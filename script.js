@@ -113,38 +113,25 @@ const todaysPredictions = [
         odds: "1.95",
         confidence: 78
     },
-    {
-        match: "Real Madrid vs Barcelona",
-        league: "La Liga",
-        time: "21:00",
-        tip: "Over 2.5",
-        odds: "1.80",
-        confidence: 82
-    },
-    {
-        match: "Juventus vs AC Milan",
-        league: "Serie A",
-        time: "19:45",
-        tip: "2 Draw No Bet",
-        odds: "2.10",
-        confidence: 75
-    }
-];
-
-function updateAllPredictions() {
-    todaysPredictions.forEach((pred, index) => {
-        const teams = pred.match.split(' vs ');
-        updatePrediction(index + 1, teams[0], teams[1], pred.tip, pred.odds, pred.confidence);
+// Fetch predictions from Google Sheets
+async function loadPredictions() {
+    const sheetURL = 'YOUR_GOOGLE_SHEETS_CSV_LINK';
+    
+    try {
+        const response = await fetch(sheetURL);
+        const csvData = await response.text();
+        const rows = csvData.split('\n').slice(1); // Skip header
         
-        // Update league and time
-        const matchCards = document.querySelectorAll('.match-card');
-        const card = matchCards[index];
-        const league = card.querySelector('.match-league');
-        const time = card.querySelector('.match-time');
-        if (league) league.innerHTML = `<i class="fas fa-trophy"></i> ${pred.league}`;
-        if (time) time.textContent = pred.time;
-    });
+        rows.forEach((row, index) => {
+            const [date, team1, team2, prediction, odds, confidence, status] = row.split(',');
+            if (team1 && team2) {
+                updatePrediction(index + 1, team1, team2, prediction, odds, confidence);
+            }
+        });
+    } catch (error) {
+        console.log('Using default predictions');
+    }
 }
 
-// Update predictions daily
-updateAllPredictions();
+// Call on page load
+document.addEventListener('DOMContentLoaded', loadPredictions);
