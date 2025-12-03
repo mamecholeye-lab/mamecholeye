@@ -236,3 +236,4 @@ document.addEventListener('DOMContentLoaded', function() {
     // Auto-refresh predictions every 5 minutes
     setInterval(loadPredictionsFromGoogleSheets, 300000);
 }); 
+https://docs.google.com/spreadsheets/d/1eNPegfdMCRhyT11d-4n7uawIJmHkHIaMyQmFD-o-bBc/edit?usp=drivesdk
