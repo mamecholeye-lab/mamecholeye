@@ -21,7 +21,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         
         const targetElement = document.querySelector(targetId);
         if (targetElement) {
-            // Close mobile menu if open
             if (navMenu) navMenu.classList.remove('active');
             if (menuToggle) menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
             
@@ -39,17 +38,14 @@ if (contactForm) {
     contactForm.addEventListener('submit', function(e) {
         e.preventDefault();
         
-        // Get form data
         const formData = new FormData(this);
         const data = Object.fromEntries(formData);
         
-        // Show loading state
         const submitBtn = this.querySelector('button[type="submit"]');
         const originalText = submitBtn.innerHTML;
         submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
         submitBtn.disabled = true;
         
-        // Simulate API call
         setTimeout(() => {
             alert('Subscription request sent successfully! We will contact you within 30 minutes with payment details.');
             
@@ -57,87 +53,80 @@ if (contactForm) {
             submitBtn.innerHTML = originalText;
             submitBtn.disabled = false;
             
-            // Log data
             console.log('Subscription Data:', data);
             
         }, 1500);
     });
 }
 
-// ===== GOOGLE SHEETS INTEGRATION =====
-// ===== SMART GOOGLE SHEETS PARSER =====
+// ===== SMART GOOGLE SHEETS PARSER - SHOWS "Home wins" =====
 async function loadPredictions() {
     const SHEET_ID = '1eNPegfdMCRhyT11d-4n7uawIJmHkHIaMyQmFD-o-bBc';
     const CSV_URL = `https://docs.google.com/spreadsheets/d/${SHEET_ID}/gviz/tq?tqx=out:csv`;
     
     try {
-        console.log('Loading predictions from Google Sheets...');
+        console.log('📡 Loading predictions from Google Sheets...');
         const response = await fetch(CSV_URL);
         const csvText = await response.text();
         
-        // Parse CSV
         const rows = csvText.split('\n');
         if (rows.length < 2) {
             console.log('No data in sheet');
             return;
         }
         
-        // Get headers (first row)
+        // Get headers
         const headers = rows[0].split(',').map(h => h.trim().toLowerCase());
-        console.log('Sheet headers:', headers);
+        console.log('📊 Sheet headers:', headers);
         
-        // Find column indices
-        const team1Index = findColumnIndex(headers, ['team1', 'home', 'team 1', 'team_1']);
-        const team2Index = findColumnIndex(headers, ['team2', 'away', 'team 2', 'team_2']);
-        const predictionIndex = findColumnIndex(headers, ['prediction', 'tip', 'pick', 'bet', 'forecast']);
-        const oddsIndex = findColumnIndex(headers, ['odds', 'odd', 'value', 'price']);
-        const leagueIndex = findColumnIndex(headers, ['league', 'competition', 'tournament']);
-        const confidenceIndex = findColumnIndex(headers, ['confidence', 'prob', 'probability', 'chance']);
+        // Find columns
+        const team1Index = findColumnIndex(headers, ['team1', 'home', 'team 1']);
+        const team2Index = findColumnIndex(headers, ['team2', 'away', 'team 2']);
+        const predictionIndex = findColumnIndex(headers, ['prediction', 'tip', 'pick']);
+        const oddsIndex = findColumnIndex(headers, ['odds', 'odd']);
+        const leagueIndex = findColumnIndex(headers, ['league', 'competition']);
+        const confidenceIndex = findColumnIndex(headers, ['confidence', 'prob']);
         
-        console.log('Column indices:', {
-            team1Index, team2Index, predictionIndex, 
-            oddsIndex, leagueIndex, confidenceIndex
-        });
+        console.log('📍 Column positions:', { team1Index, team2Index, predictionIndex, oddsIndex, leagueIndex, confidenceIndex });
         
-        // Process predictions (first 3 rows after header)
+        // Update match cards
         const matchCards = document.querySelectorAll('.match-card');
         
         for (let i = 1; i < Math.min(rows.length, 4); i++) {
             const row = rows[i].split(',');
-            if (row.length >= Math.max(team1Index, team2Index, predictionIndex, oddsIndex, leagueIndex, confidenceIndex)) {
-                
-                // Extract data using found indices
-                const team1 = team1Index >= 0 ? row[team1Index]?.trim() : '';
-                const team2 = team2Index >= 0 ? row[team2Index]?.trim() : '';
-                const prediction = predictionIndex >= 0 ? row[predictionIndex]?.trim() : '';
-                const odds = oddsIndex >= 0 ? row[oddsIndex]?.trim() : '';
-                const league = leagueIndex >= 0 ? row[leagueIndex]?.trim() : '';
-                const confidence = confidenceIndex >= 0 ? row[confidenceIndex]?.trim() : '75';
-                
-                console.log(`Row ${i}:`, { team1, team2, prediction, odds, league, confidence });
-                
-                // Update website if we have a match card
-                if (i-1 < matchCards.length) {
-                    updateMatchCard(matchCards[i-1], team1, team2, league, prediction, odds, confidence);
-                }
+            
+            const team1 = team1Index >= 0 ? cleanCell(row[team1Index]) : '';
+            const team2 = team2Index >= 0 ? cleanCell(row[team2Index]) : '';
+            const prediction = predictionIndex >= 0 ? cleanCell(row[predictionIndex]) : '';
+            const odds = oddsIndex >= 0 ? cleanCell(row[oddsIndex]) : '';
+            const league = leagueIndex >= 0 ? cleanCell(row[leagueIndex]) : '';
+            const confidence = confidenceIndex >= 0 ? cleanCell(row[confidenceIndex]) : '75';
+            
+            console.log(`🎯 Row ${i} prediction: "${prediction}"`);
+            
+            if (i-1 < matchCards.length) {
+                updateMatchCard(matchCards[i-1], team1, team2, league, prediction, odds, confidence);
             }
         }
         
     } catch (error) {
-        console.error('Error loading predictions:', error);
+        console.error('❌ Error:', error);
     }
 }
 
-// Helper function to find column index
 function findColumnIndex(headers, possibleNames) {
     for (const name of possibleNames) {
         const index = headers.indexOf(name.toLowerCase());
         if (index !== -1) return index;
     }
-    return -1; // Not found
+    return -1;
 }
 
-// Update match card with correct data
+function cleanCell(cell) {
+    if (!cell) return '';
+    return cell.toString().replace(/"/g, '').trim();
+}
+
 function updateMatchCard(card, team1, team2, league, prediction, odds, confidence) {
     // Update teams
     const teamNames = card.querySelectorAll('.team-name');
@@ -145,7 +134,6 @@ function updateMatchCard(card, team1, team2, league, prediction, odds, confidenc
         if (team1) teamNames[0].textContent = team1;
         if (team2) teamNames[1].textContent = team2;
         
-        // Update logos
         const logos = card.querySelectorAll('.team-logo');
         if (logos.length >= 2) {
             logos[0].textContent = (team1 || 'T1').substring(0, 3).toUpperCase();
@@ -159,10 +147,11 @@ function updateMatchCard(card, team1, team2, league, prediction, odds, confidenc
         leagueEl.innerHTML = `<i class="fas fa-trophy"></i> ${league}`;
     }
     
-    // Update prediction (THIS IS WHAT YOU WANT TO SHOW!)
+    // ⭐⭐⭐⭐ THIS IS THE IMPORTANT PART ⭐⭐⭐⭐
     const predValue = card.querySelector('.prediction-value');
-    if (predValue && prediction) {
-        predValue.textContent = prediction; // Will show "Home wins" or whatever you write
+    if (predValue) {
+        predValue.textContent = prediction || 'Tip';
+        console.log(`✅ Set prediction to: "${prediction}"`);
     }
     
     // Update odds
@@ -182,10 +171,8 @@ function updateMatchCard(card, team1, team2, league, prediction, odds, confidenc
     }
 }
 
-// Load on page ready
+// Initialize
 document.addEventListener('DOMContentLoaded', function() {
     setTimeout(loadPredictions, 1000);
-    setInterval(loadPredictions, 10 * 60 * 1000); // Refresh every 10 minutes
+    setInterval(loadPredictions, 5 * 60 * 1000);
 });
-})();
-// ===== END OF FILE =====
