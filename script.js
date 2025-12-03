@@ -102,3 +102,49 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style);
+// EASY UPDATE TEMPLATE - Add to your script.js
+
+const todaysPredictions = [
+    {
+        match: "Man United vs Chelsea",
+        league: "Premier League",
+        time: "20:00",
+        tip: "GG",
+        odds: "1.95",
+        confidence: 78
+    },
+    {
+        match: "Real Madrid vs Barcelona",
+        league: "La Liga",
+        time: "21:00",
+        tip: "Over 2.5",
+        odds: "1.80",
+        confidence: 82
+    },
+    {
+        match: "Juventus vs AC Milan",
+        league: "Serie A",
+        time: "19:45",
+        tip: "2 Draw No Bet",
+        odds: "2.10",
+        confidence: 75
+    }
+];
+
+function updateAllPredictions() {
+    todaysPredictions.forEach((pred, index) => {
+        const teams = pred.match.split(' vs ');
+        updatePrediction(index + 1, teams[0], teams[1], pred.tip, pred.odds, pred.confidence);
+        
+        // Update league and time
+        const matchCards = document.querySelectorAll('.match-card');
+        const card = matchCards[index];
+        const league = card.querySelector('.match-league');
+        const time = card.querySelector('.match-time');
+        if (league) league.innerHTML = `<i class="fas fa-trophy"></i> ${pred.league}`;
+        if (time) time.textContent = pred.time;
+    });
+}
+
+// Update predictions daily
+updateAllPredictions();
