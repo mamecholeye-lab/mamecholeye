@@ -733,3 +733,65 @@ section::before {
     transform: scale(1.1);
     background-color: #128C7E;
     }
+/* ===== FIX RESULTS TABLE VISIBILITY ===== */
+
+/* Make table rows more visible */
+.table-body .table-row {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+}
+
+/* Make text in table WHITE for better visibility */
+.table-row div {
+    color: white !important;
+    font-weight: 500 !important;
+}
+
+/* Make table header stand out more */
+.table-header {
+    background-color: rgba(255, 107, 53, 0.2) !important;
+    border-bottom: 2px solid var(--primary-color) !important;
+}
+
+.table-header .table-row div {
+    color: var(--primary-color) !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    text-transform: uppercase !important;
+}
+
+/* Alternate row colors for better readability */
+.table-body .table-row:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+.table-body .table-row:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.03) !important;
+}
+
+/* Hover effect for rows */
+.table-body .table-row:hover {
+    background-color: rgba(255, 107, 53, 0.1) !important;
+    transform: translateX(5px);
+    transition: all 0.3s ease;
+}
+
+/* Make status badges more visible */
+.status {
+    padding: 6px 15px !important;
+    font-weight: 700 !important;
+    font-size: 12px !important;
+    letter-spacing: 0.5px !important;
+}
+
+.status.won {
+    background-color: rgba(0, 184, 148, 0.2) !important;
+    color: #00ffd0 !important;
+    border: 1px solid rgba(0, 184, 148, 0.5) !important;
+}
+
+.status.lost {
+    background-color: rgba(255, 71, 87, 0.2) !important;
+    color: #ff8e9e !important;
+    border: 1px solid rgba(255, 71, 87, 0.5) !important;
+}
