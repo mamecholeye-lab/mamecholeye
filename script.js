@@ -113,25 +113,126 @@ const todaysPredictions = [
         odds: "1.95",
         confidence: 78
     },
-// Fetch predictions from Google Sheets
-async function loadPredictions() {
-    const sheetURL = 'YOUR_GOOGLE_SHEETS_CSV_LINK';
+   // Google Sheets Integration for Predictions
+async function loadPredictionsFromGoogleSheets() {
+    // Your published Google Sheets CSV URL
+    const sheetURL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSEvEwgk32vX6A4i1Cxb88QLPV3ESa56hY5Hdd_33x-7hT7wIKkI9P7I0TKGKb9R1lQ/pub?output=csv';
     
     try {
         const response = await fetch(sheetURL);
-        const csvData = await response.text();
-        const rows = csvData.split('\n').slice(1); // Skip header
+        const csvText = await response.text();
+        const predictions = parseCSV(csvText);
         
-        rows.forEach((row, index) => {
-            const [date, team1, team2, prediction, odds, confidence, status] = row.split(',');
-            if (team1 && team2) {
-                updatePrediction(index + 1, team1, team2, prediction, odds, confidence);
-            }
-        });
+        // Update website with predictions
+        updateWebsitePredictions(predictions);
     } catch (error) {
-        console.log('Using default predictions');
+        console.log('Error loading predictions:', error);
+        // Keep default predictions if sheet fails
     }
 }
 
-// Call on page load
-document.addEventListener('DOMContentLoaded', loadPredictions);
+function parseCSV(csvText) {
+    const rows = csvText.split('\n');
+    const headers = rows[0].split(',');
+    
+    const predictions = [];
+    for (let i = 1; i < rows.length; i++) {
+        const row = rows[i].split(',');
+        if (row.length === headers.length) {
+            const prediction = {};
+            headers.forEach((header, index) => {
+                prediction[header.trim()] = row[index]?.trim();
+            });
+            predictions.push(prediction);
+        }
+    }
+    return predictions;
+}
+
+function updateWebsitePredictions(predictions) {
+    // Update Today's Predictions section
+    const todayPredictions = predictions.filter(p => p.Status === 'Today');
+    
+    todayPredictions.forEach((pred, index) => {
+        if (index < 3) { // Update first 3 match cards
+            updateMatchCard(index + 1, pred);
+        }
+    });
+    
+    // Update Results table
+    updateResultsTable(predictions);
+}
+
+function updateMatchCard(cardNumber, prediction) {
+    const matchCard = document.querySelectorAll('.match-card')[cardNumber - 1];
+    if (!matchCard) return;
+    
+    // Update league
+    const leagueElement = matchCard.querySelector('.match-league');
+    if (leagueElement) {
+        leagueElement.innerHTML = `<i class="fas fa-trophy"></i> ${prediction.League || 'League'}`;
+    }
+    
+    // Update teams
+    const teamNames = matchCard.querySelectorAll('.team-name');
+    if (teamNames.length >= 2) {
+        teamNames[0].textContent = prediction['Team 1'] || 'Team 1';
+        teamNames[1].textContent = prediction['Team 2'] || 'Team 2';
+    }
+    
+    // Update team logos (abbreviations)
+    const teamLogos = matchCard.querySelectorAll('.team-logo');
+    if (teamLogos.length >= 2) {
+        teamLogos[0].textContent = (prediction['Team 1'] || 'T1').substring(0, 3).toUpperCase();
+        teamLogos[1].textContent = (prediction['Team 2'] || 'T2').substring(0, 3).toUpperCase();
+    }
+    
+    // Update prediction
+    const predValue = matchCard.querySelector('.prediction-value');
+    if (predValue) predValue.textContent = prediction.Prediction || 'Tip';
+    
+    // Update odds
+    const predOdds = matchCard.querySelector('.prediction-odd');
+    if (predOdds) predOdds.textContent = `@${prediction.Odds || '1.80'}`;
+    
+    // Update confidence
+    const confidenceBar = matchCard.querySelector('.confidence-fill');
+    const confidenceText = matchCard.querySelector('.confidence span');
+    const confidence = parseInt(prediction.Confidence) || 75;
+    
+    if (confidenceBar) confidenceBar.style.width = `${confidence}%`;
+    if (confidenceText) confidenceText.textContent = `${confidence}% Confidence`;
+}
+
+function updateResultsTable(predictions) {
+    const completedPredictions = predictions.filter(p => p.Status === 'WON' || p.Status === 'LOST');
+    
+    completedPredictions.slice(0, 4).forEach((pred, index) => {
+        const rowNumber = index + 1;
+        const dateElement = document.getElementById(`date-${rowNumber}`);
+        const matchElement = document.getElementById(`match-${rowNumber}`);
+        const predictionElement = document.getElementById(`prediction-${rowNumber}`);
+        const oddsElement = document.getElementById(`odds-${rowNumber}`);
+        const resultElement = document.getElementById(`result-${rowNumber}`);
+        const statusElement = document.getElementById(`status-${rowNumber}`);
+        
+        if (dateElement) dateElement.textContent = pred.Date || 'Today';
+        if (matchElement) matchElement.textContent = `${pred['Team 1'] || ''} vs ${pred['Team 2'] || ''}`;
+        if (predictionElement) predictionElement.textContent = pred.Prediction || '';
+        if (oddsElement) oddsElement.textContent = pred.Odds || '';
+        if (resultElement) resultElement.textContent = pred.Result || '';
+        
+        if (statusElement && pred.Status) {
+            statusElement.textContent = pred.Status;
+            statusElement.className = `status ${pred.Status.toLowerCase()}`;
+        }
+    });
+}
+
+// Load predictions when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    loadPredictionsFromGoogleSheets();
+    
+    // Auto-refresh predictions every 5 minutes
+    setInterval(loadPredictionsFromGoogleSheets, 300000);
+}); 
