@@ -1,235 +1,603 @@
-// Mobile Menu Toggle
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
-
-menuToggle.addEventListener('click', () => {
-    navMenu.classList.toggle('active');
-    menuToggle.innerHTML = navMenu.classList.contains('active') 
-        ? '<i class="fas fa-times"></i>' 
-        : '<i class="fas fa-bars"></i>';
-});
-
-// Close menu when clicking outside
-document.addEventListener('click', (e) => {
-    if (!menuToggle.contains(e.target) && !navMenu.contains(e.target)) {
-        navMenu.classList.remove('active');
-        menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-    }
-});
-
-// Smooth Scrolling for Navigation Links
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        e.preventDefault();
-        
-        const targetId = this.getAttribute('href');
-        if (targetId === '#') return;
-        
-        const targetElement = document.querySelector(targetId);
-        if (targetElement) {
-            // Close mobile menu if open
-            navMenu.classList.remove('active');
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-            
-            // Smooth scroll to target
-            window.scrollTo({
-                top: targetElement.offsetTop - 100,
-                behavior: 'smooth'
-            });
-        }
-    });
-});
-
-// Date Filter for Predictions
-const dateButtons = document.querySelectorAll('.date-btn');
-dateButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        // Remove active class from all buttons
-        dateButtons.forEach(btn => btn.classList.remove('active'));
-        // Add active class to clicked button
-        button.classList.add('active');
-        
-        // Here you would typically filter predictions based on date
-        // For demo, we'll just show a message
-        console.log(`Showing predictions for: ${button.textContent}`);
-    });
-});
-
-// Form Submission
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form data
-        const formData = new FormData(this);
-        const data = Object.fromEntries(formData);
-        
-        // Basic validation
-        if (!data.email || !data.phone) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
-        // Show loading state
-        const submitBtn = this.querySelector('button[type="submit"]');
-        const originalText = submitBtn.innerHTML;
-        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
-        submitBtn.disabled = true;
-        
-        // Simulate API call
-        setTimeout(() => {
-            // Success message
-            alert('Subscription request sent successfully! We will contact you within 30 minutes with payment details.');
-            
-            // Reset form
-            this.reset();
-            
-            // Restore button
-            submitBtn.innerHTML = originalText;
-            submitBtn.disabled = false;
-            
-            // Log data (in real app, send to server)
-            console.log('Subscription Data:', data);
-            
-            // Here you would typically send the data to your email
-            // For now, we'll log it and show success message
-            const emailBody = `New Subscription Request:
-Name: ${data.name}
-Email: ${data.email}
-Phone: ${data.phone}
-Package: ${data.package}
-Message: ${data.message || 'N/A'}`;
-            
-            console.log('Email would be sent to: mamecholeye@gmail.com');
-            console.log('Email content:', emailBody);
-            
-        }, 1500);
-    });
+/* ===== RESET & BASE STYLES ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-// Update Active Navigation Link on Scroll
-window.addEventListener('scroll', () => {
-    const sections = document.querySelectorAll('section');
-    const navLinks = document.querySelectorAll('.nav-link');
-    
-    let current = '';
-    
-    sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        const sectionHeight = section.clientHeight;
-        
-        if (window.scrollY >= (sectionTop - 150)) {
-            current = section.getAttribute('id');
-        }
-    });
-    
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${current}`) {
-            link.classList.add('active');
-        }
-    });
-});
-
-// View Analysis Button Click
-document.querySelectorAll('.analysis-btn').forEach(button => {
-    button.addEventListener('click', function() {
-        const matchCard = this.closest('.match-card');
-        const teams = matchCard.querySelector('.teams').textContent;
-        
-        alert(`Detailed analysis for ${teams} would be shown here. This feature is available for premium subscribers.`);
-    });
-});
-
-// Real-time Results Update (Simulated)
-function updateResults() {
-    const results = [
-        { status: 'won', match: 'Liverpool vs Everton', prediction: '1 & Over 2.5', odds: '2.10', result: '3-1' },
-        { status: 'won', match: 'Bayern vs Dortmund', prediction: 'GG', odds: '1.85', result: '2-2' },
-        { status: 'lost', match: 'Atletico vs Sevilla', prediction: '1X', odds: '1.50', result: '0-1' }
-    ];
-    
-    // In a real app, you would fetch from an API
-    console.log('Results would be updated from server');
+:root {
+    --primary-color: #FF6B35;
+    --secondary-color: #1A1A2E;
+    --accent-color: #00B894;
+    --danger-color: #FF4757;
+    --light-color: #F8F9FA;
+    --dark-color: #2D3436;
+    --gray-color: #636E72;
+    --shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    --radius: 10px;
 }
 
-// Initialize some features on page load
-document.addEventListener('DOMContentLoaded', () => {
-    // Add current date to results
-    const today = new Date();
-    const dateString = today.toLocaleDateString('en-US', { 
-        month: 'short', 
-        day: 'numeric',
-        year: 'numeric'
-    });
-    
-    // Update today's date in results table
-    document.querySelectorAll('.table-row:not(.table-header)').forEach((row, index) => {
-        if (index === 0) {
-            row.children[0].textContent = 'Today';
-        } else if (index === 1) {
-            row.children[0].textContent = 'Yesterday';
-        }
-    });
-    
-    // Initialize with first date button active
-    dateButtons[0].classList.add('active');
-    
-    // Add animation to stats on scroll
-    const observerOptions = {
-        threshold: 0.5
-    };
-    
-    const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('animate');
-            }
-        });
-    }, observerOptions);
-    
-    // Observe elements for animation
-    document.querySelectorAll('.stat-box, .package-card, .contact-card').forEach(el => {
-        observer.observe(el);
-    });
-});
+/* ===== LOGO WATERMARK BACKGROUND ===== */
+body {
+    font-family: 'Poppins', sans-serif;
+    line-height: 1.6;
+    color: var(--dark-color);
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
 
-// Add CSS for animations
-const style = document.createElement('style');
-style.textContent = `
-    @keyframes fadeInUp {
-        from {
-            opacity: 0;
-            transform: translateY(30px);
-        }
-        to {
-            opacity: 1;
-            transform: translateY(0);
-        }
-    }
-    
-    .animate {
-        animation: fadeInUp 0.6s ease forwards;
-    }
+/* Logo watermark in center */
 body::before {
     content: '';
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 500px;
-    height: 500px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
     background-image: url('rmame-logo.png');
     background-repeat: no-repeat;
     background-position: center;
-    background-size: contain;
-    opacity: 0.03;
+    background-size: 500px;
+    opacity: 0.08;
     z-index: -1;
     pointer-events: none;
 }
 
-/* Darken sections for better contrast */
+/* Optional: Add subtle pattern */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(255, 107, 53, 0.05) 0%, transparent 50%),
+        radial-gradient(circle at 80% 20%, rgba(0, 184, 148, 0.05) 0%, transparent 50%);
+    z-index: -2;
+    pointer-events: none;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+/* ===== NAVIGATION ===== */
+.navbar {
+    background-color: rgba(26, 26, 46, 0.95);
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.logo {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--primary-color);
+}
+
+.logo-text h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 28px;
+    font-weight: 900;
+    color: white;
+    letter-spacing: 2px;
+    margin: 0;
+}
+
+.tagline {
+    color: var(--primary-color);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+}
+
+.nav-menu {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.nav-link {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 16px;
+    transition: all 0.3s ease;
+    position: relative;
+    padding: 5px 0;
+}
+
+.nav-link:hover,
+.nav-link.active {
+    color: var(--primary-color);
+}
+
+.nav-link.active::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: var(--primary-color);
+}
+
+.nav-btn {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 25px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 14px;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+}
+
+.nav-btn:hover {
+    background-color: #FF8B35;
+    transform: translateY(-2px);
+}
+
+.menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* ===== HERO SECTION ===== */
+.hero {
+    padding: 180px 0 100px;
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.9) 0%, rgba(22, 33, 62, 0.9) 100%);
+    color: white;
+    margin-top: 80px;
+    position: relative;
+    overflow: hidden;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: url('rmame-logo.png') no-repeat center;
+    background-size: 400px;
+    opacity: 0.03;
+    z-index: 0;
+}
+
+.hero .container {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 50px;
+}
+
+.hero-content {
+    flex: 1;
+}
+
+.hero-badge {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+}
+
+.win-rate {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.verified {
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    padding: 8px 20px;
+    border-radius: 30px;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
+    font-weight: 800;
+    line-height: 1.2;
+    margin-bottom: 20px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.highlight {
+    color: var(--primary-color);
+}
+
+.hero-subtitle {
+    font-size: 1.2rem;
+    color: rgba(255, 255, 255, 0.9);
+    margin-bottom: 30px;
+    max-width: 600px;
+}
+
+.hero-stats {
+    display: flex;
+    gap: 30px;
+    margin: 40px 0;
+}
+
+.stat h3 {
+    font-size: 2.5rem;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.stat p {
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.btn-primary, .btn-secondary {
+    padding: 15px 30px;
+    border-radius: 30px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 16px;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.btn-primary:hover {
+    background-color: #FF8B35;
+    transform: translateY(-3px);
+    box-shadow: var(--shadow);
+}
+
+.btn-secondary {
+    background-color: transparent;
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    transform: translateY(-3px);
+}
+
+.hero-image {
+    flex: 1;
+    position: relative;
+    z-index: 1;
+}
+
+.match-card {
+    background-color: rgba(255, 255, 255, 0.05);
+    border-radius: var(--radius);
+    padding: 25px;
+    box-shadow: var(--shadow);
+    transition: transform 0.3s ease;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.match-card:hover {
+    transform: translateY(-10px);
+    border-color: rgba(255, 107, 53, 0.3);
+}
+
+.match-card.featured {
+    border-top: 5px solid var(--primary-color);
+}
+
+.match-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.match-league {
+    color: var(--primary-color);
+    font-weight: 600;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.match-time {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.teams {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 25px;
+}
+
+.team {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+}
+
+.team-logo {
+    width: 60px;
+    height: 60px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.team-name {
+    font-weight: 600;
+    font-size: 16px;
+    color: white;
+}
+
+.vs {
+    color: rgba(255, 255, 255, 0.5);
+    font-weight: 800;
+    font-size: 20px;
+    margin: 0 20px;
+}
+
+.prediction {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prediction-label {
+    font-weight: 600;
+    color: white;
+}
+
+.prediction-value {
+    font-weight: 700;
+    color: var(--primary-color);
+    font-size: 18px;
+}
+
+.prediction-odd {
+    background-color: var(--accent-color);
+    color: white;
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 700;
+}
+
+.confidence {
+    margin-top: 20px;
+}
+
+.confidence-bar {
+    height: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+    margin-bottom: 10px;
+    overflow: hidden;
+}
+
+.confidence-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
+    border-radius: 4px;
+}
+
+.confidence span {
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* ===== OTHER SECTIONS ===== */
 section {
-    background-color: rgba(15, 23, 42, 0.85);
-        }
+    padding: 100px 0;
+    background-color: rgba(15, 23, 42, 0.7);
+    backdrop-filter: blur(10px);
+    margin: 20px 0;
+    border-radius: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.section-header {
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.section-title {
+    font-size: 2.8rem;
+    font-weight: 800;
+    margin-bottom: 15px;
+    font-family: 'Montserrat', sans-serif;
+    color: white;
+}
+
+.section-subtitle {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 1.1rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+/* Add logo watermark to each section */
+section::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 300px;
+    height: 300px;
+    background-image: url('rmame-logo.png');
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    opacity: 0.02;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+@media (max-width: 992px) {
+    .hero .container {
+        flex-direction: column;
+    }
+    
+    .hero-title {
+        font-size: 2.8rem;
+    }
+    
+    body::before {
+        background-size: 300px;
+    }
+}
+
+@media (max-width: 768px) {
+    .nav-menu {
+        position: fixed;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background-color: var(--secondary-color);
+        flex-direction: column;
+        padding: 20px;
+        gap: 20px;
+        display: none;
+    }
+    
+    .nav-menu.active {
+        display: flex;
+    }
+    
+    .menu-toggle {
+        display: block;
+    }
+    
+    .hero-stats {
+        flex-direction: column;
+        gap: 20px;
+    }
+    
+    .hero-buttons {
+        flex-direction: column;
+    }
+    
+    .section-title {
+        font-size: 2.2rem;
+    }
+    
+    body::before {
+        background-size: 200px;
+    }
+}
+
+@media (max-width: 576px) {
+    .hero-title {
+        font-size: 2.2rem;
+    }
+    
+    .section-title {
+        font-size: 1.8rem;
+    }
+    
+    body::before {
+        background-size: 150px;
+        opacity: 0.05;
+    }
+}
+
+/* ===== WHATSAPP FLOAT BUTTON ===== */
+.whatsapp-float {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: #25D366;
+    color: white;
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    text-decoration: none;
+    box-shadow: 0 5px 15px rgba(37, 211, 102, 0.3);
+    z-index: 1000;
+    transition: all 0.3s ease;
+}
+
+.whatsapp-float:hover {
+    transform: scale(1.1);
+    background-color: #128C7E;
+}
