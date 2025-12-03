@@ -222,3 +222,33 @@ style.textContent = `
 `;
 document.head.appendChild(style);
 
+/* First, let's extract colors from your logo */
+/* You can use a color picker tool or I'll suggest colors */
+
+body {
+    background: linear-gradient(
+        135deg,
+        #1A1A2E 0%,      /* Dark blue */
+        #16213E 30%,     /* Medium blue */
+        #0F3460 70%,     /* Navy blue */
+        #1A1A2E 100%     /* Back to dark blue */
+    );
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Add logo pattern overlay */
+body::after {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url('rmame-logo.png');
+    background-repeat: repeat;
+    background-size: 200px;
+    opacity: 0.04;
+    z-index: -1;
+    pointer-events: none;
+    }
