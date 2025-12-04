@@ -176,3 +176,24 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(loadPredictions, 1000);
     setInterval(loadPredictions, 5 * 60 * 1000);
 });
+// Show/Hide More Predictions
+document.addEventListener('DOMContentLoaded', function() {
+    const showMoreBtn = document.getElementById('showMorePredictions');
+    const morePredictions = document.getElementById('morePredictions');
+    
+    if (showMoreBtn && morePredictions) {
+        showMoreBtn.addEventListener('click', function() {
+            if (morePredictions.style.display === 'none') {
+                morePredictions.style.display = 'block';
+                showMoreBtn.innerHTML = '<i class="fas fa-arrow-up"></i> Show Less Predictions';
+                showMoreBtn.classList.remove('btn-primary');
+                showMoreBtn.classList.add('btn-secondary');
+            } else {
+                morePredictions.style.display = 'none';
+                showMoreBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Show More Predictions (4 more)';
+                showMoreBtn.classList.remove('btn-secondary');
+                showMoreBtn.classList.add('btn-primary');
+            }
+        });
+    }
+});
