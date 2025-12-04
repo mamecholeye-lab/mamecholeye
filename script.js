@@ -1,201 +1,105 @@
-// Clean and working JavaScript for RMAME Predictions
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('RMAME Predictions website loaded');
-    
-    // ===== MOBILE MENU TOGGLE =====
-    const menuToggle = document.getElementById('menuToggle');
-    const navMenu = document.getElementById('navMenu');
-    
-    if (menuToggle && navMenu) {
-        menuToggle.addEventListener('click', function() {
-            navMenu.classList.toggle('active');
-            if (navMenu.classList.contains('active')) {
-                menuToggle.innerHTML = '<i class="fas fa-times"></i>';
-                menuToggle.setAttribute('aria-expanded', 'true');
-            } else {
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                menuToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
-        
-        // Close mobile menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!menuToggle.contains(event.target) && !navMenu.contains(event.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                menuToggle.setAttribute('aria-expanded', 'false');
-            }
-        });
+/* ===== FIX NAVIGATION & SCROLLING ===== */
+.nav-menu {
+    transition: all 0.3s ease-in-out !important;
+}
+
+.nav-menu.active {
+    display: flex !important;
+    flex-direction: column !important;
+    position: absolute !important;
+    top: 100% !important;
+    left: 0 !important;
+    right: 0 !important;
+    background: rgba(26, 26, 46, 0.98) !important;
+    padding: 20px !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3) !important;
+    backdrop-filter: blur(20px) !important;
+    border-top: 2px solid #FF6B35 !important;
+    z-index: 1000 !important;
+}
+
+.nav-menu.active .nav-link {
+    padding: 12px 0 !important;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1) !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+.nav-menu.active .nav-btn {
+    margin-top: 15px !important;
+    width: 100% !important;
+    text-align: center !important;
+}
+
+/* Fix scrolling issue */
+html {
+    scroll-behavior: smooth !important;
+}
+
+/* Active link styling */
+.nav-link.active {
+    color: #FF6B35 !important;
+    font-weight: 700 !important;
+}
+
+.nav-link.active::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -5px !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: 3px !important;
+    background: #FF6B35 !important;
+    border-radius: 2px !important;
+}
+
+/* Mobile menu button */
+.menu-toggle {
+    display: none !important;
+    background: none !important;
+    border: 2px solid rgba(255, 107, 53, 0.3) !important;
+    color: white !important;
+    width: 45px !important;
+    height: 45px !important;
+    border-radius: 10px !important;
+    font-size: 20px !important;
+    cursor: pointer !important;
+    transition: all 0.3s ease !important;
+}
+
+.menu-toggle:hover {
+    border-color: #FF6B35 !important;
+    background: rgba(255, 107, 53, 0.1) !important;
+}
+
+/* Responsive navigation */
+@media (max-width: 992px) {
+    .nav-menu {
+        display: none !important;
     }
     
-    // ===== SMOOTH SCROLLING =====
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function(e) {
-            const href = this.getAttribute('href');
-            
-            // Only handle internal links
-            if (href === '#' || href === '#!') return;
-            
-            const targetElement = document.querySelector(href);
-            if (!targetElement) return;
-            
-            e.preventDefault();
-            
-            // Close mobile menu if open
-            if (navMenu && navMenu.classList.contains('active')) {
-                navMenu.classList.remove('active');
-                if (menuToggle) {
-                    menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
-                    menuToggle.setAttribute('aria-expanded', 'false');
-                }
-            }
-            
-            // Calculate position
-            const headerHeight = 80; // Height of fixed navbar
-            const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset;
-            const offsetPosition = targetPosition - headerHeight;
-            
-            // Smooth scroll
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: 'smooth'
-            });
-            
-            // Update URL without jumping
-            history.pushState(null, null, href);
-        });
-    });
-    
-    // ===== FORM SUBMISSION =====
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Get form data
-            const formData = new FormData(this);
-            const name = formData.get('name') || 'User';
-            
-            // Show success message
-            alert('Thank you ' + name + '! Your subscription request has been sent. We will contact you within 30 minutes with payment details.');
-            
-            // Reset form
-            this.reset();
-            
-            // Optional: Scroll to top
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
-        });
+    .menu-toggle {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+}
+
+@media (min-width: 993px) {
+    .nav-menu {
+        display: flex !important;
     }
     
-    // ===== SHOW MORE PREDICTIONS =====
-    const showMoreBtn = document.getElementById('showMorePredictions');
-    const morePredictions = document.getElementById('morePredictions');
-    
-    if (showMoreBtn && morePredictions) {
-        showMoreBtn.addEventListener('click', function() {
-            if (morePredictions.style.display === 'none' || !morePredictions.style.display) {
-                morePredictions.style.display = 'block';
-                showMoreBtn.innerHTML = '<i class="fas fa-arrow-up"></i> Show Less Predictions';
-                showMoreBtn.classList.add('active');
-                
-                // Smooth scroll to expanded section
-                morePredictions.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
-            } else {
-                morePredictions.style.display = 'none';
-                showMoreBtn.innerHTML = '<i class="fas fa-arrow-down"></i> Show More Predictions (4 more)';
-                showMoreBtn.classList.remove('active');
-            }
-        });
+    .menu-toggle {
+        display: none !important;
     }
-    
-    // ===== YESTERDAY'S DATE =====
-    function getYesterdayDate() {
-        const yesterday = new Date();
-        yesterday.setDate(yesterday.getDate() - 1);
-        
-        return yesterday.toLocaleDateString('en-US', {
-            month: 'long',
-            day: 'numeric',
-            year: 'numeric'
-        });
-    }
-    
-    // Update date in hero section
-    const dateElement = document.querySelector('.results-header .date');
-    if (dateElement) {
-        dateElement.textContent = getYesterdayDate();
-    }
-    
-    // ===== ACTIVE NAV LINK ON SCROLL =====
-    function highlightNavOnScroll() {
-        const sections = document.querySelectorAll('section[id]');
-        const navLinks = document.querySelectorAll('.nav-link');
-        
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.clientHeight;
-            
-            if (scrollY >= (sectionTop - 150)) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove('active');
-            if (link.getAttribute('href') === '#' + current) {
-                link.classList.add('active');
-            }
-        });
-    }
-    
-    window.addEventListener('scroll', highlightNavOnScroll);
-    
-    // ===== WHATSAPP FLOAT BUTTON HOVER EFFECT =====
-    const whatsappFloat = document.querySelector('.whatsapp-float');
-    if (whatsappFloat) {
-        whatsappFloat.addEventListener('mouseenter', function() {
-            this.style.transform = 'scale(1.1)';
-        });
-        
-        whatsappFloat.addEventListener('mouseleave', function() {
-            this.style.transform = 'scale(1)';
-        });
-    }
-    
-    // ===== PREVENT PREDICTION HIDING =====
-    // Ensure all predictions stay visible
-    function ensurePredictionsVisible() {
-        document.querySelectorAll('.match-card, .free-match, .prediction').forEach(element => {
-            element.style.display = 'block';
-            element.style.visibility = 'visible';
-            element.style.opacity = '1';
-        });
-    }
-    
-    // Run on load and periodically
-    ensurePredictionsVisible();
-    setInterval(ensurePredictionsVisible, 1000);
-    
-    // ===== INITIALIZE TOOLTIPS =====
-    // Add tooltips to prediction cards
-    document.querySelectorAll('.match-card, .free-match').forEach(card => {
-        card.addEventListener('mouseenter', function() {
-            this.style.transform = 'translateY(-5px)';
-            this.style.boxShadow = '0 15px 30px rgba(0, 0, 0, 0.3)';
-        });
-        
-        card.addEventListener('mouseleave', function() {
-            this.style.transform = 'translateY(0)';
-            this.style.boxShadow = '0 5px 15px rgba(0, 0, 0, 0.2)';
-        });
-    });
-    
-    // ===== CONSOLE MESSAGE =====
-    console.log('All JavaScript functions loaded successfully!');
-    console.log('7/7 Wins Yesterday - RMAME Predictions');
-});
+}
+
+/* Fix z-index issues */
+.navbar {
+    z-index: 9999 !important;
+}
+
+section {
+    scroll-margin-top: 100px !important;
+}
