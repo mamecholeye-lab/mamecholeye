@@ -2752,3 +2752,63 @@ section {
         font-size: 0.8rem !important;
     }
 }
+/* ===== SIMPLE FIX FOR MOBILE RESULTS ===== */
+/* Remove all height restrictions */
+.results-list,
+.results-card {
+    max-height: none !important;
+    min-height: auto !important;
+    height: auto !important;
+    overflow: visible !important;
+}
+
+/* Remove scrollbar completely */
+.results-list {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+}
+
+.results-list::-webkit-scrollbar {
+    width: 0 !important;
+    height: 0 !important;
+    display: none !important;
+}
+
+/* Make results card flexible */
+.results-card {
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+.results-list {
+    flex: 1 !important;
+}
+
+/* Mobile optimization */
+@media (max-width: 768px) {
+    .hero .container {
+        flex-direction: column !important;
+    }
+    
+    .hero-image {
+        width: 100% !important;
+        max-width: 100% !important;
+    }
+    
+    .results-card {
+        margin-top: 30px !important;
+        width: 100% !important;
+    }
+    
+    .result-item {
+        flex-direction: column !important;
+        align-items: flex-start !important;
+        gap: 8px !important;
+    }
+    
+    .bet-info {
+        width: 100% !important;
+        justify-content: flex-start !important;
+        gap: 15px !important;
+    }
+}
