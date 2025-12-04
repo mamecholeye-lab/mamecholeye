@@ -1,63 +1,18 @@
-use<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
-<style>
-    /* FIX RESULTS SECTION ONLY */
-    #results .table-row div {
-        color: white !important;
-        font-weight: 600 !important;
-    }
-    
-    #results .table-header .table-row div {
-        color: #FF6B35 !important;
-        background-color: rgba(26, 26, 46, 0.9) !important;
-    }
-    
-    #results .table-body .table-row {
-        background-color: rgba(255, 255, 255, 0.1) !important;
-    }
-    
-    /* RESTORE PACKAGES SECTION */
-    #packages .package-card {
-        background-color: white !important;
-        color: #333 !important;
-    }
-    
-    #packages .package-header h3,
-    #packages .package-price .amount {
-        color: #1A1A2E !important;
-    }
-    
-    #packages .package-features li {
-        color: #555 !important;
-    }
-    
-    /* RESTORE CONTACT SECTION */
-    #contact .contact-card,
-    #contact .contact-form {
-        background-color: white !important;
-        color: #333 !important;
-    }
-    
-    #contact .contact-card h3,
-    #contact .contact-form h3 {
-        color: #1A1A2E !important;
-    }
-    
-    #contact .contact-form input,
-    #contact .contact-form select,
-    #contact .contact-form textarea {
-        color: #333 !important;
-        background-color: white !important;
-        border: 1px solid #ddd !important;
-    }
-</style>
-    <head>
+<head>
+    <!-- CRITICAL: Makes mobile work -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
     <title>RMAME Predictions - Accurate Football Betting Tips</title>
+    
+    <!-- Load CSS files -->
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&family=Montserrat:wght@800;900&display=swap" rel="stylesheet">
+    
+    <!-- Favicon -->
     <link rel="icon" type="image/x-icon" href="assets/favicon.ico">
 </head>
 <body>
@@ -77,7 +32,6 @@ use<!DOCTYPE html>
                 <a href="#predictions" class="nav-link">Today's Predictions</a>
                 <a href="#packages" class="nav-link">Packages</a>
                 <a href="#results" class="nav-link">Results</a>
-                <a href="#about" class="nav-link">About</a>
                 <a href="#contact" class="nav-link">Contact</a>
                 <a href="#subscribe" class="nav-btn">Subscribe Now</a>
             </div>
@@ -88,772 +42,668 @@ use<!DOCTYPE html>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-<section id="home" class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="win-rate">7/7 WINS TODAY</span>
-                <span class="verified"><i class="fas fa-check-circle"></i> Perfect Record</span>
-            </div>
-            <h1 class="hero-title">100% WIN RATE <span class="highlight">TODAY</span></h1>
-            <p class="hero-subtitle">7 out of 7 predictions won! Join our winning streak with professional betting tips.</p>
-            
-            <div class="hero-stats">
-                <div class="stat">
-                    <h3>7/7</h3>
-                    <p>Today's Wins</p>
+    <!-- Hero Section - ONLY ONE SECTION! -->
+    <section id="home" class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-badge">
+                    <span class="win-rate">7/7 WINS YESTERDAY</span>
+                    <span class="verified"><i class="fas fa-check-circle"></i> Perfect Record</span>
                 </div>
-                <div class="stat">
-                    <h3>100%</h3>
-                    <p>Success Rate</p>
-                </div>
-                <div class="stat">
-                    <h3>2.73</h3>
-                    <p>Average Odds</p>
-                </div>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="#predictions" class="btn-primary">
-                    <i class="fas fa-futbol"></i> Get Tomorrow's Tips
-                </a>
-                <a href="#subscribe" class="btn-secondary">
-                    <i class="fas fa-crown"></i> Join Winning Team
-                </a>
-            </div>
-        </div>
-        
-        <div class="hero-image">
-            <div class="results-card">
-                <div class="results-header">
-                    <h3><i class="fas fa-trophy"></i> TODAY'S PERFECT RESULTS</h3>
-                    <span class="date">December 3rd, 2024</span>
-                </div>
+                <h1 class="hero-title">100% WIN RATE <span class="highlight">YESTERDAY</span></h1>
+                <p class="hero-subtitle">7 out of 7 predictions won yesterday! Join our winning streak with professional betting tips.</p>
                 
-                <div class="results-list">
-                    <!-- Result 1 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇵🇱 14:00</span>
-                            <span class="match-teams">Avia Swidnik 4–2 Polonia Bytom</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="bet-odds">@1.21</span>
-                            <span class="status won">✅</span>
-                        </div>
+                <div class="hero-stats">
+                    <div class="stat">
+                        <h3>7/7</h3>
+                        <p>Yesterday's Wins</p>
                     </div>
-                    
-                    <!-- Result 2 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇧🇬 14:00</span>
-                            <span class="match-teams">Septemvri Sofia 1–4 CSKA 1948</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="bet-odds">@1.21</span>
-                            <span class="status won">✅</span>
-                        </div>
+                    <div class="stat">
+                        <h3>100%</h3>
+                        <p>Success Rate</p>
                     </div>
-                    
-                    <!-- Result 3 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">KF Ballkani 1–0 Rilindja 1974</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="bet-odds">@1.04</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 4 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">Llapi Podujeve 4–1 Vjosa</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">1X</span>
-                            <span class="bet-odds">@1.01</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 5 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">Trepca Mitrovice 1–2 Malisheva</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">2</span>
-<!-- Hero Section -->
-<section id="home" class="hero">
-    <div class="container">
-        <div class="hero-content">
-            <div class="hero-badge">
-                <span class="win-rate">7/7 WINS YESTERDAY</span>
-                <span class="verified"><i class="fas fa-check-circle"></i> Perfect Record</span>
-            </div>
-            <h1 class="hero-title">100% WIN RATE <span class="highlight">YESTERDAY</span></h1>
-            <p class="hero-subtitle">7 out of 7 predictions won yesterday! Join our winning streak with professional betting tips.</p>
-            
-            <div class="hero-stats">
-                <div class="stat">
-                    <h3>7/7</h3>
-                    <p>Yesterday's Wins</p>
-                </div>
-                <div class="stat">
-                    <h3>100%</h3>
-                    <p>Success Rate</p>
-                </div>
-                <div class="stat">
-                    <h3>2.73</h3>
-                    <p>Average Odds</p>
-                </div>
-            </div>
-            
-            <div class="hero-buttons">
-                <a href="#predictions" class="btn-primary">
-                    <i class="fas fa-futbol"></i> Get Today's Tips
-                </a>
-                <a href="#subscribe" class="btn-secondary">
-                    <i class="fas fa-crown"></i> Join Winning Team
-                </a>
-            </div>
-        </div>
-        
-        <div class="hero-image">
-            <div class="results-card">
-                <div class="results-header">
-                    <h3><i class="fas fa-trophy"></i> YESTERDAY'S PERFECT RESULTS</h3>
-                    <span class="date">December 3rd, 2024</span>
-                </div>
-                
-                <div class="results-list">
-                    <!-- Result 1 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇵🇱 14:00</span>
-                            <span class="match-teams">Avia Swidnik 4–2 Polonia Bytom</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="bet-odds">@1.21</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 2 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇧🇬 14:00</span>
-                            <span class="match-teams">Septemvri Sofia 1–4 CSKA 1948</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="bet-odds">@1.21</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 3 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">KF Ballkani 1–0 Rilindja 1974</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="bet-odds">@1.04</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 4 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">Llapi Podujeve 4–1 Vjosa</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">1X</span>
-                            <span class="bet-odds">@1.01</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 5 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">Trepca Mitrovice 1–2 Malisheva</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">2</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 6 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">Gjilani 2–1 Istogu</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">1X</span>
-                            <span class="status won">✅</span>
-                        </div>
-                    </div>
-                    
-                    <!-- Result 7 -->
-                    <div class="result-item won">
-                        <div class="match-info">
-                            <span class="match-time">🇽🇰 14:30</span>
-                            <span class="match-teams">Dukagjini 3–1 KF Ramiz Sadiku</span>
-                        </div>
-                        <div class="bet-info">
-                            <span class="bet-type">12</span>
-                            <span class="status won">✅</span>
-                        </div>
+                    <div class="stat">
+                        <h3>2.73</h3>
+                        <p>Average Odds</p>
                     </div>
                 </div>
                 
-                <div class="results-summary">
-                    <div class="summary-stat">
-                        <span>Total Bets</span>
-                        <strong>7</strong>
+                <div class="hero-buttons">
+                    <a href="#predictions" class="btn-primary">
+                        <i class="fas fa-futbol"></i> Get Today's Tips
+                    </a>
+                    <a href="#subscribe" class="btn-secondary">
+                        <i class="fas fa-crown"></i> Join Winning Team
+                    </a>
+                </div>
+            </div>
+            
+            <div class="hero-image">
+                <div class="results-card">
+                    <div class="results-header">
+                        <h3><i class="fas fa-trophy"></i> YESTERDAY'S PERFECT RESULTS</h3>
+                        <span class="date">December 3rd, 2024</span>
                     </div>
-                    <div class="summary-stat">
-                        <span>Won</span>
-                        <strong class="won">7</strong>
+                    
+                    <div class="results-list">
+                        <!-- Result 1 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇵🇱 14:00</span>
+                                <span class="match-teams">Avia Swidnik 4–2 Polonia Bytom</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">12</span>
+                                <span class="bet-odds">@1.21</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Result 2 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇧🇬 14:00</span>
+                                <span class="match-teams">Septemvri Sofia 1–4 CSKA 1948</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">12</span>
+                                <span class="bet-odds">@1.21</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Result 3 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇽🇰 14:30</span>
+                                <span class="match-teams">KF Ballkani 1–0 Rilindja 1974</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">12</span>
+                                <span class="bet-odds">@1.04</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Result 4 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇽🇰 14:30</span>
+                                <span class="match-teams">Llapi Podujeve 4–1 Vjosa</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">1X</span>
+                                <span class="bet-odds">@1.01</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Result 5 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇽🇰 14:30</span>
+                                <span class="match-teams">Trepca Mitrovice 1–2 Malisheva</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">2</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Result 6 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇽🇰 14:30</span>
+                                <span class="match-teams">Gjilani 2–1 Istogu</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">1X</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
+                        
+                        <!-- Result 7 -->
+                        <div class="result-item won">
+                            <div class="match-info">
+                                <span class="match-time">🇽🇰 14:30</span>
+                                <span class="match-teams">Dukagjini 3–1 KF Ramiz Sadiku</span>
+                            </div>
+                            <div class="bet-info">
+                                <span class="bet-type">12</span>
+                                <span class="status won">✅</span>
+                            </div>
+                        </div>
                     </div>
-                    <div class="summary-stat">
-                        <span>Win Rate</span>
-                        <strong class="won">100%</strong>
+                    
+                    <div class="results-summary">
+                        <div class="summary-stat">
+                            <span>Total Bets</span>
+                            <strong>7</strong>
+                        </div>
+                        <div class="summary-stat">
+                            <span>Won</span>
+                            <strong class="won">7</strong>
+                        </div>
+                        <div class="summary-stat">
+                            <span>Win Rate</span>
+                            <strong class="won">100%</strong>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
 
-<!-- Top Prediction of the Day -->
-<section id="top-prediction" class="top-prediction-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title"><span class="highlight">TOP PREDICTION</span> OF THE DAY</h2>
-            <p class="section-subtitle">Highest value pick with detailed analysis</p>
-            <div class="top-badge">
-                <i class="fas fa-fire"></i> HOT BET OF THE DAY
-            </div>
-        </div>
-        
-        <div class="top-prediction-card">
-            <div class="match-details">
-                <div class="match-header">
-                    <span class="match-league"><i class="fas fa-crown"></i> Bulgarian First League 🇧🇬</span>
-                    <span class="match-time">19:00</span>
-                    <span class="match-date">12/04</span>
-                </div>
-                
-                <div class="teams">
-                    <div class="team">
-                        <div class="team-logo">SLV</div>
-                        <span class="team-name">Slavia Sofia</span>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">LEV</div>
-                        <span class="team-name">Levski Sofia</span>
-                    </div>
-                </div>
-                
-                <div class="prediction-main">
-                    <div class="prediction-type">
-                        <span class="type-label">PREDICTION:</span>
-                        <span class="type-value">2 & Yes (Away Win & Both Teams to Score)</span>
-                    </div>
-                    <div class="prediction-odds">
-                        <span class="odds-label">ODDS:</span>
-                        <span class="odds-value">@3.50</span>
-                    </div>
-                </div>
-                
-                <div class="confidence-high">
-                    <div class="confidence-header">
-                        <i class="fas fa-bullseye"></i>
-                        <span>HIGH VALUE BET</span>
-                    </div>
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: 85%"></div>
-                    </div>
-                    <span class="confidence-percent">85% Confidence</span>
+    <!-- Top Prediction of the Day -->
+    <section id="top-prediction" class="top-prediction-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title"><span class="highlight">TOP PREDICTION</span> OF THE DAY</h2>
+                <p class="section-subtitle">Highest value pick with detailed analysis</p>
+                <div class="top-badge">
+                    <i class="fas fa-fire"></i> HOT BET OF THE DAY
                 </div>
             </div>
             
-            <div class="analysis-section">
-                <h4><i class="fas fa-chart-line"></i> Why This Bet Wins:</h4>
-                <ul class="analysis-points">
-                    <li><i class="fas fa-check-circle"></i> Levski Sofia won 4 of last 5 away matches</li>
-                    <li><i class="fas fa-check-circle"></i> Both teams scored in 7 of last 8 meetings</li>
-                    <li><i class="fas fa-check-circle"></i> Levski has better form (W3 D1 L1 last 5)</li>
-                    <li><i class="fas fa-check-circle"></i> Slavia Sofia struggling at home (L3 in last 5)</li>
-                </ul>
-                
-                <div class="stats-grid">
-                    <div class="stat">
-                        <h5>3.50</h5>
-                        <p>High Odds</p>
-                    </div>
-                    <div class="stat">
-                        <h5>85%</h5>
-                        <p>Confidence</p>
-                    </div>
-                    <div class="stat">
-                        <h5>+250%</h5>
-                        <p>Value</p>
-                    </div>
-                    <div class="stat">
-                        <h5>8/10</h5>
-                        <p>Last Meetings BTTS</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="bet-advice">
-                <p><i class="fas fa-lightbulb"></i> <strong>Betting Tip:</strong> Perfect for accumulators or single high-value bet</p>
-                <div class="stake-suggestion">
-                    <span>Recommended Stake: 3-5% of bankroll</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-    
-    <!-- Today's Predictions -->
-<section id="predictions" class="predictions-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title">TODAY'S <span class="highlight">FOOTBALL PREDICTIONS</span></h2>
-            <p class="section-subtitle">Professional betting tips with high accuracy</p>
-            <div class="date-filter">
-                <button class="date-btn active">Today (12/04)</button>
-                <button class="date-btn">Tomorrow</button>
-                <button class="date-btn">Weekend</button>
-            </div>
-        </div>
-        
-        <div class="predictions-grid">
-            <!-- Match 1: Bucheon FC 1995 vs Suwon City -->
-            <div class="match-card">
-                <div class="match-header">
-                    <span class="match-league"><i class="fas fa-trophy"></i> K League 2 🇰🇷</span>
-                    <span class="match-time">13:00</span>
-                </div>
-                <div class="teams">
-                    <div class="team">
-                        <div class="team-logo">BUC</div>
-                        <span class="team-name">Bucheon FC</span>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">SUW</div>
-                        <span class="team-name">Suwon City</span>
-                    </div>
-                </div>
-                <div class="prediction">
-                    <span class="prediction-label">RMAME TIP:</span>
-                    <span class="prediction-value">1 (Home Win)</span>
-                    <span class="prediction-odd">@3.06</span>
-                </div>
-                <div class="confidence">
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: 75%"></div>
-                    </div>
-                    <span>75% Confidence</span>
-                </div>
-            </div>
-            
-            <!-- Match 2: Igdir vs Orduspor 1967 -->
-            <div class="match-card">
-                <div class="match-header">
-                    <span class="match-league"><i class="fas fa-trophy"></i> Turkish 3.Lig 🇹🇷</span>
-                    <span class="match-time">15:30</span>
-                </div>
-                <div class="teams">
-                    <div class="team">
-                        <div class="team-logo">IGD</div>
-                        <span class="team-name">Igdir</span>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">ORD</div>
-                        <span class="team-name">Orduspor</span>
-                    </div>
-                </div>
-                <div class="prediction">
-                    <span class="prediction-label">RMAME TIP:</span>
-                    <span class="prediction-value">1X (Home Win or Draw)</span>
-                    <span class="prediction-odd">@1.04</span>
-                </div>
-                <div class="confidence">
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: 92%"></div>
-                    </div>
-                    <span>92% Confidence</span>
-                </div>
-            </div>
-            
-            <!-- Match 3: Chojniczanka vs Korona Kielce -->
-            <div class="match-card">
-                <div class="match-header">
-                    <span class="match-league"><i class="fas fa-trophy"></i> Polish I Liga 🇵🇱</span>
-                    <span class="match-time">16:00</span>
-                </div>
-                <div class="teams">
-                    <div class="team">
-                        <div class="team-logo">CHO</div>
-                        <span class="team-name">Chojniczanka</span>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">KOR</div>
-                        <span class="team-name">Korona Kielce</span>
-                    </div>
-                </div>
-                <div class="prediction">
-                    <span class="prediction-label">RMAME TIP:</span>
-                    <span class="prediction-value">Both Teams to Score</span>
-                    <span class="prediction-odd">@1.77</span>
-                </div>
-                <div class="confidence">
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: 78%"></div>
-                    </div>
-                    <span>78% Confidence</span>
-                </div>
-            </div>
-            
-            <!-- Match 4: Iraklis vs Panaitolikos -->
-            <div class="match-card">
-                <div class="match-header">
-                    <span class="match-league"><i class="fas fa-trophy"></i> Greek Super League 🇬🇷</span>
-                    <span class="match-time">18:00</span>
-                </div>
-                <div class="teams">
-                    <div class="team">
-                        <div class="team-logo">IRK</div>
-                        <span class="team-name">Iraklis</span>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo">PAN</div>
-                        <span class="team-name">Panaitolikos</span>
-                    </div>
-                </div>
-                <div class="prediction">
-                    <span class="prediction-label">RMAME TIP:</span>
-                    <span class="prediction-value">1 (Home Win)</span>
-                    <span class="prediction-odd">@3.86</span>
-                </div>
-                <div class="confidence">
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: 70%"></div>
-                    </div>
-                    <span>70% Confidence</span>
-                </div>
-            </div>
-        </div>
-        
-        <!-- More Predictions Button -->
-        <div class="more-tips">
-            <button id="showMorePredictions" class="btn-primary">
-                <i class="fas fa-arrow-down"></i> Show More Predictions (4 more)
-            </button>
-        </div>
-        
-        <!-- Hidden Predictions (will show when clicked) -->
-        <div id="morePredictions" style="display: none;">
-            <div class="predictions-grid" style="margin-top: 40px;">
-                <!-- Match 5: Wisla Plock vs Cracovia Krakow -->
-                <div class="match-card">
+            <div class="top-prediction-card">
+                <div class="match-details">
                     <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> Polish Ekstraklasa 🇵🇱</span>
+                        <span class="match-league"><i class="fas fa-crown"></i> Bulgarian First League 🇧🇬</span>
                         <span class="match-time">19:00</span>
+                        <span class="match-date">12/04</span>
                     </div>
+                    
                     <div class="teams">
                         <div class="team">
-                            <div class="team-logo">WIS</div>
-                            <span class="team-name">Wisla Plock</span>
+                            <div class="team-logo">SLV</div>
+                            <span class="team-name">Slavia Sofia</span>
                         </div>
                         <div class="vs">VS</div>
                         <div class="team">
-                            <div class="team-logo">CRA</div>
-                            <span class="team-name">Cracovia</span>
+                            <div class="team-logo">LEV</div>
+                            <span class="team-name">Levski Sofia</span>
                         </div>
                     </div>
-                    <div class="prediction">
-                        <span class="prediction-label">RMAME TIP:</span>
-                        <span class="prediction-value">1 (Home Win)</span>
-                        <span class="prediction-odd">@2.73</span>
-                    </div>
-                    <div class="confidence">
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 72%"></div>
+                    
+                    <div class="prediction-main">
+                        <div class="prediction-type">
+                            <span class="type-label">PREDICTION:</span>
+                            <span class="type-value">2 & Yes (Away Win & Both Teams to Score)</span>
                         </div>
-                        <span>72% Confidence</span>
-                    </div>
-                </div>
-                
-                <!-- Match 6: Bologna vs Parma -->
-                <div class="match-card">
-                    <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> Italian Serie A 🇮🇹</span>
-                        <span class="match-time">20:00</span>
-                    </div>
-                    <div class="teams">
-                        <div class="team">
-                            <div class="team-logo">BOL</div>
-                            <span class="team-name">Bologna</span>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-logo">PAR</div>
-                            <span class="team-name">Parma</span>
+                        <div class="prediction-odds">
+                            <span class="odds-label">ODDS:</span>
+                            <span class="odds-value">@3.50</span>
                         </div>
                     </div>
-                    <div class="prediction">
-                        <span class="prediction-label">RMAME TIP:</span>
-                        <span class="prediction-value">1 (Home Win)</span>
-                        <span class="prediction-odd">@1.54</span>
-                    </div>
-                    <div class="confidence">
+                    
+                    <div class="confidence-high">
+                        <div class="confidence-header">
+                            <i class="fas fa-bullseye"></i>
+                            <span>HIGH VALUE BET</span>
+                        </div>
                         <div class="confidence-bar">
                             <div class="confidence-fill" style="width: 85%"></div>
                         </div>
-                        <span>85% Confidence</span>
+                        <span class="confidence-percent">85% Confidence</span>
                     </div>
                 </div>
                 
-                <!-- Match 7: Lazio vs AC Milan -->
+                <div class="analysis-section">
+                    <h4><i class="fas fa-chart-line"></i> Why This Bet Wins:</h4>
+                    <ul class="analysis-points">
+                        <li><i class="fas fa-check-circle"></i> Levski Sofia won 4 of last 5 away matches</li>
+                        <li><i class="fas fa-check-circle"></i> Both teams scored in 7 of last 8 meetings</li>
+                        <li><i class="fas fa-check-circle"></i> Levski has better form (W3 D1 L1 last 5)</li>
+                        <li><i class="fas fa-check-circle"></i> Slavia Sofia struggling at home (L3 in last 5)</li>
+                    </ul>
+                    
+                    <div class="stats-grid">
+                        <div class="stat">
+                            <h5>3.50</h5>
+                            <p>High Odds</p>
+                        </div>
+                        <div class="stat">
+                            <h5>85%</h5>
+                            <p>Confidence</p>
+                        </div>
+                        <div class="stat">
+                            <h5>+250%</h5>
+                            <p>Value</p>
+                        </div>
+                        <div class="stat">
+                            <h5>8/10</h5>
+                            <p>Last Meetings BTTS</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bet-advice">
+                    <p><i class="fas fa-lightbulb"></i> <strong>Betting Tip:</strong> Perfect for accumulators or single high-value bet</p>
+                    <div class="stake-suggestion">
+                        <span>Recommended Stake: 3-5% of bankroll</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+        
+    <!-- Today's Predictions -->
+    <section id="predictions" class="predictions-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">TODAY'S <span class="highlight">FOOTBALL PREDICTIONS</span></h2>
+                <p class="section-subtitle">Professional betting tips with high accuracy</p>
+                <div class="date-filter">
+                    <button class="date-btn active">Today (12/04)</button>
+                    <button class="date-btn">Tomorrow</button>
+                    <button class="date-btn">Weekend</button>
+                </div>
+            </div>
+            
+            <div class="predictions-grid">
+                <!-- Match 1: Bucheon FC 1995 vs Suwon City -->
                 <div class="match-card">
                     <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> Italian Serie A 🇮🇹</span>
-                        <span class="match-time">23:00</span>
+                        <span class="match-league"><i class="fas fa-trophy"></i> K League 2 🇰🇷</span>
+                        <span class="match-time">13:00</span>
                     </div>
                     <div class="teams">
                         <div class="team">
-                            <div class="team-logo">LAZ</div>
-                            <span class="team-name">Lazio</span>
+                            <div class="team-logo">BUC</div>
+                            <span class="team-name">Bucheon FC</span>
                         </div>
                         <div class="vs">VS</div>
                         <div class="team">
-                            <div class="team-logo">MIL</div>
-                            <span class="team-name">AC Milan</span>
+                            <div class="team-logo">SUW</div>
+                            <span class="team-name">Suwon City</span>
+                        </div>
+                    </div>
+                    <div class="prediction">
+                        <span class="prediction-label">RMAME TIP:</span>
+                        <span class="prediction-value">1 (Home Win)</span>
+                        <span class="prediction-odd">@3.06</span>
+                    </div>
+                    <div class="confidence">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 75%"></div>
+                        </div>
+                        <span>75% Confidence</span>
+                    </div>
+                </div>
+                
+                <!-- Match 2: Igdir vs Orduspor 1967 -->
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="match-league"><i class="fas fa-trophy"></i> Turkish 3.Lig 🇹🇷</span>
+                        <span class="match-time">15:30</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">IGD</div>
+                            <span class="team-name">Igdir</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">ORD</div>
+                            <span class="team-name">Orduspor</span>
+                        </div>
+                    </div>
+                    <div class="prediction">
+                        <span class="prediction-label">RMAME TIP:</span>
+                        <span class="prediction-value">1X (Home Win or Draw)</span>
+                        <span class="prediction-odd">@1.04</span>
+                    </div>
+                    <div class="confidence">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 92%"></div>
+                        </div>
+                        <span>92% Confidence</span>
+                    </div>
+                </div>
+                
+                <!-- Match 3: Chojniczanka vs Korona Kielce -->
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="match-league"><i class="fas fa-trophy"></i> Polish I Liga 🇵🇱</span>
+                        <span class="match-time">16:00</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">CHO</div>
+                            <span class="team-name">Chojniczanka</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">KOR</div>
+                            <span class="team-name">Korona Kielce</span>
                         </div>
                     </div>
                     <div class="prediction">
                         <span class="prediction-label">RMAME TIP:</span>
                         <span class="prediction-value">Both Teams to Score</span>
-                        <span class="prediction-odd">@1.85</span>
+                        <span class="prediction-odd">@1.77</span>
                     </div>
                     <div class="confidence">
                         <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 80%"></div>
+                            <div class="confidence-fill" style="width: 78%"></div>
                         </div>
-                        <span>80% Confidence</span>
+                        <span>78% Confidence</span>
                     </div>
                 </div>
                 
-                <!-- Match 8: Universitario vs The Strongest -->
+                <!-- Match 4: Iraklis vs Panaitolikos -->
                 <div class="match-card">
                     <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> Bolivian Primera 🇧🇴</span>
-                        <span class="match-time">01:00</span>
+                        <span class="match-league"><i class="fas fa-trophy"></i> Greek Super League 🇬🇷</span>
+                        <span class="match-time">18:00</span>
                     </div>
                     <div class="teams">
                         <div class="team">
-                            <div class="team-logo">UNI</div>
-                            <span class="team-name">Universitario</span>
+                            <div class="team-logo">IRK</div>
+                            <span class="team-name">Iraklis</span>
                         </div>
                         <div class="vs">VS</div>
                         <div class="team">
-                            <div class="team-logo">STR</div>
-                            <span class="team-name">The Strongest</span>
+                            <div class="team-logo">PAN</div>
+                            <span class="team-name">Panaitolikos</span>
                         </div>
                     </div>
                     <div class="prediction">
                         <span class="prediction-label">RMAME TIP:</span>
-                        <span class="prediction-value">Over 2.5 Goals</span>
-                        <span class="prediction-odd">@1.46</span>
+                        <span class="prediction-value">1 (Home Win)</span>
+                        <span class="prediction-odd">@3.86</span>
                     </div>
                     <div class="confidence">
                         <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 88%"></div>
+                            <div class="confidence-fill" style="width: 70%"></div>
                         </div>
-                        <span>88% Confidence</span>
+                        <span>70% Confidence</span>
                     </div>
                 </div>
             </div>
+            
+            <!-- More Predictions Button -->
+            <div class="more-tips">
+                <button id="showMorePredictions" class="btn-primary">
+                    <i class="fas fa-arrow-down"></i> Show More Predictions (4 more)
+                </button>
+            </div>
+            
+            <!-- Hidden Predictions (will show when clicked) -->
+            <div id="morePredictions" style="display: none;">
+                <div class="predictions-grid" style="margin-top: 40px;">
+                    <!-- Match 5: Wisla Plock vs Cracovia Krakow -->
+                    <div class="match-card">
+                        <div class="match-header">
+                            <span class="match-league"><i class="fas fa-trophy"></i> Polish Ekstraklasa 🇵🇱</span>
+                            <span class="match-time">19:00</span>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <div class="team-logo">WIS</div>
+                                <span class="team-name">Wisla Plock</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <div class="team-logo">CRA</div>
+                                <span class="team-name">Cracovia</span>
+                            </div>
+                        </div>
+                        <div class="prediction">
+                            <span class="prediction-label">RMAME TIP:</span>
+                            <span class="prediction-value">1 (Home Win)</span>
+                            <span class="prediction-odd">@2.73</span>
+                        </div>
+                        <div class="confidence">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 72%"></div>
+                            </div>
+                            <span>72% Confidence</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 6: Bologna vs Parma -->
+                    <div class="match-card">
+                        <div class="match-header">
+                            <span class="match-league"><i class="fas fa-trophy"></i> Italian Serie A 🇮🇹</span>
+                            <span class="match-time">20:00</span>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <div class="team-logo">BOL</div>
+                                <span class="team-name">Bologna</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <div class="team-logo">PAR</div>
+                                <span class="team-name">Parma</span>
+                            </div>
+                        </div>
+                        <div class="prediction">
+                            <span class="prediction-label">RMAME TIP:</span>
+                            <span class="prediction-value">1 (Home Win)</span>
+                            <span class="prediction-odd">@1.54</span>
+                        </div>
+                        <div class="confidence">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 85%"></div>
+                            </div>
+                            <span>85% Confidence</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 7: Lazio vs AC Milan -->
+                    <div class="match-card">
+                        <div class="match-header">
+                            <span class="match-league"><i class="fas fa-trophy"></i> Italian Serie A 🇮🇹</span>
+                            <span class="match-time">23:00</span>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <div class="team-logo">LAZ</div>
+                                <span class="team-name">Lazio</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <div class="team-logo">MIL</div>
+                                <span class="team-name">AC Milan</span>
+                            </div>
+                        </div>
+                        <div class="prediction">
+                            <span class="prediction-label">RMAME TIP:</span>
+                            <span class="prediction-value">Both Teams to Score</span>
+                            <span class="prediction-odd">@1.85</span>
+                        </div>
+                        <div class="confidence">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 80%"></div>
+                            </div>
+                            <span>80% Confidence</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 8: Universitario vs The Strongest -->
+                    <div class="match-card">
+                        <div class="match-header">
+                            <span class="match-league"><i class="fas fa-trophy"></i> Bolivian Primera 🇧🇴</span>
+                            <span class="match-time">01:00</span>
+                        </div>
+                        <div class="teams">
+                            <div class="team">
+                                <div class="team-logo">UNI</div>
+                                <span class="team-name">Universitario</span>
+                            </div>
+                            <div class="vs">VS</div>
+                            <div class="team">
+                                <div class="team-logo">STR</div>
+                                <span class="team-name">The Strongest</span>
+                            </div>
+                        </div>
+                        <div class="prediction">
+                            <span class="prediction-label">RMAME TIP:</span>
+                            <span class="prediction-value">Over 2.5 Goals</span>
+                            <span class="prediction-odd">@1.46</span>
+                        </div>
+                        <div class="confidence">
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: 88%"></div>
+                            </div>
+                            <span>88% Confidence</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="premium-offer">
+                <p class="note">🔥 <strong>Premium Members:</strong> Get all 8 predictions + expert analysis + live updates</p>
+                <a href="#subscribe" class="btn-secondary">
+                    <i class="fas fa-crown"></i> Upgrade to Premium
+                </a>
+            </div>
         </div>
-        
-        <div class="premium-offer">
-            <p class="note">🔥 <strong>Premium Members:</strong> Get all 8 predictions + expert analysis + live updates</p>
-            <a href="#subscribe" class="btn-secondary">
-                <i class="fas fa-crown"></i> Upgrade to Premium
-            </a>
-        </div>
-    </div>
-</section>        
+    </section>        
 
-<!-- Free Premium Packages Section -->
-<section id="free-premium" class="free-premium-section">
-    <div class="container">
-        <div class="section-header">
-            <h2 class="section-title"><span class="highlight">FREE PREMIUM</span> PREDICTIONS</h2>
-            <p class="section-subtitle">Get these 6 premium predictions for FREE today!</p>
-            <div class="free-badge">
-                <i class="fas fa-gift"></i> LIMITED TIME OFFER
+    <!-- Free Premium Packages Section -->
+    <section id="free-premium" class="free-premium-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title"><span class="highlight">FREE PREMIUM</span> PREDICTIONS</h2>
+                <p class="section-subtitle">Get these 6 premium predictions for FREE today!</p>
+                <div class="free-badge">
+                    <i class="fas fa-gift"></i> LIMITED TIME OFFER
+                </div>
+            </div>
+            
+            <div class="free-package">
+                <div class="package-header free">
+                    <h3><i class="fas fa-crown"></i> TODAY'S FREE PREMIUM PACKAGE</h3>
+                    <div class="package-price">
+                        <span class="currency">FREE</span>
+                        <span class="amount">$0</span>
+                        <span class="period">/today only</span>
+                    </div>
+                </div>
+                
+                <div class="free-predictions">
+                    <!-- Match 1 -->
+                    <div class="free-match">
+                        <div class="match-time">14:00 🇧🇬</div>
+                        <div class="match-teams">FC Dobrudzha vs Ludogorets Razgrad</div>
+                        <div class="match-prediction">
+                            <span class="pred-type">Both Teams to Score</span>
+                            <span class="pred-odds">@2.06</span>
+                        </div>
+                        <div class="match-confidence">
+                            <div class="confidence-dot high"></div>
+                            <span>High Value</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 2 -->
+                    <div class="free-match">
+                        <div class="match-time">15:30 🇹🇷</div>
+                        <div class="match-teams">Igdir vs Orduspor 1967</div>
+                        <div class="match-prediction">
+                            <span class="pred-type">1X (Home Win or Draw)</span>
+                            <span class="pred-odds">@1.04</span>
+                        </div>
+                        <div class="match-confidence">
+                            <div class="confidence-dot very-high"></div>
+                            <span>Very Safe</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 3 -->
+                    <div class="free-match">
+                        <div class="match-time">19:00 🇧🇬</div>
+                        <div class="match-teams">Slavia Sofia vs Levski Sofia</div>
+                        <div class="match-prediction">
+                            <span class="pred-type">X2 (Draw or Away Win)</span>
+                            <span class="pred-odds">@1.07</span>
+                        </div>
+                        <div class="match-confidence">
+                            <div class="confidence-dot very-high"></div>
+                            <span>Very Safe</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 4 -->
+                    <div class="free-match">
+                        <div class="match-time">19:00 🇧🇬</div>
+                        <div class="match-teams">Slavia Sofia vs Levski Sofia</div>
+                        <div class="match-prediction">
+                            <span class="pred-type">Both Teams to Score</span>
+                            <span class="pred-odds">@2.02</span>
+                        </div>
+                        <div class="match-confidence">
+                            <div class="confidence-dot high"></div>
+                            <span>High Value</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 5 -->
+                    <div class="free-match">
+                        <div class="match-time">23:15 🇵🇹</div>
+                        <div class="match-teams">Porto vs Vitoria Guimaraes</div>
+                        <div class="match-prediction">
+                            <span class="pred-type">1 (Home Win)</span>
+                            <span class="pred-odds">@1.36</span>
+                        </div>
+                        <div class="match-confidence">
+                            <div class="confidence-dot very-high"></div>
+                            <span>Very Safe</span>
+                        </div>
+                    </div>
+                    
+                    <!-- Match 6 -->
+                    <div class="free-match">
+                        <div class="match-time">02:00 🇧🇷</div>
+                        <div class="match-teams">Palmeiras vs Internacional</div>
+                        <div class="match-prediction">
+                            <span class="pred-type">1 (Home Win)</span>
+                            <span class="pred-odds">@1.62</span>
+                        </div>
+                        <div class="match-confidence">
+                            <div class="confidence-dot high"></div>
+                            <span>High Value</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="free-stats">
+                    <div class="stat">
+                        <h4>6</h4>
+                        <p>Premium Predictions</p>
+                    </div>
+                    <div class="stat">
+                        <h4>85.2%</h4>
+                        <p>Average Confidence</p>
+                    </div>
+                    <div class="stat">
+                        <h4>1.53</h4>
+                        <p>Average Odds</p>
+                    </div>
+                    <div class="stat">
+                        <h4>4</h4>
+                        <p>Countries</p>
+                    </div>
+                </div>
+                
+                <div class="free-offer">
+                    <p><i class="fas fa-bolt"></i> <strong>Normally $20</strong> - Today <strong>FREE</strong> for new visitors!</p>
+                    <div class="offer-buttons">
+                        <a href="#contact" class="btn-premium">
+                            <i class="fab fa-whatsapp"></i> Get More Free Tips on WhatsApp
+                        </a>
+                        <a href="#subscribe" class="btn-upgrade">
+                            <i class="fas fa-rocket"></i> Upgrade for Daily Premium
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
         
-        <div class="free-package">
-            <div class="package-header free">
-                <h3><i class="fas fa-crown"></i> TODAY'S FREE PREMIUM PACKAGE</h3>
-                <div class="package-price">
-                    <span class="currency">FREE</span>
-                    <span class="amount">$0</span>
-                    <span class="period">/today only</span>
-                </div>
-            </div>
-            
-            <div class="free-predictions">
-                <!-- Match 1 -->
-                <div class="free-match">
-                    <div class="match-time">14:00 🇧🇬</div>
-                    <div class="match-teams">FC Dobrudzha vs Ludogorets Razgrad</div>
-                    <div class="match-prediction">
-                        <span class="pred-type">Both Teams to Score</span>
-                        <span class="pred-odds">@2.06</span>
-                    </div>
-                    <div class="match-confidence">
-                        <div class="confidence-dot high"></div>
-                        <span>High Value</span>
-                    </div>
-                </div>
-                
-                <!-- Match 2 -->
-                <div class="free-match">
-                    <div class="match-time">15:30 🇹🇷</div>
-                    <div class="match-teams">Igdir vs Orduspor 1967</div>
-                    <div class="match-prediction">
-                        <span class="pred-type">1X (Home Win or Draw)</span>
-                        <span class="pred-odds">@1.04</span>
-                    </div>
-                    <div class="match-confidence">
-                        <div class="confidence-dot very-high"></div>
-                        <span>Very Safe</span>
-                    </div>
-                </div>
-                
-                <!-- Match 3 -->
-                <div class="free-match">
-                    <div class="match-time">19:00 🇧🇬</div>
-                    <div class="match-teams">Slavia Sofia vs Levski Sofia</div>
-                    <div class="match-prediction">
-                        <span class="pred-type">X2 (Draw or Away Win)</span>
-                        <span class="pred-odds">@1.07</span>
-                    </div>
-                    <div class="match-confidence">
-                        <div class="confidence-dot very-high"></div>
-                        <span>Very Safe</span>
-                    </div>
-                </div>
-                
-                <!-- Match 4 -->
-                <div class="free-match">
-                    <div class="match-time">19:00 🇧🇬</div>
-                    <div class="match-teams">Slavia Sofia vs Levski Sofia</div>
-                    <div class="match-prediction">
-                        <span class="pred-type">Both Teams to Score</span>
-                        <span class="pred-odds">@2.02</span>
-                    </div>
-                    <div class="match-confidence">
-                        <div class="confidence-dot high"></div>
-                        <span>High Value</span>
-                    </div>
-                </div>
-                
-                <!-- Match 5 -->
-                <div class="free-match">
-                    <div class="match-time">23:15 🇵🇹</div>
-                    <div class="match-teams">Porto vs Vitoria Guimaraes</div>
-                    <div class="match-prediction">
-                        <span class="pred-type">1 (Home Win)</span>
-                        <span class="pred-odds">@1.36</span>
-                    </div>
-                    <div class="match-confidence">
-                        <div class="confidence-dot very-high"></div>
-                        <span>Very Safe</span>
-                    </div>
-                </div>
-                
-                <!-- Match 6 -->
-                <div class="free-match">
-                    <div class="match-time">02:00 🇧🇷</div>
-                    <div class="match-teams">Palmeiras vs Internacional</div>
-                    <div class="match-prediction">
-                        <span class="pred-type">1 (Home Win)</span>
-                        <span class="pred-odds">@1.62</span>
-                    </div>
-                    <div class="match-confidence">
-                        <div class="confidence-dot high"></div>
-                        <span>High Value</span>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="free-stats">
-                <div class="stat">
-                    <h4>6</h4>
-                    <p>Premium Predictions</p>
-                </div>
-                <div class="stat">
-                    <h4>85.2%</h4>
-                    <p>Average Confidence</p>
-                </div>
-                <div class="stat">
-                    <h4>1.53</h4>
-                    <p>Average Odds</p>
-                </div>
-                <div class="stat">
-                    <h4>4</h4>
-                    <p>Countries</p>
-                </div>
-            </div>
-            
-            <div class="free-offer">
-                <p><i class="fas fa-bolt"></i> <strong>Normally $20</strong> - Today <strong>FREE</strong> for new visitors!</p>
-                <div class="offer-buttons">
-                    <a href="#contact" class="btn-premium">
-                        <i class="fab fa-whatsapp"></i> Get More Free Tips on WhatsApp
-                    </a>
-                    <a href="#subscribe" class="btn-upgrade">
-                        <i class="fas fa-rocket"></i> Upgrade for Daily Premium
-                    </a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-    
     <!-- Packages Section -->
     <section id="packages" class="packages-section">
         <div class="container">
@@ -1113,7 +963,7 @@ use<!DOCTYPE html>
         <i class="fab fa-whatsapp"></i>
     </a>
 
+    <!-- Load JavaScript at the end -->
     <script src="script.js"></script>
 </body>
 </html>
-
