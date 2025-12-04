@@ -199,3 +199,40 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('All JavaScript functions loaded successfully!');
     console.log('7/7 Wins Yesterday - RMAME Predictions');
 });
+// Connection error handler
+window.addEventListener('error', function(e) {
+    if (e.target.tagName === 'LINK' || e.target.tagName === 'SCRIPT' || e.target.tagName === 'IMG') {
+        console.warn('Failed to load resource:', e.target.src || e.target.href);
+        
+        // Try to reload CSS if it fails
+        if (e.target.tagName === 'LINK' && e.target.rel === 'stylesheet') {
+            setTimeout(() => {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = e.target.href + '?v=' + Date.now();
+                document.head.appendChild(link);
+            }, 1000);
+        }
+    }
+});
+
+// Check if page loaded successfully
+window.addEventListener('load', function() {
+    setTimeout(() => {
+        if (document.body.innerHTML.length < 1000) {
+            console.log('Page content seems empty, attempting reload...');
+            window.location.reload();
+        }
+    }, 2000);
+});
+
+// Offline detection
+window.addEventListener('offline', function() {
+    console.log('You are offline. Some features may not work.');
+    alert('⚠️ You are offline. Please check your internet connection.');
+});
+
+// Online detection
+window.addEventListener('online', function() {
+    console.log('You are back online!');
+});
