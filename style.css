@@ -2535,3 +2535,59 @@ section {
 .results-list::-webkit-scrollbar-thumb {
     background: transparent !important;
 }
+/* ===== COMPLETE FIX - NO SCROLLBAR IN RESULTS ===== */
+.results-list {
+    /* Remove all scrollbar properties */
+    max-height: none !important;
+    overflow: hidden !important;
+    height: auto !important;
+    
+    /* Ensure all items are visible */
+    display: flex !important;
+    flex-direction: column !important;
+}
+
+/* Hide scrollbar for all browsers */
+.results-list {
+    -ms-overflow-style: none !important;  /* IE and Edge */
+    scrollbar-width: none !important;     /* Firefox */
+}
+
+.results-list::-webkit-scrollbar {
+    display: none !important; /* Chrome, Safari, Opera */
+}
+
+/* Adjust card height to fit all content */
+.results-card {
+    min-height: 600px !important;
+    height: auto !important;
+}
+
+/* Make result items compact but readable */
+.result-item {
+    padding: 12px 20px !important;
+    min-height: 55px !important;
+}
+
+/* Mobile adjustments */
+@media (max-width: 768px) {
+    .results-card {
+        min-height: 550px !important;
+    }
+    
+    .result-item {
+        padding: 10px 15px !important;
+        min-height: 50px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .results-card {
+        min-height: 500px !important;
+    }
+    
+    .result-item {
+        padding: 8px 12px !important;
+        min-height: 45px !important;
+    }
+}
