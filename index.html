@@ -158,95 +158,221 @@ use<!DOCTYPE html>
     </section>
 
     <!-- Today's Predictions -->
-    <section id="predictions" class="predictions-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">TODAY'S <span class="highlight">PREDICTIONS</span></h2>
-                <p class="section-subtitle">Updated daily with analysis and expert insights</p>
-                <div class="date-filter">
-                    <button class="date-btn active">Today</button>
-                    <button class="date-btn">Tomorrow</button>
-                    <button class="date-btn">Weekend</button>
+   <!-- Today's Predictions -->
+<section id="predictions" class="predictions-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">TODAY'S <span class="highlight">FOOTBALL PREDICTIONS</span></h2>
+            <p class="section-subtitle">Professional betting tips with high accuracy</p>
+            <div class="date-filter">
+                <button class="date-btn active">Today (12/04)</button>
+                <button class="date-btn">Tomorrow</button>
+                <button class="date-btn">Weekend</button>
+            </div>
+        </div>
+        
+        <div class="predictions-grid">
+            <!-- Match 1: Bucheon FC 1995 vs Suwon City -->
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> K League 2 🇰🇷</span>
+                    <span class="match-time">13:00</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo">BUC</div>
+                        <span class="team-name">Bucheon FC</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">SUW</div>
+                        <span class="team-name">Suwon City</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">1 (Home Win)</span>
+                    <span class="prediction-odd">@3.06</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: 75%"></div>
+                    </div>
+                    <span>75% Confidence</span>
                 </div>
             </div>
             
-            <div class="predictions-grid">
-                <!-- Match Card 1 -->
+            <!-- Match 2: Igdir vs Orduspor 1967 -->
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> Turkish 3.Lig 🇹🇷</span>
+                    <span class="match-time">15:30</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo">IGD</div>
+                        <span class="team-name">Igdir</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">ORD</div>
+                        <span class="team-name">Orduspor</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">1X (Home Win or Draw)</span>
+                    <span class="prediction-odd">@1.04</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: 92%"></div>
+                    </div>
+                    <span>92% Confidence</span>
+                </div>
+            </div>
+            
+            <!-- Match 3: Chojniczanka vs Korona Kielce -->
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> Polish I Liga 🇵🇱</span>
+                    <span class="match-time">16:00</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo">CHO</div>
+                        <span class="team-name">Chojniczanka</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">KOR</div>
+                        <span class="team-name">Korona Kielce</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">Both Teams to Score</span>
+                    <span class="prediction-odd">@1.77</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: 78%"></div>
+                    </div>
+                    <span>78% Confidence</span>
+                </div>
+            </div>
+            
+            <!-- Match 4: Iraklis vs Panaitolikos -->
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> Greek Super League 🇬🇷</span>
+                    <span class="match-time">18:00</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo">IRK</div>
+                        <span class="team-name">Iraklis</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo">PAN</div>
+                        <span class="team-name">Panaitolikos</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">1 (Home Win)</span>
+                    <span class="prediction-odd">@3.86</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: 70%"></div>
+                    </div>
+                    <span>70% Confidence</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- More Predictions Button -->
+        <div class="more-tips">
+            <button id="showMorePredictions" class="btn-primary">
+                <i class="fas fa-arrow-down"></i> Show More Predictions (4 more)
+            </button>
+        </div>
+        
+        <!-- Hidden Predictions (will show when clicked) -->
+        <div id="morePredictions" style="display: none;">
+            <div class="predictions-grid" style="margin-top: 40px;">
+                <!-- Match 5: Wisla Plock vs Cracovia Krakow -->
                 <div class="match-card">
                     <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> Premier League</span>
+                        <span class="match-league"><i class="fas fa-trophy"></i> Polish Ekstraklasa 🇵🇱</span>
+                        <span class="match-time">19:00</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">WIS</div>
+                            <span class="team-name">Wisla Plock</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">CRA</div>
+                            <span class="team-name">Cracovia</span>
+                        </div>
+                    </div>
+                    <div class="prediction">
+                        <span class="prediction-label">RMAME TIP:</span>
+                        <span class="prediction-value">1 (Home Win)</span>
+                        <span class="prediction-odd">@2.73</span>
+                    </div>
+                    <div class="confidence">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 72%"></div>
+                        </div>
+                        <span>72% Confidence</span>
+                    </div>
+                </div>
+                
+                <!-- Match 6: Bologna vs Parma -->
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="match-league"><i class="fas fa-trophy"></i> Italian Serie A 🇮🇹</span>
                         <span class="match-time">20:00</span>
                     </div>
                     <div class="teams">
                         <div class="team">
-                            <div class="team-logo">NAP</div>
-                            <span class="team-name">Napoli</span>
+                            <div class="team-logo">BOL</div>
+                            <span class="team-name">Bologna</span>
                         </div>
                         <div class="vs">VS</div>
                         <div class="team">
-                            <div class="team-logo">CAG</div>
-                            <span class="team-name">Cagliari</span>
+                            <div class="team-logo">PAR</div>
+                            <span class="team-name">Parma</span>
                         </div>
                     </div>
                     <div class="prediction">
-                        <span class="prediction-label">TIP:</span>
-                        <span class="prediction-value">GG</span>
-                        <span class="prediction-odd">@1.95</span>
+                        <span class="prediction-label">RMAME TIP:</span>
+                        <span class="prediction-value">1 (Home Win)</span>
+                        <span class="prediction-odd">@1.54</span>
                     </div>
                     <div class="confidence">
                         <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 78%"></div>
+                            <div class="confidence-fill" style="width: 85%"></div>
                         </div>
-                        <span>78% Confidence</span>
+                        <span>85% Confidence</span>
                     </div>
-                    <button class="analysis-btn">
-                        <i class="fas fa-chart-line"></i> View Analysis
-                    </button>
                 </div>
                 
-                <!-- Match Card 2 -->
+                <!-- Match 7: Lazio vs AC Milan -->
                 <div class="match-card">
                     <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> La Liga</span>
-                        <span class="match-time">21:00</span>
+                        <span class="match-league"><i class="fas fa-trophy"></i> Italian Serie A 🇮🇹</span>
+                        <span class="match-time">23:00</span>
                     </div>
                     <div class="teams">
                         <div class="team">
-                            <div class="team-logo">BAR</div>
-                            <span class="team-name">Barcelona</span>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-logo">ATM</div>
-                            <span class="team-name">Atletico Madrid</span>
-                        </div>
-                    </div>
-                    <div class="prediction">
-                        <span class="prediction-label">TIP:</span>
-                        <span class="prediction-value">Over 2.5</span>
-                        <span class="prediction-odd">@1.80</span>
-                    </div>
-                    <div class="confidence">
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 82%"></div>
-                        </div>
-                        <span>82% Confidence</span>
-                    </div>
-                    <button class="analysis-btn">
-                        <i class="fas fa-chart-line"></i> View Analysis
-                    </button>
-                </div>
-                
-                <!-- Match Card 3 -->
-                <div class="match-card">
-                    <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> Serie A</span>
-                        <span class="match-time">19:45</span>
-                    </div>
-                    <div class="teams">
-                        <div class="team">
-                            <div class="team-logo">JUV</div>
-                            <span class="team-name">Juventus</span>
+                            <div class="team-logo">LAZ</div>
+                            <span class="team-name">Lazio</span>
                         </div>
                         <div class="vs">VS</div>
                         <div class="team">
@@ -255,30 +381,58 @@ use<!DOCTYPE html>
                         </div>
                     </div>
                     <div class="prediction">
-                        <span class="prediction-label">TIP:</span>
-                        <span class="prediction-value">2 Draw No Bet</span>
-                        <span class="prediction-odd">@2.10</span>
+                        <span class="prediction-label">RMAME TIP:</span>
+                        <span class="prediction-value">Both Teams to Score</span>
+                        <span class="prediction-odd">@1.85</span>
                     </div>
                     <div class="confidence">
                         <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 75%"></div>
+                            <div class="confidence-fill" style="width: 80%"></div>
                         </div>
-                        <span>75% Confidence</span>
+                        <span>80% Confidence</span>
                     </div>
-                    <button class="analysis-btn">
-                        <i class="fas fa-chart-line"></i> View Analysis
-                    </button>
+                </div>
+                
+                <!-- Match 8: Universitario vs The Strongest -->
+                <div class="match-card">
+                    <div class="match-header">
+                        <span class="match-league"><i class="fas fa-trophy"></i> Bolivian Primera 🇧🇴</span>
+                        <span class="match-time">01:00</span>
+                    </div>
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo">UNI</div>
+                            <span class="team-name">Universitario</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo">STR</div>
+                            <span class="team-name">The Strongest</span>
+                        </div>
+                    </div>
+                    <div class="prediction">
+                        <span class="prediction-label">RMAME TIP:</span>
+                        <span class="prediction-value">Over 2.5 Goals</span>
+                        <span class="prediction-odd">@1.46</span>
+                    </div>
+                    <div class="confidence">
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: 88%"></div>
+                        </div>
+                        <span>88% Confidence</span>
+                    </div>
                 </div>
             </div>
-            
-            <div class="more-tips">
-                <a href="#subscribe" class="btn-primary">
-                    <i class="fas fa-lock"></i> Get All Tips (Premium)
-                </a>
-                <p class="note">Free tips are limited. Subscribe for full access to all predictions.</p>
-            </div>
         </div>
-    </section>
+        
+        <div class="premium-offer">
+            <p class="note">🔥 <strong>Premium Members:</strong> Get all 8 predictions + expert analysis + live updates</p>
+            <a href="#subscribe" class="btn-secondary">
+                <i class="fas fa-crown"></i> Upgrade to Premium
+            </a>
+        </div>
+    </div>
+</section>        
 
     <!-- Packages Section -->
     <section id="packages" class="packages-section">
