@@ -1163,3 +1163,158 @@ section::before {
         font-size: 20px;
     }
 }
+/* ===== WHATSAPP SHARE SECTION ===== */
+.share-section {
+    background: linear-gradient(135deg, rgba(26, 26, 46, 0.95), rgba(22, 33, 62, 0.95));
+    padding: 60px 0;
+    border-top: 3px solid #25D366;
+    border-bottom: 3px solid #25D366;
+}
+
+.share-box {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 40px;
+    text-align: center;
+    border: 2px solid rgba(37, 211, 102, 0.3);
+    backdrop-filter: blur(10px);
+}
+
+.share-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.share-header i {
+    font-size: 40px;
+    color: #25D366;
+}
+
+.share-header h3 {
+    color: white;
+    font-size: 28px;
+    font-weight: 800;
+    margin: 0;
+}
+
+.share-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 18px;
+    margin-bottom: 30px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.6;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+    margin-bottom: 30px;
+}
+
+.share-btn {
+    padding: 15px 30px;
+    border-radius: 30px;
+    border: none;
+    font-size: 16px;
+    font-weight: 700;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all 0.3s ease;
+    min-width: 200px;
+}
+
+.whatsapp-share {
+    background: linear-gradient(90deg, #25D366, #128C7E);
+    color: white;
+}
+
+.whatsapp-share-all {
+    background: linear-gradient(90deg, #FF6B35, #FF8B35);
+    color: white;
+}
+
+.share-link {
+    background: rgba(255, 255, 255, 0.1);
+    color: white;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.share-btn:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.whatsapp-share:hover {
+    background: linear-gradient(90deg, #128C7E, #25D366);
+}
+
+.whatsapp-share-all:hover {
+    background: linear-gradient(90deg, #FF8B35, #FF6B35);
+}
+
+.share-link:hover {
+    background: rgba(255, 255, 255, 0.2);
+    border-color: #FF6B35;
+}
+
+.share-tip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    color: #FFD700;
+    font-size: 16px;
+    font-weight: 600;
+    padding: 15px;
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+}
+
+.share-tip i {
+    font-size: 20px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .share-section {
+        padding: 40px 0;
+    }
+    
+    .share-box {
+        padding: 30px 20px;
+    }
+    
+    .share-header {
+        flex-direction: column;
+        gap: 10px;
+    }
+    
+    .share-header h3 {
+        font-size: 24px;
+    }
+    
+    .share-text {
+        font-size: 16px;
+        padding: 0 10px;
+    }
+    
+    .share-buttons {
+        flex-direction: column;
+    }
+    
+    .share-btn {
+        width: 100%;
+        min-width: auto;
+    }
+}
