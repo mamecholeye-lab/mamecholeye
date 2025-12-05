@@ -1048,3 +1048,44 @@ section::before {
     border-radius: 50%;
     animation: spin 1s linear infinite;
 }
+/* ===== BACK TO TOP BUTTON ===== */
+.back-to-top {
+    position: fixed;
+    bottom: 80px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: linear-gradient(135deg, #FF6B35, #FF8B35);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: none; /* Hidden by default */
+    align-items: center;
+    justify-content: center;
+    z-index: 999;
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.3);
+    transition: all 0.3s ease;
+}
+
+.back-to-top:hover {
+    background: linear-gradient(135deg, #FF8B35, #FF6B35);
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.4);
+}
+
+.back-to-top.show {
+    display: flex;
+}
+
+/* On mobile, position differently */
+@media (max-width: 768px) {
+    .back-to-top {
+        bottom: 70px;
+        right: 20px;
+        width: 45px;
+        height: 45px;
+        font-size: 18px;
+    }
+}
