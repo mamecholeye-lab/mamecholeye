@@ -1089,3 +1089,77 @@ section::before {
         font-size: 18px;
     }
 }
+/* ===== VISITOR COUNTER STYLES ===== */
+.visitor-stats {
+    margin-top: 25px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.visitor-stats h4 {
+    color: #FF6B35;
+    font-size: 18px;
+    margin-bottom: 15px;
+    text-align: center;
+    font-weight: 700;
+}
+
+.stat-item {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 12px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    border: 1px solid rgba(255, 107, 53, 0.2);
+    transition: all 0.3s ease;
+}
+
+.stat-item:hover {
+    background: rgba(255, 107, 53, 0.1);
+    transform: translateY(-2px);
+}
+
+.stat-item i {
+    color: #FF6B35;
+    font-size: 24px;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 50%;
+}
+
+.stat-number {
+    display: block;
+    font-size: 24px;
+    font-weight: 800;
+    color: white;
+    line-height: 1;
+}
+
+.stat-label {
+    display: block;
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.7);
+    margin-top: 5px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .visitor-stats {
+        margin-top: 20px;
+        padding-top: 15px;
+    }
+    
+    .stat-item {
+        padding: 10px;
+    }
+    
+    .stat-number {
+        font-size: 20px;
+    }
+}
