@@ -919,3 +919,54 @@ section::before {
         font-size: 16px !important;
     }
 }
+/* ===== BETTER TOUCH EFFECTS FOR MOBILE ===== */
+
+/* Make cards touch-friendly */
+.match-card, .free-match, .package-card, .contact-card {
+    transition: all 0.2s ease !important;
+    cursor: pointer !important;
+}
+
+/* Touch feedback for mobile */
+@media (hover: none) and (pointer: coarse) {
+    .match-card:active, 
+    .free-match:active, 
+    .package-card:active,
+    .contact-card:active {
+        transform: scale(0.98) !important;
+        background: rgba(255, 107, 53, 0.05) !important;
+    }
+    
+    .btn-primary:active,
+    .btn-secondary:active,
+    .btn-package:active {
+        transform: scale(0.95) !important;
+    }
+}
+
+/* Make sure buttons are easy to tap */
+@media (max-width: 768px) {
+    button,
+    .btn-primary,
+    .btn-secondary,
+    .btn-package,
+    .nav-link {
+        min-height: 44px !important;
+        min-width: 44px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+    }
+    
+    /* Prevent text selection on tap */
+    * {
+        -webkit-tap-highlight-color: transparent !important;
+        -webkit-touch-callout: none !important;
+        user-select: none !important;
+    }
+    
+    /* Allow text selection in form fields */
+    input, textarea {
+        user-select: text !important;
+    }
+}
