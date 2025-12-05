@@ -172,3 +172,24 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }, 5000); // Max 5 seconds loading time
 });
+// ===== BACK TO TOP BUTTON =====
+const backToTopBtn = document.getElementById('backToTop');
+
+if (backToTopBtn) {
+    // Show/hide button based on scroll position
+    window.addEventListener('scroll', function() {
+        if (window.scrollY > 300) {
+            backToTopBtn.classList.add('show');
+        } else {
+            backToTopBtn.classList.remove('show');
+        }
+    });
+    
+    // Scroll to top when clicked
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+}
