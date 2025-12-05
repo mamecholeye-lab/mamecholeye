@@ -92,3 +92,52 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.style.minWidth = '44px';
     });
 });
+// ===== AUTO UPDATE DATES =====
+function updateDates() {
+    // Get yesterday's date
+    const yesterday = new Date();
+    yesterday.setDate(yesterday.getDate() - 1);
+    
+    // Format date like "December 3rd, 2024"
+    const options = { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+    };
+    
+    let day = yesterday.getDate();
+    let suffix = "th";
+    
+    if (day === 1 || day === 21 || day === 31) suffix = "st";
+    else if (day === 2 || day === 22) suffix = "nd";
+    else if (day === 3 || day === 23) suffix = "rd";
+    
+    const formattedDate = yesterday.toLocaleDateString('en-US', {
+        month: 'long',
+        year: 'numeric'
+    }).replace(',', '') + ` ${day}${suffix}, ${yesterday.getFullYear()}`;
+    
+    // Update ALL date elements on page
+    document.querySelectorAll('.date').forEach(element => {
+        element.textContent = formattedDate;
+    });
+    
+    console.log('Dates updated to:', formattedDate);
+}
+
+// Run when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    updateDates();
+    
+    // Also update every day at midnight
+    const now = new Date();
+    const midnight = new Date();
+    midnight.setHours(24, 0, 0, 0);
+    const timeUntilMidnight = midnight - now;
+    
+    setTimeout(function() {
+        updateDates();
+        // Update every 24 hours
+        setInterval(updateDates, 24 * 60 * 60 * 1000);
+    }, timeUntilMidnight);
+});
