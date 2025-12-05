@@ -141,3 +141,34 @@ document.addEventListener('DOMContentLoaded', function() {
         setInterval(updateDates, 24 * 60 * 60 * 1000);
     }, timeUntilMidnight);
 });
+// ===== LOADING ANIMATION CONTROL =====
+window.addEventListener('load', function() {
+    // Wait 1 second then hide loader (makes it feel smoother)
+    setTimeout(function() {
+        const loader = document.getElementById('loader');
+        if (loader) {
+            loader.classList.add('hidden');
+            
+            // Remove from DOM after animation completes
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500); // Match CSS transition time
+        }
+    }, 1000);
+});
+
+// Show loader when page starts loading
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('RMAME Predictions loading...');
+    
+    // If page takes too long, hide loader anyway
+    setTimeout(function() {
+        const loader = document.getElementById('loader');
+        if (loader && !loader.classList.contains('hidden')) {
+            loader.classList.add('hidden');
+            setTimeout(function() {
+                loader.style.display = 'none';
+            }, 500);
+        }
+    }, 5000); // Max 5 seconds loading time
+});
