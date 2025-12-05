@@ -193,3 +193,67 @@ if (backToTopBtn) {
         });
     });
 }
+// ===== WHATSAPP SHARE FUNCTION =====
+function shareOnWhatsApp(type) {
+    const websiteUrl = 'https://mamecholeye-lab.github.io/mamecholeye/';
+    
+    let message = '';
+    
+    if (type === 'free') {
+        message = `🎯 *FREE FOOTBALL PREDICTIONS* 🎯\n\n`;
+        message += `RMAME Predictions is giving away 6 FREE premium predictions today!\n\n`;
+        message += `🔥 *Today's Free Predictions:*\n`;
+        message += `• 14:00 🇧🇬 FC Dobrudzha vs Ludogorets - BTTS @2.06\n`;
+        message += `• 15:30 🇹🇷 Igdir vs Orduspor - 1X @1.04\n`;
+        message += `• 19:00 🇧🇬 Slavia Sofia vs Levski Sofia - X2 @1.07\n`;
+        message += `• 19:00 🇧🇬 Slavia Sofia vs Levski Sofia - BTTS @2.02\n`;
+        message += `• 23:15 🇵🇹 Porto vs Vitoria - 1 @1.36\n`;
+        message += `• 02:00 🇧🇷 Palmeiras vs Internacional - 1 @1.62\n\n`;
+        message += `✅ *Yesterday's Results: 7/7 WINS!*\n`;
+        message += `Get more predictions: ${websiteUrl}`;
+        
+    } else if (type === 'all') {
+        message = `⚽ *PROFESSIONAL FOOTBALL PREDICTIONS* ⚽\n\n`;
+        message += `RMAME Predictions - 100% Win Rate Yesterday!\n\n`;
+        message += `📊 *Yesterday's Perfect Record:* 7/7 WINS\n`;
+        message += `🎯 *Today's Top Pick:* Slavia Sofia vs Levski Sofia\n`;
+        message += `💰 *Free Predictions Available*\n\n`;
+        message += `Join the winning team and get accurate predictions daily!\n`;
+        message += `${websiteUrl}`;
+    }
+    
+    // Encode message for WhatsApp
+    const encodedMessage = encodeURIComponent(message);
+    const whatsappUrl = `https://wa.me/?text=${encodedMessage}`;
+    
+    // Open WhatsApp
+    window.open(whatsappUrl, '_blank');
+    
+    // Show success message
+    if (type === 'free') {
+        alert('Sharing free predictions on WhatsApp...');
+    } else {
+        alert('Sharing all predictions on WhatsApp...');
+    }
+}
+
+// ===== COPY WEBSITE LINK =====
+function shareWebsite() {
+    const websiteUrl = 'https://mamecholeye-lab.github.io/mamecholeye/';
+    
+    // Copy to clipboard
+    navigator.clipboard.writeText(websiteUrl)
+        .then(() => {
+            alert('✅ Website link copied to clipboard!\n\nShare: ' + websiteUrl);
+        })
+        .catch(err => {
+            // Fallback for older browsers
+            const tempInput = document.createElement('input');
+            tempInput.value = websiteUrl;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            alert('✅ Website link copied to clipboard!\n\nShare: ' + websiteUrl);
+        });
+}
