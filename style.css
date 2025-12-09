@@ -1599,3 +1599,82 @@ section::before {
         margin-bottom: 10px;
     }
 }
+/* Results Table League Label */
+.league {
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
+    display: block;
+}
+
+/* Lost Status */
+.status.lost {
+    color: #FF4757;
+    background: rgba(255, 71, 87, 0.1);
+    padding: 5px 15px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+.table-row.lost {
+    background: linear-gradient(90deg, rgba(255, 71, 87, 0.05), transparent);
+    border-left: 3px solid #FF4757;
+}
+
+/* Lost stat box */
+.stat-box .lost {
+    color: #FF4757;
+}
+
+/* Results Analysis */
+.results-analysis {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 25px;
+    margin-top: 40px;
+    border-left: 4px solid #FF6B35;
+}
+
+.results-analysis h4 {
+    color: #FF6B35;
+    font-size: 20px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.results-analysis p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.6;
+    margin-bottom: 15px;
+}
+
+.analysis-tips {
+    background: rgba(255, 215, 0, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    margin-top: 20px;
+}
+
+.analysis-tips p {
+    color: #FFD700;
+    margin: 0;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .table-row div {
+        padding: 10px 5px;
+        font-size: 13px;
+    }
+    
+    .league {
+        font-size: 10px;
+    }
+    
+    .results-analysis {
+        padding: 20px 15px;
+    }
+}
