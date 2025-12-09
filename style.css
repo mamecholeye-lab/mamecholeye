@@ -2084,3 +2084,111 @@ section::before {
         font-size: 14px;
     }
 }
+/* Enhanced package section colors */
+.packages-section {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+}
+
+.package-card {
+    background: rgba(30, 33, 47, 0.9);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #E8EAEF; /* Light gray for text */
+}
+
+.package-header {
+    padding: 25px;
+    border-radius: 10px 10px 0 0;
+}
+
+.package-features {
+    list-style: none;
+    padding: 20px 25px;
+}
+
+.package-features li {
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.package-features span {
+    font-size: 15px;
+    line-height: 1.5;
+}
+
+.btn-package {
+    display: block;
+    text-align: center;
+    padding: 15px 25px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 16px;
+    margin: 20px 25px;
+    transition: all 0.3s ease;
+}
+
+.btn-package:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Color themes for each package */
+.package-card:nth-child(1) .package-header {
+    background: linear-gradient(135deg, #2A2D43, #3A3F5D);
+}
+
+.package-card:nth-child(1) h3 {
+    color: #FF9E6D;
+}
+
+.package-card:nth-child(2) .package-header {
+    background: linear-gradient(135deg, #FF6B35, #FF8B4D);
+}
+
+.package-card:nth-child(2) h3 {
+    color: #000000;
+}
+
+.package-card:nth-child(3) .package-header {
+    background: linear-gradient(135deg, #0B2B40, #1C3D52);
+}
+
+.package-card:nth-child(3) h3 {
+    color: #64D2FF;
+}
+
+/* Improved text colors */
+.currency, .amount, .period {
+    font-weight: 700;
+}
+
+.period {
+    opacity: 0.8;
+}
+
+/* Better contrast for disabled features */
+.package-features li:last-child {
+    opacity: 0.8;
+}
+
+/* Mobile responsive improvements */
+@media (max-width: 768px) {
+    .package-header {
+        padding: 20px 15px;
+    }
+    
+    .package-features {
+        padding: 15px 20px;
+    }
+    
+    .package-features span {
+        font-size: 14px;
+    }
+    
+    .btn-package {
+        margin: 15px 20px;
+        padding: 12px 20px;
+    }
+}
