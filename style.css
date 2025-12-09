@@ -2018,3 +2018,69 @@ section::before {
         text-align: center;
     }
 }
+/* Package savings and discounts */
+.package-discount {
+    background: linear-gradient(90deg, #FF6B35, #FF8B35);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    margin-top: 10px;
+    display: inline-block;
+}
+
+.package-savings {
+    text-align: center;
+    margin: 15px 0;
+    padding: 10px;
+    background: rgba(0, 184, 148, 0.1);
+    border-radius: 8px;
+    border: 1px solid rgba(0, 184, 148, 0.3);
+}
+
+.package-savings span {
+    color: #00B894;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.packages-note {
+    text-align: center;
+    margin-top: 40px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+.packages-note p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 16px;
+    margin: 0;
+}
+
+.packages-note i {
+    color: #FF6B35;
+    margin-right: 10px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .package-discount {
+        font-size: 12px;
+        padding: 6px 12px;
+    }
+    
+    .package-savings span {
+        font-size: 12px;
+    }
+    
+    .packages-note {
+        padding: 15px;
+    }
+    
+    .packages-note p {
+        font-size: 14px;
+    }
+}
