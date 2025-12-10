@@ -1007,6 +1007,214 @@
                 loadCurrentData();
             }, 1000);
         };
+        // ===== TOP PREDICTION FUNCTIONS =====
+
+// Toggle secondary match visibility
+function toggleSecondary() {
+    const secondaryDiv = document.getElementById('secondary-match');
+    const checkbox = document.getElementById('include-secondary');
+    secondaryDiv.style.display = checkbox.checked ? 'block' : 'none';
+}
+
+// Save top prediction data
+function saveTopData() {
+    // Get all values from the form
+    const topData = {
+        title: document.getElementById('top-title').value || 'Top Prediction of the Day',
+        subtitle: document.getElementById('top-subtitle-input').value || 'Today\'s Premium Selection',
+        badge: document.getElementById('top-badge-input').value || 'PREMIUM PICK',
+        
+        mainMatch: {
+            league: document.getElementById('top-league').value,
+            time: document.getElementById('top-time').value,
+            team1: {
+                name: document.getElementById('top-team1').value,
+                code: document.getElementById('top-team1').value.substring(0,3).toUpperCase(),
+                color: document.getElementById('top-team1-color').value
+            },
+            team2: {
+                name: document.getElementById('top-team2').value,
+                code: document.getElementById('top-team2').value.substring(0,3).toUpperCase(),
+                color: document.getElementById('top-team2-color').value
+            },
+            prediction: document.getElementById('top-prediction').value,
+            odds: parseFloat(document.getElementById('top-odds').value) || 2.50,
+            confidence: parseInt(document.getElementById('top-confidence').value) || 70,
+            riskLevel: getRiskLevel(parseInt(document.getElementById('top-confidence').value) || 70)
+        }
+    };
+    
+    // Add secondary match if enabled
+    const includeSecondary = document.getElementById('include-secondary').checked;
+    if (includeSecondary && document.getElementById('sec-team1').value && document.getElementById('sec-team2').value) {
+        topData.secondaryMatch = {
+            league: document.getElementById('sec-league').value || 'Champions League 🇪🇺',
+            time: document.getElementById('sec-time').value || '23:00',
+            team1: {
+                name: document.getElementById('sec-team1').value,
+                code: document.getElementById('sec-team1').value.substring(0,3).toUpperCase(),
+                color: '#F0202A'
+            },
+            team2: {
+                name: document.getElementById('sec-team2').value,
+                code: document.getElementById('sec-team2').value.substring(0,3).toUpperCase(),
+                color: '#F9A01B'
+            },
+            prediction: document.getElementById('sec-prediction').value || 'Away Win (2)',
+            odds: parseFloat(document.getElementById('sec-odds').value) || 3.10,
+            confidence: parseInt(document.getElementById('sec-confidence').value) || 45,
+            riskLevel: getRiskLevel(parseInt(document.getElementById('sec-confidence').value) || 45)
+        };
+        
+        // Add accumulator
+        const totalOdds = (parseFloat(document.getElementById('top-odds').value) * 
+                          parseFloat(document.getElementById('sec-odds').value)).toFixed(2);
+        
+        topData.accumulator = {
+            totalOdds: totalOdds,
+            matches: [
+                {
+                    match: `${topData.mainMatch.team1.name} (${topData.mainMatch.prediction})`,
+                    odds: topData.mainMatch.odds
+                },
+                {
+                    match: `${topData.secondaryMatch.team2.name} (${topData.secondaryMatch.prediction})`,
+                    odds: topData.secondaryMatch.odds
+                }
+            ],
+            winningExamples: [
+                {stake: 20, win: (20 * totalOdds).toFixed(2)},
+                {stake: 50, win: (50 * totalOdds).toFixed(2)},
+                {stake: 100, win: (100 * totalOdds).toFixed(2)}
+            ],
+            tip: "Double accumulator offers good value. Recommended stake: 1-2% of bankroll.",
+            warning: "Higher risk due to away win pick"
+        };
+    }
+    
+    // Save to localStorage
+    localStorage.setItem('topData', JSON.stringify(topData));
+    
+    // Show success message
+    let message = `✅ Top prediction saved!\n\n• ${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name}\n• ${topData.mainMatch.prediction} @${topData.mainMatch.odds}\n• ${topData.mainMatch.confidence}% confidence`;
+    
+    if (includeSecondary) {
+        message += `\n• Includes accumulator @${topData.accumulator.totalOdds}`;
+    }
+    
+    alert(message);
+}
+
+// Helper function for risk level
+function getRiskLevel(confidence) {
+    if (confidence >= 80) return 'LOW RISK';
+    if (confidence >= 60) return 'MEDIUM RISK';
+    return 'HIGH RISK';
+}
+
+// Load sample top prediction
+function loadTopSample() {
+    // Set all form values to sample data
+    document.getElementById('top-title').value = 'Top Prediction of the Day';
+    document.getElementById('top-subtitle-input').value = 'December 12, 2025 - Champions League Special';
+    document.getElementById('top-badge-input').value = 'CHAMPIONS LEAGUE SPECIAL';
+    document.getElementById('top-league').value = 'Champions League 🇪🇺';
+    document.getElementById('top-time').value = '21:00';
+    document.getElementById('top-team1').value = 'Real Madrid';
+    document.getElementById('top-team1-color').value = '#FFFFFF';
+    document.getElementById('top-team2').value = 'PSG';
+    document.getElementById('top-team2-color').value = '#004170';
+    document.getElementById('top-prediction').value = '1 & Over 2.5 Goals';
+    document.getElementById('top-odds').value = 2.80;
+    document.getElementById('top-confidence').value = 75;
+    
+    // Also save to localStorage immediately
+    saveTopData();
+}
+
+// ===== HELPER FUNCTIONS FOR GENERATE JSON =====
+
+// Get default top data
+function getDefaultTopData() {
+    return {
+        title: "Top Prediction of the Day",
+        subtitle: "Today's Premium Selection",
+        badge: "PREMIUM PICK",
+        mainMatch: {
+            league: "Champions League 🇪🇺",
+            time: "21:00",
+            team1: {
+                name: "Real Madrid",
+                code: "RMA",
+                color: "#FFFFFF"
+            },
+            team2: {
+                name: "PSG",
+                code: "PSG",
+                color: "#004170"
+            },
+            prediction: "1 & Over 2.5 Goals",
+            odds: 2.80,
+            confidence: 75,
+            riskLevel: "MEDIUM RISK"
+        }
+    };
+}
+
+// Generate match analysis
+function getMatchAnalysis(match) {
+    const homeTeam = match.team1.name;
+    const awayTeam = match.team2.name;
+    const prediction = match.prediction;
+    
+    let analysis = [
+        `${homeTeam}: Strong home advantage this season`,
+        `${awayTeam}: ${prediction.includes('2') ? 'Good away form' : 'Mixed away record'}`,
+        "Head-to-head record favorable",
+        "Good value at current odds"
+    ];
+    
+    // Add specific analysis based on prediction type
+    if (prediction.includes('Over 2.5')) {
+        analysis.push("Both teams strong in attack");
+        analysis.push("Previous meetings high scoring");
+    } else if (prediction.includes('Under')) {
+        analysis.push("Both teams solid defensively");
+        analysis.push("Low scoring trend in recent matches");
+    } else if (prediction.includes('BTTS')) {
+        analysis.push("Both teams score regularly");
+        analysis.push("Weak defenses on both sides");
+    }
+    
+    analysis.push(`${match.confidence}% confidence based on recent form`);
+    
+    return analysis;
+}
+
+// Get team color based on name
+function getTeamColor(teamName) {
+    const colorMap = {
+        'real madrid': '#FFFFFF',
+        'barcelona': '#A50044',
+        'man city': '#6CABDD',
+        'man united': '#DA291C',
+        'liverpool': '#C8102E',
+        'chelsea': '#034694',
+        'arsenal': '#EF0107',
+        'psg': '#004170',
+        'bayern': '#DC052D',
+        'dortmund': '#FDE100',
+        'juventus': '#000000',
+        'milan': '#000000',
+        'inter': '#0066B3',
+        'atletico': '#CB3524',
+        'monaco': '#F0202A',
+        'galatasaray': '#F9A01B'
+    };
+    
+    const key = teamName.toLowerCase();
+    return colorMap[key] || '#FF6B35'; // Default color
+}
     </script>
 </body>
 </html>
