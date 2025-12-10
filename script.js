@@ -39,28 +39,6 @@ if (showMoreBtn && morePredictions) {
     });
 }
 
-// Form Submission
-const contactForm = document.querySelector('.contact-form');
-if (contactForm) {
-    contactForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        
-        // Get form values
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        
-        if (!name || !email) {
-            alert('Please fill in all required fields');
-            return;
-        }
-        
-        alert(`Thank you ${name}! We will contact you at ${email} within 30 minutes.`);
-        
-        // Reset form
-        this.reset();
-    });
-}
-
 // Smooth Scrolling
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
@@ -79,17 +57,6 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
                 behavior: 'smooth'
             });
         }
-    });
-});
-
-// Mobile-friendly touch events
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('RMAME Predictions Mobile Ready!');
-    
-    // Make buttons easier to tap on mobile
-    document.querySelectorAll('button, .btn-primary, .btn-secondary').forEach(btn => {
-        btn.style.minHeight = '44px';
-        btn.style.minWidth = '44px';
     });
 });
 
@@ -261,6 +228,7 @@ function shareWebsite() {
             alert('✅ Website link copied to clipboard!\n\nShare: ' + websiteUrl);
         });
 }
+
 // ===== SUBSCRIPTION FORM WITH WHATSAPP =====
 const subscriptionForm = document.getElementById('subscribe');
 
@@ -272,12 +240,22 @@ if (subscriptionForm) {
         const name = this.querySelector('input[type="text"]').value;
         const email = this.querySelector('input[type="email"]').value;
         const phone = this.querySelector('input[type="tel"]').value;
-        const package = this.querySelector('select').value;
+        const packageSelect = this.querySelector('select');
+        const package = packageSelect.value;
         const paymentMethod = this.querySelector('input[name="payment"]:checked').value;
         
         // Check if all fields are filled
         if (!name || !email || !phone || !package) {
             alert('❌ Please fill in all fields before submitting!');
+            return;
+        }
+        
+        // Clean phone number (remove spaces, plus sign)
+        let cleanPhone = phone.replace(/\s+/g, '').replace('+', '');
+        
+        // Ensure it starts with country code
+        if (!cleanPhone.startsWith('251')) {
+            alert('❌ Please enter a valid Ethiopian phone number starting with 251');
             return;
         }
         
@@ -297,14 +275,14 @@ if (subscriptionForm) {
                        `*💳 Payment Method:* ${paymentMethod.toUpperCase()}%0A%0A` +
                        `*📍 Request:* Please send payment details for ${package} package`;
         
-        // Your WhatsApp number
-        const whatsappNumber = '251979380726';
+        // Your WhatsApp number - CORRECT FORMAT
+        const whatsappNumber = '251979380726'; // NO + sign here
         
-        // Create WhatsApp link
-        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+        // Create WhatsApp link - CORRECT FORMAT
+        const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
         
         // Show success message
-        alert(`✅ Thank you ${name}!\\n\\nWe will send payment details to your WhatsApp (${phone}) within 5 minutes.\\n\\nClick OK to open WhatsApp and confirm.`);
+        alert(`✅ Thank you ${name}!\n\nWe will send payment details to your WhatsApp (${phone}) within 5 minutes.\n\nClick OK to open WhatsApp and confirm.`);
         
         // Open WhatsApp in new tab
         window.open(whatsappUrl, '_blank');
@@ -314,6 +292,9 @@ if (subscriptionForm) {
         
         // Set default payment method
         this.querySelector('#mobile-money').checked = true;
+        
+        // Reset select to first option
+        packageSelect.selectedIndex = 0;
     });
 }
 
@@ -323,22 +304,36 @@ if (phoneInput) {
     phoneInput.addEventListener('input', function(e) {
         let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
         
-        // Add + if starts with 251
-        if (value.startsWith('251') && !value.startsWith('+251')) {
-            value = '+' + value;
+        // Format as +251 XXX XXX XXX
+        if (value.startsWith('251')) {
+            value = '+251 ' + value.slice(3);
         }
         
-        // Format as +251 XXX XXX XXX
-        if (value.length > 3) {
-            value = value.slice(0, 3) + ' ' + value.slice(3);
-        }
+        // Add space after every 3 digits
         if (value.length > 7) {
-            value = value.slice(0, 7) + ' ' + value.slice(7);
+            value = value.slice(0, 7) + ' ' + value.slice(7, 10);
         }
         if (value.length > 11) {
-            value = value.slice(0, 11) + ' ' + value.slice(11);
+            value = value.slice(0, 11) + ' ' + value.slice(11, 13);
         }
         
         e.target.value = value;
     });
+    
+    // Set placeholder example
+    phoneInput.placeholder = '+251 912 345 678';
 }
+
+// Mobile-friendly touch events
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('RMAME Predictions Mobile Ready!');
+    
+    // Make buttons easier to tap on mobile
+    document.querySelectorAll('button, .btn-primary, .btn-secondary').forEach(btn => {
+        btn.style.minHeight = '44px';
+        btn.style.minWidth = '44px';
+    });
+    
+    // Initialize form
+    console.log('Subscription form ready!');
+});
