@@ -1,0 +1,139 @@
+{
+  "lastUpdated": "2024-12-11",
+  "countries": [
+    {
+      "name": "England",
+      "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "leagues": [
+        {"name": "Premier League", "level": 1, "color": "#3D195B"},
+        {"name": "Championship", "level": 2, "color": "#1C4A9A"},
+        {"name": "League One", "level": 3, "color": "#DA291C"},
+        {"name": "League Two", "level": 4, "color": "#FF6600"},
+        {"name": "National League", "level": 5, "color": "#0B6623"},
+        {"name": "FA Cup", "level": "Cup", "color": "#FF0000"},
+        {"name": "EFL Cup", "level": "Cup", "color": "#0000FF"}
+      ]
+    },
+    {
+      "name": "Spain",
+      "flag": "🇪🇸",
+      "leagues": [
+        {"name": "La Liga", "level": 1, "color": "#F0B400"},
+        {"name": "Segunda División", "level": 2, "color": "#FF0000"},
+        {"name": "Primera Federación", "level": 3, "color": "#0000FF"},
+        {"name": "Copa del Rey", "level": "Cup", "color": "#FF0000"}
+      ]
+    },
+    {
+      "name": "Italy",
+      "flag": "🇮🇹",
+      "leagues": [
+        {"name": "Serie A", "level": 1, "color": "#008C45"},
+        {"name": "Serie B", "level": 2, "color": "#CD212A"},
+        {"name": "Serie C", "level": 3, "color": "#F4F5F0"},
+        {"name": "Coppa Italia", "level": "Cup", "color": "#008C45"}
+      ]
+    },
+    {
+      "name": "Germany",
+      "flag": "🇩🇪",
+      "leagues": [
+        {"name": "Bundesliga", "level": 1, "color": "#DD0000"},
+        {"name": "2. Bundesliga", "level": 2, "color": "#000000"},
+        {"name": "3. Liga", "level": 3, "color": "#FFCE00"},
+        {"name": "DFB-Pokal", "level": "Cup", "color": "#000000"}
+      ]
+    },
+    {
+      "name": "France",
+      "flag": "🇫🇷",
+      "leagues": [
+        {"name": "Ligue 1", "level": 1, "color": "#0D4F9C"},
+        {"name": "Ligue 2", "level": 2, "color": "#ED2939"},
+        {"name": "National", "level": 3, "color": "#002395"},
+        {"name": "Coupe de France", "level": "Cup", "color": "#ED2939"}
+      ]
+    },
+    {
+      "name": "Portugal",
+      "flag": "🇵🇹",
+      "leagues": [
+        {"name": "Primeira Liga", "level": 1, "color": "#006600"},
+        {"name": "Liga Portugal 2", "level": 2, "color": "#FF0000"},
+        {"name": "Taça de Portugal", "level": "Cup", "color": "#006600"}
+      ]
+    },
+    {
+      "name": "Netherlands",
+      "flag": "🇳🇱",
+      "leagues": [
+        {"name": "Eredivisie", "level": 1, "color": "#FF6F61"},
+        {"name": "Eerste Divisie", "level": 2, "color": "#01426A"},
+        {"name": "KNVB Cup", "level": "Cup", "color": "#FF6F61"}
+      ]
+    },
+    {
+      "name": "Belgium",
+      "flag": "🇧🇪",
+      "leagues": [
+        {"name": "First Division A", "level": 1, "color": "#000000"},
+        {"name": "First Division B", "level": 2, "color": "#FFD700"},
+        {"name": "Belgian Cup", "level": "Cup", "color": "#FFD700"}
+      ]
+    },
+    {
+      "name": "Turkey",
+      "flag": "🇹🇷",
+      "leagues": [
+        {"name": "Süper Lig", "level": 1, "color": "#E30A17"},
+        {"name": "TFF First League", "level": 2, "color": "#000000"},
+        {"name": "Turkish Cup", "level": "Cup", "color": "#E30A17"}
+      ]
+    },
+    {
+      "name": "Brazil",
+      "flag": "🇧🇷",
+      "leagues": [
+        {"name": "Série A", "level": 1, "color": "#009C3B"},
+        {"name": "Série B", "level": 2, "color": "#FFDF00"},
+        {"name": "Série C", "level": 3, "color": "#002776"},
+        {"name": "Copa do Brasil", "level": "Cup", "color": "#009C3B"}
+      ]
+    },
+    {
+      "name": "Argentina",
+      "flag": "🇦🇷",
+      "leagues": [
+        {"name": "Primera División", "level": 1, "color": "#75AADB"},
+        {"name": "Primera Nacional", "level": 2, "color": "#FFFFFF"},
+        {"name": "Copa Argentina", "level": "Cup", "color": "#75AADB"}
+      ]
+    },
+    {
+      "name": "International",
+      "flag": "🌍",
+      "leagues": [
+        {"name": "Champions League", "level": "UEFA", "color": "#0047AB"},
+        {"name": "Europa League", "level": "UEFA", "color": "#FFD700"},
+        {"name": "Conference League", "level": "UEFA", "color": "#00B894"},
+        {"name": "World Cup Qualifiers", "level": "FIFA", "color": "#009F3D"}
+      ]
+    },
+    {
+      "name": "Africa",
+      "flag": "🌍",
+      "leagues": [
+        {"name": "CAF Champions League", "level": "CAF", "color": "#FF0000"},
+        {"name": "CAF Confederation Cup", "level": "CAF", "color": "#0000FF"}
+      ]
+    },
+    {
+      "name": "Asia",
+      "flag": "🌏",
+      "leagues": [
+        {"name": "AFC Champions League", "level": "AFC", "color": "#00008B"},
+        {"name": "AFC Cup", "level": "AFC", "color": "#FF0000"}
+      ]
+    }
+  ]
+}
