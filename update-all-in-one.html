@@ -672,157 +672,202 @@
         
         // Generate Complete JSON
         function generateCompleteJSON() {
-            // Get data from localStorage or use defaults
-            const heroData = JSON.parse(localStorage.getItem('heroData')) || getDefaultHeroData();
-            const topData = getTopData();
-            const todayData = JSON.parse(localStorage.getItem('todayData')) || getDefaultTodayData();
-            const resultsData = JSON.parse(localStorage.getItem('resultsData')) || getDefaultResultsData();
+    // Get data from localStorage or use defaults
+    const heroData = JSON.parse(localStorage.getItem('heroData')) || getDefaultHeroData();
+    const topData = JSON.parse(localStorage.getItem('topData')) || getDefaultTopData();
+    const todayData = JSON.parse(localStorage.getItem('todayData')) || getDefaultTodayData();
+    const resultsData = JSON.parse(localStorage.getItem('resultsData')) || getDefaultResultsData();
+    
+    // Calculate statistics
+    const winRate = resultsData.total > 0 ? 
+        ((resultsData.wins / resultsData.total) * 100).toFixed(1) + '%' : '0%';
+    
+    // Generate today's date
+    const today = new Date();
+    const formattedDate = today.toLocaleDateString('en-US', { 
+        month: 'long', 
+        day: 'numeric', 
+        year: 'numeric' 
+    });
+    
+    // Generate complete data structure
+    const completeData = {
+        lastUpdated: document.getElementById('update-date').value || today.toISOString(),
+        site: {
+            title: "RMAME Predictions",
+            tagline: "Professional Football Betting Tips",
+            contact: {
+                whatsapp: "+251979380726",
+                email: "mamecholeye@gmail.com"
+            }
+        },
+        
+        hero: {
+            date: formattedDate,
+            title: heroData.title || "103.12 ACCUMULATOR WON",
+            subtitle: heroData.subtitle || "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
+            badges: [
+                {text: "3/3 WINS YESTERDAY", color: "#00B894"},
+                {text: "Perfect Record", color: "#FF6B35", icon: "check-circle"},
+                {text: "TOTAL ODDS: 103.12", color: "#FFD700"}
+            ],
+            stats: heroData.stats || [
+                {value: "3/3", label: "Perfect Wins", color: "#00B894"},
+                {value: "103.12", label: "Total Odds", color: "#FFD700"},
+                {value: "34.37", label: "Avg Odds", color: "#0984E3"},
+                {value: "100%", label: "Win Rate", color: "#00B894"}
+            ],
+            results: (heroData.matches || []).map((match, index) => ({
+                time: match.time,
+                league: "League Two",
+                fixture: match.fixture,
+                betType: match.betType,
+                betColor: index === 0 ? "#FFD700" : index === 1 ? "#00B894" : "#FF6B35",
+                odds: match.odds,
+                status: "won"
+            })),
+            calculations: {
+                totalOdds: 103.12,
+                winningExamples: [
+                    {stake: 10, win: 1031.20},
+                    {stake: 50, win: 5156.00},
+                    {stake: 100, win: 10312.00}
+                ],
+                profitNote: "3-match accumulator with 103.12 odds = 10,312% PROFIT!"
+            }
+        },
+        
+        topPrediction: {
+            date: formattedDate,
+            title: topData.title || "Top Prediction of the Day",
+            subtitle: topData.subtitle || `${formattedDate} - Premium Selection`,
+            badge: topData.badge || "PREMIUM PICK",
             
-            // Calculate statistics
-            const winRate = resultsData.total > 0 ? 
-                ((resultsData.wins / resultsData.total) * 100).toFixed(1) + '%' : '0%';
-            
-            // Generate complete data structure
-            const completeData = {
-                lastUpdated: document.getElementById('update-date').value || new Date().toISOString(),
-                site: {
-                    title: "RMAME Predictions",
-                    tagline: "Professional Football Betting Tips",
-                    contact: {
-                        whatsapp: "+251979380726",
-                        email: "mamecholeye@gmail.com"
-                    }
+            mainMatch: {
+                league: topData.mainMatch.league || "Champions League 🇪🇺",
+                time: topData.mainMatch.time || "21:00",
+                fixture: `${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name}`,
+                team1: {
+                    name: topData.mainMatch.team1.name,
+                    code: topData.mainMatch.team1.code,
+                    color: topData.mainMatch.team1.color
                 },
-                
-                hero: {
-                    date: new Date().toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    title: heroData.title,
-                    subtitle: heroData.subtitle,
-                    badges: [
-                        {text: "3/3 WINS YESTERDAY", color: "#00B894"},
-                        {text: "Perfect Record", color: "#FF6B35", icon: "check-circle"},
-                        {text: "TOTAL ODDS: 103.12", color: "#FFD700"}
-                    ],
-                    stats: heroData.stats,
-                    results: heroData.matches.map((match, index) => ({
-                        time: match.time,
-                        league: "League Two",
-                        fixture: match.fixture,
-                        betType: match.betType,
-                        betColor: index === 0 ? "#FFD700" : index === 1 ? "#00B894" : "#FF6B35",
-                        odds: match.odds,
-                        status: "won"
-                    })),
-                    calculations: {
-                        totalOdds: 103.12,
-                        winningExamples: [
-                            {stake: 10, win: 1031.20},
-                            {stake: 50, win: 5156.00},
-                            {stake: 100, win: 10312.00}
-                        ],
-                        profitNote: "3-match accumulator with 103.12 odds = 10,312% PROFIT!"
-                    }
+                team2: {
+                    name: topData.mainMatch.team2.name,
+                    code: topData.mainMatch.team2.code,
+                    color: topData.mainMatch.team2.color
                 },
-                
-                topPrediction: {
-                    date: new Date().toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    title: "Champions League Double",
-                    subtitle: `${new Date().toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    })} - Champions League Double`,
-                    badge: "CHAMPIONS LEAGUE SPECIAL",
-                    
-                    mainMatch: {
-                        league: topData.league,
-                        time: topData.time,
-                        fixture: `${topData.team1} vs ${topData.team2}`,
-                        team1: {name: topData.team1, code: topData.team1.substring(0,3).toUpperCase(), color: "#DC052D"},
-                        team2: {name: topData.team2, code: topData.team2.substring(0,3).toUpperCase(), color: "#008E3B"},
-                        prediction: topData.prediction,
-                        odds: topData.odds,
-                        confidence: topData.confidence,
-                        riskLevel: "MEDIUM RISK",
-                        analysis: [
-                            "Bayern: Unbeaten in last 10 home UCL matches",
-                            "Sporting: Lost 3 of last 4 away in UCL",
-                            "Bayern: 4 clean sheets in last 6 home games",
-                            "H2H: Bayern won last 3 meetings",
-                            "Under 3.5 goals in Bayern's last 5 home UCL matches"
-                        ]
-                    }
+                prediction: topData.mainMatch.prediction,
+                odds: topData.mainMatch.odds,
+                confidence: topData.mainMatch.confidence,
+                riskLevel: topData.mainMatch.riskLevel,
+                analysis: getMatchAnalysis(topData.mainMatch)
+            }
+        },
+        
+        todayPredictions: {
+            date: formattedDate,
+            title: todayData.title || "Today's Premium Picks",
+            subtitle: todayData.subtitle || `${todayData.predictions.length} Premium Picks`,
+            totalPredictions: todayData.predictions.length,
+            totalOdds: todayData.predictions.reduce((total, pred) => total * pred.odds, 1).toFixed(2),
+            predictions: todayData.predictions.map(pred => ({
+                league: pred.league || "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+                time: pred.time || "20:45",
+                fixture: `${pred.team1} v ${pred.team2}`,
+                team1: {
+                    name: pred.team1,
+                    code: pred.team1.substring(0,3).toUpperCase(),
+                    color: getTeamColor(pred.team1)
                 },
-                
-                todayPredictions: {
-                    date: new Date().toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    title: todayData.title,
-                    subtitle: todayData.subtitle,
-                    totalPredictions: todayData.predictions.length,
-                    totalOdds: todayData.predictions.reduce((total, pred) => total * pred.odds, 1).toFixed(2),
-                    predictions: todayData.predictions.map(pred => ({
-                        league: pred.league,
-                        time: pred.time,
-                        fixture: `${pred.team1} v ${pred.team2}`,
-                        team1: {name: pred.team1, code: pred.team1.substring(0,3).toUpperCase(), color: getRandomColor()},
-                        team2: {name: pred.team2, code: pred.team2.substring(0,3).toUpperCase(), color: getRandomColor()},
-                        prediction: pred.prediction,
-                        odds: pred.odds,
-                        confidence: pred.confidence
-                    })),
-                    winningExamples: [
-                        {stake: 10, win: (10 * todayData.predictions.reduce((total, pred) => total * pred.odds, 1)).toFixed(2)},
-                        {stake: 50, win: (50 * todayData.predictions.reduce((total, pred) => total * pred.odds, 1)).toFixed(2)},
-                        {stake: 100, win: (100 * todayData.predictions.reduce((total, pred) => total * pred.odds, 1)).toFixed(2)}
-                    ]
+                team2: {
+                    name: pred.team2,
+                    code: pred.team2.substring(0,3).toUpperCase(),
+                    color: getTeamColor(pred.team2)
                 },
-                
-                yesterdayResults: {
-                    date: new Date(Date.now() - 86400000).toLocaleDateString('en-US', { 
-                        month: 'long', 
-                        day: 'numeric', 
-                        year: 'numeric' 
-                    }),
-                    title: "Yesterday's Performance",
-                    subtitle: `${resultsData.wins} Wins out of ${resultsData.total} Predictions`,
-                    stats: {
-                        total: resultsData.total,
-                        wins: resultsData.wins,
-                        losses: resultsData.losses,
-                        winRate: winRate,
-                        totalOdds: resultsData.results.reduce((total, result) => total * result.odds, 1).toFixed(2),
-                        status: resultsData.wins > resultsData.losses ? "Good" : "Poor",
-                        record: `${resultsData.wins}-0-${resultsData.losses}`
-                    },
-                    results: resultsData.results,
-                    analysis: `Performance with ${resultsData.wins} wins out of ${resultsData.total} predictions (${winRate} accuracy).`,
-                    insight: "Focus on high confidence predictions for better results."
+                prediction: pred.prediction,
+                odds: pred.odds,
+                confidence: pred.confidence
+            })),
+            winningExamples: [
+                {
+                    stake: 10,
+                    win: (10 * todayData.predictions.reduce((total, pred) => total * pred.odds, 1)).toFixed(2)
+                },
+                {
+                    stake: 50, 
+                    win: (50 * todayData.predictions.reduce((total, pred) => total * pred.odds, 1)).toFixed(2)
+                },
+                {
+                    stake: 100,
+                    win: (100 * todayData.predictions.reduce((total, pred) => total * pred.odds, 1)).toFixed(2)
                 }
-            };
-            
-            // Display JSON
-            document.getElementById('json-text').value = JSON.stringify(completeData, null, 2);
-            document.getElementById('json-output').style.display = 'block';
-            
-            // Scroll to output
-            setTimeout(() => {
-                document.getElementById('json-output').scrollIntoView({ behavior: 'smooth' });
-            }, 100);
-            
-            alert(`✅ Complete JSON generated!\n\n• Hero: 3 matches\n• Today: ${todayData.predictions.length} predictions\n• Results: ${resultsData.results.length} matches\n\nClick "Copy JSON" then update GitHub!`);
+            ]
+        },
+        
+        yesterdayResults: {
+            date: new Date(today.getTime() - 86400000).toLocaleDateString('en-US', { 
+                month: 'long', 
+                day: 'numeric', 
+                year: 'numeric' 
+            }),
+            title: "Yesterday's Performance",
+            subtitle: `${resultsData.wins || 0} Wins out of ${resultsData.total || 0} Predictions`,
+            stats: {
+                total: resultsData.total || 0,
+                wins: resultsData.wins || 0,
+                losses: resultsData.losses || 0,
+                winRate: winRate,
+                totalOdds: resultsData.results.reduce((total, result) => total * result.odds, 1).toFixed(2) || "0",
+                status: resultsData.wins > resultsData.losses ? "Good" : "Poor",
+                record: `${resultsData.wins || 0}-0-${resultsData.losses || 0}`
+            },
+            results: resultsData.results || [],
+            analysis: `Performance with ${resultsData.wins || 0} wins out of ${resultsData.total || 0} predictions (${winRate} accuracy).`,
+            insight: "Focus on high confidence predictions for better results."
         }
+    };
+    
+    // Add secondary match if exists
+    if (topData.secondaryMatch) {
+        completeData.topPrediction.secondaryMatch = {
+            league: topData.secondaryMatch.league,
+            time: topData.secondaryMatch.time,
+            fixture: `${topData.secondaryMatch.team1.name} vs ${topData.secondaryMatch.team2.name}`,
+            team1: {
+                name: topData.secondaryMatch.team1.name,
+                code: topData.secondaryMatch.team1.code,
+                color: topData.secondaryMatch.team1.color
+            },
+            team2: {
+                name: topData.secondaryMatch.team2.name,
+                code: topData.secondaryMatch.team2.code,
+                color: topData.secondaryMatch.team2.color
+            },
+            prediction: topData.secondaryMatch.prediction,
+            odds: topData.secondaryMatch.odds,
+            confidence: topData.secondaryMatch.confidence,
+            riskLevel: topData.secondaryMatch.riskLevel
+        };
+    }
+    
+    // Add accumulator if exists
+    if (topData.accumulator) {
+        completeData.topPrediction.accumulator = topData.accumulator;
+    }
+    
+    // Display JSON
+    document.getElementById('json-text').value = JSON.stringify(completeData, null, 2);
+    document.getElementById('json-output').style.display = 'block';
+    
+    // Scroll to output
+    setTimeout(() => {
+        document.getElementById('json-output').scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+    
+    // Show success message
+    alert(`✅ Complete JSON generated!\n\n• Hero: 3 matches\n• Top: ${completeData.topPrediction.mainMatch.fixture}\n• Today: ${todayData.predictions.length} predictions\n• Results: ${resultsData.results.length} matches\n\nClick "Copy JSON" then update GitHub!`);
+}
         
         function getDefaultHeroData() {
             return {
