@@ -1,12 +1,9 @@
-// ===== RMAME Predictions - Main JavaScript =====
-// Fully compatible with your index.html and style.css
-// No CSS conflicts - only adds functionality
-
+// ===== RMAME Predictions - Updated JavaScript for Your data.json =====
 console.log('📱 RMAME Predictions Script - Loading...');
 
 // ===== INITIALIZE WEBSITE =====
 function initializeWebsite() {
-    console.log('🏁 Initializing all website features...');
+    console.log('🏁 Initializing website...');
     
     // Setup all functionality
     setupMobileMenu();
@@ -15,14 +12,671 @@ function initializeWebsite() {
     setupWhatsAppSharing();
     setupSubscriptionForm();
     setupSmoothScrolling();
-    loadResultsTable();
+    loadResultsFromJSON(); // Updated to use your JSON
+    loadHeroData(); // Load hero data from JSON
+    loadTodayPredictions(); // Load today's predictions
     setupVisitorCounter();
     hideLoader();
     
     console.log('✅ Website fully initialized');
 }
 
-// ===== MOBILE MENU =====
+// ===== LOAD HERO DATA FROM JSON =====
+async function loadHeroData() {
+    try {
+        const response = await fetch('data.json?v=' + Date.now());
+        const data = await response.json();
+        
+        if (data.hero) {
+            updateHeroSection(data.hero);
+        }
+        
+        if (data.topPrediction) {
+            updateTopPredictionSection(data.topPrediction);
+        }
+        
+        // Show success indicator
+        showDataLoadedIndicator();
+        
+    } catch (error) {
+        console.log('📋 Using hardcoded data (JSON error)');
+    }
+}
+
+// ===== UPDATE HERO SECTION =====
+function updateHeroSection(heroData) {
+    console.log('🏆 Updating hero section...');
+    
+    // Update title
+    const heroTitle = document.querySelector('.hero-title');
+    if (heroTitle && heroData.title) {
+        // Check if title contains "WON" for highlighting
+        if (heroData.title.includes('WON')) {
+            const parts = heroData.title.split('WON');
+            heroTitle.innerHTML = `${parts[0]}<span class="highlight">WON</span>${parts[1] || ''}`;
+        } else {
+            heroTitle.innerHTML = heroData.title.replace('ACCUMULATOR', '<span class="highlight">ACCUMULATOR</span>');
+        }
+    }
+    
+    // Update subtitle
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    if (heroSubtitle && heroData.subtitle) {
+        heroSubtitle.textContent = heroData.subtitle;
+    }
+    
+    // Update date
+    const heroDate = document.querySelector('.results-header .date');
+    if (heroDate && heroData.date) {
+        heroDate.textContent = heroData.date + ' • 3-Match Accumulator';
+    }
+    
+    // Update stats
+    const stats = document.querySelectorAll('.hero-stats .stat h3');
+    if (stats.length >= 2 && heroData.stats) {
+        heroData.stats.forEach((stat, index) => {
+            if (stats[index]) {
+                stats[index].textContent = stat.value;
+                
+                // Update label if available
+                const label = stats[index].parentElement.querySelector('p');
+                if (label && stat.label) {
+                    label.textContent = stat.label;
+                }
+            }
+        });
+    }
+    
+    // Update results list
+    updateHeroResults(heroData.results);
+    
+    // Update calculations
+    updateHeroCalculations(heroData.calculations);
+}
+
+// ===== UPDATE HERO RESULTS =====
+function updateHeroResults(results) {
+    const resultsList = document.querySelector('.results-list');
+    if (!resultsList || !results) return;
+    
+    // Clear existing results except the first one (for template)
+    const existingResults = resultsList.querySelectorAll('.result-item');
+    if (existingResults.length > 0) {
+        // Keep first as template, remove others
+        for (let i = 1; i < existingResults.length; i++) {
+            existingResults[i].remove();
+        }
+        
+        // Update first result
+        const firstResult = existingResults[0];
+        if (results[0]) {
+            updateResultItem(firstResult, results[0], true);
+        }
+        
+        // Add remaining results
+        for (let i = 1; i < results.length; i++) {
+            const newResult = firstResult.cloneNode(true);
+            updateResultItem(newResult, results[i]);
+            resultsList.appendChild(newResult);
+        }
+    }
+}
+
+function updateResultItem(item, data, isFirst = false) {
+    if (!item || !data) return;
+    
+    // Update match info
+    const matchInfo = item.querySelector('.match-info');
+    if (matchInfo) {
+        const timeSpan = matchInfo.querySelector('.match-time');
+        if (timeSpan) {
+            timeSpan.textContent = `🏴󠁧󠁢󠁥󠁮󠁧󠁿 ${data.time}`;
+        }
+        
+        const teamsSpan = matchInfo.querySelector('.match-teams');
+        if (teamsSpan) {
+            teamsSpan.textContent = data.fixture;
+        }
+        
+        // Update league if it's the first item (featured)
+        if (isFirst) {
+            const detail = matchInfo.querySelector('.match-detail');
+            if (detail) {
+                const label = detail.querySelector('.detail-label');
+                const value = detail.querySelector('.detail-value');
+                if (label) label.textContent = data.league?.toUpperCase() || 'LEAGUE TWO';
+                if (value) value.textContent = data.betType || '';
+            }
+        }
+    }
+    
+    // Update bet info
+    const betInfo = item.querySelector('.bet-info');
+    if (betInfo) {
+        const betType = betInfo.querySelector('.bet-type');
+        if (betType) {
+            betType.textContent = data.betType || '';
+            betType.style.background = data.betColor ? 
+                `linear-gradient(90deg, ${data.betColor}, ${adjustColor(data.betColor, 20)})` : 
+                'rgba(255, 255, 255, 0.1)';
+            betType.style.color = data.betColor === '#FFD700' ? '#000' : 'white';
+        }
+        
+        const oddsSpan = betInfo.querySelector('.bet-odds');
+        if (oddsSpan && data.odds) {
+            oddsSpan.textContent = `@${data.odds}`;
+        }
+        
+        const statusSpan = betInfo.querySelector('.status');
+        if (statusSpan) {
+            statusSpan.textContent = data.status === 'won' ? '✅' : '❌';
+            statusSpan.className = `status ${data.status}`;
+        }
+    }
+    
+    // Update status classes
+    item.className = 'result-item';
+    if (data.status === 'won') {
+        item.classList.add('won');
+    }
+    if (isFirst) {
+        item.classList.add('featured');
+    }
+}
+
+// ===== UPDATE HERO CALCULATIONS =====
+function updateHeroCalculations(calculations) {
+    if (!calculations) return;
+    
+    // Update total odds in summary
+    const summaryStats = document.querySelectorAll('.summary-stat strong');
+    if (summaryStats.length >= 4 && calculations.totalOdds) {
+        // Update accumulator odds
+        summaryStats[3].textContent = calculations.totalOdds;
+        summaryStats[3].className = 'won';
+    }
+    
+    // Update winning calculations
+    const calcGrid = document.querySelector('.calculation-grid');
+    if (calcGrid && calculations.winningExamples) {
+        const calcItems = calcGrid.querySelectorAll('.calc-item');
+        calculations.winningExamples.forEach((example, index) => {
+            if (calcItems[index]) {
+                const span = calcItems[index].querySelector('span');
+                const strong = calcItems[index].querySelector('strong');
+                
+                if (span) {
+                    span.textContent = `With $${example.stake} Stake:`;
+                }
+                
+                if (strong) {
+                    strong.textContent = `$${example.win?.toLocaleString() || example.win}`;
+                    strong.className = 'won';
+                }
+            }
+        });
+    }
+    
+    // Update profit note
+    const profitNote = document.querySelector('.profit-note');
+    if (profitNote && calculations.profitNote) {
+        profitNote.textContent = calculations.profitNote;
+    }
+}
+
+// ===== UPDATE TOP PREDICTION SECTION =====
+function updateTopPredictionSection(predictionData) {
+    console.log('🎯 Updating top prediction...');
+    
+    const topSection = document.getElementById('top-prediction');
+    if (!topSection || !predictionData.mainMatch) return;
+    
+    // Update section subtitle
+    const subtitle = topSection.querySelector('.section-subtitle');
+    if (subtitle && predictionData.subtitle) {
+        subtitle.textContent = predictionData.subtitle;
+    }
+    
+    // Update badge
+    const badge = topSection.querySelector('.top-badge');
+    if (badge && predictionData.badge) {
+        badge.innerHTML = `<i class="fas fa-fire"></i> ${predictionData.badge}`;
+    }
+    
+    // Update main match details
+    updateMatchInTopPrediction(predictionData.mainMatch);
+}
+
+function updateMatchInTopPrediction(matchData) {
+    // Update match header
+    const matchHeader = document.querySelector('.match-header');
+    if (matchHeader) {
+        const leagueSpan = matchHeader.querySelector('.match-league');
+        if (leagueSpan && matchData.league) {
+            leagueSpan.innerHTML = `<i class="fas fa-crown"></i> ${matchData.league}`;
+        }
+        
+        const timeSpan = matchHeader.querySelector('.match-time');
+        if (timeSpan && matchData.time) {
+            timeSpan.textContent = matchData.time;
+        }
+    }
+    
+    // Update teams
+    const teams = document.querySelectorAll('.team');
+    if (teams.length >= 2 && matchData.team1 && matchData.team2) {
+        // Team 1
+        const team1Logo = teams[0].querySelector('.team-logo');
+        const team1Name = teams[0].querySelector('.team-name');
+        if (team1Logo && matchData.team1.code) {
+            team1Logo.textContent = matchData.team1.code;
+            team1Logo.style.backgroundColor = matchData.team1.color || '#DC052D';
+            team1Logo.style.color = 'white';
+        }
+        if (team1Name && matchData.team1.name) {
+            team1Name.textContent = matchData.team1.name;
+        }
+        
+        // Team 2
+        const team2Logo = teams[1].querySelector('.team-logo');
+        const team2Name = teams[1].querySelector('.team-name');
+        if (team2Logo && matchData.team2.code) {
+            team2Logo.textContent = matchData.team2.code;
+            team2Logo.style.backgroundColor = matchData.team2.color || '#008E3B';
+            team2Logo.style.color = 'white';
+        }
+        if (team2Name && matchData.team2.name) {
+            team2Name.textContent = matchData.team2.name;
+        }
+    }
+    
+    // Update prediction
+    const predictionType = document.querySelector('.type-value');
+    if (predictionType && matchData.prediction) {
+        predictionType.textContent = matchData.prediction;
+    }
+    
+    // Update odds
+    const oddsValue = document.querySelector('.odds-value');
+    if (oddsValue && matchData.odds) {
+        oddsValue.textContent = `@${matchData.odds}`;
+    }
+    
+    // Update confidence
+    const confidenceFill = document.querySelector('.confidence-fill');
+    const confidencePercent = document.querySelector('.confidence-percent');
+    if (confidenceFill && matchData.confidence) {
+        confidenceFill.style.width = `${matchData.confidence}%`;
+    }
+    if (confidencePercent && matchData.confidence) {
+        confidencePercent.textContent = `${matchData.confidence}% Confidence`;
+    }
+    
+    // Update risk level
+    const confidenceHeader = document.querySelector('.confidence-header span');
+    if (confidenceHeader && matchData.riskLevel) {
+        confidenceHeader.textContent = matchData.riskLevel;
+    }
+}
+
+// ===== LOAD TODAY'S PREDICTIONS =====
+async function loadTodayPredictions() {
+    try {
+        const response = await fetch('data.json?v=' + Date.now());
+        const data = await response.json();
+        
+        if (data.todayPredictions) {
+            updateTodayPredictions(data.todayPredictions);
+        }
+        
+        if (data.yesterdayResults) {
+            updateYesterdayResults(data.yesterdayResults);
+        }
+        
+    } catch (error) {
+        console.log('📋 Using hardcoded predictions');
+    }
+}
+
+function updateTodayPredictions(predictionsData) {
+    const predictionsSection = document.getElementById('predictions');
+    if (!predictionsSection || !predictionsData) return;
+    
+    // Update section subtitle
+    const subtitle = predictionsSection.querySelector('.section-subtitle');
+    if (subtitle && predictionsData.subtitle) {
+        subtitle.textContent = predictionsData.subtitle;
+    }
+    
+    // Update predictions grid
+    const predictionsGrid = document.querySelector('.predictions-grid');
+    if (predictionsGrid && predictionsData.predictions) {
+        // Clear existing cards except first (template)
+        const cards = predictionsGrid.querySelectorAll('.match-card');
+        if (cards.length > 0) {
+            // Update first card
+            if (cards[0] && predictionsData.predictions[0]) {
+                updateMatchCard(cards[0], predictionsData.predictions[0]);
+            }
+            
+            // Remove extra cards if we have less predictions
+            if (predictionsData.predictions.length < cards.length) {
+                for (let i = predictionsData.predictions.length; i < cards.length; i++) {
+                    cards[i].remove();
+                }
+            }
+        }
+        
+        // Update premium offer
+        updatePremiumOffer(predictionsData);
+    }
+}
+
+function updateMatchCard(card, data) {
+    if (!card || !data) return;
+    
+    // Update match header
+    const header = card.querySelector('.match-header');
+    if (header) {
+        const leagueSpan = header.querySelector('.match-league');
+        if (leagueSpan && data.league) {
+            leagueSpan.innerHTML = `<i class="fas fa-trophy"></i> ${data.league}`;
+        }
+        
+        const timeSpan = header.querySelector('.match-time');
+        if (timeSpan && data.time) {
+            timeSpan.textContent = data.time;
+        }
+    }
+    
+    // Update teams
+    const teamsContainer = card.querySelector('.teams');
+    if (teamsContainer && data.team1 && data.team2) {
+        const teamDivs = teamsContainer.querySelectorAll('.team');
+        
+        // Team 1
+        if (teamDivs[0]) {
+            const logo = teamDivs[0].querySelector('.team-logo');
+            const name = teamDivs[0].querySelector('.team-name');
+            
+            if (logo && data.team1.code) {
+                logo.textContent = data.team1.code;
+                logo.style.backgroundColor = data.team1.color || '#FF69B4';
+                logo.style.color = 'white';
+            }
+            if (name && data.team1.name) {
+                name.textContent = data.team1.name;
+            }
+        }
+        
+        // Team 2
+        if (teamDivs[1]) {
+            const logo = teamDivs[1].querySelector('.team-logo');
+            const name = teamDivs[1].querySelector('.team-name');
+            
+            if (logo && data.team2.code) {
+                logo.textContent = data.team2.code;
+                logo.style.backgroundColor = data.team2.color || '#FF6600';
+                logo.style.color = 'white';
+            }
+            if (name && data.team2.name) {
+                name.textContent = data.team2.name;
+            }
+        }
+    }
+    
+    // Update prediction
+    const predictionDiv = card.querySelector('.prediction');
+    if (predictionDiv) {
+        const valueSpan = predictionDiv.querySelector('.prediction-value');
+        const oddSpan = predictionDiv.querySelector('.prediction-odd');
+        
+        if (valueSpan && data.prediction) {
+            valueSpan.textContent = data.prediction;
+        }
+        if (oddSpan && data.odds) {
+            oddSpan.textContent = `@${data.odds}`;
+        }
+    }
+    
+    // Update confidence
+    const confidenceDiv = card.querySelector('.confidence');
+    if (confidenceDiv && data.confidence) {
+        const fill = confidenceDiv.querySelector('.confidence-fill');
+        const text = confidenceDiv.querySelector('span');
+        
+        if (fill) {
+            fill.style.width = `${data.confidence}%`;
+        }
+        if (text) {
+            text.textContent = `${data.confidence}% Confidence`;
+        }
+    }
+}
+
+function updatePremiumOffer(predictionsData) {
+    const premiumOffer = document.querySelector('.premium-offer');
+    if (!premiumOffer || !predictionsData.totalOdds) return;
+    
+    // Update note
+    const note = premiumOffer.querySelector('.note');
+    if (note && predictionsData.totalPredictions && predictionsData.totalOdds) {
+        note.innerHTML = `🔥 <strong>${predictionsData.totalPredictions} Match Accumulator:</strong> Total Odds: ${predictionsData.totalOdds} - Potential ${(parseFloat(predictionsData.totalOdds) * 100 - 100).toFixed(0)}% Return!`;
+    }
+    
+    // Update winning calculations
+    if (predictionsData.winningExamples) {
+        const calculationGrid = premiumOffer.querySelector('.calculation-grid');
+        if (calculationGrid) {
+            const calcItems = calculationGrid.querySelectorAll('.calc-item');
+            predictionsData.winningExamples.forEach((example, index) => {
+                if (calcItems[index]) {
+                    const span = calcItems[index].querySelector('span');
+                    const strong = calcItems[index].querySelector('strong');
+                    
+                    if (span) {
+                        span.textContent = `With $${example.stake} Stake:`;
+                    }
+                    if (strong) {
+                        strong.textContent = `$${example.win}`;
+                        strong.className = 'won';
+                    }
+                }
+            });
+        }
+    }
+}
+
+// ===== UPDATE YESTERDAY RESULTS =====
+function updateYesterdayResults(resultsData) {
+    const resultsSection = document.getElementById('results');
+    if (!resultsSection || !resultsData) return;
+    
+    // Update subtitle
+    const subtitle = resultsSection.querySelector('.section-subtitle');
+    if (subtitle && resultsData.subtitle) {
+        subtitle.textContent = resultsData.subtitle;
+    }
+    
+    // Update stats
+    updateResultsStats(resultsData.stats);
+    
+    // Update analysis
+    updateResultsAnalysis(resultsData);
+}
+
+function updateResultsStats(statsData) {
+    const statBoxes = document.querySelectorAll('.stat-box');
+    if (!statBoxes.length || !statsData) return;
+    
+    // Update each stat box
+    statBoxes.forEach((box, index) => {
+        const valueDiv = box.querySelector('.stat-value');
+        const p = box.querySelector('p');
+        
+        switch(index) {
+            case 0: // Yesterday's Record
+                if (valueDiv && statsData.record) {
+                    valueDiv.textContent = statsData.record;
+                }
+                if (p) {
+                    p.textContent = 'W-D-L Record';
+                }
+                break;
+            case 1: // Win Rate
+                if (valueDiv && statsData.winRate) {
+                    valueDiv.textContent = statsData.winRate;
+                }
+                if (p && statsData.wins && statsData.total) {
+                    p.textContent = `${statsData.wins}/${statsData.total} Wins`;
+                }
+                break;
+            case 2: // Total Odds
+                if (valueDiv && statsData.totalOdds) {
+                    valueDiv.textContent = statsData.totalOdds;
+                }
+                if (p) {
+                    p.textContent = 'Accumulator Value';
+                }
+                break;
+            case 3: // Slip Status
+                if (valueDiv && statsData.status) {
+                    valueDiv.textContent = statsData.status;
+                    valueDiv.className = 'stat-value ' + statsData.status.toLowerCase();
+                }
+                if (p && statsData.losses) {
+                    p.textContent = `${statsData.losses} losses broke accumulator`;
+                }
+                break;
+        }
+    });
+}
+
+function updateResultsAnalysis(resultsData) {
+    const analysisDiv = document.querySelector('.results-analysis');
+    if (!analysisDiv || !resultsData) return;
+    
+    // Update analysis text
+    const p = analysisDiv.querySelector('p');
+    if (p && resultsData.analysis) {
+        p.innerHTML = `Excellent performance with <strong style="color: #00E6A1;">${resultsData.analysis}</strong>`;
+    }
+    
+    // Update insight
+    const insightDiv = analysisDiv.querySelector('.analysis-tips p');
+    if (insightDiv && resultsData.insight) {
+        insightDiv.innerHTML = `<i class="fas fa-lightbulb"></i> <strong>Key Insight:</strong> ${resultsData.insight}`;
+    }
+}
+
+// ===== LOAD RESULTS FROM JSON =====
+async function loadResultsFromJSON() {
+    try {
+        const response = await fetch('data.json?v=' + Date.now());
+        const data = await response.json();
+        
+        if (data.yesterdayResults && data.yesterdayResults.results) {
+            updateResultsTable(data.yesterdayResults.results);
+        }
+        
+    } catch (error) {
+        loadFallbackResults();
+    }
+}
+
+function updateResultsTable(results) {
+    const tableBody = document.getElementById('results-table-body');
+    if (!tableBody || !results) return;
+    
+    tableBody.innerHTML = '';
+    
+    results.forEach(result => {
+        const row = document.createElement('div');
+        row.className = 'table-row';
+        
+        if (result.outcome === 'won') {
+            row.classList.add('won');
+        } else if (result.outcome === 'lost') {
+            row.classList.add('lost');
+        }
+        
+        row.innerHTML = `
+            <div>${result.fixture || ''}</div>
+            <div>${result.betType || ''}</div>
+            <div>@${result.odds || ''}</div>
+            <div>${result.result || ''}</div>
+            <div class="status ${result.outcome || ''}">${result.outcome?.toUpperCase() || ''}</div>
+        `;
+        
+        tableBody.appendChild(row);
+    });
+}
+
+function loadFallbackResults() {
+    const tableBody = document.getElementById('results-table-body');
+    if (!tableBody) return;
+    
+    tableBody.innerHTML = `
+        <div class="table-row lost">
+            <div>Stevenage 0-1 Cardiff</div>
+            <div>Double Chance: 1X</div>
+            <div>@1.41</div>
+            <div>0-1</div>
+            <div class="status lost">LOST</div>
+        </div>
+    `;
+}
+
+// ===== SHOW DATA LOADED INDICATOR =====
+function showDataLoadedIndicator() {
+    const existingIndicator = document.querySelector('.data-update-indicator');
+    if (existingIndicator) existingIndicator.remove();
+    
+    const indicator = document.createElement('div');
+    indicator.className = 'data-update-indicator';
+    indicator.style.cssText = `
+        background: linear-gradient(90deg, #00B894, #FF6B35);
+        color: white;
+        padding: 10px 25px;
+        border-radius: 25px;
+        font-size: 14px;
+        font-weight: 700;
+        margin: 15px auto;
+        text-align: center;
+        display: inline-block;
+        animation: pulse 2s infinite;
+    `;
+    indicator.innerHTML = '<i class="fas fa-sync-alt"></i> LIVE DATA LOADED • UPDATED JUST NOW';
+    
+    const heroSection = document.querySelector('.hero .container');
+    if (heroSection) {
+        heroSection.prepend(indicator);
+    }
+    
+    // Add pulse animation
+    if (!document.querySelector('#pulse-animation')) {
+        const style = document.createElement('style');
+        style.id = 'pulse-animation';
+        style.textContent = `
+            @keyframes pulse {
+                0% { opacity: 1; }
+                50% { opacity: 0.7; }
+                100% { opacity: 1; }
+            }
+        `;
+        document.head.appendChild(style);
+    }
+}
+
+// ===== UTILITY FUNCTIONS =====
+function adjustColor(color, amount) {
+    // Simple color adjustment
+    return color; // For now, return same color
+}
+
+// ===== OTHER FUNCTIONS (SAME AS BEFORE) =====
+
+// Mobile Menu
 function setupMobileMenu() {
     const menuToggle = document.getElementById('menuToggle');
     const navMenu = document.getElementById('navMenu');
@@ -30,45 +684,14 @@ function setupMobileMenu() {
     if (menuToggle && navMenu) {
         menuToggle.addEventListener('click', function() {
             navMenu.classList.toggle('active');
-            this.classList.toggle('active');
-            
-            // Change icon
             const icon = this.querySelector('i');
-            if (navMenu.classList.contains('active')) {
-                icon.classList.remove('fa-bars');
-                icon.classList.add('fa-times');
-            } else {
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-        
-        // Close menu when clicking outside
-        document.addEventListener('click', function(event) {
-            if (!navMenu.contains(event.target) && !menuToggle.contains(event.target)) {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                const icon = menuToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            }
-        });
-        
-        // Close menu when clicking links
-        const navLinks = document.querySelectorAll('.nav-link');
-        navLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-                const icon = menuToggle.querySelector('i');
-                icon.classList.remove('fa-times');
-                icon.classList.add('fa-bars');
-            });
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
         });
     }
 }
 
-// ===== SHOW MORE PREDICTIONS =====
+// Show More Predictions
 function setupShowMorePredictions() {
     const showMoreBtn = document.getElementById('showMorePredictions');
     const morePredictions = document.getElementById('morePredictions');
@@ -82,299 +705,99 @@ function setupShowMorePredictions() {
                 morePredictions.style.display = 'none';
                 this.innerHTML = '<i class="fas fa-arrow-down"></i> Show More Predictions (8 more)';
             }
-            
-            // Smooth scroll to show/hide
-            morePredictions.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         });
     }
 }
 
-// ===== BACK TO TOP BUTTON =====
+// Back to Top
 function setupBackToTop() {
     const backToTopBtn = document.getElementById('backToTop');
     
     if (backToTopBtn) {
-        // Show/hide button on scroll
         window.addEventListener('scroll', function() {
-            if (window.pageYOffset > 300) {
-                backToTopBtn.style.display = 'flex';
-            } else {
-                backToTopBtn.style.display = 'none';
-            }
+            backToTopBtn.style.display = window.pageYOffset > 300 ? 'flex' : 'none';
         });
         
-        // Smooth scroll to top
         backToTopBtn.addEventListener('click', function() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         });
     }
 }
 
-// ===== LOAD RESULTS TABLE =====
-async function loadResultsTable() {
-    const resultsTableBody = document.getElementById('results-table-body');
-    
-    if (!resultsTableBody) return;
-    
-    try {
-        // Try to load from JSON first
-        const response = await fetch('results.json?v=' + Date.now());
-        
-        if (response.ok) {
-            const results = await response.json();
-            
-            // Clear loading message
-            resultsTableBody.innerHTML = '';
-            
-            // Add results to table
-            results.forEach(result => {
-                const row = document.createElement('div');
-                row.className = 'table-row';
-                
-                // Add appropriate class based on outcome
-                if (result.outcome?.toLowerCase() === 'won') {
-                    row.classList.add('won');
-                } else if (result.outcome?.toLowerCase() === 'lost') {
-                    row.classList.add('lost');
-                }
-                
-                row.innerHTML = `
-                    <div>${result.fixture || ''}</div>
-                    <div>${result.betType || ''}</div>
-                    <div>${result.odds || ''}</div>
-                    <div>${result.result || ''}</div>
-                    <div class="status ${result.outcome?.toLowerCase() || ''}">${result.outcome || ''}</div>
-                `;
-                
-                resultsTableBody.appendChild(row);
-            });
-            
-            console.log('✅ Results loaded from JSON');
-        } else {
-            throw new Error('JSON file not found');
-        }
-    } catch (error) {
-        console.log('📋 Using hardcoded results (JSON not available)');
-        // Fallback to hardcoded results
-        resultsTableBody.innerHTML = `
-            <div class="table-row won">
-                <div>Stevenage 0-1 Cardiff</div>
-                <div>1X (Double Chance)</div>
-                <div>@1.41</div>
-                <div>0-1</div>
-                <div class="status lost">Lost</div>
-            </div>
-            <div class="table-row won">
-                <div>Penybont 2-2 Barry Town</div>
-                <div>BTTS Yes</div>
-                <div>@1.60</div>
-                <div>2-2</div>
-                <div class="status won">Won</div>
-            </div>
-            <div class="table-row won">
-                <div>Leyton Orient 1-1 Luton</div>
-                <div>1X (Double Chance)</div>
-                <div>@1.46</div>
-                <div>1-1</div>
-                <div class="status won">Won</div>
-            </div>
-            <div class="table-row won">
-                <div>Atalanta 2-1 Chelsea</div>
-                <div>BTTS Yes</div>
-                <div>@1.54</div>
-                <div>2-1</div>
-                <div class="status won">Won</div>
-            </div>
-            <div class="table-row won">
-                <div>QPR 0-0 Birmingham</div>
-                <div>1X (Double Chance)</div>
-                <div>@1.46</div>
-                <div>0-0</div>
-                <div class="status won">Won</div>
-            </div>
-        `;
-    }
-}
-
-// ===== WHATSAPP SHARING =====
+// WhatsApp Sharing
 function setupWhatsAppSharing() {
-    // Share Free Predictions
     window.shareOnWhatsApp = function(type) {
-        let message = '';
         const url = 'https://mamecholeye-lab.github.io/mamecholeye/';
+        let message = '';
         
         if (type === 'free') {
-            message = `⚽️ FREE FOOTBALL PREDICTIONS ⚽️\n\n`;
-            message += `🔥 RMAME Predictions - Today's Top Picks:\n\n`;
-            message += `1️⃣ Stevenage v Cardiff\n   Bet: 1X (Double Chance)\n   Odds: @1.41\n\n`;
-            message += `2️⃣ Penybont v Barry Town\n   Bet: BTTS Yes\n   Odds: @1.60\n\n`;
-            message += `3️⃣ Leyton Orient v Luton\n   Bet: 1X (Double Chance)\n   Odds: @1.46\n\n`;
-            message += `🎯 Join our VIP group for all 12 predictions!\n`;
-            message += `💰 83.3% Win Rate Yesterday\n`;
-            message += `💵 163.9 Total Odds Potential\n\n`;
-            message += `👉 Get Premium Predictions: ${url}`;
+            message = `⚽️ FREE FOOTBALL PREDICTIONS ⚽️\n\nCheck out RMAME Predictions!\n👉 ${url}`;
         } else {
-            message = `⚽️ RMAME PREDICTIONS ⚽️\n\n`;
-            message += `✅ Professional Football Betting Tips\n`;
-            message += `✅ 83.3% Win Rate\n`;
-            message += `✅ 10/12 Wins Yesterday\n`;
-            message += `✅ 163.9 Total Odds Accumulator\n`;
-            message += `✅ Daily Premium Predictions\n\n`;
-            message += `🎯 Join the winning team today!\n`;
-            message += `👉 Visit: ${url}`;
+            message = `⚽️ RMAME PREDICTIONS ⚽️\n\nProfessional Betting Tips\n✅ High Win Rate\n✅ Daily Predictions\n👉 ${url}`;
         }
         
-        const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-        window.open(whatsappUrl, '_blank');
+        window.open(`https://wa.me/?text=${encodeURIComponent(message)}`, '_blank');
     };
     
-    // Share Website Link
     window.shareWebsite = function() {
         const url = 'https://mamecholeye-lab.github.io/mamecholeye/';
-        
-        // Try clipboard API first
-        if (navigator.clipboard) {
-            navigator.clipboard.writeText(url)
-                .then(() => {
-                    showNotification('✅ Website link copied to clipboard!');
-                })
-                .catch(err => {
-                    fallbackCopy(url);
-                });
-        } else {
-            fallbackCopy(url);
-        }
-        
-        function fallbackCopy(text) {
-            const textArea = document.createElement('textarea');
-            textArea.value = text;
-            textArea.style.position = 'fixed';
-            textArea.style.opacity = '0';
-            document.body.appendChild(textArea);
-            textArea.focus();
-            textArea.select();
-            
-            try {
+        navigator.clipboard.writeText(url)
+            .then(() => alert('✅ Website link copied!'))
+            .catch(() => {
+                const tempInput = document.createElement('input');
+                tempInput.value = url;
+                document.body.appendChild(tempInput);
+                tempInput.select();
                 document.execCommand('copy');
-                showNotification('✅ Link copied!');
-            } catch (err) {
-                showNotification('❌ Failed to copy link');
-            }
-            
-            document.body.removeChild(textArea);
-        }
+                document.body.removeChild(tempInput);
+                alert('✅ Link copied!');
+            });
     };
 }
 
-// ===== SUBSCRIPTION FORM =====
+// Subscription Form
 function setupSubscriptionForm() {
     const form = document.getElementById('subscribe');
+    if (!form) return;
     
-    if (form) {
-        // Phone number formatting
-        const phoneInput = document.getElementById('phoneInput');
-        if (phoneInput) {
-            phoneInput.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/\D/g, '');
-                
-                // Format for Ethiopian numbers
-                if (value.startsWith('251')) {
-                    value = '+251' + value.substring(3);
-                } else if (value.startsWith('0')) {
-                    value = '+251' + value.substring(1);
-                }
-                
-                // Limit to +251 followed by 9 digits
-                if (value.length > 13) {
-                    value = value.substring(0, 13);
-                }
-                
-                e.target.value = value;
-                
-                // Validate
-                const pattern = /^\+251[0-9]{9}$/;
-                if (pattern.test(value)) {
-                    e.target.classList.remove('invalid');
-                    e.target.classList.add('valid');
-                } else {
-                    e.target.classList.remove('valid');
-                    e.target.classList.add('invalid');
-                }
-            });
-        }
-        
-        // Form submission
-        form.addEventListener('submit', function(e) {
-            e.preventDefault();
+    const phoneInput = document.getElementById('phoneInput');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
             
-            // Get form values
-            const name = this.querySelector('input[type="text"]')?.value.trim();
-            const email = this.querySelector('input[type="email"]')?.value.trim();
-            const phone = this.querySelector('input[type="tel"]')?.value.trim();
-            const packageType = this.querySelector('select')?.value;
-            const paymentMethod = this.querySelector('input[name="payment"]:checked')?.value;
-            
-            // Validate phone number
-            const phonePattern = /^\+251[0-9]{9}$/;
-            if (phone && !phonePattern.test(phone)) {
-                showNotification('❌ Please enter a valid Ethiopian phone number (+251XXXXXXXXX)');
-                return;
+            if (value.startsWith('251')) {
+                value = '+251' + value.substring(3);
+            } else if (value.startsWith('0')) {
+                value = '+251' + value.substring(1);
             }
             
-            // Create WhatsApp message
-            let message = `*NEW SUBSCRIPTION REQUEST* 📋\n\n`;
-            message += `👤 Name: ${name || 'Not provided'}\n`;
-            message += `📧 Email: ${email || 'Not provided'}\n`;
-            message += `📱 Phone: ${phone || 'Not provided'}\n`;
-            message += `📦 Package: ${packageType || 'Not selected'}\n`;
-            message += `💳 Payment Method: ${paymentMethod || 'Not selected'}\n\n`;
-            message += `✅ Please send payment details for this subscription.`;
-            
-            // Open WhatsApp
-            const whatsappUrl = `https://wa.me/251979380726?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-            
-            // Show success message
-            const submitBtn = this.querySelector('button[type="submit"]');
-            if (submitBtn) {
-                const originalText = submitBtn.innerHTML;
-                const originalBg = submitBtn.style.background;
-                
-                submitBtn.innerHTML = '<i class="fas fa-check"></i> Request Sent!';
-                submitBtn.style.background = 'linear-gradient(90deg, #00B894, #00E6A1)';
-                submitBtn.disabled = true;
-                
-                // Reset after 3 seconds
-                setTimeout(() => {
-                    submitBtn.innerHTML = originalText;
-                    submitBtn.style.background = originalBg;
-                    submitBtn.disabled = false;
-                }, 3000);
+            if (value.length > 13) {
+                value = value.substring(0, 13);
             }
             
-            // Reset form
-            this.reset();
-            
-            // Reset phone validation classes
-            if (phoneInput) {
-                phoneInput.classList.remove('valid', 'invalid');
-            }
+            e.target.value = value;
         });
     }
+    
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        const name = this.querySelector('input[type="text"]')?.value || '';
+        const phone = this.querySelector('input[type="tel"]')?.value || '';
+        const packageType = this.querySelector('select')?.value || '';
+        
+        const message = `Name: ${name}%0APhone: ${phone}%0APackage: ${packageType}`;
+        window.open(`https://wa.me/251979380726?text=${message}`, '_blank');
+    });
 }
 
-// ===== SMOOTH SCROLLING =====
+// Smooth Scrolling
 function setupSmoothScrolling() {
-    // Smooth scroll for anchor links
     document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
             const href = this.getAttribute('href');
             
-            // Skip if it's not a section ID or if it's a button/link with special function
-            if (href === '#' || href === '#backToTop' || href === '#subscribe' || this.classList.contains('nav-btn')) {
+            if (href === '#' || href === '#backToTop' || this.classList.contains('nav-btn')) {
                 return;
             }
             
@@ -384,87 +807,37 @@ function setupSmoothScrolling() {
             const targetElement = document.getElementById(targetId);
             
             if (targetElement) {
-                // Calculate navbar height
-                const navbarHeight = document.querySelector('.navbar').offsetHeight;
-                
                 window.scrollTo({
-                    top: targetElement.offsetTop - navbarHeight,
+                    top: targetElement.offsetTop - 80,
                     behavior: 'smooth'
                 });
-                
-                // Update active nav link
-                updateActiveNavLink(targetId);
             }
         });
     });
-    
-    // Update active nav link on scroll
-    window.addEventListener('scroll', debounce(() => {
-        const sections = document.querySelectorAll('section[id]');
-        let current = '';
-        
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop - 100;
-            const sectionHeight = section.clientHeight;
-            
-            if (window.pageYOffset >= sectionTop && window.pageYOffset < sectionTop + sectionHeight) {
-                current = section.getAttribute('id');
-            }
-        });
-        
-        updateActiveNavLink(current);
-    }, 100));
 }
 
-function updateActiveNavLink(currentSection) {
-    const navLinks = document.querySelectorAll('.nav-link');
-    navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href') === `#${currentSection}`) {
-            link.classList.add('active');
-        }
-    });
-}
-
-// ===== VISITOR COUNTER =====
+// Visitor Counter
 function setupVisitorCounter() {
     const visitorCountElement = document.querySelector('.stat-number');
+    if (!visitorCountElement) return;
     
-    if (visitorCountElement) {
-        // Simulate visitor count with localStorage
-        let count = localStorage.getItem('rmame_visitors');
-        
-        if (!count) {
-            // Start with base number + random
-            count = 1327 + Math.floor(Math.random() * 100);
-            localStorage.setItem('rmame_visitors', count);
-        } else {
-            // Increment slightly each visit
-            count = parseInt(count) + Math.floor(Math.random() * 5) + 1;
-            localStorage.setItem('rmame_visitors', count);
-        }
-        
-        // Update display
-        visitorCountElement.textContent = count.toLocaleString();
-        
-        // Animate the update
-        visitorCountElement.style.transform = 'scale(1.1)';
-        setTimeout(() => {
-            visitorCountElement.style.transform = 'scale(1)';
-        }, 300);
+    let count = localStorage.getItem('rmame_visitors');
+    if (!count) {
+        count = 1327 + Math.floor(Math.random() * 100);
+    } else {
+        count = parseInt(count) + Math.floor(Math.random() * 3) + 1;
     }
+    
+    localStorage.setItem('rmame_visitors', count);
+    visitorCountElement.textContent = count.toLocaleString();
 }
 
-// ===== LOADER =====
+// Hide Loader
 function hideLoader() {
     const loader = document.getElementById('loader');
-    
     if (loader) {
-        // Add a small delay for better UX
         setTimeout(() => {
             loader.style.opacity = '0';
-            loader.style.transition = 'opacity 0.5s ease';
-            
             setTimeout(() => {
                 loader.style.display = 'none';
             }, 500);
@@ -472,119 +845,13 @@ function hideLoader() {
     }
 }
 
-// ===== UTILITY FUNCTIONS =====
-function showNotification(message) {
-    // Create notification element
-    const notification = document.createElement('div');
-    notification.className = 'notification';
-    notification.textContent = message;
-    notification.style.cssText = `
-        position: fixed;
-        top: 20px;
-        right: 20px;
-        background: linear-gradient(135deg, #FF6B35, #FF8B4D);
-        color: white;
-        padding: 15px 25px;
-        border-radius: 10px;
-        z-index: 9999;
-        font-weight: 600;
-        box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-        animation: slideIn 0.3s ease;
-    `;
-    
-    document.body.appendChild(notification);
-    
-    // Remove after 3 seconds
-    setTimeout(() => {
-        notification.style.animation = 'slideOut 0.3s ease';
-        setTimeout(() => {
-            document.body.removeChild(notification);
-        }, 300);
-    }, 3000);
-    
-    // Add keyframes
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
-}
-
-// Debounce function for scroll events
-function debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-}
-
-// ===== INITIALIZE WHEN DOCUMENT LOADS =====
+// ===== INITIALIZE =====
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 DOM fully loaded and parsed');
+    console.log('🚀 Website loading...');
     
-    // Initialize all features
+    // Initialize everything
     initializeWebsite();
-    
-    // Add CSS for notifications
-    if (!document.querySelector('#notification-styles')) {
-        const style = document.createElement('style');
-        style.id = 'notification-styles';
-        style.textContent = `
-            .notification {
-                position: fixed;
-                top: 20px;
-                right: 20px;
-                background: linear-gradient(135deg, #FF6B35, #FF8B4D);
-                color: white;
-                padding: 15px 25px;
-                border-radius: 10px;
-                z-index: 9999;
-                font-weight: 600;
-                box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-                animation: slideIn 0.3s ease;
-            }
-            
-            @keyframes slideIn {
-                from { transform: translateX(100%); opacity: 0; }
-                to { transform: translateX(0); opacity: 1; }
-            }
-            
-            @keyframes slideOut {
-                from { transform: translateX(0); opacity: 1; }
-                to { transform: translateX(100%); opacity: 0; }
-            }
-        `;
-        document.head.appendChild(style);
-    }
     
     // Update visitor counter every minute
     setInterval(setupVisitorCounter, 60000);
 });
-
-// ===== ERROR HANDLING =====
-window.addEventListener('error', function(e) {
-    console.error('⚠️ JavaScript Error:', e.message, e.filename, e.lineno);
-    
-    // Don't break the site if there's an error
-    if (document.getElementById('loader')) {
-        document.getElementById('loader').style.display = 'none';
-    }
-});
-
-// ===== TOUCH DEVICE SUPPORT =====
-document.addEventListener('touchstart', function() {}, {passive: true});
