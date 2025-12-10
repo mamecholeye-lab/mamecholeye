@@ -1101,67 +1101,120 @@
 </section>
 
     <!-- Contact Section -->
-    <section id="contact" class="contact-section">
-        <div class="container">
-            <div class="section-header">
-                <h2 class="section-title">GET IN <span class="highlight">TOUCH</span></h2>
-                <p class="section-subtitle">Subscribe to our premium predictions or ask questions</p>
+<section id="contact" class="contact-section">
+    <div class="container">
+        <div class="section-header">
+            <h2 class="section-title">GET IN <span class="highlight">TOUCH</span></h2>
+            <p class="section-subtitle">Subscribe to get daily winning predictions</p>
+        </div>
+        
+        <div class="contact-content">
+            <div class="contact-info">
+                <div class="contact-card">
+                    <i class="fas fa-whatsapp" style="color: #25D366;"></i>
+                    <h3>WhatsApp</h3>
+                    <p>+251 979 380 726</p>
+                    <a href="https://wa.me/251979380726" class="contact-link" target="_blank" style="background: #25D366;">Chat Now</a>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-envelope" style="color: #FF6B35;"></i>
+                    <h3>Email</h3>
+                    <p>mamecholeye@gmail.com</p>
+                    <a href="mailto:mamecholeye@gmail.com" class="contact-link">Send Email</a>
+                </div>
+                
+                <div class="contact-card">
+                    <i class="fas fa-phone" style="color: #00B894;"></i>
+                    <h3>Call/SMS</h3>
+                    <p>+251 979 380 726</p>
+                    <a href="tel:+251979380726" class="contact-link">Call Now</a>
+                </div>
             </div>
             
-            <div class="contact-content">
-                <div class="contact-info">
-                    <div class="contact-card">
-                        <i class="fas fa-envelope"></i>
-                        <h3>Email</h3>
-                        <p>mamecholeye@gmail.com</p>
-                        <a href="mailto:mamecholeye@gmail.com" class="contact-link">Send Email</a>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <i class="fab fa-whatsapp"></i>
-                        <h3>WhatsApp</h3>
-                        <p>+251 979 380 726</p>
-                        <a href="https://wa.me/251979380726" class="contact-link" target="_blank">Chat Now</a>
-                    </div>
-                    
-                    <div class="contact-card">
-                        <i class="fas fa-phone"></i>
-                        <h3>Call/SMS</h3>
-                        <p>+251 979 380 726</p>
-                        <a href="tel:+251979380726" class="contact-link">Call Now</a>
+            <!-- SUBSCRIPTION FORM -->
+            <form id="subscribe" class="contact-form">
+                <h3 style="color: #FFFFFF; margin-bottom: 20px;">📋 SUBSCRIBE NOW</h3>
+                
+                <div class="form-group">
+                    <input type="text" placeholder="Your Full Name" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="email" placeholder="Email Address" required>
+                </div>
+                
+                <div class="form-group">
+                    <input type="tel" placeholder="WhatsApp Number (with +251)" required>
+                </div>
+                
+                <div class="form-group">
+                    <select required>
+                        <option value="">Select Package</option>
+                        <option value="daily">Daily Package - $9.99/day</option>
+                        <option value="weekly">Weekly Package - $39.99/week</option>
+                        <option value="monthly">Monthly VIP - $149.99/month</option>
+                    </select>
+                </div>
+                
+                <!-- Payment Methods -->
+                <div class="payment-methods">
+                    <h4 style="color: #FF9E6D; margin-bottom: 15px; font-size: 16px;">💳 Payment Method:</h4>
+                    <div class="payment-options">
+                        <div class="payment-option">
+                            <input type="radio" id="mobile-money" name="payment" value="mobile-money" checked>
+                            <label for="mobile-money">
+                                <i class="fas fa-mobile-alt"></i>
+                                <span>Mobile Money</span>
+                            </label>
+                        </div>
+                        <div class="payment-option">
+                            <input type="radio" id="bank-transfer" name="payment" value="bank-transfer">
+                            <label for="bank-transfer">
+                                <i class="fas fa-university"></i>
+                                <span>Bank Transfer</span>
+                            </label>
+                        </div>
                     </div>
                 </div>
                 
-                <form id="subscribe" class="contact-form">
-                    <h3>Subscribe Now</h3>
-                    <div class="form-group">
-                        <input type="text" placeholder="Your Name" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="email" placeholder="Email Address" required>
-                    </div>
-                    <div class="form-group">
-                        <input type="tel" placeholder="Phone Number" required>
-                    </div>
-                    <!-- In your contact form, update the select options -->
-<div class="form-group">
-    <select required>
-        <option value="">Select Package</option>
-        <option value="daily">Daily Package ($0.99/day)</option>
-        <option value="weekly">Weekly Package ($9.99/week)</option>
-        <option value="monthly">Monthly VIP ($19.99/month)</option>
-    </select>
-</div>
-                    <div class="form-group">
-                        <textarea placeholder="Message (Optional)" rows="3"></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary">
-                        <i class="fas fa-paper-plane"></i> Send Subscription Request
-                    </button>
-                    <p class="form-note">We'll contact you within 30 minutes with payment details</p>
-                </form>
+                <button type="submit" class="btn-primary" style="background: linear-gradient(90deg, #25D366, #128C7E);">
+                    <i class="fab fa-whatsapp"></i> Request Payment Details
+                </button>
+                
+                <p class="form-note" style="color: #B0B3C5; font-size: 14px; margin-top: 15px;">
+                    <i class="fas fa-shield-alt"></i> We'll WhatsApp you payment details within 5 minutes
+                </p>
+            </form>
+        </div>
+        
+        <!-- Payment Instructions -->
+        <div class="payment-instructions">
+            <h4 style="color: #FF6B35; text-align: center; margin-top: 40px;">💸 How to Pay & Get Predictions:</h4>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h5>Fill the Form</h5>
+                    <p>Enter your details and choose package</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h5>Get Payment Details</h5>
+                    <p>We'll WhatsApp you where to send money</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h5>Make Payment</h5>
+                    <p>Send payment via Mobile Money or Bank</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h5>Get Predictions</h5>
+                    <p>We'll add you to VIP group immediately</p>
+                </div>
             </div>
         </div>
+    </div>
     </section>
 
     <!-- Footer -->
