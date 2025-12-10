@@ -183,52 +183,142 @@
         </div>
         
         <!-- Top Prediction Tab -->
-        <div id="top-tab" class="tab-content">
-            <div class="section-card">
-                <h2 class="section-title">🎯 Top Prediction Configuration</h2>
-                
-                <h3 style="color:#FF9E6D; margin-bottom:15px;">Main Match</h3>
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>League:</label>
-                        <input type="text" id="top-league" value="Champions League 🇪🇺">
-                    </div>
-                    <div class="form-group">
-                        <label>Time:</label>
-                        <input type="text" id="top-time" value="20:45">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Team 1:</label>
-                        <input type="text" id="top-team1" value="Bayern Munich">
-                    </div>
-                    <div class="form-group">
-                        <label>Team 2:</label>
-                        <input type="text" id="top-team2" value="Sporting CP">
-                    </div>
-                </div>
-                
-                <div class="form-row">
-                    <div class="form-group">
-                        <label>Prediction:</label>
-                        <input type="text" id="top-prediction" value="1 & Under 3.5 Goals">
-                    </div>
-                    <div class="form-group">
-                        <label>Odds:</label>
-                        <input type="number" step="0.01" id="top-odds" value="2.50">
-                    </div>
-                </div>
-                
-                <div class="form-group">
-                    <label>Confidence %:</label>
-                    <input type="number" id="top-confidence" value="70" min="1" max="100">
-                </div>
-                
-                <button class="btn btn-success" onclick="saveTopData()">💾 Save Top Prediction</button>
+<div id="top-tab" class="tab-content">
+    <div class="section-card">
+        <h2 class="section-title">🎯 Top Prediction Configuration</h2>
+        
+        <div class="form-group">
+            <label>Section Title:</label>
+            <input type="text" id="top-title" value="Top Prediction of the Day">
+        </div>
+        
+        <div class="form-group">
+            <label>Section Subtitle:</label>
+            <input type="text" id="top-subtitle-input" value="Today's Premium Selection">
+        </div>
+        
+        <div class="form-group">
+            <label>Badge Text:</label>
+            <input type="text" id="top-badge-input" value="PREMIUM PICK">
+        </div>
+        
+        <h3 style="color:#FF9E6D; margin:20px 0 15px 0;">🏆 Main Match</h3>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>League:</label>
+                <select id="top-league">
+                    <option value="Champions League 🇪🇺">Champions League 🇪🇺</option>
+                    <option value="Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿">Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                    <option value="La Liga 🇪🇸">La Liga 🇪🇸</option>
+                    <option value="Serie A 🇮🇹">Serie A 🇮🇹</option>
+                    <option value="Bundesliga 🇩🇪">Bundesliga 🇩🇪</option>
+                    <option value="Ligue 1 🇫🇷">Ligue 1 🇫🇷</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Time:</label>
+                <input type="text" id="top-time" value="20:45">
             </div>
         </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Team 1 Name:</label>
+                <input type="text" id="top-team1" placeholder="e.g., Real Madrid">
+            </div>
+            <div class="form-group">
+                <label>Team 1 Color:</label>
+                <input type="color" id="top-team1-color" value="#DC052D">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Team 2 Name:</label>
+                <input type="text" id="top-team2" placeholder="e.g., PSG">
+            </div>
+            <div class="form-group">
+                <label>Team 2 Color:</label>
+                <input type="color" id="top-team2-color" value="#004170">
+            </div>
+        </div>
+        
+        <div class="form-row">
+            <div class="form-group">
+                <label>Prediction:</label>
+                <select id="top-prediction">
+                    <option value="1 & Under 3.5 Goals">1 & Under 3.5 Goals</option>
+                    <option value="1X (Double Chance)">1X (Double Chance)</option>
+                    <option value="BTTS Yes">BTTS Yes</option>
+                    <option value="Over 2.5 Goals">Over 2.5 Goals</option>
+                    <option value="Home Win (1)">Home Win (1)</option>
+                    <option value="Away Win (2)">Away Win (2)</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Odds:</label>
+                <input type="number" step="0.01" id="top-odds" value="2.50">
+            </div>
+        </div>
+        
+        <div class="form-group">
+            <label>Confidence %:</label>
+            <input type="number" id="top-confidence" value="75" min="1" max="100">
+        </div>
+        
+        <h3 style="color:#FF9E6D; margin:20px 0 15px 0;">📊 Optional: Secondary Match</h3>
+        <div class="form-group">
+            <label>
+                <input type="checkbox" id="include-secondary" onchange="toggleSecondary()">
+                Include Secondary Match for Accumulator
+            </label>
+        </div>
+        
+        <div id="secondary-match" style="display:none;">
+            <div class="form-row">
+                <div class="form-group">
+                    <label>League:</label>
+                    <input type="text" id="sec-league" placeholder="Champions League 🇪🇺">
+                </div>
+                <div class="form-group">
+                    <label>Time:</label>
+                    <input type="text" id="sec-time" placeholder="23:00">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Team 1:</label>
+                    <input type="text" id="sec-team1" placeholder="Monaco">
+                </div>
+                <div class="form-group">
+                    <label>Team 2:</label>
+                    <input type="text" id="sec-team2" placeholder="Galatasaray">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Prediction:</label>
+                    <input type="text" id="sec-prediction" placeholder="Away Win (2)">
+                </div>
+                <div class="form-group">
+                    <label>Odds:</label>
+                    <input type="number" step="0.01" id="sec-odds" value="3.10">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Confidence %:</label>
+                <input type="number" id="sec-confidence" value="45" min="1" max="100">
+            </div>
+        </div>
+        
+        <button class="btn btn-success" onclick="saveTopData()">💾 Save Top Prediction</button>
+        <button class="btn btn-primary" onclick="loadTopSample()">📊 Load Sample</button>
+    </div>
+</div>
         
         <!-- Today's Predictions Tab -->
         <div id="today-tab" class="tab-content">
