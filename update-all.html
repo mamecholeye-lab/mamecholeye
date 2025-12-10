@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMAME - Update All Predictions</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: #0f172a; color: white; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #FF6B35; margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; color: #94a3b8; margin-bottom: 5px; font-size: 14px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #334155; background: #1e293b; color: white; border-radius: 5px; }
+        button { background: #FF6B35; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .prediction-form { background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #334155; }
+        .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+        .json-output { background: #1e293b; padding: 20px; border-radius: 10px; margin-top: 20px; display: none; }
+        textarea { font-family: monospace; height: 300px; }
+        .flag { font-size: 20px; margin-right: 5px; }
+        .section-title { background: #334155; padding: 10px; border-radius: 5px; margin: 20px 0 10px 0; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 RMAME PREDICTIONS - UPDATE ALL LEAGUES</h1>
+        
+        <div class="buttons">
+            <button onclick="addPrediction()">➕ Add New Prediction</button>
+            <button onclick="loadSample()">📊 Load Sample Data</button>
+            <button onclick="clearAll()">🗑️ Clear All</button>
+            <button onclick="generateJSON()" style="background:#00B894;">🎯 Generate JSON</button>
+        </div>
+        
+        <div id="forms-container">
+            <!-- Forms will be added here -->
+        </div>
+        
+        <div id="json-output" class="json-output">
+            <h3>📋 GENERATED JSON:</h3>
+            <textarea id="json-text" readonly></textarea>
+            <div class="buttons">
+                <button onclick="copyJSON()" style="background:#25D366;">📋 Copy JSON</button>
+                <button onclick="openGitHub()" style="background:#4078c0;">🔗 Open GitHub</button>
+                <button onclick="testJSON()" style="background:#FFD700;color:black;">🧪 Test JSON</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3 class="section-title">📝 HOW TO UPDATE:</h3>
+            <ol>
+                <li>Fill predictions above (add as many as you want)</li>
+                <li>Click "Generate JSON"</li>
+                <li>Click "Copy JSON"</li>
+                <li>Go to GitHub → Edit predictions-database.json</li>
+                <li>Paste the JSON</li>
+                <li>Click "Commit changes"</li>
+                <li>Wait 2 minutes → Website updates automatically!</li>
+            </ol>
+            
+            <h3 class="section-title">🔗 IMPORTANT LINKS:</h3>
+            <ul>
+                <li>📁 JSON File: <a href="https://github.com/mamecholeye-lab/mamecholeye/edit/main/predictions-database.json" style="color:#FF6B35;">Edit predictions-database.json</a></li>
+                <li>🌐 Your Website: <a href="https://mamecholeye-lab.github.io/mamecholeye/" style="color:#FF6B35;">https://mamecholeye-lab.github.io/mamecholeye/</a></li>
+                <li>📱 WhatsApp: <a href="https://wa.me/251979380726" style="color:#25D366;">+251 979 380 726</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        // Master database of ALL countries and leagues
+        const countriesDB = {
+            "International": {"flag": "🌍", "leagues": ["Champions League", "Europa League", "Conference League", "World Cup Qualifiers", "Euro Qualifiers"]},
+            "England": {"flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿", "leagues": ["Premier League", "Championship", "League One", "League Two", "National League", "FA Cup", "EFL Cup", "FA Trophy"]},
+            "Spain": {"flag": "🇪🇸", "leagues": ["La Liga", "Segunda División", "Primera Federación", "Segunda Federación", "Copa del Rey"]},
+            "Italy": {"flag": "🇮🇹", "leagues": ["Serie A", "Serie B", "Serie C", "Coppa Italia", "Supercoppa Italiana"]},
+            "Germany": {"flag": "🇩🇪", "leagues": ["Bundesliga", "2. Bundesliga", "3. Liga", "Regionalliga", "DFB-Pokal"]},
+            "France": {"flag": "🇫🇷", "leagues": ["Ligue 1", "Ligue 2", "National", "Coupe de France", "Coupe de la Ligue"]},
+            "Portugal": {"flag": "🇵🇹", "leagues": ["Primeira Liga", "Liga Portugal 2", "Taça de Portugal", "Taça da Liga"]},
+            "Netherlands": {"flag": "🇳🇱", "leagues": ["Eredivisie", "Eerste Divisie", "KNVB Cup", "Johan Cruijff Shield"]},
+            "Belgium": {"flag": "🇧🇪", "leagues": ["First Division A", "First Division B", "Belgian Cup", "Super Cup"]},
+            "Turkey": {"flag": "🇹🇷", "leagues": ["Süper Lig", "TFF First League", "Turkish Cup", "Super Cup"]},
+            "Brazil": {"flag": "🇧🇷", "leagues": ["Série A", "Série B", "Série C", "Série D", "Copa do Brasil", "Campeonato Carioca"]},
+            "Argentina": {"flag": "🇦🇷", "leagues": ["Primera División", "Primera Nacional", "Copa Argentina", "Supercopa Argentina"]},
+            "Scotland": {"flag": "🏴󠁧󠁢󠁳󠁣󠁴󠁿", "leagues": ["Premiership", "Championship", "League One", "League Two", "Scottish Cup"]},
+            "Wales": {"flag": "🏴󠁧󠁢󠁷󠁬󠁳󠁿", "leagues": ["Welsh Premier League", "Cymru North", "Cymru South", "Welsh Cup"]},
+            "Ireland": {"flag": "🇮🇪", "leagues": ["Premier Division", "First Division", "FAI Cup", "League of Ireland Cup"]},
+            "Denmark": {"flag": "🇩🇰", "leagues": ["Superliga", "First Division", "Danish Cup"]},
+            "Sweden": {"flag": "🇸🇪", "leagues": ["Allsvenskan", "Superettan", "Svenska Cupen"]},
+            "Norway": {"flag": "🇳🇴", "leagues": ["Eliteserien", "First Division", "Norwegian Cup"]},
+            "Switzerland": {"flag": "🇨🇭", "leagues": ["Super League", "Challenge League", "Swiss Cup"]},
+            "Austria": {"flag": "🇦🇹", "leagues": ["Bundesliga", "2. Liga", "ÖFB-Cup"]},
+            "Greece": {"flag": "🇬🇷", "leagues": ["Super League", "Super League 2", "Greek Cup"]},
+            "Russia": {"flag": "🇷🇺", "leagues": ["Premier League", "First Division", "Russian Cup"]},
+            "Ukraine": {"flag": "🇺🇦", "leagues": ["Premier League", "First League", "Ukrainian Cup"]},
+            "Poland": {"flag": "🇵🇱", "leagues": ["Ekstraklasa", "I liga", "Polish Cup"]},
+            "Czech Republic": {"flag": "🇨🇿", "leagues": ["First League", "National League", "Czech Cup"]},
+            "Romania": {"flag": "🇷🇴", "leagues": ["Liga I", "Liga II", "Cupa României"]},
+            "Serbia": {"flag": "🇷🇸", "leagues": ["SuperLiga", "First League", "Serbian Cup"]},
+            "Croatia": {"flag": "🇭🇷", "leagues": ["First League", "Second League", "Croatian Cup"]},
+            "Bulgaria": {"flag": "🇧🇬", "leagues": ["First League", "Second League", "Bulgarian Cup"]},
+            "Hungary": {"flag": "🇭🇺", "leagues": ["NB I", "NB II", "Hungarian Cup"]},
+            "Slovakia": {"flag": "🇸🇰", "leagues": ["Fortuna Liga", "2. Liga", "Slovak Cup"]},
+            "Slovenia": {"flag": "🇸🇮", "leagues": ["PrvaLiga", "2. SNL", "Slovenian Cup"]},
+            "Cyprus": {"flag": "🇨🇾", "leagues": ["First Division", "Second Division", "Cypriot Cup"]},
+            "Israel": {"flag": "🇮🇱", "leagues": ["Ligat Ha'al", "Liga Leumit", "State Cup"]},
+            "Saudi Arabia": {"flag": "🇸🇦", "leagues": ["Pro League", "First Division", "King Cup"]},
+            "UAE": {"flag": "🇦🇪", "leagues": ["UAE Pro League", "First Division", "President's Cup"]},
+            "Qatar": {"flag": "🇶🇦", "leagues": ["Stars League", "Qatar Cup", "Emir Cup"]},
+            "Iran": {"flag": "🇮🇷", "leagues": ["Persian Gulf Pro League", "Azadegan League", "Hazfi Cup"]},
+            "Japan": {"flag": "🇯🇵", "leagues": ["J1 League", "J2 League", "J3 League", "Emperor's Cup"]},
+            "South Korea": {"flag": "🇰🇷", "leagues": ["K League 1", "K League 2", "Korean FA Cup"]},
+            "China": {"flag": "🇨🇳", "leagues": ["Super League", "League One", "Chinese FA Cup"]},
+            "Australia": {"flag": "🇦🇺", "leagues": ["A-League", "A-League Women", "FFA Cup"]},
+            "USA": {"flag": "🇺🇸", "leagues": ["MLS", "USL Championship", "US Open Cup"]},
+            "Canada": {"flag": "🇨🇦", "leagues": ["Canadian Premier League", "Canadian Championship"]},
+            "Mexico": {"flag": "🇲🇽", "leagues": ["Liga MX", "Liga de Expansión", "Copa MX"]},
+            "Colombia": {"flag": "🇨🇴", "leagues": ["Categoría Primera A", "Primera B", "Copa Colombia"]},
+            "Chile": {"flag": "🇨🇱", "leagues": ["Primera División", "Primera B", "Copa Chile"]},
+            "Peru": {"flag": "🇵🇪", "leagues": ["Liga 1", "Liga 2", "Copa Bicentenario"]},
+            "Uruguay": {"flag": "🇺🇾", "leagues": ["Primera División", "Segunda División", "Copa Uruguay"]},
+            "Paraguay": {"flag": "🇵🇾", "leagues": ["Primera División", "División Intermedia", "Copa Paraguay"]},
+            "Ecuador": {"flag": "🇪🇨", "leagues": ["Serie A", "Serie B", "Copa Ecuador"]},
+            "Bolivia": {"flag": "🇧🇴", "leagues": ["División Profesional", "Copa Simón Bolívar", "Copa Bolivia"]},
+            "Venezuela": {"flag": "🇻🇪", "leagues": ["Primera División", "Segunda División", "Copa Venezuela"]},
+            "Costa Rica": {"flag": "🇨🇷", "leagues": ["Primera División", "Liga de Ascenso", "Costa Rican Cup"]},
+            "Honduras": {"flag": "🇭🇳", "leagues": ["Liga Nacional", "Liga de Ascenso", "Honduran Cup"]},
+            "El Salvador": {"flag": "🇸🇻", "leagues": ["Primera División", "Segunda División", "Copa El Salvador"]},
+            "Guatemala": {"flag": "🇬🇹", "leagues": ["Liga Nacional", "Primera División", "Copa Guatemala"]},
+            "Panama": {"flag": "🇵🇦", "leagues": ["Liga Panameña", "Liga Nacional", "Copa Panamá"]},
+            "Jamaica": {"flag": "🇯🇲", "leagues": ["Premier League", "Championship", "Jamaica Cup"]},
+            "Trinidad and Tobago": {"flag": "🇹🇹", "leagues": ["TT Pro League", "Championship", "FA Trophy"]},
+            "South Africa": {"flag": "🇿🇦", "leagues": ["PSL", "National First Division", "Nedbank Cup"]},
+            "Egypt": {"flag": "🇪🇬", "leagues": ["Premier League", "Second Division", "Egypt Cup"]},
+            "Morocco": {"flag": "🇲🇦", "leagues": ["Botola", "Botola 2", "Moroccan Throne Cup"]},
+            "Tunisia": {"flag": "🇹🇳", "leagues": ["Ligue 1", "Ligue 2", "Tunisian Cup"]},
+            "Algeria": {"flag": "🇩🇿", "leagues": ["Ligue 1", "Ligue 2", "Algerian Cup"]},
+            "Nigeria": {"flag": "🇳🇬", "leagues": ["NPFL", "Nationwide League", "Federation Cup"]},
+            "Ghana": {"flag": "🇬🇭", "leagues": ["Premier League", "Division One", "Ghana FA Cup"]},
+            "Ivory Coast": {"flag": "🇨🇮", "leagues": ["Ligue 1", "Ligue 2", "Coupe de Côte d'Ivoire"]},
+            "Senegal": {"flag": "🇸🇳", "leagues": ["Ligue 1", "Ligue 2", "Senegal Cup"]},
+            "Cameroon": {"flag": "🇨🇲", "leagues": ["Elite One", "Elite Two", "Cameroon Cup"]},
+            "DR Congo": {"flag": "🇨🇩", "leagues": ["Linafoot", "Ligue 2", "Coupe du Congo"]},
+            "Kenya": {"flag": "🇰🇪", "leagues": ["Premier League", "National Super League", "FKF Cup"]},
+            "Tanzania": {"flag": "🇹🇿", "leagues": ["Premier League", "First Division", "Tanzania FA Cup"]},
+            "Uganda": {"flag": "🇺🇬", "leagues": ["Premier League", "Big League", "Uganda Cup"]},
+            "Zambia": {"flag": "🇿🇲", "leagues": ["Super League", "National Division One", "Zambia Cup"]},
+            "Zimbabwe": {"flag": "🇿🇼", "leagues": ["Premier League", "Division One", "Cup of Zimbabwe"]},
+            "Angola": {"flag": "🇦🇴", "leagues": ["Girabola", "Segundona", "Taça de Angola"]},
+            "Mozambique": {"flag": "🇲🇿", "leagues": ["Moçambola", "Segunda Divisão", "Taça de Moçambique"]},
+            "Ethiopia": {"flag": "🇪🇹", "leagues": ["Premier League", "Higher League", "Ethiopian Cup"]}
+        };
+
+        let predictionCount = 0;
+        const formsContainer = document.getElementById('forms-container');
+        
+        // Bet types database
+        const betTypes = [
+            "1X (Double Chance)",
+            "BTTS Yes", 
+            "BTTS No",
+            "Over 2.5 Goals",
+            "Under 2.5 Goals",
+            "Home Win (1)",
+            "Away Win (2)",
+            "Draw (X)",
+            "1 & Over 2.5",
+            "2 & Over 2.5",
+            "1 & BTTS",
+            "2 & BTTS",
+            "Draw & BTTS",
+            "1 & Under 2.5",
+            "2 & Under 2.5",
+            "HT/FT Home/Home",
+            "HT/FT Draw/Home",
+            "HT/FT Draw/Draw",
+            "Correct Score"
+        ];
+        
+        function addPrediction() {
+            predictionCount++;
+            const formId = `prediction-${predictionCount}`;
+            
+            const formHTML = `
+                <div class="prediction-form" id="${formId}">
+                    <h3 style="color:#FF6B35; margin-bottom:15px; display:flex; align-items:center;">
+                        ⚽ Prediction ${predictionCount}
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label>Country:</label>
+                        <select onchange="updateLeagues('${formId}')" class="country">
+                            <option value="">Select Country</option>
+                            ${Object.keys(countriesDB).map(country => 
+                                `<option value="${country}">${countriesDB[country].flag} ${country}</option>`
+                            ).join('')}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>League:</label>
+                        <select class="league">
+                            <option value="">Select League</option>
+                            <!-- Leagues will be populated when country is selected -->
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Fixture:</label>
+                        <input type="text" class="fixture" placeholder="e.g., Bayern Munich vs Sporting CP">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Date:</label>
+                        <input type="date" class="date" value="${new Date().toISOString().split('T')[0]}">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Time:</label>
+                        <input type="time" class="time" value="20:00">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Bet Type:</label>
+                        <select class="bet-type">
+                            ${betTypes.map(type => `<option value="${type}">${type}</option>`).join('')}
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Odds:</label>
+                        <input type="number" class="odds" step="0.01" placeholder="2.50" min="1.01" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Confidence %:</label>
+                        <input type="number" class="confidence" value="70" min="1" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Status:</label>
+                        <select class="status">
+                            <option value="pending">⏳ Pending</option>
+                            <option value="won">✅ Won</option>
+                            <option value="lost">❌ Lost</option>
+                            <option value="void">⚪ Void</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Result (if completed):</label>
+                        <input type="text" class="result" placeholder="e.g., 2-1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Analysis/Notes:</label>
+                        <textarea class="analysis" rows="2" placeholder="Why this bet? Key factors..."></textarea>
+                    </div>
+                    
+                    <hr style="border:none; border-top:1px solid #334155; margin:15px 0;">
+                </div>
+            `;
+            
+            formsContainer.insertAdjacentHTML('beforeend', formHTML);
+            
+            // Scroll to new form
+            setTimeout(() => {
+                document.getElementById(formId).scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+        }
+        
+        function updateLeagues(formId) {
+            const form = document.getElementById(formId);
+            if (!form) return;
+            
+            const countrySelect = form.querySelector('.country');
+            const leagueSelect = form.querySelector('.league');
+            const country = countrySelect.value;
+            
+            leagueSelect.innerHTML = '<option value="">Select League</option>';
+            
+            if (country && countriesDB[country]) {
+                countriesDB[country].leagues.forEach(league => {
+                    leagueSelect.innerHTML += `<option value="${league}">${league}</option>`;
+                });
+            }
+        }
+        
+        function loadSample() {
+            clearAll();
+            
+            // Add 4 sample predictions
+            for (let i = 0; i < 4; i++) {
+                addPrediction();
+            }
+            
+            // Fill sample data after forms are added
+            setTimeout(() => {
+                const forms = document.querySelectorAll('.prediction-form');
+                
+                // Sample 1: Champions League
+                if (forms[0]) {
+                    forms[0].querySelector('.country').value = 'International';
+                    updateLeagues('prediction-1');
+                    setTimeout(() => {
+                        forms[0].querySelector('.league').value = 'Champions League';
+                        forms[0].querySelector('.fixture').value = 'Bayern Munich vs Sporting CP';
+                        forms[0].querySelector('.bet-type').value = '1 & Under 3.5 Goals';
+                        forms[0].querySelector('.odds').value = '2.50';
+                        forms[0].querySelector('.confidence').value = '70';
+                    }, 100);
+                }
+                
+                // Sample 2: English Championship
+                if (forms[1]) {
+                    forms[1].querySelector('.country').value = 'England';
+                    updateLeagues('prediction-2');
+                    setTimeout(() => {
+                        forms[1].querySelector('.league').value = 'Championship';
+                        forms[1].querySelector('.fixture').value = 'Stevenage v Cardiff';
+                        forms[1].querySelector('.bet-type').value = '1X (Double Chance)';
+                        forms[1].querySelector('.odds').value = '1.41';
+                        forms[1].querySelector('.confidence').value = '75';
+                    }, 100);
+                }
+                
+                // Sample 3: Welsh Premier
+                if (forms[2]) {
+                    forms[2].querySelector('.country').value = 'Wales';
+                    updateLeagues('prediction-3');
+                    setTimeout(() => {
+                        forms[2].querySelector('.league').value = 'Welsh Premier League';
+                        forms[2].querySelector('.fixture').value = 'Penybont v Barry Town';
+                        forms[2].querySelector('.bet-type').value = 'BTTS Yes';
+                        forms[2].querySelector('.odds').value = '1.60';
+                        forms[2].querySelector('.confidence').value = '68';
+                    }, 100);
+                }
+                
+                // Sample 4: Iranian League
+                if (forms[3]) {
+                    forms[3].querySelector('.country').value = 'Iran';
+                    updateLeagues('prediction-4');
+                    setTimeout(() => {
+                        forms[3].querySelector('.league').value = 'Persian Gulf Pro League';
+                        forms[3].querySelector('.fixture').value = 'Shams Azar v Gol Gohar';
+                        forms[3].querySelector('.bet-type').value = '1X (Double Chance)';
+                        forms[3].querySelector('.odds').value = '1.49';
+                        forms[3].querySelector('.confidence').value = '73';
+                    }, 100);
+                }
+                
+                alert('✅ Sample predictions loaded! Click "Generate JSON" to see the result.');
+            }, 200);
+        }
+        
+        function clearAll() {
+            if (confirm('Clear all predictions?')) {
+                formsContainer.innerHTML = '';
+                predictionCount = 0;
+                document.getElementById('json-output').style.display = 'none';
+            }
+        }
+        
+        function generateJSON() {
+            const forms = document.querySelectorAll('.prediction-form');
+            const predictions = [];
+            
+            forms.forEach((form, index) => {
+                const country = form.querySelector('.country').value;
+                const league = form.querySelector('.league').value;
+                const fixture = form.querySelector('.fixture').value;
+                
+                if (country && league && fixture) {
+                    const flag = countriesDB[country]?.flag || '⚽';
+                    const prediction = {
+                        id: index + 1,
+                        country: country,
+                        flag: flag,
+                        league: league,
+                        fixture: fixture,
+                        date: form.querySelector('.date').value || new Date().toISOString().split('T')[0],
+                        time: form.querySelector('.time').value || '20:00',
+                        betType: form.querySelector('.bet-type').value || '1X (Double Chance)',
+                        odds: parseFloat(form.querySelector('.odds').value) || 2.00,
+                        confidence: parseInt(form.querySelector('.confidence').value) || 70,
+                        status: form.querySelector('.status').value || 'pending',
+                        result: form.querySelector('.result').value || '',
+                        analysis: form.querySelector('.analysis').value || ''
+                    };
+                    
+                    predictions.push(prediction);
+                }
+            });
+            
+            if (predictions.length === 0) {
+                alert('❌ Please fill at least one prediction!');
+                return;
+            }
+            
+            // Calculate stats
+            const pending = predictions.filter(p => p.status === 'pending').length;
+            const won = predictions.filter(p => p.status === 'won').length;
+            const lost = predictions.filter(p => p.status === 'lost').length;
+            const totalOdds = predictions.filter(p => p.status === 'pending')
+                .reduce((total, pred) => total * pred.odds, 1).toFixed(2);
+            
+            const today = new Date();
+            const jsonData = {
+                lastUpdated: today.toISOString(),
+                today: today.toLocaleDateString('en-US', { 
+                    weekday: 'long', 
+                    year: 'numeric', 
+                    month: 'long', 
+                    day: 'numeric' 
+                }),
+                stats: {
+                    totalPredictions: predictions.length,
+                    pending: pending,
+                    won: won,
+                    lost: lost,
+                    totalOdds: totalOdds
+                },
+                predictions: {
+                    today: predictions.filter(p => p.status === 'pending'),
+                    completed: predictions.filter(p => p.status !== 'pending')
+                }
+            };
+            
+            // Display JSON
+            document.getElementById('json-text').value = JSON.stringify(jsonData, null, 2);
+            document.getElementById('json-output').style.display = 'block';
+            
+            // Scroll to output
+            setTimeout(() => {
+                document.getElementById('json-output').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+            
+            // Show success message
+            alert(`✅ Generated ${predictions.length} predictions!\n\n📊 Stats:\n• Pending: ${pending}\n• Won: ${won}\n• Lost: ${lost}\n• Total Odds: ${totalOdds}\n\nClick "Copy JSON" to save.`);
+        }
+        
+        function copyJSON() {
+            const textarea = document.getElementById('json-text');
+            textarea.select();
+            
+            try {
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    alert('✅ JSON copied to clipboard!\n\nNow go to GitHub and paste it in predictions-database.json');
+                });
+            } catch (err) {
+                document.execCommand('copy');
+                alert('✅ JSON copied!\n\nNow go to GitHub and paste it in predictions-database.json');
+            }
+        }
+        
+        function openGitHub() {
+            window.open('https://github.com/mamecholeye-lab/mamecholeye/edit/main/predictions-database.json', '_blank');
+        }
+        
+        function testJSON() {
+            try {
+                const json = JSON.parse(document.getElementById('json-text').value);
+                alert('✅ JSON is valid!\n\nYou can now copy and use it.');
+            } catch (error) {
+                alert('❌ Invalid JSON!\n\nError: ' + error.message);
+            }
+        }
+        
+        // Initialize with one form
+        window.onload = function() {
+            addPrediction();
+        };
+    </script>
+</body>
+</html>
