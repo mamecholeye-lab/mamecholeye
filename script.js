@@ -225,98 +225,209 @@ function updateHeroCalculations(calculations) {
 }
 
 // ===== UPDATE TOP PREDICTION SECTION =====
-function updateTopPredictionSection(predictionData) {
-    console.log('🎯 Updating top prediction...');
+function updateTopPrediction(topData) {
+    if (!topData || !topData.mainMatch) return;
     
-    const topSection = document.getElementById('top-prediction');
-    if (!topSection || !predictionData.mainMatch) return;
+    const topPredictionContent = document.getElementById('top-prediction-content');
+    if (!topPredictionContent) return;
     
     // Update section subtitle
-    const subtitle = topSection.querySelector('.section-subtitle');
-    if (subtitle && predictionData.subtitle) {
-        subtitle.textContent = predictionData.subtitle;
+    const subtitle = document.getElementById('top-subtitle');
+    if (subtitle) {
+        subtitle.textContent = topData.subtitle || '';
     }
     
     // Update badge
-    const badge = topSection.querySelector('.top-badge');
-    if (badge && predictionData.badge) {
-        badge.innerHTML = `<i class="fas fa-fire"></i> ${predictionData.badge}`;
+    const badge = document.getElementById('top-badge');
+    if (badge && topData.badge) {
+        badge.innerHTML = `<i class="fas fa-fire"></i> ${topData.badge}`;
     }
     
-    // Update main match details
-    updateMatchInTopPrediction(predictionData.mainMatch);
-}
-
-function updateMatchInTopPrediction(matchData) {
-    // Update match header
-    const matchHeader = document.querySelector('.match-header');
-    if (matchHeader) {
-        const leagueSpan = matchHeader.querySelector('.match-league');
-        if (leagueSpan && matchData.league) {
-            leagueSpan.innerHTML = `<i class="fas fa-crown"></i> ${matchData.league}`;
-        }
-        
-        const timeSpan = matchHeader.querySelector('.match-time');
-        if (timeSpan && matchData.time) {
-            timeSpan.textContent = matchData.time;
-        }
-    }
+    // Create complete top prediction HTML
+    topPredictionContent.innerHTML = `
+        <div class="top-prediction-card">
+            <div class="match-details">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-crown"></i> ${topData.mainMatch.league}</span>
+                    <span class="match-time">${topData.mainMatch.time}</span>
+                    <span class="match-date">Today, ${topData.date}</span>
+                </div>
+                
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo" style="background-color: ${topData.mainMatch.team1.color}; color: white;">
+                            ${topData.mainMatch.team1.code}
+                        </div>
+                        <span class="team-name">${topData.mainMatch.team1.name}</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo" style="background-color: ${topData.mainMatch.team2.color}; color: white;">
+                            ${topData.mainMatch.team2.code}
+                        </div>
+                        <span class="team-name">${topData.mainMatch.team2.name}</span>
+                    </div>
+                </div>
+                
+                <div class="prediction-main">
+                    <div class="prediction-type">
+                        <span class="type-label">PREDICTION:</span>
+                        <span class="type-value">${topData.mainMatch.prediction}</span>
+                    </div>
+                    <div class="prediction-odds">
+                        <span class="odds-label">ODDS:</span>
+                        <span class="odds-value">@${topData.mainMatch.odds}</span>
+                    </div>
+                </div>
+                
+                <div class="confidence-high">
+                    <div class="confidence-header">
+                        <i class="fas fa-bullseye"></i>
+                        <span>${topData.mainMatch.riskLevel || 'MEDIUM RISK'}</span>
+                    </div>
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${topData.mainMatch.confidence}%"></div>
+                    </div>
+                    <span class="confidence-percent">${topData.mainMatch.confidence}% Confidence</span>
+                </div>
+                
+                <div class="profit-info">
+                    <div class="profit-item">
+                        <span>Stake:</span>
+                        <strong>$20.00</strong>
+                    </div>
+                    <div class="profit-item">
+                        <span>Potential Win:</span>
+                        <strong class="won">$${(20 * topData.mainMatch.odds).toFixed(2)}</strong>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="analysis-section">
+                <h4><i class="fas fa-chart-line"></i> Analysis:</h4>
+                <ul class="analysis-points">
+                    ${(topData.mainMatch.analysis || [
+                        'Strong home advantage',
+                        'Good recent form',
+                        'Head-to-head record favorable',
+                        'High probability of success'
+                    ]).map(point => `<li><i class="fas fa-check-circle"></i> ${point}</li>`).join('')}
+                </ul>
+                
+                <div class="stats-grid">
+                    <div class="stat">
+                        <h5>${topData.mainMatch.odds}</h5>
+                        <p>Odds</p>
+                    </div>
+                    <div class="stat">
+                        <h5>${topData.mainMatch.confidence}%</h5>
+                        <p>Confidence</p>
+                    </div>
+                    <div class="stat">
+                        <h5>+${((topData.mainMatch.odds - 1) * 100).toFixed(0)}%</h5>
+                        <p>Value</p>
+                    </div>
+                    <div class="stat">
+                        <h5>${Math.round(topData.mainMatch.confidence / 2)}%</h5>
+                        <p>Win Probability</p>
+                    </div>
+                </div>
+                
+                ${topData.secondaryMatch ? `
+                <div class="match-details" style="margin-top: 25px;">
+                    <div class="match-header">
+                        <span class="match-league"><i class="fas fa-trophy"></i> ${topData.secondaryMatch.league}</span>
+                        <span class="match-time">${topData.secondaryMatch.time}</span>
+                    </div>
+                    
+                    <div class="teams">
+                        <div class="team">
+                            <div class="team-logo" style="background-color: ${topData.secondaryMatch.team1.color}; color: white;">
+                                ${topData.secondaryMatch.team1.code}
+                            </div>
+                            <span class="team-name">${topData.secondaryMatch.team1.name}</span>
+                        </div>
+                        <div class="vs">VS</div>
+                        <div class="team">
+                            <div class="team-logo" style="background-color: ${topData.secondaryMatch.team2.color}; color: white;">
+                                ${topData.secondaryMatch.team2.code}
+                            </div>
+                            <span class="team-name">${topData.secondaryMatch.team2.name}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="prediction-main">
+                        <div class="prediction-type">
+                            <span class="type-label">PREDICTION:</span>
+                            <span class="type-value">${topData.secondaryMatch.prediction}</span>
+                        </div>
+                        <div class="prediction-odds">
+                            <span class="odds-label">ODDS:</span>
+                            <span class="odds-value">@${topData.secondaryMatch.odds}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="confidence-high">
+                        <div class="confidence-header">
+                            <i class="fas fa-bullseye"></i>
+                            <span>${topData.secondaryMatch.riskLevel || 'HIGH RISK'}</span>
+                        </div>
+                        <div class="confidence-bar">
+                            <div class="confidence-fill" style="width: ${topData.secondaryMatch.confidence}%"></div>
+                        </div>
+                        <span class="confidence-percent">${topData.secondaryMatch.confidence}% Confidence</span>
+                    </div>
+                </div>
+                ` : ''}
+            </div>
+            
+            ${topData.accumulator ? `
+            <div class="bet-advice">
+                <div class="double-accumulator">
+                    <h4><i class="fas fa-layer-group"></i> ACCUMULATOR:</h4>
+                    <div class="accumulator-details">
+                        ${(topData.accumulator.matches || []).map(match => `
+                        <div class="acc-item">
+                            <span>${match.match}</span>
+                            <strong>@${match.odds}</strong>
+                        </div>
+                        `).join('')}
+                        <div class="acc-divider">
+                            <i class="fas fa-times"></i>
+                        </div>
+                        <div class="acc-total">
+                            <span>TOTAL ODDS:</span>
+                            <strong class="highlight">${topData.accumulator.totalOdds}</strong>
+                        </div>
+                    </div>
+                    
+                    <div class="winning-calculation" style="margin-top: 20px;">
+                        <div class="calculation-grid">
+                            ${(topData.accumulator.winningExamples || []).map(example => `
+                            <div class="calc-item">
+                                <span>With $${example.stake} Stake:</span>
+                                <strong class="won">$${example.win}</strong>
+                            </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="stake-suggestion">
+                    <p><i class="fas fa-lightbulb"></i> <strong>Expert Tip:</strong> ${topData.accumulator.tip || 'Recommended stake: 1-2% of bankroll.'}</p>
+                    ${topData.accumulator.warning ? `
+                    <div class="risk-warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                        <span>${topData.accumulator.warning}</span>
+                    </div>
+                    ` : ''}
+                </div>
+            </div>
+            ` : ''}
+        </div>
+    `;
     
-    // Update teams
-    const teams = document.querySelectorAll('.team');
-    if (teams.length >= 2 && matchData.team1 && matchData.team2) {
-        // Team 1
-        const team1Logo = teams[0].querySelector('.team-logo');
-        const team1Name = teams[0].querySelector('.team-name');
-        if (team1Logo && matchData.team1.code) {
-            team1Logo.textContent = matchData.team1.code;
-            team1Logo.style.backgroundColor = matchData.team1.color || '#DC052D';
-            team1Logo.style.color = 'white';
-        }
-        if (team1Name && matchData.team1.name) {
-            team1Name.textContent = matchData.team1.name;
-        }
-        
-        // Team 2
-        const team2Logo = teams[1].querySelector('.team-logo');
-        const team2Name = teams[1].querySelector('.team-name');
-        if (team2Logo && matchData.team2.code) {
-            team2Logo.textContent = matchData.team2.code;
-            team2Logo.style.backgroundColor = matchData.team2.color || '#008E3B';
-            team2Logo.style.color = 'white';
-        }
-        if (team2Name && matchData.team2.name) {
-            team2Name.textContent = matchData.team2.name;
-        }
-    }
-    
-    // Update prediction
-    const predictionType = document.querySelector('.type-value');
-    if (predictionType && matchData.prediction) {
-        predictionType.textContent = matchData.prediction;
-    }
-    
-    // Update odds
-    const oddsValue = document.querySelector('.odds-value');
-    if (oddsValue && matchData.odds) {
-        oddsValue.textContent = `@${matchData.odds}`;
-    }
-    
-    // Update confidence
-    const confidenceFill = document.querySelector('.confidence-fill');
-    const confidencePercent = document.querySelector('.confidence-percent');
-    if (confidenceFill && matchData.confidence) {
-        confidenceFill.style.width = `${matchData.confidence}%`;
-    }
-    if (confidencePercent && matchData.confidence) {
-        confidencePercent.textContent = `${matchData.confidence}% Confidence`;
-    }
-    
-    // Update risk level
-    const confidenceHeader = document.querySelector('.confidence-header span');
-    if (confidenceHeader && matchData.riskLevel) {
-        confidenceHeader.textContent = matchData.riskLevel;
-    }
+    console.log('✅ Top prediction updated:', topData.mainMatch.fixture);
 }
 
 // ===== LOAD TODAY'S PREDICTIONS =====
