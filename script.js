@@ -295,3 +295,39 @@ document.addEventListener('DOMContentLoaded', function() {
         phoneInput.placeholder = '+251979380726';
     }
 });
+// ===== PHONE NUMBER VALIDATION =====
+const phoneInput = document.getElementById('phoneInput');
+
+if (phoneInput) {
+    phoneInput.addEventListener('input', function() {
+        const value = this.value;
+        
+        // Auto-format: Add +251 if not present
+        if (value && !value.startsWith('+251')) {
+            if (value.startsWith('0')) {
+                // Convert 09... to +2519...
+                this.value = '+251' + value.substring(1);
+            } else if (value.length > 0 && value.startsWith('9')) {
+                // Convert 9... to +2519...
+                this.value = '+251' + value;
+            }
+        }
+        
+        // Validate Ethiopian number pattern
+        const pattern = /^\+251[0-9]{9}$/;
+        if (pattern.test(this.value)) {
+            this.classList.remove('invalid');
+            this.classList.add('valid');
+        } else {
+            this.classList.remove('valid');
+            this.classList.add('invalid');
+        }
+    });
+    
+    // Show Ethiopian format on focus
+    phoneInput.addEventListener('focus', function() {
+        if (!this.value) {
+            this.value = '+251';
+        }
+    });
+                       }
