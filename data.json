@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-10T20:49:10.166Z",
+  "lastUpdated": "2025-12-10T22:03:11.583Z",
   "site": {
     "title": "RMAME Predictions",
     "tagline": "Professional Football Betting Tips",
@@ -9,7 +9,7 @@
     }
   },
   "hero": {
-    "date": "December 10, 2025",
+    "date": "December 11, 2025",
     "title": "103.12 ACCUMULATOR WON",
     "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
     "badges": [
@@ -86,9 +86,9 @@
     }
   },
   "topPrediction": {
-    "date": "December 10, 2025",
+    "date": "December 11, 2025",
     "title": "Champions League Double",
-    "subtitle": "December 10, 2025 - Champions League Double",
+    "subtitle": "December 11, 2025 - Champions League Double",
     "badge": "CHAMPIONS LEAGUE SPECIAL",
     "mainMatch": {
       "league": "Champions League 🇪🇺",
@@ -118,48 +118,29 @@
     }
   },
   "todayPredictions": {
-    "date": "December 10, 2025",
-    "title": "Today's Premium Picks",
-    "subtitle": "12 Premium Picks with 163.9 Total Odds",
-    "totalPredictions": 1,
-    "totalOdds": "1.41",
-    "predictions": [
-      {
-        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-        "time": "20:45",
-        "fixture": "Stevenage v Cardiff",
-        "team1": {
-          "name": "Stevenage",
-          "code": "STE",
-          "color": "#FF69B4"
-        },
-        "team2": {
-          "name": "Cardiff",
-          "code": "CAR",
-          "color": "#FF6600"
-        },
-        "prediction": "1X (Double Chance)",
-        "odds": 1.41,
-        "confidence": 75
-      }
-    ],
+    "date": "December 11, 2025",
+    "title": "",
+    "subtitle": "",
+    "totalPredictions": 0,
+    "totalOdds": "1.00",
+    "predictions": [],
     "winningExamples": [
       {
         "stake": 10,
-        "win": "14.10"
+        "win": "10.00"
       },
       {
         "stake": 50,
-        "win": "70.50"
+        "win": "50.00"
       },
       {
         "stake": 100,
-        "win": "141.00"
+        "win": "100.00"
       }
     ]
   },
   "yesterdayResults": {
-    "date": "December 9, 2025",
+    "date": "December 10, 2025",
     "title": "Yesterday's Performance",
     "subtitle": "10 Wins out of 12 Predictions",
     "stats": {
@@ -167,18 +148,106 @@
       "wins": 10,
       "losses": 2,
       "winRate": "83.3%",
-      "totalOdds": "1.41",
+      "totalOdds": "0.00",
       "status": "Good",
       "record": "10-0-2"
     },
     "results": [
       {
-        "fixture": "Stevenage v Cardiff",
-        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
-        "betType": "Double Chance: 1X",
-        "odds": 1.41,
+        "fixture": "Stevenge vs cardiff",
+        "league": "Btts yes ",
+        "betType": "1x",
+        "odds": 0,
         "result": "0-1",
-        "outcome": "lost"
+        "outcome": "won"
+      },
+      {
+        "fixture": "Penybont v Barry Town ",
+        "league": "",
+        "betType": "Btts yes ",
+        "odds": 0,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Atalanta v Chelsea ",
+        "league": "",
+        "betType": "Btts yes ",
+        "odds": 0,
+        "result": "2-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Leyton orient vs Luton ",
+        "league": "",
+        "betType": "1x",
+        "odds": 0,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "QPR v Birmingham ",
+        "league": "",
+        "betType": "1x",
+        "odds": 0,
+        "result": "2-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Shrewsbury v Grimsby ",
+        "league": "",
+        "betType": "1x",
+        "odds": 0,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Shams Azar v Gol Gohar",
+        "league": "",
+        "betType": "1x",
+        "odds": 0,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Inter Milan v Liverpool ",
+        "league": "",
+        "betType": "Btts yes ",
+        "odds": 0,
+        "result": "0-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Fleetwood v Salford ",
+        "league": "",
+        "betType": "Btts yes ",
+        "odds": 0,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Genk 2 v Anderlecht res",
+        "league": "",
+        "betType": "Over 2.5",
+        "odds": 0,
+        "result": "3-2",
+        "outcome": "won"
+      },
+      {
+        "fixture": "PSV v Atletico Madrid ",
+        "league": "",
+        "betType": "Over 2.5",
+        "odds": 0,
+        "result": "2-3",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Union SG v Marseille ",
+        "league": "",
+        "betType": "Btts yes ",
+        "odds": 0,
+        "result": "2-3",
+        "outcome": "won"
       }
     ],
     "analysis": "Performance with 10 wins out of 12 predictions (83.3% accuracy).",
