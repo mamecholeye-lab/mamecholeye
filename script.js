@@ -288,11 +288,11 @@ if (subscriptionForm) {
         }
         
         // Set package prices
-        const prices = {
-            'daily': '$9.99 per day',
-            'weekly': '$39.99 per week', 
-            'monthly': '$149.99 per month'
-        };
+const prices = {
+    'daily': '$0.99 per day',
+    'weekly': '$9.99 per week', 
+    'monthly': '$19.99 per month'
+};
         
         // Create WhatsApp message (automatically formatted)
         const message = `📋 *NEW SUBSCRIPTION REQUEST* 📋%0A%0A` +
