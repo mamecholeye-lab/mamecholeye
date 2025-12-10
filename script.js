@@ -63,14 +63,17 @@ function updateHero(data) {
 
 // ===== UPDATE TOP PREDICTION =====
 function updateTopPrediction(data) {
+    console.log('🔍 Updating top prediction...');
+    
     if (!data.topPrediction || !data.topPrediction.mainMatch) {
-        console.error('❌ No top prediction data');
+        console.error('❌ No top prediction data found');
         return;
     }
     
     const match = data.topPrediction.mainMatch;
+    console.log('Match data:', match);
     
-    // Update teams
+    // Method 1: Update team names if .team-name elements exist
     const teamNames = document.querySelectorAll('.team-name');
     if (teamNames.length >= 2) {
         teamNames[0].textContent = match.team1.name;
@@ -78,24 +81,48 @@ function updateTopPrediction(data) {
         console.log('✅ Team names updated');
     }
     
-    // Update prediction type
-    const typeValue = document.querySelector('.type-value');
-    if (typeValue) {
-        typeValue.textContent = match.prediction;
+    // Method 2: Try different selectors
+    const predictionType = document.querySelector('.prediction-value, .type-value, .prediction-text');
+    if (predictionType) {
+        predictionType.textContent = match.prediction;
+        console.log('✅ Prediction type updated');
     }
     
-    // Update odds
-    const oddsValue = document.querySelector('.odds-value');
-    if (oddsValue) {
-        oddsValue.textContent = '@' + match.odds;
+    // Method 3: Try to find odds element
+    const oddsElement = document.querySelector('.odds-value, .prediction-odd, .odds');
+    if (oddsElement) {
+        oddsElement.textContent = '@' + match.odds;
+        console.log('✅ Odds updated');
     }
     
-    // Update confidence
-    const confidenceFill = document.querySelector('.confidence-fill');
-    const confidencePercent = document.querySelector('.confidence-percent');
-    if (confidenceFill && confidencePercent) {
-        confidenceFill.style.width = match.confidence + '%';
-        confidencePercent.textContent = match.confidence + '% Confidence';
+    // Method 4: Update confidence bar
+    const confidenceBar = document.querySelector('.confidence-fill, .confidence-bar div');
+    const confidenceText = document.querySelector('.confidence-percent, .confidence span');
+    
+    if (confidenceBar) {
+        confidenceBar.style.width = match.confidence + '%';
+        console.log('✅ Confidence bar updated');
+    }
+    
+    if (confidenceText) {
+        confidenceText.textContent = match.confidence + '% Confidence';
+        console.log('✅ Confidence text updated');
+    }
+    
+    // Method 5: Direct HTML manipulation for testing
+    const topSection = document.getElementById('top-prediction');
+    if (topSection) {
+        // Create a test message
+        const testMsg = document.createElement('div');
+        testMsg.style.cssText = 'background:#00B894;color:white;padding:10px;border-radius:5px;margin:10px 0;';
+        testMsg.innerHTML = `
+            <strong>✅ Top Prediction Loaded!</strong><br>
+            ${match.team1.name} vs ${match.team2.name}<br>
+            Prediction: ${match.prediction}<br>
+            Odds: ${match.odds} | Confidence: ${match.confidence}%
+        `;
+        topSection.appendChild(testMsg);
+        console.log('✅ Test message added');
     }
 }
 
