@@ -277,8 +277,8 @@ if (subscriptionForm) {
             return;
         }
         
-        // Clean phone number (remove spaces, plus sign)
-        let cleanPhone = phone.replace(/\s+/g, '').replace('+', '');
+        // Clean phone number - SIMPLE VERSION
+let cleanPhone = phone.replace(/\s+/g, ''); // Just remove spaces
         
         // Ensure it starts with country code
         if (!cleanPhone.startsWith('251')) {
