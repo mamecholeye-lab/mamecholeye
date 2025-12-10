@@ -261,3 +261,84 @@ function shareWebsite() {
             alert('✅ Website link copied to clipboard!\n\nShare: ' + websiteUrl);
         });
 }
+// ===== SUBSCRIPTION FORM WITH WHATSAPP =====
+const subscriptionForm = document.getElementById('subscribe');
+
+if (subscriptionForm) {
+    subscriptionForm.addEventListener('submit', function(e) {
+        e.preventDefault(); // Stop form from reloading page
+        
+        // Get all form values
+        const name = this.querySelector('input[type="text"]').value;
+        const email = this.querySelector('input[type="email"]').value;
+        const phone = this.querySelector('input[type="tel"]').value;
+        const package = this.querySelector('select').value;
+        const paymentMethod = this.querySelector('input[name="payment"]:checked').value;
+        
+        // Check if all fields are filled
+        if (!name || !email || !phone || !package) {
+            alert('❌ Please fill in all fields before submitting!');
+            return;
+        }
+        
+        // Set package prices
+        const prices = {
+            'daily': '$9.99 per day',
+            'weekly': '$39.99 per week', 
+            'monthly': '$149.99 per month'
+        };
+        
+        // Create WhatsApp message (automatically formatted)
+        const message = `📋 *NEW SUBSCRIPTION REQUEST* 📋%0A%0A` +
+                       `*👤 Name:* ${name}%0A` +
+                       `*📧 Email:* ${email}%0A` +
+                       `*📱 WhatsApp:* ${phone}%0A` +
+                       `*💰 Package:* ${package.toUpperCase()} - ${prices[package]}%0A` +
+                       `*💳 Payment Method:* ${paymentMethod.toUpperCase()}%0A%0A` +
+                       `*📍 Request:* Please send payment details for ${package} package`;
+        
+        // Your WhatsApp number
+        const whatsappNumber = '251979380726';
+        
+        // Create WhatsApp link
+        const whatsappUrl = `https://wa.me/${whatsappNumber}?text=${message}`;
+        
+        // Show success message
+        alert(`✅ Thank you ${name}!\\n\\nWe will send payment details to your WhatsApp (${phone}) within 5 minutes.\\n\\nClick OK to open WhatsApp and confirm.`);
+        
+        // Open WhatsApp in new tab
+        window.open(whatsappUrl, '_blank');
+        
+        // Reset form
+        this.reset();
+        
+        // Set default payment method
+        this.querySelector('#mobile-money').checked = true;
+    });
+}
+
+// ===== AUTO-FORMAT PHONE NUMBER =====
+const phoneInput = document.querySelector('input[type="tel"]');
+if (phoneInput) {
+    phoneInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
+        
+        // Add + if starts with 251
+        if (value.startsWith('251') && !value.startsWith('+251')) {
+            value = '+' + value;
+        }
+        
+        // Format as +251 XXX XXX XXX
+        if (value.length > 3) {
+            value = value.slice(0, 3) + ' ' + value.slice(3);
+        }
+        if (value.length > 7) {
+            value = value.slice(0, 7) + ' ' + value.slice(7);
+        }
+        if (value.length > 11) {
+            value = value.slice(0, 11) + ' ' + value.slice(11);
+        }
+        
+        e.target.value = value;
+    });
+}
