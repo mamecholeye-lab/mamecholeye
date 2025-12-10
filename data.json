@@ -31,5 +31,93 @@
       "confidence": 70,
       "riskLevel": "MEDIUM RISK"
     }
+  },
+  
+  "todayPredictions": {
+    "predictions": [
+      {
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "time": "20:45",
+        "fixture": "Stevenage v Cardiff",
+        "team1": {"name": "Stevenage", "code": "STE", "color": "#DA291C"},
+        "team2": {"name": "Cardiff", "code": "CAR", "color": "#1C4A9A"},
+        "prediction": "1X (Double Chance)",
+        "odds": 1.41,
+        "confidence": 75
+      },
+      {
+        "league": "Welsh Premier League 🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+        "time": "19:45",
+        "fixture": "Penybont v Barry Town",
+        "team1": {"name": "Penybont", "code": "PEN", "color": "#FF0000"},
+        "team2": {"name": "Barry Town", "code": "BAR", "color": "#0000FF"},
+        "prediction": "BTTS Yes",
+        "odds": 1.60,
+        "confidence": 68
+      },
+      {
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "time": "21:00",
+        "fixture": "Leyton Orient v Luton",
+        "team1": {"name": "Leyton Orient", "code": "LEY", "color": "#FF6600"},
+        "team2": {"name": "Luton", "code": "LUT", "color": "#FF69B4"},
+        "prediction": "1X (Double Chance)",
+        "odds": 1.46,
+        "confidence": 72
+      },
+      {
+        "league": "Champions League 🇪🇺",
+        "time": "21:00",
+        "fixture": "Atalanta v Chelsea",
+        "team1": {"name": "Atalanta", "code": "ATA", "color": "#0000FF"},
+        "team2": {"name": "Chelsea", "code": "CHE", "color": "#034694"},
+        "prediction": "BTTS Yes",
+        "odds": 1.54,
+        "confidence": 70
+      }
+    ]
+  },
+  
+  "yesterdayResults": {
+    "stats": {
+      "record": "10-0-2",
+      "winRate": "83.3%",
+      "totalOdds": "163.9",
+      "status": "Good"
+    },
+    "results": [
+      {
+        "fixture": "Stevenage v Cardiff",
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "betType": "1X (Double Chance)",
+        "odds": 1.41,
+        "result": "0-1",
+        "outcome": "lost"
+      },
+      {
+        "fixture": "Penybont v Barry Town",
+        "league": "Welsh Premier League 🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+        "betType": "BTTS Yes",
+        "odds": 1.60,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Leyton Orient v Luton",
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "betType": "1X (Double Chance)",
+        "odds": 1.46,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Atalanta v Chelsea",
+        "league": "Champions League 🇪🇺",
+        "betType": "BTTS Yes",
+        "odds": 1.54,
+        "result": "2-1",
+        "outcome": "won"
+      }
+    ]
   }
 }
