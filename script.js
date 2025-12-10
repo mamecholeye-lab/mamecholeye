@@ -555,3 +555,129 @@ document.addEventListener('DOMContentLoaded', function() {
     // Load predictions from JSON (optional)
     // loadPredictionsFromJSON();
 });
+// ===== LOAD TODAY'S PREDICTIONS FROM JSON =====
+async function loadTodayPredictions() {
+    try {
+        console.log('Loading today predictions...');
+        
+        // Fetch from your JSON file
+        const response = await fetch('predictions.json');
+        const data = await response.json();
+        
+        // Update predictions section
+        updatePredictionsSection(data);
+        
+        // Update top prediction
+        if (data.predictions && data.predictions.length > 0) {
+            updateTopPrediction(data.predictions[0]);
+        }
+        
+    } catch (error) {
+        console.log('Using default predictions');
+        // Keep existing predictions as fallback
+    }
+}
+
+function updatePredictionsSection(data) {
+    const predictionsContainer = document.querySelector('#predictions .predictions-grid');
+    
+    if (!predictionsContainer || !data.predictions) return;
+    
+    // Clear existing predictions
+    predictionsContainer.innerHTML = '';
+    
+    // Add new predictions
+    data.predictions.forEach(prediction => {
+        const matchCard = createMatchCard(prediction);
+        predictionsContainer.appendChild(matchCard);
+    });
+    
+    // Update date in subtitle
+    const subtitle = document.querySelector('#predictions .section-subtitle');
+    if (subtitle) {
+        subtitle.textContent = `${data.today} - ${data.totalPredictions} Premium Picks with ${data.totalOdds} Total Odds`;
+    }
+}
+
+function createMatchCard(prediction) {
+    const card = document.createElement('div');
+    card.className = 'match-card';
+    card.innerHTML = `
+        <div class="match-header">
+            <span class="match-league"><i class="fas fa-trophy"></i> ${prediction.league}</span>
+            <span class="match-time">${prediction.time}</span>
+        </div>
+        <div class="teams">
+            <div class="team">
+                <div class="team-logo">${prediction.fixture.split('vs')[0].trim().substring(0,3).toUpperCase()}</div>
+                <span class="team-name">${prediction.fixture.split('vs')[0].trim()}</span>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team">
+                <div class="team-logo">${prediction.fixture.split('vs')[1].trim().substring(0,3).toUpperCase()}</div>
+                <span class="team-name">${prediction.fixture.split('vs')[1].trim()}</span>
+            </div>
+        </div>
+        <div class="prediction">
+            <span class="prediction-label">RMAME TIP:</span>
+            <span class="prediction-value">${prediction.betType}</span>
+            <span class="prediction-odd">@${prediction.odds}</span>
+        </div>
+        <div class="confidence">
+            <div class="confidence-bar">
+                <div class="confidence-fill" style="width: ${prediction.confidence}%"></div>
+            </div>
+            <span>${prediction.confidence}% Confidence</span>
+        </div>
+    `;
+    
+    return card;
+}
+
+function updateTopPrediction(prediction) {
+    // Update the top prediction section
+    const topSection = document.querySelector('#top-prediction');
+    if (!topSection) return;
+    
+    // Update the match details
+    const fixtureParts = prediction.fixture.split(' vs ');
+    if (fixtureParts.length === 2) {
+        const team1 = fixtureParts[0].trim();
+        const team2 = fixtureParts[1].trim();
+        
+        // Update team names
+        const teamElements = document.querySelectorAll('.team-name');
+        if (teamElements.length >= 2) {
+            teamElements[0].textContent = team1;
+            teamElements[1].textContent = team2;
+        }
+        
+        // Update prediction type
+        const predictionType = document.querySelector('.type-value');
+        if (predictionType) {
+            predictionType.textContent = prediction.betType;
+        }
+        
+        // Update odds
+        const oddsValue = document.querySelector('.odds-value');
+        if (oddsValue) {
+            oddsValue.textContent = `@${prediction.odds}`;
+        }
+        
+        // Update confidence
+        const confidenceFill = document.querySelector('.confidence-fill');
+        const confidencePercent = document.querySelector('.confidence-percent');
+        if (confidenceFill && confidencePercent) {
+            confidenceFill.style.width = `${prediction.confidence}%`;
+            confidencePercent.textContent = `${prediction.confidence}% Confidence`;
+        }
+    }
+}
+
+// Call this function when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Load today's predictions after page loads
+    setTimeout(() => {
+        loadTodayPredictions();
+    }, 2000);
+});
