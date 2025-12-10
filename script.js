@@ -1,29 +1,4 @@
-console.log('📱 RMAME Script Started');
-
-// Debug: Check if top prediction section exists
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🔍 Checking DOM elements...');
-    
-    // Check for top prediction elements
-    const elements = [
-        {selector: '.team-name', desc: 'Team names'},
-        {selector: '.prediction-value', desc: 'Prediction value'},
-        {selector: '.type-value', desc: 'Type value'},
-        {selector: '.odds-value', desc: 'Odds value'},
-        {selector: '.confidence-fill', desc: 'Confidence bar'},
-        {selector: '#top-prediction', desc: 'Top prediction section'}
-    ];
-    
-    elements.forEach(item => {
-        const el = document.querySelector(item.selector);
-        if (el) {
-            console.log(`✅ Found: ${item.desc} (${item.selector})`);
-        } else {
-            console.log(`❌ NOT FOUND: ${item.desc} (${item.selector})`);
-        }
-    });
-});
-console.log('📱 RMAME Script Loaded');
+console.log('📱 RMAME Predictions Script Loaded');
 
 // ===== SIMPLE TEST FUNCTION =====
 async function testWebsite() {
@@ -46,7 +21,15 @@ async function testWebsite() {
         console.log('Step 3: Updating top prediction...');
         updateTopPrediction(data);
         
-        // 4. Hide loading animation
+        // 4. Update Today's Predictions
+        console.log('Step 4: Updating today\'s predictions...');
+        updateTodayPredictions(data);
+        
+        // 5. Update Results
+        console.log('Step 5: Updating results...');
+        updateResults(data);
+        
+        // 6. Hide loading animation
         hideLoader();
         
         console.log('🎉 Website updated successfully!');
@@ -79,10 +62,13 @@ function updateHero(data) {
     }
     
     // Update stats
-    const heroStats = document.querySelector('.hero-stats');
-    if (heroStats && data.hero.stats) {
-        // You can update stats here
-        console.log('✅ Hero stats found');
+    const heroStats = document.querySelectorAll('.hero-stats .stat h3');
+    if (heroStats.length >= 4 && data.hero.stats) {
+        heroStats[0].textContent = data.hero.stats[0]?.value || '3/3';
+        heroStats[1].textContent = data.hero.stats[1]?.value || '103.12';
+        heroStats[2].textContent = data.hero.stats[2]?.value || '34.37';
+        heroStats[3].textContent = data.hero.stats[3]?.value || '100%';
+        console.log('✅ Hero stats updated');
     }
 }
 
@@ -98,57 +84,166 @@ function updateTopPrediction(data) {
     const match = data.topPrediction.mainMatch;
     console.log('Match data:', match);
     
-    // Method 1: Update team names if .team-name elements exist
-    const teamNames = document.querySelectorAll('.team-name');
-    if (teamNames.length >= 2) {
-        teamNames[0].textContent = match.team1.name;
-        teamNames[1].textContent = match.team2.name;
-        console.log('✅ Team names updated');
+    // Try to update based on visible HTML structure
+    // Look for team names in the prediction section
+    const teamContainers = document.querySelectorAll('#top-prediction .team span');
+    if (teamContainers.length >= 2) {
+        teamContainers[0].textContent = match.team1.name;
+        teamContainers[1].textContent = match.team2.name;
+        console.log('✅ Team names updated via team spans');
     }
     
-    // Method 2: Try different selectors
-    const predictionType = document.querySelector('.prediction-value, .type-value, .prediction-text');
-    if (predictionType) {
-        predictionType.textContent = match.prediction;
-        console.log('✅ Prediction type updated');
-    }
+    // Look for prediction text
+    const predictionElements = document.querySelectorAll('#top-prediction p, #top-prediction div');
+    predictionElements.forEach(element => {
+        const text = element.textContent.trim();
+        if (text.includes('PREDICTION:')) {
+            element.textContent = 'PREDICTION: ' + match.prediction;
+            console.log('✅ Prediction text updated');
+        }
+        if (text.includes('ODDS:')) {
+            element.textContent = 'ODDS: @' + match.odds;
+            console.log('✅ Odds text updated');
+        }
+    });
     
-    // Method 3: Try to find odds element
-    const oddsElement = document.querySelector('.odds-value, .prediction-odd, .odds');
-    if (oddsElement) {
-        oddsElement.textContent = '@' + match.odds;
-        console.log('✅ Odds updated');
-    }
+    // Update confidence if exists
+    const confidenceElements = document.querySelectorAll('#top-prediction strong, #top-prediction .confidence');
+    confidenceElements.forEach(element => {
+        if (element.textContent.includes('%') && element.textContent.includes('Confidence')) {
+            element.textContent = match.confidence + '% Confidence';
+            console.log('✅ Confidence updated');
+        }
+    });
     
-    // Method 4: Update confidence bar
-    const confidenceBar = document.querySelector('.confidence-fill, .confidence-bar div');
-    const confidenceText = document.querySelector('.confidence-percent, .confidence span');
-    
-    if (confidenceBar) {
-        confidenceBar.style.width = match.confidence + '%';
-        console.log('✅ Confidence bar updated');
-    }
-    
-    if (confidenceText) {
-        confidenceText.textContent = match.confidence + '% Confidence';
-        console.log('✅ Confidence text updated');
-    }
-    
-    // Method 5: Direct HTML manipulation for testing
+    // Add test message to verify update
     const topSection = document.getElementById('top-prediction');
     if (topSection) {
-        // Create a test message
+        // Remove any previous test message
+        const oldTestMsg = topSection.querySelector('.dynamic-test-message');
+        if (oldTestMsg) oldTestMsg.remove();
+        
         const testMsg = document.createElement('div');
-        testMsg.style.cssText = 'background:#00B894;color:white;padding:10px;border-radius:5px;margin:10px 0;';
+        testMsg.className = 'dynamic-test-message';
+        testMsg.style.cssText = 'background:#00B894;color:white;padding:10px;border-radius:5px;margin:10px 0;text-align:center;';
         testMsg.innerHTML = `
-            <strong>✅ Top Prediction Loaded!</strong><br>
-            ${match.team1.name} vs ${match.team2.name}<br>
-            Prediction: ${match.prediction}<br>
-            Odds: ${match.odds} | Confidence: ${match.confidence}%
+            <strong>✅ Data Dynamically Loaded!</strong><br>
+            <small>Teams: ${match.team1.name} vs ${match.team2.name}</small>
         `;
-        topSection.appendChild(testMsg);
+        topSection.insertBefore(testMsg, topSection.firstChild);
         console.log('✅ Test message added');
     }
+}
+
+// ===== UPDATE TODAY'S PREDICTIONS =====
+function updateTodayPredictions(data) {
+    if (!data.todayPredictions || !data.todayPredictions.predictions) {
+        console.log('⚠️ No today predictions data found');
+        return;
+    }
+    
+    console.log('🔍 Updating today\'s predictions...');
+    const predictions = data.todayPredictions.predictions;
+    
+    // Update first 4 match cards if they exist
+    const matchCards = document.querySelectorAll('.match-card');
+    for (let i = 0; i < Math.min(matchCards.length, predictions.length); i++) {
+        const pred = predictions[i];
+        const card = matchCards[i];
+        
+        // Update league
+        const leagueElement = card.querySelector('.match-league');
+        if (leagueElement) {
+            leagueElement.textContent = pred.league;
+        }
+        
+        // Update teams - look for team-name spans
+        const teamSpans = card.querySelectorAll('.team-name');
+        if (teamSpans.length >= 2) {
+            teamSpans[0].textContent = pred.team1?.name || pred.fixture.split(' v ')[0] || 'Team 1';
+            teamSpans[1].textContent = pred.team2?.name || pred.fixture.split(' v ')[1] || 'Team 2';
+        }
+        
+        // Update prediction
+        const predictionElement = card.querySelector('.prediction-value, [class*="tip"]');
+        if (predictionElement) {
+            predictionElement.textContent = pred.prediction;
+        }
+        
+        // Update odds
+        const oddsElement = card.querySelector('.prediction-odd, [class*="odds"]');
+        if (oddsElement) {
+            oddsElement.textContent = '@' + pred.odds;
+        }
+        
+        // Update confidence
+        const confidenceBar = card.querySelector('.confidence-fill');
+        if (confidenceBar && pred.confidence) {
+            confidenceBar.style.width = pred.confidence + '%';
+        }
+    }
+    
+    console.log(`✅ Updated ${Math.min(matchCards.length, predictions.length)} match cards`);
+}
+
+// ===== UPDATE RESULTS =====
+function updateResults(data) {
+    if (!data.yesterdayResults || !data.yesterdayResults.results) {
+        console.log('⚠️ No results data found');
+        return;
+    }
+    
+    console.log('🔍 Updating results...');
+    const results = data.yesterdayResults.results;
+    const resultsContainer = document.getElementById('results-table-body');
+    
+    if (!resultsContainer) {
+        console.log('❌ Results container not found');
+        return;
+    }
+    
+    // Clear loading message
+    resultsContainer.innerHTML = '';
+    
+    // Add each result
+    results.forEach((result, index) => {
+        const row = document.createElement('div');
+        row.className = 'table-row';
+        row.style.cssText = 'display: flex; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);';
+        
+        // Create outcome badge
+        const outcomeClass = result.outcome === 'won' ? 'won' : 'lost';
+        const outcomeBadge = result.outcome === 'won' ? '✅' : '❌';
+        
+        row.innerHTML = `
+            <div style="flex: 3; color: white;">${result.fixture || 'Match'}</div>
+            <div style="flex: 2; color: #FF9E6D;">${result.betType || 'N/A'}</div>
+            <div style="flex: 1; color: #FFD700;">${result.odds || '0.00'}</div>
+            <div style="flex: 1; color: #64D2FF;">${result.result || 'N/A'}</div>
+            <div style="flex: 1; color: ${result.outcome === 'won' ? '#00E6A1' : '#FF6B6B'};">
+                <span class="status ${outcomeClass}">${outcomeBadge} ${result.outcome || 'pending'}</span>
+            </div>
+        `;
+        
+        resultsContainer.appendChild(row);
+    });
+    
+    // Update stats summary
+    if (data.yesterdayResults.stats) {
+        const stats = data.yesterdayResults.stats;
+        const statBoxes = document.querySelectorAll('.stat-box .stat-value');
+        
+        if (statBoxes.length >= 4) {
+            statBoxes[0].textContent = stats.record || '0-0-0';
+            statBoxes[1].textContent = stats.winRate || '0%';
+            statBoxes[2].textContent = stats.totalOdds || '0.00';
+            statBoxes[3].textContent = stats.status === 'Good' ? '✅ Good' : '❌ Poor';
+            
+            console.log('✅ Results stats updated');
+        }
+    }
+    
+    console.log(`✅ Loaded ${results.length} results`);
 }
 
 // ===== HIDE LOADER =====
@@ -181,6 +276,7 @@ function showError(message) {
         border-radius: 10px;
         z-index: 9999;
         font-family: Arial;
+        text-align: center;
     `;
     errorDiv.innerHTML = `
         <strong>⚠️ Website Error:</strong><br>
@@ -214,6 +310,20 @@ if (menuToggle && navMenu) {
 // ===== START WEBSITE =====
 document.addEventListener('DOMContentLoaded', function() {
     console.log('🏁 DOM loaded, starting website...');
+    console.log('🔍 Checking page structure...');
+    
+    // Log what elements we find
+    const elementsToCheck = [
+        { selector: '.hero-title', desc: 'Hero Title' },
+        { selector: '#top-prediction', desc: 'Top Prediction Section' },
+        { selector: '.match-card', desc: 'Match Cards' },
+        { selector: '#results-table-body', desc: 'Results Table' }
+    ];
+    
+    elementsToCheck.forEach(item => {
+        const found = document.querySelectorAll(item.selector);
+        console.log(`${found.length > 0 ? '✅' : '❌'} ${item.desc}: ${found.length} found`);
+    });
     
     // Start testing
     setTimeout(() => {
@@ -235,4 +345,4 @@ if (backToTopBtn) {
     backToTopBtn.addEventListener('click', function() {
         window.scrollTo({ top: 0, behavior: 'smooth' });
     });
-                                           }
+}
