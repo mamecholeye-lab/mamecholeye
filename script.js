@@ -339,10 +339,10 @@ if (phoneInput) {
         
         // Add space after every 3 digits
         if (value.length > 11) {
-            value = value.slice(0, 7) + ' ' + value.slice(7, 10);
+            value = value.slice(0, 11) + ' ' + value.slice(7, 10);
         }
         if (value.length > 12) {
-            value = value.slice(0, 11) + ' ' + value.slice(11, 13);
+            value = value.slice(0, 12) + ' ' + value.slice(11, 13);
         }
         
         e.target.value = value;
