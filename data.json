@@ -327,3 +327,190 @@
     "insight": "Double Chance bets (1X) performed perfectly (5/5 wins). BTTS bets went 4/5 (80%). Consider focusing on Double Chance markets for higher consistency."
   }
       }
+{
+  "lastUpdated": "2024-12-11T18:30",
+  "site": {
+    "title": "RMAME Predictions",
+    "tagline": "Professional Football Betting Tips",
+    "contact": {
+      "whatsapp": "+251979380726",
+      "email": "mamecholeye@gmail.com"
+    }
+  },
+  "hero": {
+    "date": "December 10, 2025",
+    "title": "103.12 ACCUMULATOR WON",
+    "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
+    "badges": [
+      {
+        "text": "3/3 WINS YESTERDAY",
+        "color": "#00B894"
+      },
+      {
+        "text": "Perfect Record",
+        "color": "#FF6B35",
+        "icon": "check-circle"
+      },
+      {
+        "text": "TOTAL ODDS: 103.12",
+        "color": "#FFD700"
+      }
+    ],
+    "stats": [
+      {
+        "value": "3/3",
+        "label": "Perfect Wins"
+      },
+      {
+        "value": "103.12",
+        "label": "Total Odds"
+      }
+    ],
+    "results": [
+      {
+        "time": "19:45",
+        "league": "League Two",
+        "fixture": "Fleetwood 1 – 1 Salford city",
+        "betType": "Draw & BTTS",
+        "betColor": "#FFD700",
+        "odds": 4.33,
+        "status": "won"
+      },
+      {
+        "time": "20:00",
+        "league": "League Two",
+        "fixture": "Barrow 0 – 3 Tranmere",
+        "betType": "Away & Over 2.5",
+        "betColor": "#00B894",
+        "odds": 4.33,
+        "status": "won"
+      },
+      {
+        "time": "19:45",
+        "league": "League Two",
+        "fixture": "Notts Co 3 – 2 MK Dons",
+        "betType": "Home & BTTS",
+        "betColor": "#FF6B35",
+        "odds": 5.5,
+        "status": "won"
+      }
+    ],
+    "calculations": {
+      "totalOdds": 103.12,
+      "winningExamples": [
+        {
+          "stake": 10,
+          "win": 1031.2
+        },
+        {
+          "stake": 50,
+          "win": 5156
+        },
+        {
+          "stake": 100,
+          "win": 10312
+        }
+      ],
+      "profitNote": "3-match accumulator with 103.12 odds = 10,312% PROFIT!"
+    }
+  },
+  "topPrediction": {
+    "date": "December 10, 2025",
+    "title": "Champions League Double",
+    "subtitle": "December 10, 2025 - Champions League Double",
+    "badge": "CHAMPIONS LEAGUE SPECIAL",
+    "mainMatch": {
+      "league": "Champions League 🇪🇺",
+      "time": "20:45",
+      "fixture": "Bayern Munich vs Sporting CP",
+      "team1": {
+        "name": "Bayern Munich",
+        "code": "BAY",
+        "color": "#DC052D"
+      },
+      "team2": {
+        "name": "Sporting CP",
+        "code": "SPO",
+        "color": "#008E3B"
+      },
+      "prediction": "1 & Under 3.5 Goals",
+      "odds": 2.5,
+      "confidence": 70,
+      "riskLevel": "MEDIUM RISK",
+      "analysis": [
+        "Bayern: Unbeaten in last 10 home UCL matches",
+        "Sporting: Lost 3 of last 4 away in UCL",
+        "Bayern: 4 clean sheets in last 6 home games",
+        "H2H: Bayern won last 3 meetings",
+        "Under 3.5 goals in Bayern's last 5 home UCL matches"
+      ]
+    }
+  },
+  "todayPredictions": {
+    "date": "December 10, 2025",
+    "title": "Today's Premium Picks",
+    "subtitle": "12 Premium Picks with 163.9 Total Odds",
+    "totalPredictions": 1,
+    "totalOdds": "1.41",
+    "predictions": [
+      {
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "time": "20:45",
+        "fixture": "Stevenage v Cardiff",
+        "team1": {
+          "name": "Stevenage",
+          "code": "STE",
+          "color": "#DA291C"
+        },
+        "team2": {
+          "name": "Cardiff",
+          "code": "CAR",
+          "color": "#FF69B4"
+        },
+        "prediction": "1X (Double Chance)",
+        "odds": 1.41,
+        "confidence": 75
+      }
+    ],
+    "winningExamples": [
+      {
+        "stake": 10,
+        "win": "14.10"
+      },
+      {
+        "stake": 50,
+        "win": "70.50"
+      },
+      {
+        "stake": 100,
+        "win": "141.00"
+      }
+    ]
+  },
+  "yesterdayResults": {
+    "date": "December 9, 2025",
+    "title": "Yesterday's Performance",
+    "subtitle": "10 Wins out of 12 Predictions",
+    "stats": {
+      "total": 12,
+      "wins": 10,
+      "losses": 2,
+      "winRate": "83.3%",
+      "totalOdds": "1.41",
+      "status": "Good",
+      "record": "10-0-2"
+    },
+    "results": [
+      {
+        "fixture": "Stevenage v Cardiff",
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "betType": "Double Chance: 1X",
+        "odds": 1.41,
+        "result": "0-1",
+        "outcome": "lost"
+      }
+    ],
+    "analysis": "Performance with 10 wins out of 12 predictions (83.3% accuracy).",
+    "insight": "Focus on high confidence predictions for better results."
+  }
+        }
