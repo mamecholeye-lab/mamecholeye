@@ -2489,3 +2489,21 @@ section::before {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+/* Top Prediction Loading */
+.loading-top {
+    text-align: center;
+    padding: 60px 20px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    border: 2px dashed #FF6B35;
+}
+
+.loading-top .loading-spinner {
+    width: 50px;
+    height: 50px;
+    border: 5px solid rgba(255, 107, 53, 0.2);
+    border-top: 5px solid #FF6B35;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
