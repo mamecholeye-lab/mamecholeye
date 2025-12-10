@@ -1,0 +1,227 @@
+{
+  "lastUpdated": "2024-12-11",
+  "totalStats": {
+    "totalPredictions": 1456,
+    "totalWins": 1218,
+    "totalLosses": 238,
+    "winRate": "83.7%",
+    "totalProfit": "+387,452%",
+    "averageOdds": 2.45,
+    "bestWinStreak": 18,
+    "currentStreak": 7
+  },
+  "monthlyStats": {
+    "December 2024": {
+      "predictions": 84,
+      "wins": 72,
+      "losses": 12,
+      "winRate": "85.7%",
+      "profit": "+9,845%"
+    },
+    "November 2024": {
+      "predictions": 92,
+      "wins": 78,
+      "losses": 14,
+      "winRate": "84.8%",
+      "profit": "+10,234%"
+    }
+  },
+  "leaguePerformance": {
+    "Champions League": {"predictions": 56, "wins": 48, "winRate": "85.7%"},
+    "Premier League": {"predictions": 89, "wins": 75, "winRate": "84.3%"},
+    "Championship": {"predictions": 67, "wins": 58, "winRate": "86.6%"},
+    "La Liga": {"predictions": 45, "wins": 38, "winRate": "84.4%"},
+    "Serie A": {"predictions": 39, "wins": 33, "winRate": "84.6%"}
+  },
+  "dailyResults": [
+    {
+      "date": "2024-12-10",
+      "day": "Yesterday",
+      "totalPredictions": 12,
+      "wins": 10,
+      "losses": 2,
+      "winRate": "83.3%",
+      "totalOdds": 163.9,
+      "status": "Excellent",
+      "results": [
+        {
+          "id": 1,
+          "fixture": "Stevenage v Cardiff",
+          "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "1X (Double Chance)",
+          "odds": 1.41,
+          "result": "0-1",
+          "outcome": "lost",
+          "profit": "-100%",
+          "analysis": "Cardiff scored late winner"
+        },
+        {
+          "id": 2,
+          "fixture": "Penybont v Barry Town",
+          "league": "Welsh Premier League 🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+          "betType": "BTTS Yes",
+          "odds": 1.60,
+          "result": "1-1",
+          "outcome": "won",
+          "profit": "+60%",
+          "analysis": "Both teams scored as predicted"
+        },
+        {
+          "id": 3,
+          "fixture": "Leyton Orient v Luton",
+          "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "1X (Double Chance)",
+          "odds": 1.46,
+          "result": "1-1",
+          "outcome": "won",
+          "profit": "+46%",
+          "analysis": "Late equalizer secured win"
+        },
+        {
+          "id": 4,
+          "fixture": "Atalanta v Chelsea",
+          "league": "Champions League 🇪🇺",
+          "betType": "BTTS Yes",
+          "odds": 1.54,
+          "result": "2-1",
+          "outcome": "won",
+          "profit": "+54%",
+          "analysis": "Perfect BTTS prediction"
+        },
+        {
+          "id": 5,
+          "fixture": "QPR v Birmingham",
+          "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "1X (Double Chance)",
+          "odds": 1.46,
+          "result": "2-1",
+          "outcome": "won",
+          "profit": "+46%",
+          "analysis": "Home win secured"
+        },
+        {
+          "id": 6,
+          "fixture": "Shrewsbury v Grimsby",
+          "league": "English League One 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "1X (Double Chance)",
+          "odds": 1.52,
+          "result": "1-1",
+          "outcome": "won",
+          "profit": "+52%",
+          "analysis": "Draw predicted correctly"
+        },
+        {
+          "id": 7,
+          "fixture": "Shams Azar v Gol Gohar",
+          "league": "Iranian Pro League 🇮🇷",
+          "betType": "1X (Double Chance)",
+          "odds": 1.49,
+          "result": "1-1",
+          "outcome": "won",
+          "profit": "+49%",
+          "analysis": "Asian match perfect prediction"
+        },
+        {
+          "id": 8,
+          "fixture": "Inter Milan v Liverpool",
+          "league": "Champions League 🇪🇺",
+          "betType": "BTTS Yes",
+          "odds": 1.54,
+          "result": "0-1",
+          "outcome": "lost",
+          "profit": "-100%",
+          "analysis": "Liverpool kept clean sheet"
+        },
+        {
+          "id": 9,
+          "fixture": "Fleetwood v Salford",
+          "league": "English League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "BTTS Yes",
+          "odds": 1.56,
+          "result": "1-1",
+          "outcome": "won",
+          "profit": "+56%",
+          "analysis": "Both teams scored"
+        },
+        {
+          "id": 10,
+          "fixture": "Genk II v Anderlecht Res.",
+          "league": "Belgian Reserve League 🇧🇪",
+          "betType": "Over 2.5 Goals",
+          "odds": 1.49,
+          "result": "3-2",
+          "outcome": "won",
+          "profit": "+49%",
+          "analysis": "High scoring reserve match"
+        },
+        {
+          "id": 11,
+          "fixture": "PSV v Atletico Madrid",
+          "league": "Champions League 🇪🇺",
+          "betType": "Over 2.5 Goals",
+          "odds": 1.49,
+          "result": "2-3",
+          "outcome": "won",
+          "profit": "+49%",
+          "analysis": "5 goals - over 2.5 perfect"
+        },
+        {
+          "id": 12,
+          "fixture": "Union SG v Marseille",
+          "league": "Europa League 🇪🇺",
+          "betType": "BTTS Yes",
+          "odds": 1.52,
+          "result": "2-3",
+          "outcome": "won",
+          "profit": "+52%",
+          "analysis": "5 goals, BTTS correct"
+        }
+      ]
+    },
+    {
+      "date": "2024-12-09",
+      "day": "2 Days Ago",
+      "totalPredictions": 3,
+      "wins": 3,
+      "losses": 0,
+      "winRate": "100%",
+      "totalOdds": 103.12,
+      "status": "Perfect",
+      "results": [
+        {
+          "id": 101,
+          "fixture": "Fleetwood v Salford",
+          "league": "English League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "Draw & BTTS",
+          "odds": 4.33,
+          "result": "1-1",
+          "outcome": "won",
+          "profit": "+333%",
+          "analysis": "Perfect accumulator start"
+        },
+        {
+          "id": 102,
+          "fixture": "Barrow v Tranmere",
+          "league": "English League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "Away & Over 2.5",
+          "odds": 4.33,
+          "result": "0-3",
+          "outcome": "won",
+          "profit": "+333%",
+          "analysis": "Away win with over 2.5 goals"
+        },
+        {
+          "id": 103,
+          "fixture": "Notts Co v MK Dons",
+          "league": "English League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+          "betType": "Home & BTTS",
+          "odds": 5.50,
+          "result": "3-2",
+          "outcome": "won",
+          "profit": "+450%",
+          "analysis": "Home win with BTTS - accumulator completed"
+        }
+      ]
+    }
+  ]
+}
