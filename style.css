@@ -2192,3 +2192,31 @@ section::before {
         padding: 12px 20px;
     }
 }
+/* Featured result with different bet type colors */
+.bet-type[style*="1 & BTTS"] {
+    background: linear-gradient(90deg, #FF6B35, #FF8B35) !important;
+    color: white !important;
+}
+
+.bet-type[style*="Over 2.5"] {
+    background: linear-gradient(90deg, #00B894, #00E6A1) !important;
+    color: white !important;
+}
+
+.bet-type[style*="Draw & BTTS"] {
+    background: linear-gradient(90deg, #FFD700, #FFED4E) !important;
+    color: #000 !important;
+    font-weight: 700;
+}
+
+/* Hero stats adjustment */
+.hero-stats .stat:nth-child(2) h3 {
+    color: #FFD700; /* Gold for total odds */
+}
+
+/* Highlight featured match */
+.result-item.featured {
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.15), rgba(255, 142, 83, 0.1));
+    border-left: 4px solid #FFD700;
+    border-right: 2px solid #FF6B35;
+    }
