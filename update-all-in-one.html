@@ -954,89 +954,86 @@
         }
         
         // Load current data from data.json
-        async function loadCurrentData() {
-            try {
-                const response = await fetch('https://raw.githubusercontent.com/mamecholeye-lab/mamecholeye/main/data.json');
-                const data = await response.json();
-                
-                // Populate hero data
-                if (data.hero) {
-                    document.getElementById('hero-title').value = data.hero.title || '';
-                    document.getElementById('hero-subtitle').value = data.hero.subtitle || '';
-                    
-                    if (data.hero.stats && data.hero.stats.length >= 2) {
-                        document.getElementById('stat1-value').value = data.hero.stats[0].value || '';
-                        document.getElementById('stat1-label').value = data.hero.stats[0].label || '';
-                        document.getElementById('stat2-value').value = data.hero.stats[1].value || '';
-                        document.getElementById('stat2-label').value = data.hero.stats[1].label || '';
-                    }
-                    
-                    if (data.hero.results && data.hero.results.length >= 3) {
-                        document.getElementById('hero-match1-time').value = data.hero.results[0].time || '';
-                        document.getElementById('hero-match1-fixture').value = data.hero.results[0].fixture || '';
-                        document.getElementById('hero-match1-bet').value = data.hero.results[0].betType || '';
-                        document.getElementById('hero-match1-odds').value = data.hero.results[0].odds || '';
-                        
-                        document.getElementById('hero-match2-time').value = data.hero.results[1].time || '';
-                        document.getElementById('hero-match2-fixture').value = data.hero.results[1].fixture || '';
-                        document.getElementById('hero-match2-bet').value = data.hero.results[1].betType || '';
-                        document.getElementById('hero-match2-odds').value = data.hero.results[1].odds || '';
-                        
-                        document.getElementById('hero-match3-time').value = data.hero.results[2].time || '';
-                        document.getElementById('hero-match3-fixture').value = data.hero.results[2].fixture || '';
-                        document.getElementById('hero-match3-bet').value = data.hero.results[2].betType || '';
-                        document.getElementById('hero-match3-odds').value = data.hero.results[2].odds || '';
-                    }
-                }
-                
-                // Populate top prediction
-                if (data.topPrediction && data.topPrediction.mainMatch) {
-                    document.getElementById('top-league').value = data.topPrediction.mainMatch.league || '';
-                    document.getElementById('top-time').value = data.topPrediction.mainMatch.time || '';
-                    document.getElementById('top-team1').value = data.topPrediction.mainMatch.team1.name || '';
-                    document.getElementById('top-team2').value = data.topPrediction.mainMatch.team2.name || '';
-                    document.getElementById('top-prediction').value = data.topPrediction.mainMatch.prediction || '';
-                    document.getElementById('top-odds').value = data.topPrediction.mainMatch.odds || '';
-                    document.getElementById('top-confidence').value = data.topPrediction.mainMatch.confidence || '';
-                }
-                
-                // Set update date
-                document.getElementById('update-date').value = data.lastUpdated || new Date().toISOString().slice(0,16);
-                
-                alert('✅ Current data loaded successfully!');
-                
-            } catch (error) {
-                console.error('Error loading data:', error);
-                alert('⚠️ Could not load current data. Starting with defaults.');
-            }
-        }
+async function loadCurrentData() {
+    try {
+        console.log('Loading current data from GitHub...');
+        const response = await fetch('https://raw.githubusercontent.com/mamecholeye-lab/mamecholeye/main/data.json');
+        const data = await response.json();
         
-        function copyCompleteJSON() {
-            const textarea = document.getElementById('json-text');
-            textarea.select();
+        // Populate hero data
+        if (data.hero) {
+            document.getElementById('hero-title').value = data.hero.title || '';
+            document.getElementById('hero-subtitle').value = data.hero.subtitle || '';
             
-            try {
-                navigator.clipboard.writeText(textarea.value).then(() => {
-                    alert('✅ JSON copied to clipboard!\n\nNow update data.json on GitHub.');
-                });
-            } catch (err) {
-                document.execCommand('copy');
-                alert('✅ JSON copied!\n\nNow update data.json on GitHub.');
+            if (data.hero.stats && data.hero.stats.length >= 2) {
+                document.getElementById('stat1-value').value = data.hero.stats[0].value || '';
+                document.getElementById('stat1-label').value = data.hero.stats[0].label || '';
+                document.getElementById('stat2-value').value = data.hero.stats[1].value || '';
+                document.getElementById('stat2-label').value = data.hero.stats[1].label || '';
+            }
+            
+            if (data.hero.results && data.hero.results.length >= 3) {
+                document.getElementById('hero-match1-time').value = data.hero.results[0].time || '';
+                document.getElementById('hero-match1-fixture').value = data.hero.results[0].fixture || '';
+                document.getElementById('hero-match1-bet').value = data.hero.results[0].betType || '';
+                document.getElementById('hero-match1-odds').value = data.hero.results[0].odds || '';
+                
+                document.getElementById('hero-match2-time').value = data.hero.results[1].time || '';
+                document.getElementById('hero-match2-fixture').value = data.hero.results[1].fixture || '';
+                document.getElementById('hero-match2-bet').value = data.hero.results[1].betType || '';
+                document.getElementById('hero-match2-odds').value = data.hero.results[1].odds || '';
+                
+                document.getElementById('hero-match3-time').value = data.hero.results[2].time || '';
+                document.getElementById('hero-match3-fixture').value = data.hero.results[2].fixture || '';
+                document.getElementById('hero-match3-bet').value = data.hero.results[2].betType || '';
+                document.getElementById('hero-match3-odds').value = data.hero.results[2].odds || '';
             }
         }
         
-        function openGitHub() {
-            window.open('https://github.com/mamecholeye-lab/mamecholeye/edit/main/data.json', '_blank');
-        }
-        
-        function testJSON() {
-            try {
-                const json = JSON.parse(document.getElementById('json-text').value);
-                alert('✅ JSON is valid and ready to use!');
-            } catch (error) {
-                alert('❌ Invalid JSON!\n\nError: ' + error.message);
+        // Populate top prediction data
+        if (data.topPrediction) {
+            document.getElementById('top-title').value = data.topPrediction.title || '';
+            document.getElementById('top-subtitle-input').value = data.topPrediction.subtitle || '';
+            document.getElementById('top-badge-input').value = data.topPrediction.badge || '';
+            
+            if (data.topPrediction.mainMatch) {
+                document.getElementById('top-league').value = data.topPrediction.mainMatch.league || '';
+                document.getElementById('top-time').value = data.topPrediction.mainMatch.time || '';
+                document.getElementById('top-team1').value = data.topPrediction.mainMatch.team1.name || '';
+                document.getElementById('top-team1-color').value = data.topPrediction.mainMatch.team1.color || '#DC052D';
+                document.getElementById('top-team2').value = data.topPrediction.mainMatch.team2.name || '';
+                document.getElementById('top-team2-color').value = data.topPrediction.mainMatch.team2.color || '#008E3B';
+                document.getElementById('top-prediction').value = data.topPrediction.mainMatch.prediction || '';
+                document.getElementById('top-odds').value = data.topPrediction.mainMatch.odds || 2.50;
+                document.getElementById('top-confidence').value = data.topPrediction.mainMatch.confidence || 70;
+            }
+            
+            // Handle secondary match
+            if (data.topPrediction.secondaryMatch) {
+                document.getElementById('include-secondary').checked = true;
+                toggleSecondary();
+                
+                document.getElementById('sec-league').value = data.topPrediction.secondaryMatch.league || '';
+                document.getElementById('sec-time').value = data.topPrediction.secondaryMatch.time || '';
+                document.getElementById('sec-team1').value = data.topPrediction.secondaryMatch.team1.name || '';
+                document.getElementById('sec-team2').value = data.topPrediction.secondaryMatch.team2.name || '';
+                document.getElementById('sec-prediction').value = data.topPrediction.secondaryMatch.prediction || '';
+                document.getElementById('sec-odds').value = data.topPrediction.secondaryMatch.odds || 3.10;
+                document.getElementById('sec-confidence').value = data.topPrediction.secondaryMatch.confidence || 45;
             }
         }
+        
+        // Set update date
+        const updateDate = data.lastUpdated || new Date().toISOString();
+        document.getElementById('update-date').value = updateDate.slice(0,16);
+        
+        alert('✅ Current data loaded successfully!\n\nNow you can generate updated JSON.');
+        
+    } catch (error) {
+        console.error('Error loading data:', error);
+        alert('⚠️ Could not load current data. Starting with defaults.\n\nError: ' + error.message);
+    }
+}
         
         // Initialize with some sample data
         window.onload = function() {
