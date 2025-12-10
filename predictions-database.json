@@ -1,0 +1,141 @@
+{
+  "lastUpdated": "2024-12-11",
+  "today": "December 11, 2024",
+  "stats": {
+    "totalPredictions": 12,
+    "totalWins": 10,
+    "totalLosses": 2,
+    "winRate": "83.3%",
+    "totalOdds": 163.9
+  },
+  "predictions": {
+    "today": [
+      {
+        "id": 1,
+        "country": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "league": "Championship",
+        "level": 2,
+        "division": "Second Tier",
+        "fixture": "Stevenage v Cardiff",
+        "time": "20:45",
+        "date": "2024-12-11",
+        "betType": "1X (Double Chance)",
+        "odds": 1.41,
+        "confidence": 75,
+        "status": "pending",
+        "analysis": "Stevenage strong at home, Cardiff poor away record"
+      },
+      {
+        "id": 2,
+        "country": "International",
+        "flag": "🌍",
+        "league": "Champions League",
+        "level": "UEFA",
+        "division": "Group Stage",
+        "fixture": "Bayern Munich vs Sporting CP",
+        "time": "20:45",
+        "date": "2024-12-11",
+        "betType": "1 & Under 3.5 Goals",
+        "odds": 2.50,
+        "confidence": 70,
+        "status": "pending",
+        "analysis": "Bayern unbeaten at home, Sporting weak away"
+      },
+      {
+        "id": 3,
+        "country": "Wales",
+        "flag": "🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+        "league": "Welsh Premier League",
+        "level": 1,
+        "division": "Top Tier",
+        "fixture": "Penybont v Barry Town",
+        "time": "19:45",
+        "date": "2024-12-11",
+        "betType": "BTTS Yes",
+        "odds": 1.60,
+        "confidence": 68,
+        "status": "pending",
+        "analysis": "Both teams score regularly"
+      },
+      {
+        "id": 4,
+        "country": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "league": "League One",
+        "level": 3,
+        "division": "Third Tier",
+        "fixture": "Shrewsbury v Grimsby",
+        "time": "19:45",
+        "date": "2024-12-11",
+        "betType": "1X (Double Chance)",
+        "odds": 1.52,
+        "confidence": 71,
+        "status": "pending",
+        "analysis": "Shrewsbury strong home form"
+      },
+      {
+        "id": 5,
+        "country": "Iran",
+        "flag": "🇮🇷",
+        "league": "Persian Gulf Pro League",
+        "level": 1,
+        "division": "Top Tier",
+        "fixture": "Shams Azar v Gol Gohar",
+        "time": "16:30",
+        "date": "2024-12-11",
+        "betType": "1X (Double Chance)",
+        "odds": 1.49,
+        "confidence": 73,
+        "status": "pending",
+        "analysis": "Home advantage crucial"
+      },
+      {
+        "id": 6,
+        "country": "Belgium",
+        "flag": "🇧🇪",
+        "league": "Reserve League",
+        "level": "Reserve",
+        "division": "Reserve",
+        "fixture": "Genk II v Anderlecht Res.",
+        "time": "19:00",
+        "date": "2024-12-11",
+        "betType": "Over 2.5 Goals",
+        "odds": 1.49,
+        "confidence": 67,
+        "status": "pending",
+        "analysis": "Reserve games usually high scoring"
+      }
+    ],
+    "yesterday": [
+      {
+        "id": 101,
+        "country": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "league": "League Two",
+        "level": 4,
+        "division": "Fourth Tier",
+        "fixture": "Fleetwood v Salford",
+        "result": "1-1",
+        "betType": "Draw & BTTS",
+        "odds": 4.33,
+        "outcome": "won",
+        "profit": "+333%"
+      },
+      {
+        "id": 102,
+        "country": "England",
+        "flag": "🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "league": "League Two",
+        "level": 4,
+        "division": "Fourth Tier",
+        "fixture": "Barrow v Tranmere",
+        "result": "0-3",
+        "betType": "Away & Over 2.5",
+        "odds": 4.33,
+        "outcome": "won",
+        "profit": "+333%"
+      }
+    ]
+  }
+}
