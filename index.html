@@ -1147,8 +1147,13 @@
                 </div>
                 
                 <div class="form-group">
-    <input type="tel" placeholder="+251979380726" required maxlength="13" pattern="\+251[0-9]{9}" title="Enter Ethiopian number: +251XXXXXXXXX">
-                </div>
+    <input type="tel" id="phoneInput" placeholder="+251_________" required 
+           pattern="\+251[0-9]{9}" 
+           title="Enter Ethiopian number starting with +251 followed by 9 digits">
+    <div class="phone-help">
+        <small style="color: #FF6B35;">Format: +251 followed by 9 digits (Example: +251912345678)</small>
+    </div>
+</div>
                 
                 <div class="form-group">
                     <select required>
