@@ -365,3 +365,38 @@ document.addEventListener('DOMContentLoaded', function() {
     // Initialize form
     console.log('Subscription form ready!');
 });
+// ===== FIX PHONE NUMBER ISSUE =====
+document.addEventListener('DOMContentLoaded', function() {
+    const phoneInput = document.querySelector('#subscribe input[type="tel"]');
+    
+    if (phoneInput) {
+        // Fix placeholder
+        phoneInput.placeholder = '+251979380726';
+        
+        // Override the form validation
+        const oldSubmit = document.getElementById('subscribe').onsubmit;
+        
+        document.getElementById('subscribe').onsubmit = function(e) {
+            e.preventDefault();
+            
+            // Get values
+            const name = this.querySelector('input[type="text"]').value;
+            const email = this.querySelector('input[type="email"]').value;
+            const phone = this.querySelector('input[type="tel"]').value;
+            const package = this.querySelector('select').value;
+            
+            // Simple validation
+            if (name && email && phone && package) {
+                // Always send to YOUR number
+                const message = `New subscription: ${name}, ${email}, ${phone}, ${package}`;
+                window.open(`https://wa.me/251979380726?text=${encodeURIComponent(message)}`, '_blank');
+                alert('Opening WhatsApp...');
+                this.reset();
+            } else {
+                alert('Please fill all fields!');
+            }
+            
+            return false;
+        };
+    }
+});
