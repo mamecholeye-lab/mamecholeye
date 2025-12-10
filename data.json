@@ -1,6 +1,21 @@
 {
+  "lastUpdated": "2024-12-11",
   "hero": {
     "title": "TEST - WORKING NOW",
-    "subtitle": "If you see this, JSON is loading!"
+    "subtitle": "If you see this, hero section is working!",
+    "stats": [
+      {"value": "3/3", "label": "Test Wins"},
+      {"value": "100.00", "label": "Test Odds"}
+    ]
+  },
+  "topPrediction": {
+    "mainMatch": {
+      "league": "Champions League 🇪🇺",
+      "team1": {"name": "Bayern Munich", "code": "BAY"},
+      "team2": {"name": "Sporting CP", "code": "SPO"},
+      "prediction": "1 & Under 3.5 Goals",
+      "odds": 2.5,
+      "confidence": 70
+    }
   }
 }
