@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Update Predictions</title>
+    <style>
+        body { font-family: Arial; padding: 20px; background: #1a1a2e; color: white; }
+        .container { max-width: 800px; margin: 0 auto; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; margin-bottom: 5px; color: #FF6B35; }
+        input, select, textarea { width: 100%; padding: 10px; border: 1px solid #334155; background: #0f172a; color: white; }
+        button { background: #FF6B35; color: white; border: none; padding: 10px 20px; margin: 10px 5px; }
+        #output { background: #0f172a; padding: 15px; margin-top: 20px; border: 1px solid #FF6B35; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Update Today's Predictions</h1>
+        
+        <div id="forms">
+            <!-- Forms will be added here -->
+        </div>
+        
+        <button onclick="addPrediction()">Add Another Prediction</button>
+        <button onclick="generateJSON()">Generate JSON</button>
+        <button onclick="clearAll()">Clear All</button>
+        
+        <div id="output" style="display:none;">
+            <h3>Copy this JSON:</h3>
+            <textarea id="jsonOutput" rows="20" style="width:100%;"></textarea>
+            <button onclick="copyJSON()">Copy JSON</button>
+            <button onclick="openGitHub()">Open GitHub</button>
+        </div>
+        
+        <h3>Instructions:</h3>
+        <ol>
+            <li>Fill predictions above</li>
+            <li>Click "Generate JSON"</li>
+            <li>Copy the JSON</li>
+            <li>Go to GitHub → Open predictions.json</li>
+            <li>Paste and Save</li>
+        </ol>
+    </div>
+
+    <script>
+        let predictionCount = 0;
+        
+        function addPrediction() {
+            predictionCount++;
+            const form = document.createElement('div');
+            form.className = 'prediction-form';
+            form.innerHTML = `
+                <h3>Prediction ${predictionCount}</h3>
+                <div class="form-group">
+                    <label>Fixture:</label>
+                    <input type="text" placeholder="Team A vs Team B">
+                </div>
+                <div class="form-group">
+                    <label>League:</label>
+                    <select>
+                        <option>Champions League 🇪🇺</option>
+                        <option>English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                        <option>Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                        <option>La Liga 🇪🇸</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Bet Type:</label>
+                    <select>
+                        <option>1X (Double Chance)</option>
+                        <option>BTTS Yes</option>
+                        <option>Over 2.5 Goals</option>
+                        <option>1 & Under 3.5 Goals</option>
+                        <option>Away Win (2)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Odds:</label>
+                    <input type="number" step="0.01" placeholder="2.50">
+                </div>
+                <div class="form-group">
+                    <label>Time:</label>
+                    <input type="text" placeholder="20:45">
+                </div>
+                <div class="form-group">
+                    <label>Confidence %:</label>
+                    <input type="number" value="70" min="1" max="100">
+                </div>
+                <hr>
+            `;
+            document.getElementById('forms').appendChild(form);
+        }
+        
+        function generateJSON() {
+            const forms = document.querySelectorAll('.prediction-form');
+            const predictions = [];
+            
+            forms.forEach((form, index) => {
+                const inputs = form.querySelectorAll('input, select');
+                const fixture = inputs[0].value;
+                
+                if (fixture) {
+                    predictions.push({
+                        id: index + 1,
+                        fixture: fixture,
+                        league: inputs[1].value,
+                        betType: inputs[2].value,
+                        odds: parseFloat(inputs[3].value) || 2.00,
+                        time: inputs[4].value || "20:00",
+                        confidence: parseInt(inputs[5].value) || 70,
+                        status: "pending"
+                    });
+                }
+            });
+            
+            if (predictions.length === 0) {
+                alert('Add at least one prediction!');
+                return;
+            }
+            
+            const today = new Date();
+            const jsonData = {
+                lastUpdated: today.toISOString().split('T')[0],
+                today: today.toLocaleDateString('en-US', { 
+                    month: 'long', 
+                    day: 'numeric', 
+                    year: 'numeric' 
+                }),
+                totalPredictions: predictions.length,
+                totalOdds: predictions.reduce((total, pred) => total * pred.odds, 1).toFixed(2),
+                predictions: predictions
+            };
+            
+            document.getElementById('jsonOutput').value = JSON.stringify(jsonData, null, 2);
+            document.getElementById('output').style.display = 'block';
+            alert(`Generated ${predictions.length} predictions!`);
+        }
+        
+        function copyJSON() {
+            const textarea = document.getElementById('jsonOutput');
+            textarea.select();
+            document.execCommand('copy');
+            alert('JSON copied! Now paste it in GitHub predictions.json file.');
+        }
+        
+        function openGitHub() {
+            window.open('https://github.com/mamecholeye-lab/mamecholeye/blob/main/predictions.json', '_blank');
+        }
+        
+        function clearAll() {
+            if (confirm('Clear all predictions?')) {
+                document.getElementById('forms').innerHTML = '';
+                predictionCount = 0;
+                document.getElementById('output').style.display = 'none';
+            }
+        }
+        
+        // Add first form automatically
+        window.onload = addPrediction;
+    </script>
+</body>
+</html>
