@@ -681,6 +681,248 @@ document.addEventListener('DOMContentLoaded', function() {
         loadTodayPredictions();
     }, 2000);
 });
+// ===== LOAD ALL PREDICTIONS FROM DATABASE =====
+async function loadAllPredictions() {
+    try {
+        console.log('Loading predictions database...');
+        
+        // Load from your JSON database
+        const response = await fetch('predictions-database.json');
+        const data = await response.json();
+        
+        if (!data || !data.predictions) {
+            console.log('No predictions data found');
+            return;
+        }
+        
+        // Update today's predictions
+        updateTodayPredictions(data.predictions.today || []);
+        
+        // Update yesterday's results
+        updateYesterdayResults(data.predictions.completed || []);
+        
+        // Update statistics
+        updateStatistics(data.stats || {});
+        
+        // Update date
+        updateDate(data.today || 'Today');
+        
+        console.log('Predictions loaded successfully');
+        
+    } catch (error) {
+        console.error('Error loading predictions:', error);
+        // Keep existing content as fallback
+    }
+}
+
+function updateTodayPredictions(predictions) {
+    const container = document.querySelector('#predictions .predictions-grid');
+    if (!container) return;
+    
+    // Clear existing content
+    container.innerHTML = '';
+    
+    // Add each prediction
+    predictions.forEach(pred => {
+        const matchCard = document.createElement('div');
+        matchCard.className = 'match-card';
+        matchCard.innerHTML = `
+            <div class="match-header">
+                <span class="match-league">
+                    <i class="fas fa-trophy"></i> ${pred.flag} ${pred.league}
+                </span>
+                <span class="match-time">${pred.time}</span>
+            </div>
+            <div class="teams">
+                <div class="team">
+                    <div class="team-logo" style="background-color: ${getTeamColor(pred.fixture.split('vs')[0])}">
+                        ${pred.fixture.split('vs')[0].trim().substring(0,3).toUpperCase()}
+                    </div>
+                    <span class="team-name">${pred.fixture.split('vs')[0].trim()}</span>
+                </div>
+                <div class="vs">VS</div>
+                <div class="team">
+                    <div class="team-logo" style="background-color: ${getTeamColor(pred.fixture.split('vs')[1])}">
+                        ${pred.fixture.split('vs')[1].trim().substring(0,3).toUpperCase()}
+                    </div>
+                    <span class="team-name">${pred.fixture.split('vs')[1].trim()}</span>
+                </div>
+            </div>
+            <div class="prediction">
+                <span class="prediction-label">RMAME TIP:</span>
+                <span class="prediction-value">${pred.betType}</span>
+                <span class="prediction-odd">@${pred.odds}</span>
+            </div>
+            <div class="confidence">
+                <div class="confidence-bar">
+                    <div class="confidence-fill" style="width: ${pred.confidence}%"></div>
+                </div>
+                <span>${pred.confidence}% Confidence</span>
+            </div>
+            ${pred.analysis ? `<div class="analysis-note"><small>${pred.analysis}</small></div>` : ''}
+        `;
+        container.appendChild(matchCard);
+    });
+}
+
+function getTeamColor(teamName) {
+    // Generate a color based on team name
+    const colors = [
+        '#FF6B35', '#00B894', '#0984E3', '#6C5CE7', '#FDCB6E',
+        '#E17055', '#00CEC9', '#A29BFE', '#FD79A8', '#55EFC4'
+    ];
+    const index = teamName.charCodeAt(0) % colors.length;
+    return colors[index];
+}
+
+// Call this when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    setTimeout(() => {
+        loadAllPredictions();
+    }, 2000);
+});
+// ===== LOAD AND DISPLAY RESULTS =====
+async function loadResults() {
+    try {
+        console.log('Loading results database...');
+        
+        // Load from results-database.json
+        const response = await fetch('results-database.json');
+        const data = await response.json();
+        
+        if (!data || !data.dailyResults) {
+            console.log('No results data found');
+            return;
+        }
+        
+        // Display yesterday's results
+        displayYesterdayResults(data.dailyResults[0]);
+        
+        // Update total statistics
+        updateTotalStats(data.totalStats);
+        
+        // Update monthly stats
+        updateMonthlyStats(data.monthlyStats);
+        
+        // Update league performance
+        updateLeaguePerformance(data.leaguePerformance);
+        
+        console.log('Results loaded successfully');
+        
+    } catch (error) {
+        console.error('Error loading results:', error);
+        // Fallback to static results
+        displayStaticResults();
+    }
+}
+
+function displayYesterdayResults(yesterdayData) {
+    const resultsTable = document.getElementById('results-table-body');
+    if (!resultsTable || !yesterdayData.results) return;
+    
+    // Clear existing content
+    resultsTable.innerHTML = '';
+    
+    // Add each result row
+    yesterdayData.results.forEach(result => {
+        const row = document.createElement('div');
+        row.className = `table-row ${result.outcome}`;
+        
+        // Set row background based on outcome
+        if (result.outcome === 'won') {
+            row.style.background = 'rgba(0, 184, 148, 0.05)';
+            row.style.borderLeft = '3px solid #00B894';
+        } else {
+            row.style.background = 'rgba(255, 107, 53, 0.05)';
+            row.style.borderLeft = '3px solid #FF4757';
+        }
+        
+        row.innerHTML = `
+            <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">
+                ${result.fixture}
+                <br>
+                <span class="league" style="color: ${result.outcome === 'won' ? '#64D2FF' : '#FF9E6D'};">
+                    ${result.league}
+                </span>
+            </div>
+            <div data-label="Bet Type" style="color: #E8EAEF;">${result.betType}</div>
+            <div data-label="Odds" style="color: #FFD700; font-weight: 700;">${result.odds}</div>
+            <div data-label="Result" style="color: ${result.outcome === 'won' ? '#64D2FF' : '#FF9E6D'}; font-weight: 700;">${result.result}</div>
+            <div data-label="Outcome">
+                <span class="status ${result.outcome}" style="background: ${result.outcome === 'won' ? 'rgba(0, 184, 148, 0.2)' : 'rgba(255, 71, 87, 0.2)'}; color: ${result.outcome === 'won' ? '#00E6A1' : '#FF6B6B'}; border: 1px solid ${result.outcome === 'won' ? 'rgba(0, 230, 161, 0.4)' : 'rgba(255, 107, 107, 0.4)'};">
+                    ${result.outcome === 'won' ? '✅ WIN' : '❌ LOSE'}
+                </span>
+            </div>
+        `;
+        
+        resultsTable.appendChild(row);
+    });
+    
+    // Update section subtitle
+    const subtitle = document.querySelector('#results .section-subtitle');
+    if (subtitle && yesterdayData.day) {
+        subtitle.textContent = `${yesterdayData.day} - ${yesterdayData.totalPredictions} Predictions with ${yesterdayData.winRate} Win Rate`;
+    }
+    
+    // Update stats boxes
+    updateStatsBoxes(yesterdayData);
+}
+
+function updateStatsBoxes(data) {
+    // Update the 4 stat boxes
+    const statBoxes = document.querySelectorAll('.stat-box');
+    
+    if (statBoxes.length >= 4) {
+        // Box 1: Yesterday's Record
+        statBoxes[0].querySelector('.stat-value').textContent = `${data.wins}-${data.losses}`;
+        
+        // Box 2: Win Rate
+        statBoxes[1].querySelector('.stat-value').textContent = data.winRate;
+        
+        // Box 3: Total Odds
+        statBoxes[2].querySelector('.stat-value').textContent = data.totalOdds || 'N/A';
+        
+        // Box 4: Status
+        const statusText = data.losses === 0 ? 'Perfect' : data.wins > data.losses ? 'Good' : 'Poor';
+        statBoxes[3].querySelector('.stat-value').textContent = statusText;
+        statBoxes[3].querySelector('.stat-value').style.color = 
+            statusText === 'Perfect' ? '#00E6A1' : 
+            statusText === 'Good' ? '#FFD700' : '#FF6B6B';
+        statBoxes[3].querySelector('p').textContent = 
+            data.losses === 0 ? 'All predictions won!' : 
+            `${data.losses} losses`;
+    }
+}
+
+function updateTotalStats(stats) {
+    // You can add a separate section for total stats if needed
+    console.log('Total Stats:', stats);
+}
+
+function displayStaticResults() {
+    // Fallback if JSON fails to load
+    const resultsTable = document.getElementById('results-table-body');
+    if (!resultsTable) return;
+    
+    resultsTable.innerHTML = `
+        <div class="table-row won">
+            <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">Fleetwood v Salford<br><span class="league" style="color: #FF9E6D;">League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span></div>
+            <div data-label="Bet Type" style="color: #E8EAEF;">Draw & BTTS</div>
+            <div data-label="Odds" style="color: #FFD700; font-weight: 700;">4.33</div>
+            <div data-label="Result" style="color: #FF9E6D; font-weight: 700;">1-1</div>
+            <div data-label="Outcome"><span class="status won">✅ WIN</span></div>
+        </div>
+        <!-- Add more static results as needed -->
+    `;
+}
+
+// Call this function when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Load results after page loads
+    setTimeout(() => {
+        loadResults();
+    }, 1000);
+});
 // ===== LOAD COMPLETE DATA FROM SINGLE JSON =====
 async function loadCompleteData() {
     try {
