@@ -1,0 +1,48 @@
+{
+  "lastUpdated": "2024-12-11",
+  "today": "December 11, 2024",
+  "totalPredictions": 8,
+  "totalOdds": 45.32,
+  "predictions": [
+    {
+      "id": 1,
+      "fixture": "Bayern Munich vs Sporting CP",
+      "league": "Champions League 🇪🇺",
+      "time": "20:45",
+      "betType": "1 & Under 3.5 Goals",
+      "odds": 2.50,
+      "confidence": 70,
+      "status": "pending"
+    },
+    {
+      "id": 2,
+      "fixture": "Monaco vs Galatasaray",
+      "league": "Champions League 🇪🇺", 
+      "time": "23:00",
+      "betType": "Away Win (2)",
+      "odds": 3.10,
+      "confidence": 45,
+      "status": "pending"
+    },
+    {
+      "id": 3,
+      "fixture": "Stevenage v Cardiff",
+      "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "time": "20:45",
+      "betType": "1X (Double Chance)",
+      "odds": 1.41,
+      "confidence": 75,
+      "status": "pending"
+    },
+    {
+      "id": 4,
+      "fixture": "Penybont v Barry Town",
+      "league": "Welsh Premier League 🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+      "time": "19:45",
+      "betType": "BTTS Yes",
+      "odds": 1.60,
+      "confidence": 68,
+      "status": "pending"
+    }
+  ]
+}
