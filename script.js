@@ -966,3 +966,28 @@ document.addEventListener('DOMContentLoaded', function() {
     // Update visitor counter every minute
     setInterval(setupVisitorCounter, 60000);
 });
+// Test function to verify top prediction is updating
+function testTopPredictionUpdate() {
+    console.log('Testing top prediction update...');
+    
+    // Check if old Monaco/Galatasaray content exists
+    const oldContent = document.querySelector('.top-prediction-card');
+    if (oldContent) {
+        console.log('✅ Old content found, will be replaced by JavaScript');
+    } else {
+        console.log('❌ No old content found - check HTML structure');
+    }
+    
+    // Check if new container exists
+    const newContainer = document.getElementById('top-prediction-content');
+    if (newContainer) {
+        console.log('✅ New container found:', newContainer);
+    } else {
+        console.log('❌ New container not found - check HTML');
+    }
+}
+
+// Run test after page loads
+setTimeout(() => {
+    testTopPredictionUpdate();
+}, 2000);
