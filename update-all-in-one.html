@@ -1035,20 +1035,72 @@ async function loadCurrentData() {
     }
 }
         
-        // Initialize with some sample data
-        window.onload = function() {
-            // Set default date
-            document.getElementById('update-date').value = new Date().toISOString().slice(0,16);
-            
-            // Add some initial predictions
-            addTodayPrediction();
-            addResult();
-            
-            // Try to load current data
-            setTimeout(() => {
-                loadCurrentData();
-            }, 1000);
-        };
+        // Initialize when page loads
+window.onload = function() {
+    console.log('RMAME Control Panel initialized');
+    
+    // Set default date
+    document.getElementById('update-date').value = new Date().toISOString().slice(0,16);
+    
+    // Add some initial predictions
+    addTodayPrediction();
+    addResult();
+    
+    // Load sample top prediction after a short delay
+    setTimeout(() => {
+        loadTopSample();
+        
+        // Auto-save the sample data
+        setTimeout(() => {
+            saveTopData();
+        }, 500);
+    }, 1000);
+    
+    // Try to load current data from GitHub
+    setTimeout(() => {
+        loadCurrentData();
+    }, 2000);
+    
+    // Set up event listeners
+    setupEventListeners();
+};
+
+// Set up event listeners
+function setupEventListeners() {
+    // Auto-save when leaving tabs
+    document.querySelectorAll('.tab').forEach(tab => {
+        tab.addEventListener('click', function() {
+            autoSaveCurrentTab();
+        });
+    });
+    
+    // Auto-save on form changes
+    document.querySelectorAll('input, select, textarea').forEach(element => {
+        element.addEventListener('change', function() {
+            autoSaveCurrentTab();
+        });
+    });
+}
+
+// Auto-save current tab data
+function autoSaveCurrentTab() {
+    const activeTab = document.querySelector('.tab.active');
+    if (!activeTab) return;
+    
+    const tabText = activeTab.textContent.toLowerCase();
+    
+    if (tabText.includes('hero')) {
+        saveHeroData();
+    } else if (tabText.includes('top')) {
+        saveTopData();
+    } else if (tabText.includes('today')) {
+        saveTodayData();
+    } else if (tabText.includes('result')) {
+        saveResultsData();
+    }
+    
+    console.log('Auto-saved:', tabText);
+        }
         // ===== TOP PREDICTION FUNCTIONS =====
 
 // Toggle secondary match visibility
