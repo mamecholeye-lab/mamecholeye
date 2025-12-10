@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>📱 RMAME Results Updater - Mobile</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+            color: white;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 15px;
+            border: 2px solid #FF6B35;
+        }
+        
+        .header h1 {
+            color: #FF6B35;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+        
+        .prediction-form {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        label {
+            display: block;
+            color: #FF9E6D;
+            font-weight: 600;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: #FF6B35;
+            outline: none;
+            background: rgba(255, 107, 53, 0.05);
+        }
+        
+        button {
+            background: linear-gradient(135deg, #FF6B35, #FF8B35);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            margin: 10px 0;
+            transition: all 0.3s;
+        }
+        
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(255, 107, 53, 0.3);
+        }
+        
+        .secondary-btn {
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid #FF6B35;
+        }
+        
+        .json-output {
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-top: 20px;
+            border: 2px solid #00B894;
+            display: none;
+        }
+        
+        .json-output textarea {
+            background: #1a1a2e;
+            color: #00E6A1;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            height: 300px;
+            line-height: 1.4;
+        }
+        
+        .buttons-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .buttons-row button {
+            flex: 1;
+            min-width: 150px;
+        }
+        
+        .counter {
+            background: #FF6B35;
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-weight: 700;
+            margin-left: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .buttons-row {
+                flex-direction: column;
+            }
+            
+            .buttons-row button {
+                width: 100%;
+            }
+            
+            input, select, textarea {
+                font-size: 16px; /* Prevents zoom on iOS */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📱 RMAME RESULTS UPDATER</h1>
+            <p>Update your predictions directly from your phone</p>
+            <p style="color: #FFD700; font-size: 14px; margin-top: 10px;">
+                🔥 Fill the form → Generate JSON → Update GitHub
+            </p>
+        </div>
+        
+        <div id="forms-container">
+            <!-- Forms will be added here -->
+        </div>
+        
+        <div class="buttons-row">
+            <button onclick="addPredictionForm()" class="secondary-btn">
+                ➕ Add New Prediction
+            </button>
+            <button onclick="removeLastForm()" class="secondary-btn">
+                ➖ Remove Last
+            </button>
+        </div>
+        
+        <button onclick="generateJSON()" style="background: linear-gradient(135deg, #00B894, #00E6A1);">
+            🎯 GENERATE JSON
+        </button>
+        
+        <button onclick="clearAllForms()" style="background: linear-gradient(135deg, #FF4757, #FF6B6B);">
+            🗑️ CLEAR ALL
+        </button>
+        
+        <div id="json-output" class="json-output">
+            <h3 style="color: #00E6A1; margin-bottom: 15px;">📋 GENERATED JSON:</h3>
+            <textarea id="json-text" readonly placeholder="JSON will appear here..."></textarea>
+            
+            <div class="buttons-row" style="margin-top: 20px;">
+                <button onclick="copyToClipboard()" style="background: linear-gradient(135deg, #25D366, #128C7E);">
+                    📋 Copy JSON
+                </button>
+                <button onclick="openGitHub()" style="background: linear-gradient(135deg, #4078c0, #6cc644);">
+                    🔗 Open GitHub
+                </button>
+            </div>
+            
+            <div style="margin-top: 20px; padding: 15px; background: rgba(255, 215, 0, 0.1); border-radius: 10px;">
+                <h4 style="color: #FFD700;">📝 Instructions:</h4>
+                <ol style="margin-top: 10px; padding-left: 20px; font-size: 14px;">
+                    <li>Click "Copy JSON" above</li>
+                    <li>Go to your GitHub repository</li>
+                    <li>Open results.json</li>
+                    <li>Click Edit (pencil icon)</li>
+                    <li>Delete old content</li>
+                    <li>Paste new JSON</li>
+                    <li>Click "Commit changes"</li>
+                </ol>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let formCount = 0;
+        const formsContainer = document.getElementById('forms-container');
+        
+        // Add first form automatically
+        window.onload = function() {
+            addPredictionForm();
+        };
+        
+        function addPredictionForm() {
+            formCount++;
+            const formId = `prediction-${formCount}`;
+            
+            const formHTML = `
+                <div class="prediction-form" id="${formId}">
+                    <h3 style="color: #FF6B35; margin-bottom: 15px; display: flex; align-items: center;">
+                        ⚽ Prediction ${formCount}
+                        <span class="counter">${formCount}</span>
+                    </h3>
+                    
+                    <div class="form-group">
+                        <label>📅 Date:</label>
+                        <input type="text" class="date" value="${getTodayDate()}" placeholder="YYYY-MM-DD">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>🏆 Fixture:</label>
+                        <input type="text" class="fixture" placeholder="e.g., Bayern Munich vs Sporting CP">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>🌍 League:</label>
+                        <select class="league">
+                            <option value="English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿">English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                            <option value="Champions League 🇪🇺">Champions League 🇪🇺</option>
+                            <option value="Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿">Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                            <option value="La Liga 🇪🇸">La Liga 🇪🇸</option>
+                            <option value="Serie A 🇮🇹">Serie A 🇮🇹</option>
+                            <option value="Bundesliga 🇩🇪">Bundesliga 🇩🇪</option>
+                            <option value="League One 🏴󠁧󠁢󠁥󠁮󠁧󠁿">League One 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                            <option value="League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿">League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
+                            <option value="Europa League 🇪🇺">Europa League 🇪🇺</option>
+                            <option value="Welsh Premier 🏴󠁧󠁢󠁷󠁬󠁳󠁿">Welsh Premier 🏴󠁧󠁢󠁷󠁬󠁳󠁿</option>
+                            <option value="Other">Other</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>🎯 Bet Type:</label>
+                        <select class="bet-type">
+                            <option value="1X (Double Chance)">1X (Double Chance)</option>
+                            <option value="BTTS Yes">BTTS Yes</option>
+                            <option value="BTTS No">BTTS No</option>
+                            <option value="Over 2.5 Goals">Over 2.5 Goals</option>
+                            <option value="Under 2.5 Goals">Under 2.5 Goals</option>
+                            <option value="Home Win (1)">Home Win (1)</option>
+                            <option value="Away Win (2)">Away Win (2)</option>
+                            <option value="Draw (X)">Draw (X)</option>
+                            <option value="1 & Over 2.5">1 & Over 2.5</option>
+                            <option value="2 & Over 2.5">2 & Over 2.5</option>
+                            <option value="1 & BTTS">1 & BTTS</option>
+                            <option value="2 & BTTS">2 & BTTS</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>💰 Odds:</label>
+                        <input type="number" class="odds" step="0.01" placeholder="e.g., 1.50" min="1.01" max="100">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>📊 Result:</label>
+                        <input type="text" class="result" placeholder="e.g., 2-1">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>✅ Outcome:</label>
+                        <select class="outcome">
+                            <option value="won">✅ WON</option>
+                            <option value="lost">❌ LOST</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>📈 Confidence %:</label>
+                        <input type="number" class="confidence" value="70" min="1" max="100">
+                    </div>
+                    
+                    <hr style="border: none; border-top: 1px solid rgba(255, 255, 255, 0.1); margin: 20px 0;">
+                </div>
+            `;
+            
+            formsContainer.insertAdjacentHTML('beforeend', formHTML);
+            
+            // Scroll to new form
+            document.getElementById(formId).scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        function removeLastForm() {
+            if (formCount > 1) {
+                const lastForm = document.getElementById(`prediction-${formCount}`);
+                if (lastForm) {
+                    lastForm.remove();
+                    formCount--;
+                }
+            } else {
+                alert("You need at least one prediction form!");
+            }
+        }
+        
+        function clearAllForms() {
+            if (confirm("Are you sure? This will remove all prediction forms.")) {
+                formsContainer.innerHTML = '';
+                formCount = 0;
+                addPredictionForm(); // Add one empty form
+            }
+        }
+        
+        function getTodayDate() {
+            const today = new Date();
+            const year = today.getFullYear();
+            const month = String(today.getMonth() + 1).padStart(2, '0');
+            const day = String(today.getDate()).padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+        
+        function generateJSON() {
+            const forms = document.querySelectorAll('.prediction-form');
+            const predictions = [];
+            
+            forms.forEach((form, index) => {
+                const fixture = form.querySelector('.fixture').value;
+                const league = form.querySelector('.league').value;
+                const betType = form.querySelector('.bet-type').value;
+                const odds = parseFloat(form.querySelector('.odds').value) || 0;
+                const result = form.querySelector('.result').value;
+                const outcome = form.querySelector('.outcome').value;
+                const confidence = parseInt(form.querySelector('.confidence').value) || 70;
+                const date = form.querySelector('.date').value || getTodayDate();
+                
+                // Only add if fixture is filled
+                if (fixture.trim()) {
+                    predictions.push({
+                        id: index + 1,
+                        date: date,
+                        fixture: fixture,
+                        league: league,
+                        betType: betType,
+                        odds: odds,
+                        result: result,
+                        outcome: outcome,
+                        confidence: confidence
+                    });
+                }
+            });
+            
+            if (predictions.length === 0) {
+                alert("Please fill at least one prediction!");
+                return;
+            }
+            
+            // Calculate statistics
+            const totalWins = predictions.filter(p => p.outcome === 'won').length;
+            const totalLosses = predictions.filter(p => p.outcome === 'lost').length;
+            const totalPredictions = predictions.length;
+            const winRate = totalPredictions > 0 ? ((totalWins / totalPredictions) * 100).toFixed(1) + '%' : '0%';
+            
+            // Calculate total odds (multiply all odds)
+            const totalOdds = predictions.reduce((total, pred) => total * pred.odds, 1).toFixed(2);
+            
+            // Create final JSON
+            const jsonData = {
+                lastUpdated: getTodayDate(),
+                totalPredictions: totalPredictions,
+                totalWins: totalWins,
+                totalLosses: totalLosses,
+                winRate: winRate,
+                totalOdds: parseFloat(totalOdds),
+                predictions: predictions
+            };
+            
+            // Display JSON
+            document.getElementById('json-text').value = JSON.stringify(jsonData, null, 2);
+            document.getElementById('json-output').style.display = 'block';
+            
+            // Scroll to JSON output
+            document.getElementById('json-output').scrollIntoView({ behavior: 'smooth' });
+            
+            // Show success message
+            alert(`✅ Generated JSON with ${predictions.length} predictions!\n\n📊 Stats:\n• Wins: ${totalWins}\n• Losses: ${totalLosses}\n• Win Rate: ${winRate}\n\nClick "Copy JSON" then update GitHub.`);
+        }
+        
+        function copyToClipboard() {
+            const jsonText = document.getElementById('json-text');
+            jsonText.select();
+            jsonText.setSelectionRange(0, 99999); // For mobile
+            
+            try {
+                navigator.clipboard.writeText(jsonText.value).then(() => {
+                    alert('✅ JSON copied to clipboard!\n\nNow go to GitHub and paste it in results.json');
+                }).catch(err => {
+                    // Fallback for older browsers
+                    document.execCommand('copy');
+                    alert('✅ JSON copied to clipboard!\n\nNow go to GitHub and paste it in results.json');
+                });
+            } catch (err) {
+                // Another fallback
+                document.execCommand('copy');
+                alert('✅ JSON copied to clipboard!\n\nNow go to GitHub and paste it in results.json');
+            }
+        }
+        
+        function openGitHub() {
+            window.open('https://github.com/mamecholeye-lab/mamecholeye/blob/main/results.json', '_blank');
+        }
+        
+        // Add some sample data button
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add a sample data button
+            const sampleBtn = document.createElement('button');
+            sampleBtn.innerHTML = '📊 Load Sample Data';
+            sampleBtn.style.background = 'linear-gradient(135deg, #6c5ce7, #a29bfe)';
+            sampleBtn.style.marginTop = '10px';
+            sampleBtn.onclick = loadSampleData;
+            
+            document.querySelector('.buttons-row').parentNode.insertBefore(sampleBtn, document.querySelector('.buttons-row').nextSibling);
+        });
+        
+        function loadSampleData() {
+            if (confirm("Load sample predictions? This will replace current forms.")) {
+                clearAllForms();
+                
+                // Add 3 sample predictions
+                for (let i = 0; i < 3; i++) {
+                    addPredictionForm();
+                }
+                
+                // Fill sample data
+                const forms = document.querySelectorAll('.prediction-form');
+                
+                // Sample 1
+                forms[0].querySelector('.fixture').value = 'Bayern Munich vs Sporting CP';
+                forms[0].querySelector('.league').value = 'Champions League 🇪🇺';
+                forms[0].querySelector('.bet-type').value = '1 & Under 3.5 Goals';
+                forms[0].querySelector('.odds').value = '2.50';
+                forms[0].querySelector('.result').value = '2-0';
+                forms[0].querySelector('.outcome').value = 'won';
+                forms[0].querySelector('.confidence').value = '70';
+                
+                // Sample 2
+                if (forms[1]) {
+                    forms[1].querySelector('.fixture').value = 'Monaco vs Galatasaray';
+                    forms[1].querySelector('.league').value = 'Champions League 🇪🇺';
+                    forms[1].querySelector('.bet-type').value = 'Away Win (2)';
+                    forms[1].querySelector('.odds').value = '3.10';
+                    forms[1].querySelector('.result').value = '1-2';
+                    forms[1].querySelector('.outcome').value = 'won';
+                    forms[1].querySelector('.confidence').value = '45';
+                }
+                
+                // Sample 3
+                if (forms[2]) {
+                    forms[2].querySelector('.fixture').value = 'Atalanta vs Chelsea';
+                    forms[2].querySelector('.league').value = 'Champions League 🇪🇺';
+                    forms[2].querySelector('.bet-type').value = 'BTTS Yes';
+                    forms[2].querySelector('.odds').value = '1.54';
+                    forms[2].querySelector('.result').value = '2-1';
+                    forms[2].querySelector('.outcome').value = 'won';
+                    forms[2].querySelector('.confidence').value = '70';
+                }
+                
+                alert('✅ Sample data loaded! Click "Generate JSON" to see the result.');
+            }
+        }
+    </script>
+</body>
+</html>
