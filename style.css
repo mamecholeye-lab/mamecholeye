@@ -2220,3 +2220,96 @@ section::before {
     border-left: 4px solid #FFD700;
     border-right: 2px solid #FF6B35;
     }
+/* Odds breakdown styling */
+.odds-breakdown {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    padding: 20px;
+    margin-top: 20px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.odds-breakdown h4 {
+    color: #FF6B35;
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.odds-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.odds-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 15px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border-left: 3px solid #FF6B35;
+}
+
+.odds-item span {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 14px;
+}
+
+.odds-item strong {
+    color: #FFD700;
+    font-weight: 700;
+    font-size: 16px;
+}
+
+.odds-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px;
+    background: rgba(255, 107, 53, 0.1);
+    border-radius: 10px;
+    margin-top: 10px;
+    border: 2px solid rgba(255, 107, 53, 0.3);
+}
+
+.odds-total span {
+    color: white;
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.odds-total strong {
+    font-size: 24px;
+    color: #FFD700;
+    font-weight: 800;
+}
+
+/* Bet type colors */
+.bet-type[style*="Draw & BTTS"] {
+    background: linear-gradient(90deg, #FFD700, #FFED4E) !important;
+    color: #000 !important;
+    font-weight: 700;
+}
+
+.bet-type[style*="Away & Over 2.5"] {
+    background: linear-gradient(90deg, #00B894, #00E6A1) !important;
+    color: white !important;
+}
+
+.bet-type[style*="Home & BTTS"] {
+    background: linear-gradient(90deg, #FF6B35, #FF8B35) !important;
+    color: white !important;
+}
+
+/* Update hero stats */
+.hero-stats .stat:nth-child(2) h3 {
+    color: #FFD700;
+}
+
+.hero-stats .stat:nth-child(3) h3 {
+    color: #00B894;
+}
