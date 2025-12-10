@@ -1,253 +1,316 @@
-console.log('📱 RMAME Predictions Script Loaded');
+console.log('📱 RMAME Predictions Script - Loaded');
 
-// ===== SIMPLE TEST FUNCTION =====
-async function testWebsite() {
-    console.log('🔍 Testing website...');
+// ===== MAIN WEBSITE UPDATER =====
+async function updateWebsiteFromJSON() {
+    console.log('🔄 Updating website from JSON data...');
     
     try {
-        // 1. Test if we can load data.json
-        console.log('Step 1: Loading data.json...');
+        // Load your data.json file
         const response = await fetch('data.json?v=' + Date.now());
-        console.log('✅ Fetch status:', response.status);
+        if (!response.ok) throw new Error('Failed to load data.json');
         
         const data = await response.json();
-        console.log('✅ Data loaded:', data);
+        console.log('✅ JSON data loaded:', data);
         
-        // 2. Update Hero Section
-        console.log('Step 2: Updating hero...');
-        updateHero(data);
+        // 1. UPDATE HERO SECTION
+        updateHeroSection(data);
         
-        // 3. Update Top Prediction
-        console.log('Step 3: Updating top prediction...');
-        updateTopPrediction(data);
+        // 2. UPDATE TOP PREDICTION SECTION
+        updateTopPredictionSection(data);
         
-        // 4. Update Today's Predictions
-        console.log('Step 4: Updating today\'s predictions...');
-        updateTodayPredictions(data);
-        
-        // 5. Update Results
-        console.log('Step 5: Updating results...');
-        updateResults(data);
-        
-        // 6. Hide loading animation
-        hideLoader();
+        // 3. HIDE LOADING ANIMATION
+        hideLoadingAnimation();
         
         console.log('🎉 Website updated successfully!');
         
     } catch (error) {
-        console.error('❌ ERROR:', error);
-        showError(error.message);
+        console.error('❌ Error updating website:', error);
+        showErrorToUser('Data loading failed. Showing default content.');
     }
 }
 
 // ===== UPDATE HERO SECTION =====
-function updateHero(data) {
+function updateHeroSection(data) {
     if (!data.hero) {
-        console.error('❌ No hero data found');
+        console.warn('⚠️ No hero data in JSON');
         return;
     }
     
-    // Update title
+    console.log('🎯 Updating hero section...');
+    
+    // Update hero title
     const heroTitle = document.querySelector('.hero-title');
-    if (heroTitle) {
+    if (heroTitle && data.hero.title) {
         heroTitle.innerHTML = data.hero.title.replace('ACCUMULATOR', '<span class="highlight">ACCUMULATOR</span>');
         console.log('✅ Hero title updated');
     }
     
-    // Update subtitle
+    // Update hero subtitle
     const heroSubtitle = document.querySelector('.hero-subtitle');
-    if (heroSubtitle) {
+    if (heroSubtitle && data.hero.subtitle) {
         heroSubtitle.textContent = data.hero.subtitle;
         console.log('✅ Hero subtitle updated');
     }
     
-    // Update stats
-    const heroStats = document.querySelectorAll('.hero-stats .stat h3');
-    if (heroStats.length >= 4 && data.hero.stats) {
-        heroStats[0].textContent = data.hero.stats[0]?.value || '3/3';
-        heroStats[1].textContent = data.hero.stats[1]?.value || '103.12';
-        heroStats[2].textContent = data.hero.stats[2]?.value || '34.37';
-        heroStats[3].textContent = data.hero.stats[3]?.value || '100%';
-        console.log('✅ Hero stats updated');
+    // Update hero stats (4 stats)
+    const statElements = document.querySelectorAll('.hero-stats .stat h3');
+    if (statElements.length >= 4 && data.hero.stats) {
+        statElements[0].textContent = data.hero.stats[0]?.value || '3/3';
+        statElements[1].textContent = data.hero.stats[1]?.value || '103.12';
+        statElements[2].textContent = data.hero.stats[2]?.value || '34.37';
+        statElements[3].textContent = data.hero.stats[3]?.value || '100%';
+        console.log('✅ Hero stats updated (4 stats)');
     }
 }
 
-// ===== UPDATE TOP PREDICTION =====
-function updateTopPrediction(data) {
-    console.log('🔍 Updating top prediction...');
-    
+// ===== UPDATE TOP PREDICTION SECTION =====
+function updateTopPredictionSection(data) {
     if (!data.topPrediction || !data.topPrediction.mainMatch) {
-        console.error('❌ No top prediction data found');
+        console.warn('⚠️ No top prediction data in JSON');
         return;
     }
     
+    console.log('🎯 Updating top prediction section...');
     const match = data.topPrediction.mainMatch;
-    console.log('Match data:', match);
     
-    // Try to update based on visible HTML structure
-    // Look for team names in the prediction section
-    const teamContainers = document.querySelectorAll('#top-prediction .team span');
-    if (teamContainers.length >= 2) {
-        teamContainers[0].textContent = match.team1.name;
-        teamContainers[1].textContent = match.team2.name;
-        console.log('✅ Team names updated via team spans');
+    // Update team names (looking for .team-name elements)
+    const teamNameElements = document.querySelectorAll('.team-name');
+    if (teamNameElements.length >= 2) {
+        teamNameElements[0].textContent = match.team1?.name || 'Team 1';
+        teamNameElements[1].textContent = match.team2?.name || 'Team 2';
+        console.log('✅ Team names updated');
     }
     
-    // Look for prediction text
-    const predictionElements = document.querySelectorAll('#top-prediction p, #top-prediction div');
-    predictionElements.forEach(element => {
-        const text = element.textContent.trim();
-        if (text.includes('PREDICTION:')) {
-            element.textContent = 'PREDICTION: ' + match.prediction;
-            console.log('✅ Prediction text updated');
-        }
-        if (text.includes('ODDS:')) {
-            element.textContent = 'ODDS: @' + match.odds;
-            console.log('✅ Odds text updated');
-        }
-    });
+    // Update prediction text (looking for .type-value)
+    const predictionElement = document.querySelector('.type-value');
+    if (predictionElement && match.prediction) {
+        predictionElement.textContent = match.prediction;
+        console.log('✅ Prediction text updated');
+    }
     
-    // Update confidence if exists
-    const confidenceElements = document.querySelectorAll('#top-prediction strong, #top-prediction .confidence');
-    confidenceElements.forEach(element => {
-        if (element.textContent.includes('%') && element.textContent.includes('Confidence')) {
-            element.textContent = match.confidence + '% Confidence';
-            console.log('✅ Confidence updated');
-        }
-    });
+    // Update odds (looking for .odds-value)
+    const oddsElement = document.querySelector('.odds-value');
+    if (oddsElement && match.odds) {
+        oddsElement.textContent = '@' + match.odds;
+        console.log('✅ Odds updated');
+    }
     
-    // Add test message to verify update
-    const topSection = document.getElementById('top-prediction');
-    if (topSection) {
-        // Remove any previous test message
-        const oldTestMsg = topSection.querySelector('.dynamic-test-message');
-        if (oldTestMsg) oldTestMsg.remove();
-        
-        const testMsg = document.createElement('div');
-        testMsg.className = 'dynamic-test-message';
-        testMsg.style.cssText = 'background:#00B894;color:white;padding:10px;border-radius:5px;margin:10px 0;text-align:center;';
-        testMsg.innerHTML = `
-            <strong>✅ Data Dynamically Loaded!</strong><br>
-            <small>Teams: ${match.team1.name} vs ${match.team2.name}</small>
-        `;
-        topSection.insertBefore(testMsg, topSection.firstChild);
-        console.log('✅ Test message added');
+    // Update confidence bar if exists
+    const confidenceBar = document.querySelector('.confidence-fill');
+    if (confidenceBar && match.confidence) {
+        confidenceBar.style.width = match.confidence + '%';
+        console.log('✅ Confidence bar updated');
+    }
+    
+    // Update confidence text if exists
+    const confidenceText = document.querySelector('.confidence-percent');
+    if (confidenceText && match.confidence) {
+        confidenceText.textContent = match.confidence + '% Confidence';
+        console.log('✅ Confidence text updated');
     }
 }
 
-// ===== UPDATE TODAY'S PREDICTIONS =====
-function updateTodayPredictions(data) {
-    if (!data.todayPredictions || !data.todayPredictions.predictions) {
-        console.log('⚠️ No today predictions data found');
+// ===== SUBSCRIPTION FORM HANDLER =====
+function setupSubscriptionForm() {
+    console.log('🔄 Setting up subscription form...');
+    
+    const subscribeForm = document.getElementById('subscribe');
+    if (!subscribeForm) {
+        console.error('❌ No subscription form found (ID: #subscribe)');
         return;
     }
     
-    console.log('🔍 Updating today\'s predictions...');
-    const predictions = data.todayPredictions.predictions;
+    console.log('✅ Found subscription form');
     
-    // Update first 4 match cards if they exist
-    const matchCards = document.querySelectorAll('.match-card');
-    for (let i = 0; i < Math.min(matchCards.length, predictions.length); i++) {
-        const pred = predictions[i];
-        const card = matchCards[i];
-        
-        // Update league
-        const leagueElement = card.querySelector('.match-league');
-        if (leagueElement) {
-            leagueElement.textContent = pred.league;
-        }
-        
-        // Update teams - look for team-name spans
-        const teamSpans = card.querySelectorAll('.team-name');
-        if (teamSpans.length >= 2) {
-            teamSpans[0].textContent = pred.team1?.name || pred.fixture.split(' v ')[0] || 'Team 1';
-            teamSpans[1].textContent = pred.team2?.name || pred.fixture.split(' v ')[1] || 'Team 2';
-        }
-        
-        // Update prediction
-        const predictionElement = card.querySelector('.prediction-value, [class*="tip"]');
-        if (predictionElement) {
-            predictionElement.textContent = pred.prediction;
-        }
-        
-        // Update odds
-        const oddsElement = card.querySelector('.prediction-odd, [class*="odds"]');
-        if (oddsElement) {
-            oddsElement.textContent = '@' + pred.odds;
-        }
-        
-        // Update confidence
-        const confidenceBar = card.querySelector('.confidence-fill');
-        if (confidenceBar && pred.confidence) {
-            confidenceBar.style.width = pred.confidence + '%';
-        }
-    }
-    
-    console.log(`✅ Updated ${Math.min(matchCards.length, predictions.length)} match cards`);
-}
-
-// ===== UPDATE RESULTS =====
-function updateResults(data) {
-    if (!data.yesterdayResults || !data.yesterdayResults.results) {
-        console.log('⚠️ No results data found');
-        return;
-    }
-    
-    console.log('🔍 Updating results...');
-    const results = data.yesterdayResults.results;
-    const resultsContainer = document.getElementById('results-table-body');
-    
-    if (!resultsContainer) {
-        console.log('❌ Results container not found');
-        return;
-    }
-    
-    // Clear loading message
-    resultsContainer.innerHTML = '';
-    
-    // Add each result
-    results.forEach((result, index) => {
-        const row = document.createElement('div');
-        row.className = 'table-row';
-        row.style.cssText = 'display: flex; padding: 15px; border-bottom: 1px solid rgba(255,255,255,0.1);';
-        
-        // Create outcome badge
-        const outcomeClass = result.outcome === 'won' ? 'won' : 'lost';
-        const outcomeBadge = result.outcome === 'won' ? '✅' : '❌';
-        
-        row.innerHTML = `
-            <div style="flex: 3; color: white;">${result.fixture || 'Match'}</div>
-            <div style="flex: 2; color: #FF9E6D;">${result.betType || 'N/A'}</div>
-            <div style="flex: 1; color: #FFD700;">${result.odds || '0.00'}</div>
-            <div style="flex: 1; color: #64D2FF;">${result.result || 'N/A'}</div>
-            <div style="flex: 1; color: ${result.outcome === 'won' ? '#00E6A1' : '#FF6B6B'};">
-                <span class="status ${outcomeClass}">${outcomeBadge} ${result.outcome || 'pending'}</span>
-            </div>
-        `;
-        
-        resultsContainer.appendChild(row);
-    });
-    
-    // Update stats summary
-    if (data.yesterdayResults.stats) {
-        const stats = data.yesterdayResults.stats;
-        const statBoxes = document.querySelectorAll('.stat-box .stat-value');
-        
-        if (statBoxes.length >= 4) {
-            statBoxes[0].textContent = stats.record || '0-0-0';
-            statBoxes[1].textContent = stats.winRate || '0%';
-            statBoxes[2].textContent = stats.totalOdds || '0.00';
-            statBoxes[3].textContent = stats.status === 'Good' ? '✅ Good' : '❌ Poor';
+    // Phone input formatting (Ethiopian numbers)
+    const phoneInput = subscribeForm.querySelector('input[type="tel"]');
+    if (phoneInput) {
+        phoneInput.addEventListener('input', function(e) {
+            let value = e.target.value.replace(/\D/g, '');
             
-            console.log('✅ Results stats updated');
-        }
+            // Auto-format to Ethiopian format
+            if (value.startsWith('0') && value.length > 1) {
+                value = '+251' + value.substring(1);
+            } else if (!value.startsWith('+251') && value.length >= 9) {
+                value = '+251' + value;
+            }
+            
+            if (value.length > 13) value = value.substring(0, 13);
+            e.target.value = value;
+        });
     }
     
-    console.log(`✅ Loaded ${results.length} results`);
+    // Form submission
+    subscribeForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        console.log('📝 Form submitted');
+        
+        // Get form values
+        const formData = new FormData(this);
+        const name = formData.get('name')?.trim() || 'Customer';
+        const phone = formData.get('phone')?.trim() || '';
+        const packageType = formData.get('package') || 'daily';
+        const paymentMethod = formData.get('payment') || 'mobile-money';
+        
+        // Validation
+        if (!name || !phone || !packageType) {
+            showFormMessage('Please fill all required fields', 'error');
+            return;
+        }
+        
+        // Phone validation (Ethiopian format)
+        if (!phone.startsWith('+251') || phone.length !== 13) {
+            showFormMessage('Please use valid Ethiopian number: +251XXXXXXXXX', 'error');
+            return;
+        }
+        
+        console.log(`📦 Subscription details: ${name}, ${phone}, ${packageType}, ${paymentMethod}`);
+        
+        // Create WhatsApp message
+        const packageNames = {
+            'daily': 'Daily Package ($0.99/day)',
+            'weekly': 'Weekly Package ($9.99/week)',
+            'monthly': 'Monthly VIP ($19.99/month)'
+        };
+        
+        const paymentNames = {
+            'mobile-money': 'Mobile Money',
+            'bank-transfer': 'Bank Transfer'
+        };
+        
+        const whatsappMessage = `Hello RMAME Predictions!%0A%0A`
+            + `I want to subscribe to your predictions service.%0A%0A`
+            + `👤 Name: ${name}%0A`
+            + `📱 Phone: ${phone}%0A`
+            + `📦 Package: ${packageNames[packageType] || packageType}%0A`
+            + `💳 Payment Method: ${paymentNames[paymentMethod] || paymentMethod}%0A%0A`
+            + `Please send me payment details.`;
+        
+        // Show success message
+        showFormMessage('Opening WhatsApp with your details...', 'success');
+        
+        // Open WhatsApp after delay
+        setTimeout(() => {
+            window.open(`https://wa.me/251979380726?text=${whatsappMessage}`, '_blank');
+            
+            // Reset form after successful submission
+            setTimeout(() => {
+                subscribeForm.reset();
+                // Reset radio buttons to default (Mobile Money)
+                const mobileMoneyRadio = document.getElementById('mobile-money');
+                if (mobileMoneyRadio) mobileMoneyRadio.checked = true;
+            }, 1000);
+            
+        }, 1500);
+    });
+    
+    console.log('✅ Subscription form ready');
 }
 
-// ===== HIDE LOADER =====
-function hideLoader() {
+// ===== FORM MESSAGES =====
+function showFormMessage(message, type = 'info') {
+    const form = document.getElementById('subscribe');
+    if (!form) return;
+    
+    // Remove existing messages
+    const existingMsg = form.querySelector('.form-message');
+    if (existingMsg) existingMsg.remove();
+    
+    // Create new message
+    const messageDiv = document.createElement('div');
+    messageDiv.className = 'form-message';
+    messageDiv.style.cssText = `
+        padding: 12px 20px;
+        border-radius: 8px;
+        margin: 15px 0;
+        text-align: center;
+        font-weight: 600;
+        background: ${type === 'error' ? 'rgba(255, 71, 87, 0.1)' : 'rgba(0, 184, 148, 0.1)'};
+        color: ${type === 'error' ? '#FF4757' : '#00B894'};
+        border: 1px solid ${type === 'error' ? 'rgba(255, 71, 87, 0.3)' : 'rgba(0, 184, 148, 0.3)'};
+    `;
+    messageDiv.textContent = message;
+    
+    form.appendChild(messageDiv);
+    
+    // Auto-remove after 5 seconds
+    setTimeout(() => {
+        if (messageDiv.parentNode) {
+            messageDiv.remove();
+        }
+    }, 5000);
+}
+
+// ===== MOBILE MENU TOGGLE =====
+function setupMobileMenu() {
+    const menuToggle = document.getElementById('menuToggle');
+    const navMenu = document.getElementById('navMenu');
+    
+    if (!menuToggle || !navMenu) {
+        console.warn('⚠️ Mobile menu elements not found');
+        return;
+    }
+    
+    menuToggle.addEventListener('click', function() {
+        navMenu.classList.toggle('active');
+        this.innerHTML = navMenu.classList.contains('active') 
+            ? '<i class="fas fa-times"></i>' 
+            : '<i class="fas fa-bars"></i>';
+    });
+    
+    // Close menu when clicking links
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', () => {
+            navMenu.classList.remove('active');
+            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        });
+    });
+    
+    console.log('✅ Mobile menu ready');
+}
+
+// ===== SMOOTH SCROLLING =====
+function setupSmoothScrolling() {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            if (href === '#' || href === '#!') return;
+            
+            e.preventDefault();
+            const targetElement = document.querySelector(href);
+            if (targetElement) {
+                targetElement.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+            }
+        });
+    });
+}
+
+// ===== BACK TO TOP BUTTON =====
+function setupBackToTop() {
+    const backToTopBtn = document.getElementById('backToTop');
+    if (!backToTopBtn) return;
+    
+    // Show/hide button on scroll
+    window.addEventListener('scroll', function() {
+        backToTopBtn.style.display = window.scrollY > 300 ? 'block' : 'none';
+    });
+    
+    // Scroll to top when clicked
+    backToTopBtn.addEventListener('click', function() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+    
+    console.log('✅ Back to top button ready');
+}
+
+// ===== LOADING ANIMATION =====
+function hideLoadingAnimation() {
     const loader = document.getElementById('loader');
     if (loader) {
         setTimeout(() => {
@@ -259,90 +322,56 @@ function hideLoader() {
     }
 }
 
-// ===== SHOW ERROR =====
-function showError(message) {
-    console.error('❌ Website Error:', message);
+// ===== ERROR DISPLAY =====
+function showErrorToUser(message) {
+    console.error('❌ Showing error to user:', message);
     
-    // Create error message
     const errorDiv = document.createElement('div');
     errorDiv.style.cssText = `
         position: fixed;
         top: 20px;
         left: 20px;
         right: 20px;
-        background: #FF6B35;
+        background: rgba(255, 107, 53, 0.9);
         color: white;
         padding: 15px;
         border-radius: 10px;
         z-index: 9999;
-        font-family: Arial;
         text-align: center;
+        font-family: Arial, sans-serif;
     `;
     errorDiv.innerHTML = `
-        <strong>⚠️ Website Error:</strong><br>
-        ${message}<br>
-        <small>Check console for details</small>
+        <strong>⚠️ Notice</strong><br>
+        ${message}
     `;
     
     document.body.appendChild(errorDiv);
     
-    // Remove after 10 seconds
     setTimeout(() => {
-        errorDiv.remove();
-    }, 10000);
-}
-
-// ===== MOBILE MENU =====
-const menuToggle = document.getElementById('menuToggle');
-const navMenu = document.getElementById('navMenu');
-
-if (menuToggle && navMenu) {
-    menuToggle.addEventListener('click', function() {
-        navMenu.classList.toggle('active');
-        if (navMenu.classList.contains('active')) {
-            menuToggle.innerHTML = '<i class="fas fa-times"></i>';
-        } else {
-            menuToggle.innerHTML = '<i class="fas fa-bars"></i>';
+        if (errorDiv.parentNode) {
+            errorDiv.remove();
         }
-    });
+    }, 5000);
 }
 
-// ===== START WEBSITE =====
+// ===== INITIALIZE EVERYTHING =====
 document.addEventListener('DOMContentLoaded', function() {
-    console.log('🏁 DOM loaded, starting website...');
-    console.log('🔍 Checking page structure...');
+    console.log('🏁 Website DOM loaded - Initializing...');
     
-    // Log what elements we find
-    const elementsToCheck = [
-        { selector: '.hero-title', desc: 'Hero Title' },
-        { selector: '#top-prediction', desc: 'Top Prediction Section' },
-        { selector: '.match-card', desc: 'Match Cards' },
-        { selector: '#results-table-body', desc: 'Results Table' }
-    ];
+    // 1. Setup mobile navigation
+    setupMobileMenu();
     
-    elementsToCheck.forEach(item => {
-        const found = document.querySelectorAll(item.selector);
-        console.log(`${found.length > 0 ? '✅' : '❌'} ${item.desc}: ${found.length} found`);
-    });
+    // 2. Setup smooth scrolling
+    setupSmoothScrolling();
     
-    // Start testing
-    setTimeout(() => {
-        testWebsite();
-    }, 1000);
+    // 3. Setup back to top button
+    setupBackToTop();
+    
+    // 4. Setup subscription form
+    setupSubscriptionForm();
+    
+    // 5. Load and update from JSON data
+    setTimeout(updateWebsiteFromJSON, 800);
+    
+    console.log('✅ All scripts initialized');
 });
-
-// ===== BACK TO TOP =====
-const backToTopBtn = document.getElementById('backToTop');
-if (backToTopBtn) {
-    window.addEventListener('scroll', function() {
-        if (window.scrollY > 300) {
-            backToTopBtn.classList.add('show');
-        } else {
-            backToTopBtn.classList.remove('show');
-        }
-    });
-    
-    backToTopBtn.addEventListener('click', function() {
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-    });
-}
