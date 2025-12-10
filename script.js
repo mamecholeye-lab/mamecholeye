@@ -229,127 +229,54 @@ function shareWebsite() {
         });
 }
 
-// ===== SUBSCRIPTION FORM WITH WHATSAPP =====
+// ===== SUBSCRIPTION FORM =====
 const subscriptionForm = document.getElementById('subscribe');
 
 if (subscriptionForm) {
     subscriptionForm.addEventListener('submit', function(e) {
-        e.preventDefault(); // Stop form from reloading page
+        e.preventDefault();
         
-        // Get all form values
-        const name = this.querySelector('input[type="text"]').value.trim();
-        const email = this.querySelector('input[type="email"]').value.trim();
-        const phone = this.querySelector('input[type="tel"]').value.trim();
-        const packageSelect = this.querySelector('select');
-        const package = packageSelect ? packageSelect.value : '';
+        // Get values
+        const name = this.querySelector('input[type="text"]').value;
+        const email = this.querySelector('input[type="email"]').value;
+        const phone = this.querySelector('input[type="tel"]').value;
+        const package = this.querySelector('select').value;
         const paymentMethod = this.querySelector('input[name="payment"]:checked') ? 
-                            this.querySelector('input[name="payment"]:checked').value : '';
-        
-        // Debug: Show what values we got
-        console.log('Name:', name);
-        console.log('Email:', email);
-        console.log('Phone:', phone);
-        console.log('Package:', package);
-        console.log('Payment Method:', paymentMethod);
+                            this.querySelector('input[name="payment"]:checked').value : 'mobile-money';
         
         // Check if all fields are filled
-        if (!name) {
-            alert('❌ Please enter your name!');
-            this.querySelector('input[type="text"]').focus();
+        if (!name || !email || !phone || !package) {
+            alert('Please fill all fields!');
             return;
         }
         
-        if (!email) {
-            alert('❌ Please enter your email address!');
-            this.querySelector('input[type="email"]').focus();
-            return;
-        }
+        // Prices
+        const prices = {
+            'daily': '$0.99 per day',
+            'weekly': '$9.99 per week', 
+            'monthly': '$19.99 per month'
+        };
         
-        if (!phone) {
-            alert('❌ Please enter your WhatsApp number!');
-            this.querySelector('input[type="tel"]').focus();
-            return;
-        }
+        // Create WhatsApp message
+        const message = `📋 NEW SUBSCRIPTION REQUEST%0A%0A` +
+                       `Name: ${name}%0A` +
+                       `Email: ${email}%0A` +
+                       `Phone: ${phone}%0A` +
+                       `Package: ${package} - ${prices[package]}%0A` +
+                       `Payment: ${paymentMethod}%0A%0A` +
+                       `Please send payment details.`;
         
-        if (!package || package === '') {
-            alert('❌ Please select a package (Daily, Weekly, or Monthly)!');
-            if (packageSelect) packageSelect.focus();
-            return;
-        }
+        // WhatsApp URL
+        const whatsappUrl = `https://wa.me/251979380726?text=${message}`;
         
-        // Clean phone number - SIMPLE VERSION
-let cleanPhone = phone.replace(/\s+/g, ''); // Just remove spaces
-        
-        // Ensure it starts with country code
-        if (!cleanPhone.startsWith('251')) {
-            alert('❌ Please enter a valid Ethiopian phone number starting with 251\n\nExample: +251 912 345 678');
-            this.querySelector('input[type="tel"]').focus();
-            return;
-        }
-        
-        // Set package prices
-const prices = {
-    'daily': '$0.99 per day',
-    'weekly': '$9.99 per week', 
-    'monthly': '$19.99 per month'
-};
-        
-        // Create WhatsApp message (automatically formatted)
-        const message = `📋 *NEW SUBSCRIPTION REQUEST* 📋%0A%0A` +
-                       `*👤 Name:* ${name}%0A` +
-                       `*📧 Email:* ${email}%0A` +
-                       `*📱 WhatsApp:* ${phone}%0A` +
-                       `*💰 Package:* ${package.toUpperCase()} - ${prices[package]}%0A` +
-                       `*💳 Payment Method:* ${paymentMethod.toUpperCase()}%0A%0A` +
-                       `*📍 Request:* Please send payment details for ${package} package`;
-        
-        // Your WhatsApp number - CORRECT FORMAT
-        const whatsappNumber = '251979380726'; // NO + sign here
-        
-        // Create WhatsApp link - CORRECT FORMAT
-        const whatsappUrl = `https://api.whatsapp.com/send?phone=${whatsappNumber}&text=${message}`;
-        
-        // Show success message
-        alert(`✅ Thank you ${name}!\n\nWe will send payment details to your WhatsApp (${phone}) within 5 minutes.\n\nClick OK to open WhatsApp and confirm.`);
-        
-        // Open WhatsApp in new tab
+        // Show success and open WhatsApp
+        alert('Opening WhatsApp to send payment details...');
         window.open(whatsappUrl, '_blank');
         
         // Reset form
         this.reset();
-        
-        // Set default payment method
         this.querySelector('#mobile-money').checked = true;
-        
-        // Reset select to first option
-        if (packageSelect) packageSelect.selectedIndex = 0;
     });
-            }
-
-// ===== AUTO-FORMAT PHONE NUMBER =====
-const phoneInput = document.querySelector('input[type="tel"]');
-if (phoneInput) {
-    phoneInput.addEventListener('input', function(e) {
-        let value = e.target.value.replace(/\D/g, ''); // Remove non-digits
-        
-        // Format as +251 XXX XXX XXX
-        if (value.startsWith('251')) {
-            value = '+251 ' + value.slice(3);
-        }
-        
-        // Add space after every 3 digits
-        if (value.length > 11) {
-            value = value.slice(0, 11) + ' ' + value.slice(7, 10);
-        }
-        if (value.length > 12) {
-            value = value.slice(0, 12) + ' ' + value.slice(11, 13);
-        }
-        
-        e.target.value = value;
-    });
-    
-    // Set placeholder example
-    phoneInput.placeholder = '+251 912 345 678';
 }
 
 // Mobile-friendly touch events
@@ -362,41 +289,9 @@ document.addEventListener('DOMContentLoaded', function() {
         btn.style.minWidth = '44px';
     });
     
-    // Initialize form
-    console.log('Subscription form ready!');
-});
-// ===== FIX PHONE NUMBER ISSUE =====
-document.addEventListener('DOMContentLoaded', function() {
+    // Set phone placeholder
     const phoneInput = document.querySelector('#subscribe input[type="tel"]');
-    
     if (phoneInput) {
-        // Fix placeholder
         phoneInput.placeholder = '+251979380726';
-        
-        // Override the form validation
-        const oldSubmit = document.getElementById('subscribe').onsubmit;
-        
-        document.getElementById('subscribe').onsubmit = function(e) {
-            e.preventDefault();
-            
-            // Get values
-            const name = this.querySelector('input[type="text"]').value;
-            const email = this.querySelector('input[type="email"]').value;
-            const phone = this.querySelector('input[type="tel"]').value;
-            const package = this.querySelector('select').value;
-            
-            // Simple validation
-            if (name && email && phone && package) {
-                // Always send to YOUR number
-                const message = `New subscription: ${name}, ${email}, ${phone}, ${package}`;
-                window.open(`https://wa.me/251979380726?text=${encodeURIComponent(message)}`, '_blank');
-                alert('Opening WhatsApp...');
-                this.reset();
-            } else {
-                alert('Please fill all fields!');
-            }
-            
-            return false;
-        };
     }
 });
