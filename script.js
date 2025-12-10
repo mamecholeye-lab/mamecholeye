@@ -1,3 +1,28 @@
+console.log('📱 RMAME Script Started');
+
+// Debug: Check if top prediction section exists
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🔍 Checking DOM elements...');
+    
+    // Check for top prediction elements
+    const elements = [
+        {selector: '.team-name', desc: 'Team names'},
+        {selector: '.prediction-value', desc: 'Prediction value'},
+        {selector: '.type-value', desc: 'Type value'},
+        {selector: '.odds-value', desc: 'Odds value'},
+        {selector: '.confidence-fill', desc: 'Confidence bar'},
+        {selector: '#top-prediction', desc: 'Top prediction section'}
+    ];
+    
+    elements.forEach(item => {
+        const el = document.querySelector(item.selector);
+        if (el) {
+            console.log(`✅ Found: ${item.desc} (${item.selector})`);
+        } else {
+            console.log(`❌ NOT FOUND: ${item.desc} (${item.selector})`);
+        }
+    });
+});
 console.log('📱 RMAME Script Loaded');
 
 // ===== SIMPLE TEST FUNCTION =====
