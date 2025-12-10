@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RMAME - Update Results</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: #0f172a; color: white; padding: 20px; }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 { color: #FF6B35; margin-bottom: 20px; text-align: center; }
+        .form-group { margin-bottom: 15px; }
+        label { display: block; color: #94a3b8; margin-bottom: 5px; }
+        input, select, textarea { width: 100%; padding: 12px; border: 1px solid #334155; background: #1e293b; color: white; border-radius: 5px; }
+        button { background: #FF6B35; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; margin: 5px; }
+        .match-form { background: #1e293b; padding: 20px; border-radius: 10px; margin-bottom: 20px; border: 1px solid #334155; }
+        .buttons { display: flex; flex-wrap: wrap; gap: 10px; margin: 20px 0; }
+        .json-output { background: #1e293b; padding: 20px; border-radius: 10px; margin-top: 20px; display: none; }
+        textarea { font-family: monospace; height: 300px; }
+        .status-badge { padding: 5px 10px; border-radius: 5px; font-size: 12px; }
+        .won { background: #00B894; color: white; }
+        .lost { background: #FF4757; color: white; }
+        .pending { background: #FFD700; color: black; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📊 RMAME - UPDATE RESULTS</h1>
+        
+        <div class="buttons">
+            <button onclick="addResultForm()">➕ Add Match Result</button>
+            <button onclick="loadTodayMatches()">📅 Load Today's Predictions</button>
+            <button onclick="generateJSON()" style="background:#00B894;">🎯 Generate Results JSON</button>
+            <button onclick="clearAll()" style="background:#FF4757;">🗑️ Clear All</button>
+        </div>
+        
+        <div id="forms-container">
+            <!-- Result forms will appear here -->
+        </div>
+        
+        <div id="json-output" class="json-output">
+            <h3>📋 RESULTS JSON:</h3>
+            <textarea id="json-text" readonly></textarea>
+            <div class="buttons">
+                <button onclick="copyJSON()" style="background:#25D366;">📋 Copy JSON</button>
+                <button onclick="openGitHub()" style="background:#4078c0;">🔗 Open GitHub</button>
+                <button onclick="calculateStats()" style="background:#FFD700;color:black;">📊 Calculate Stats</button>
+            </div>
+        </div>
+        
+        <div class="instructions">
+            <h3>📝 HOW TO UPDATE RESULTS:</h3>
+            <ol>
+                <li>Click "Load Today's Predictions" to load matches</li>
+                <li>Enter actual results for each match</li>
+                <li>Select outcome (Won/Lost)</li>
+                <li>Click "Generate Results JSON"</li>
+                <li>Copy the JSON and update GitHub</li>
+            </ol>
+            
+            <h3>🔗 IMPORTANT LINKS:</h3>
+            <ul>
+                <li>📁 Results File: <a href="https://github.com/mamecholeye-lab/mamecholeye/edit/main/results-database.json" style="color:#FF6B35;">Edit results-database.json</a></li>
+                <li>📁 Predictions File: <a href="https://github.com/mamecholeye-lab/mamecholeye/edit/main/predictions-database.json" style="color:#FF6B35;">Edit predictions-database.json</a></li>
+                <li>🌐 Your Website: <a href="https://mamecholeye-lab.github.io/mamecholeye/" style="color:#FF6B35;">View Website</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        let resultCount = 0;
+        const formsContainer = document.getElementById('forms-container');
+        
+        // Sample today's matches (you would load these from predictions-database.json)
+        const todaysMatches = [
+            {
+                fixture: "Bayern Munich vs Sporting CP",
+                league: "Champions League 🇪🇺",
+                betType: "1 & Under 3.5 Goals",
+                odds: 2.50,
+                time: "20:45"
+            },
+            {
+                fixture: "Monaco vs Galatasaray",
+                league: "Champions League 🇪🇺",
+                betType: "Away Win (2)",
+                odds: 3.10,
+                time: "23:00"
+            },
+            {
+                fixture: "Stevenage v Cardiff",
+                league: "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+                betType: "1X (Double Chance)",
+                odds: 1.41,
+                time: "20:45"
+            }
+        ];
+        
+        function addResultForm() {
+            resultCount++;
+            const formId = `result-${resultCount}`;
+            
+            const formHTML = `
+                <div class="match-form" id="${formId}">
+                    <h3 style="color:#FF6B35; margin-bottom:15px;">⚽ Result ${resultCount}</h3>
+                    
+                    <div class="form-group">
+                        <label>Fixture:</label>
+                        <input type="text" class="fixture" placeholder="e.g., Bayern Munich vs Sporting CP">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>League:</label>
+                        <input type="text" class="league" placeholder="e.g., Champions League 🇪🇺">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Bet Type:</label>
+                        <input type="text" class="bet-type" placeholder="e.g., 1 & Under 3.5 Goals">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Odds:</label>
+                        <input type="number" class="odds" step="0.01" placeholder="2.50">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Actual Result (Score):</label>
+                        <input type="text" class="result" placeholder="e.g., 2-0">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Outcome:</label>
+                        <select class="outcome" onchange="updateStatusBadge('${formId}')">
+                            <option value="pending">⏳ Pending</option>
+                            <option value="won">✅ Won</option>
+                            <option value="lost">❌ Lost</option>
+                            <option value="void">⚪ Void</option>
+                        </select>
+                        <span id="status-badge-${formId}" class="status-badge pending" style="margin-left:10px;">⏳ Pending</span>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Profit/Loss:</label>
+                        <input type="text" class="profit" placeholder="Will calculate automatically" readonly>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>Analysis/Notes:</label>
+                        <textarea class="analysis" rows="2" placeholder="Why win/loss? Key moments..."></textarea>
+                    </div>
+                    
+                    <div class="buttons">
+                        <button onclick="calculateProfit('${formId}')" style="background:#0984E3; padding:8px 15px;">💰 Calculate Profit</button>
+                        <button onclick="removeForm('${formId}')" style="background:#FF4757; padding:8px 15px;">🗑️ Remove</button>
+                    </div>
+                    
+                    <hr style="border:none; border-top:1px solid #334155; margin:15px 0;">
+                </div>
+            `;
+            
+            formsContainer.insertAdjacentHTML('beforeend', formHTML);
+        }
+        
+        function loadTodayMatches() {
+            clearAll();
+            
+            todaysMatches.forEach(match => {
+                addResultForm();
+                
+                // Fill with today's match data
+                setTimeout(() => {
+                    const forms = document.querySelectorAll('.match-form');
+                    const lastForm = forms[forms.length - 1];
+                    
+                    lastForm.querySelector('.fixture').value = match.fixture;
+                    lastForm.querySelector('.league').value = match.league;
+                    lastForm.querySelector('.bet-type').value = match.betType;
+                    lastForm.querySelector('.odds').value = match.odds;
+                }, 100);
+            });
+            
+            alert(`✅ Loaded ${todaysMatches.length} today's predictions`);
+        }
+        
+        function updateStatusBadge(formId) {
+            const form = document.getElementById(formId);
+            const outcome = form.querySelector('.outcome').value;
+            const badge = document.getElementById(`status-badge-${formId}`);
+            
+            badge.className = `status-badge ${outcome}`;
+            badge.textContent = 
+                outcome === 'won' ? '✅ Won' :
+                outcome === 'lost' ? '❌ Lost' :
+                outcome === 'void' ? '⚪ Void' : '⏳ Pending';
+        }
+        
+        function calculateProfit(formId) {
+            const form = document.getElementById(formId);
+            const odds = parseFloat(form.querySelector('.odds').value) || 1;
+            const outcome = form.querySelector('.outcome').value;
+            const profitField = form.querySelector('.profit');
+            
+            if (outcome === 'won') {
+                const profit = ((odds - 1) * 100).toFixed(0);
+                profitField.value = `+${profit}%`;
+            } else if (outcome === 'lost') {
+                profitField.value = '-100%';
+            } else {
+                profitField.value = '0%';
+            }
+        }
+        
+        function calculateStats() {
+            const forms = document.querySelectorAll('.match-form');
+            let total = 0, wins = 0, losses = 0, totalOdds = 1;
+            
+            forms.forEach(form => {
+                const outcome = form.querySelector('.outcome').value;
+                const odds = parseFloat(form.querySelector('.odds').value) || 1;
+                
+                if (outcome === 'won' || outcome === 'lost') {
+                    total++;
+                    if (outcome === 'won') {
+                        wins++;
+                        totalOdds *= odds;
+                    } else {
+                        losses++;
+                    }
+                }
+            });
+            
+            const winRate = total > 0 ? ((wins / total) * 100).toFixed(1) + '%' : '0%';
+            
+            alert(`📊 STATISTICS:\n\n• Total: ${total}\n• Wins: ${wins}\n• Losses: ${losses}\n• Win Rate: ${winRate}\n• Total Odds: ${totalOdds.toFixed(2)}`);
+        }
+        
+        function generateJSON() {
+            const forms = document.querySelectorAll('.match-form');
+            const results = [];
+            
+            forms.forEach((form, index) => {
+                const fixture = form.querySelector('.fixture').value;
+                const league = form.querySelector('.league').value;
+                const betType = form.querySelector('.bet-type').value;
+                const odds = parseFloat(form.querySelector('.odds').value) || 0;
+                const resultScore = form.querySelector('.result').value;
+                const outcome = form.querySelector('.outcome').value;
+                const profit = form.querySelector('.profit').value;
+                const analysis = form.querySelector('.analysis').value;
+                
+                if (fixture && league && betType && resultScore && (outcome === 'won' || outcome === 'lost')) {
+                    results.push({
+                        id: index + 1,
+                        fixture: fixture,
+                        league: league,
+                        betType: betType,
+                        odds: odds,
+                        result: resultScore,
+                        outcome: outcome,
+                        profit: profit,
+                        analysis: analysis
+                    });
+                }
+            });
+            
+            if (results.length === 0) {
+                alert('❌ Please enter at least one completed result (Won/Lost with score)');
+                return;
+            }
+            
+            const wins = results.filter(r => r.outcome === 'won').length;
+            const losses = results.filter(r => r.outcome === 'lost').length;
+            const total = results.length;
+            const winRate = ((wins / total) * 100).toFixed(1) + '%';
+            const totalOdds = results.filter(r => r.outcome === 'won')
+                .reduce((total, r) => total * r.odds, 1).toFixed(2);
+            
+            const today = new Date();
+            const resultData = {
+                date: today.toISOString().split('T')[0],
+                day: "Today",
+                totalPredictions: total,
+                wins: wins,
+                losses: losses,
+                winRate: winRate,
+                totalOdds: totalOdds,
+                status: wins > losses ? "Good" : "Poor",
+                results: results
+            };
+            
+            // Display JSON
+            document.getElementById('json-text').value = JSON.stringify(resultData, null, 2);
+            document.getElementById('json-output').style.display = 'block';
+            
+            // Scroll to output
+            setTimeout(() => {
+                document.getElementById('json-output').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+            
+            alert(`✅ Generated ${results.length} results!\n\n📊 Stats:\n• Wins: ${wins}\n• Losses: ${losses}\n• Win Rate: ${winRate}\n• Total Odds: ${totalOdds}`);
+        }
+        
+        function copyJSON() {
+            const textarea = document.getElementById('json-text');
+            textarea.select();
+            
+            try {
+                navigator.clipboard.writeText(textarea.value).then(() => {
+                    alert('✅ JSON copied!\n\nNow update your results-database.json on GitHub.');
+                });
+            } catch (err) {
+                document.execCommand('copy');
+                alert('✅ JSON copied!\n\nNow update your results-database.json on GitHub.');
+            }
+        }
+        
+        function openGitHub() {
+            window.open('https://github.com/mamecholeye-lab/mamecholeye/edit/main/results-database.json', '_blank');
+        }
+        
+        function removeForm(formId) {
+            if (confirm('Remove this result?')) {
+                document.getElementById(formId).remove();
+            }
+        }
+        
+        function clearAll() {
+            if (confirm('Clear all results?')) {
+                formsContainer.innerHTML = '';
+                resultCount = 0;
+                document.getElementById('json-output').style.display = 'none';
+            }
+        }
+        
+        // Initialize with one form
+        window.onload = function() {
+            addResultForm();
+        };
+    </script>
+</body>
+</html>
