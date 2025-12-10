@@ -1,21 +1,35 @@
 {
   "lastUpdated": "2024-12-11",
+  
   "hero": {
-    "title": "TEST - WORKING NOW",
-    "subtitle": "If you see this, hero section is working!",
+    "title": "103.12 ACCUMULATOR WON",
+    "subtitle": "Perfect 3/3 predictions won yesterday! Join our winning streak!",
     "stats": [
-      {"value": "3/3", "label": "Test Wins"},
-      {"value": "100.00", "label": "Test Odds"}
+      {"value": "3/3", "label": "Perfect Wins"},
+      {"value": "103.12", "label": "Total Odds"},
+      {"value": "34.37", "label": "Avg Odds"},
+      {"value": "100%", "label": "Win Rate"}
     ]
   },
+  
   "topPrediction": {
     "mainMatch": {
       "league": "Champions League 🇪🇺",
-      "team1": {"name": "Bayern Munich", "code": "BAY"},
-      "team2": {"name": "Sporting CP", "code": "SPO"},
+      "time": "20:45",
+      "team1": {
+        "name": "Bayern Munich",
+        "code": "BAY",
+        "color": "#DC052D"
+      },
+      "team2": {
+        "name": "Sporting CP", 
+        "code": "SPO",
+        "color": "#008E3B"
+      },
       "prediction": "1 & Under 3.5 Goals",
-      "odds": 2.5,
-      "confidence": 70
+      "odds": 2.50,
+      "confidence": 70,
+      "riskLevel": "MEDIUM RISK"
     }
   }
 }
