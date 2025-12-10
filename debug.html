@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Test</title>
+</head>
+<body style="padding:20px;font-family:Arial;">
+    <h1>Debug Test Page</h1>
+    <div id="result" style="padding:20px;background:#f0f0f0;border-radius:10px;">
+        Testing connection to data.json...
+    </div>
+    
+    <script>
+        // Test 1: Check if file exists
+        console.log('Starting debug test...');
+        
+        // Test fetch to data.json
+        fetch('data.json')
+            .then(response => {
+                console.log('Response status:', response.status);
+                document.getElementById('result').innerHTML += 
+                    '<br><br>✅ Response status: ' + response.status;
+                
+                if (!response.ok) {
+                    throw new Error('File not found or error: ' + response.status);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data loaded:', data);
+                document.getElementById('result').innerHTML += 
+                    '<br>✅ JSON loaded successfully!';
+                document.getElementById('result').innerHTML += 
+                    '<br>Hero title: ' + (data.hero?.title || 'No title found');
+                document.getElementById('result').innerHTML += 
+                    '<br>Last updated: ' + (data.lastUpdated || 'Not found');
+            })
+            .catch(error => {
+                console.error('Fetch error:', error);
+                document.getElementById('result').innerHTML += 
+                    '<br><br>❌ ERROR: ' + error.message;
+                document.getElementById('result').innerHTML += 
+                    '<br>This means data.json is not accessible or has errors.';
+            });
+        
+        // Test 2: Try with absolute URL
+        setTimeout(() => {
+            fetch('https://mamecholeye-lab.github.io/mamecholeye/data.json')
+                .then(r => {
+                    document.getElementById('result').innerHTML += 
+                        '<br><br>📡 Absolute URL test: ' + r.status;
+                    return r.text();
+                })
+                .then(text => {
+                    if (text) {
+                        document.getElementById('result').innerHTML += 
+                            '<br>✅ Got content (length: ' + text.length + ' chars)';
+                    }
+                })
+                .catch(e => {
+                    document.getElementById('result').innerHTML += 
+                        '<br>❌ Absolute URL failed: ' + e.message;
+                });
+        }, 2000);
+    </script>
+</body>
+  </html>
