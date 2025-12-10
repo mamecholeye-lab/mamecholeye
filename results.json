@@ -1,0 +1,142 @@
+{
+  "lastUpdated": "2024-12-10",
+  "totalPredictions": 12,
+  "totalWins": 10,
+  "totalLosses": 2,
+  "winRate": "83.3%",
+  "totalOdds": 163.9,
+  "predictions": [
+    {
+      "id": 1,
+      "date": "2024-12-09",
+      "fixture": "Stevenage v Cardiff",
+      "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "betType": "Double Chance: 1X",
+      "odds": 1.41,
+      "result": "0-1",
+      "outcome": "lost",
+      "confidence": 75
+    },
+    {
+      "id": 2,
+      "date": "2024-12-09",
+      "fixture": "Penybont v Barry Town",
+      "league": "Welsh Premier League 🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+      "betType": "BTTS: YES",
+      "odds": 1.60,
+      "result": "1-1",
+      "outcome": "won",
+      "confidence": 68
+    },
+    {
+      "id": 3,
+      "date": "2024-12-09",
+      "fixture": "Leyton Orient v Luton",
+      "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "betType": "Double Chance: 1X",
+      "odds": 1.46,
+      "result": "1-1",
+      "outcome": "won",
+      "confidence": 72
+    },
+    {
+      "id": 4,
+      "date": "2024-12-09",
+      "fixture": "Atalanta v Chelsea",
+      "league": "Champions League 🇪🇺",
+      "betType": "BTTS: YES",
+      "odds": 1.54,
+      "result": "2-1",
+      "outcome": "won",
+      "confidence": 70
+    },
+    {
+      "id": 5,
+      "date": "2024-12-09",
+      "fixture": "QPR v Birmingham",
+      "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "betType": "Double Chance: 1X",
+      "odds": 1.46,
+      "result": "2-1",
+      "outcome": "won",
+      "confidence": 74
+    },
+    {
+      "id": 6,
+      "date": "2024-12-09",
+      "fixture": "Shrewsbury v Grimsby",
+      "league": "English League One 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "betType": "Double Chance: 1X",
+      "odds": 1.52,
+      "result": "1-1",
+      "outcome": "won",
+      "confidence": 71
+    },
+    {
+      "id": 7,
+      "date": "2024-12-09",
+      "fixture": "Shams Azar v Gol Gohar",
+      "league": "Iranian Pro League 🇮🇷",
+      "betType": "Double Chance: 1X",
+      "odds": 1.49,
+      "result": "1-1",
+      "outcome": "won",
+      "confidence": 73
+    },
+    {
+      "id": 8,
+      "date": "2024-12-09",
+      "fixture": "Inter Milan v Liverpool",
+      "league": "Champions League 🇪🇺",
+      "betType": "BTTS: YES",
+      "odds": 1.54,
+      "result": "0-1",
+      "outcome": "lost",
+      "confidence": 78
+    },
+    {
+      "id": 9,
+      "date": "2024-12-09",
+      "fixture": "Fleetwood v Salford",
+      "league": "English League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+      "betType": "BTTS: YES",
+      "odds": 1.56,
+      "result": "1-1",
+      "outcome": "won",
+      "confidence": 69
+    },
+    {
+      "id": 10,
+      "date": "2024-12-09",
+      "fixture": "Genk II v Anderlecht Res.",
+      "league": "Belgian Reserve League 🇧🇪",
+      "betType": "Over 2.5 Goals",
+      "odds": 1.49,
+      "result": "3-2",
+      "outcome": "won",
+      "confidence": 67
+    },
+    {
+      "id": 11,
+      "date": "2024-12-09",
+      "fixture": "PSV v Atletico Madrid",
+      "league": "Champions League 🇪🇺",
+      "betType": "Over 2.5 Goals",
+      "odds": 1.49,
+      "result": "2-3",
+      "outcome": "won",
+      "confidence": 65
+    },
+    {
+      "id": 12,
+      "date": "2024-12-09",
+      "fixture": "Union SG v Marseille",
+      "league": "Europa League 🇪🇺",
+      "betType": "BTTS: YES",
+      "odds": 1.52,
+      "result": "2-3",
+      "outcome": "won",
+      "confidence": 72
+    }
+  ]
+}
