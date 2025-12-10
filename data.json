@@ -1,256 +1,51 @@
-{
-  "lastUpdated": "2025-12-10T22:03:11.583Z",
-  "site": {
-    "title": "RMAME Predictions",
-    "tagline": "Professional Football Betting Tips",
-    "contact": {
-      "whatsapp": "+251979380726",
-      "email": "mamecholeye@gmail.com"
-    }
-  },
-  "hero": {
-    "date": "December 11, 2025",
-    "title": "103.12 ACCUMULATOR WON",
-    "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
-    "badges": [
-      {
-        "text": "3/3 WINS YESTERDAY",
-        "color": "#00B894"
-      },
-      {
-        "text": "Perfect Record",
-        "color": "#FF6B35",
-        "icon": "check-circle"
-      },
-      {
-        "text": "TOTAL ODDS: 103.12",
-        "color": "#FFD700"
-      }
-    ],
-    "stats": [
-      {
-        "value": "3/3",
-        "label": "Perfect Wins"
-      },
-      {
-        "value": "103.12",
-        "label": "Total Odds"
-      }
-    ],
-    "results": [
-      {
-        "time": "19:45",
-        "league": "League Two",
-        "fixture": "Fleetwood 1 – 1 Salford city",
-        "betType": "Draw & BTTS",
-        "betColor": "#FFD700",
-        "odds": 4.33,
-        "status": "won"
-      },
-      {
-        "time": "20:00",
-        "league": "League Two",
-        "fixture": "Barrow 0 – 3 Tranmere",
-        "betType": "Away & Over 2.5",
-        "betColor": "#00B894",
-        "odds": 4.33,
-        "status": "won"
-      },
-      {
-        "time": "19:45",
-        "league": "League Two",
-        "fixture": "Notts Co 3 – 2 MK Dons",
-        "betType": "Home & BTTS",
-        "betColor": "#FF6B35",
-        "odds": 5.5,
-        "status": "won"
-      }
-    ],
-    "calculations": {
-      "totalOdds": 103.12,
-      "winningExamples": [
-        {
-          "stake": 10,
-          "win": 1031.2
-        },
-        {
-          "stake": 50,
-          "win": 5156
-        },
-        {
-          "stake": 100,
-          "win": 10312
-        }
-      ],
-      "profitNote": "3-match accumulator with 103.12 odds = 10,312% PROFIT!"
-    }
-  },
-  "topPrediction": {
-    "date": "December 11, 2025",
-    "title": "Champions League Double",
-    "subtitle": "December 11, 2025 - Champions League Double",
-    "badge": "CHAMPIONS LEAGUE SPECIAL",
-    "mainMatch": {
-      "league": "Champions League 🇪🇺",
-      "time": "20:45",
-      "fixture": "Qarabag FK vs Ajax",
-      "team1": {
-        "name": "Qarabag FK",
-        "code": "QAR",
-        "color": "#DC052D"
-      },
-      "team2": {
-        "name": "Ajax",
-        "code": "AJA",
-        "color": "#008E3B"
-      },
-      "prediction": "2",
-      "odds": 3.19,
-      "confidence": 56,
-      "riskLevel": "MEDIUM RISK",
-      "analysis": [
-        "Bayern: Unbeaten in last 10 home UCL matches",
-        "Sporting: Lost 3 of last 4 away in UCL",
-        "Bayern: 4 clean sheets in last 6 home games",
-        "H2H: Bayern won last 3 meetings",
-        "Under 3.5 goals in Bayern's last 5 home UCL matches"
-      ]
-    }
-  },
-  "todayPredictions": {
-    "date": "December 11, 2025",
-    "title": "",
-    "subtitle": "",
-    "totalPredictions": 0,
-    "totalOdds": "1.00",
-    "predictions": [],
-    "winningExamples": [
-      {
-        "stake": 10,
-        "win": "10.00"
-      },
-      {
-        "stake": 50,
-        "win": "50.00"
-      },
-      {
-        "stake": 100,
-        "win": "100.00"
-      }
+"topPrediction": {
+  "date": "December 11, 2025",
+  "title": "Champions League Double",
+  "subtitle": "December 11, 2025 - Champions League Double",
+  "badge": "CHAMPIONS LEAGUE SPECIAL",
+  
+  "mainMatch": {
+    "league": "Champions League 🇪🇺",
+    "time": "21:00",
+    "fixture": "Real Madrid vs PSG",
+    "team1": {"name": "Real Madrid", "code": "RMA", "color": "#FFFFFF"},
+    "team2": {"name": "PSG", "code": "PSG", "color": "#004170"},
+    "prediction": "1 & Over 2.5 Goals",
+    "odds": 2.80,
+    "confidence": 75,
+    "riskLevel": "MEDIUM RISK",
+    "analysis": [
+      "Real Madrid: Unbeaten at home this season",
+      "PSG: Strong attacking lineup",
+      "Both teams in good scoring form",
+      "Previous meetings high scoring"
     ]
   },
-  "yesterdayResults": {
-    "date": "December 10, 2025",
-    "title": "Yesterday's Performance",
-    "subtitle": "10 Wins out of 12 Predictions",
-    "stats": {
-      "total": 12,
-      "wins": 10,
-      "losses": 2,
-      "winRate": "83.3%",
-      "totalOdds": "0.00",
-      "status": "Good",
-      "record": "10-0-2"
-    },
-    "results": [
-      {
-        "fixture": "Stevenge vs cardiff",
-        "league": "Btts yes ",
-        "betType": "1x",
-        "odds": 0,
-        "result": "0-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Penybont v Barry Town ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Atalanta v Chelsea ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "2-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Leyton orient vs Luton ",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "QPR v Birmingham ",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "2-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Shrewsbury v Grimsby ",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Shams Azar v Gol Gohar",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Inter Milan v Liverpool ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "0-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Fleetwood v Salford ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Genk 2 v Anderlecht res",
-        "league": "",
-        "betType": "Over 2.5",
-        "odds": 0,
-        "result": "3-2",
-        "outcome": "won"
-      },
-      {
-        "fixture": "PSV v Atletico Madrid ",
-        "league": "",
-        "betType": "Over 2.5",
-        "odds": 0,
-        "result": "2-3",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Union SG v Marseille ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "2-3",
-        "outcome": "won"
-      }
+  
+  "secondaryMatch": {
+    "league": "Champions League 🇪🇺",
+    "time": "20:45",
+    "fixture": "Manchester City vs Barcelona",
+    "team1": {"name": "Manchester City", "code": "MCI", "color": "#6CABDD"},
+    "team2": {"name": "Barcelona", "code": "BAR", "color": "#A50044"},
+    "prediction": "BTTS Yes",
+    "odds": 1.65,
+    "confidence": 80,
+    "riskLevel": "LOW RISK"
+  },
+  
+  "accumulator": {
+    "totalOdds": 4.62,
+    "matches": [
+      {"match": "Real Madrid (1 & Over 2.5)", "odds": 2.80},
+      {"match": "Man City vs Barcelona BTTS", "odds": 1.65}
     ],
-    "analysis": "Performance with 10 wins out of 12 predictions (83.3% accuracy).",
-    "insight": "Focus on high confidence predictions for better results."
+    "winningExamples": [
+      {"stake": 20, "win": 92.40},
+      {"stake": 50, "win": 231.00},
+      {"stake": 100, "win": 462.00}
+    ],
+    "tip": "Double accumulator offers 4.62 odds. Recommended stake: 2-3% of bankroll.",
+    "warning": "Champions League matches can be unpredictable"
   }
 }
