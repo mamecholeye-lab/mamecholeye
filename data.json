@@ -1,51 +1,39 @@
-"topPrediction": {
-  "date": "December 11, 2025",
-  "title": "Champions League Double",
-  "subtitle": "December 11, 2025 - Champions League Double",
-  "badge": "CHAMPIONS LEAGUE SPECIAL",
-  
-  "mainMatch": {
-    "league": "Champions League 🇪🇺",
-    "time": "21:00",
-    "fixture": "Real Madrid vs PSG",
-    "team1": {"name": "Real Madrid", "code": "RMA", "color": "#FFFFFF"},
-    "team2": {"name": "PSG", "code": "PSG", "color": "#004170"},
-    "prediction": "1 & Over 2.5 Goals",
-    "odds": 2.80,
-    "confidence": 75,
-    "riskLevel": "MEDIUM RISK",
-    "analysis": [
-      "Real Madrid: Unbeaten at home this season",
-      "PSG: Strong attacking lineup",
-      "Both teams in good scoring form",
-      "Previous meetings high scoring"
-    ]
-  },
-  
-  "secondaryMatch": {
-    "league": "Champions League 🇪🇺",
-    "time": "20:45",
-    "fixture": "Manchester City vs Barcelona",
-    "team1": {"name": "Manchester City", "code": "MCI", "color": "#6CABDD"},
-    "team2": {"name": "Barcelona", "code": "BAR", "color": "#A50044"},
-    "prediction": "BTTS Yes",
-    "odds": 1.65,
-    "confidence": 80,
-    "riskLevel": "LOW RISK"
-  },
-  
-  "accumulator": {
-    "totalOdds": 4.62,
-    "matches": [
-      {"match": "Real Madrid (1 & Over 2.5)", "odds": 2.80},
-      {"match": "Man City vs Barcelona BTTS", "odds": 1.65}
-    ],
-    "winningExamples": [
-      {"stake": 20, "win": 92.40},
-      {"stake": 50, "win": 231.00},
-      {"stake": 100, "win": 462.00}
-    ],
-    "tip": "Double accumulator offers 4.62 odds. Recommended stake: 2-3% of bankroll.",
-    "warning": "Champions League matches can be unpredictable"
-  }
+/* Top Prediction Specific Styles */
+input[type="color"] {
+    width: 60px;
+    height: 40px;
+    padding: 2px;
+    cursor: pointer;
+}
+
+#secondary-match {
+    transition: all 0.3s ease;
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Form validation */
+input:valid, select:valid {
+    border-color: #00B894;
+}
+
+input:invalid, select:invalid {
+    border-color: #FF4757;
+}
+
+/* Auto-save indicator */
+.auto-save {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: #00B894;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    z-index: 1000;
 }
