@@ -237,16 +237,43 @@ if (subscriptionForm) {
         e.preventDefault(); // Stop form from reloading page
         
         // Get all form values
-        const name = this.querySelector('input[type="text"]').value;
-        const email = this.querySelector('input[type="email"]').value;
-        const phone = this.querySelector('input[type="tel"]').value;
+        const name = this.querySelector('input[type="text"]').value.trim();
+        const email = this.querySelector('input[type="email"]').value.trim();
+        const phone = this.querySelector('input[type="tel"]').value.trim();
         const packageSelect = this.querySelector('select');
-        const package = packageSelect.value;
-        const paymentMethod = this.querySelector('input[name="payment"]:checked').value;
+        const package = packageSelect ? packageSelect.value : '';
+        const paymentMethod = this.querySelector('input[name="payment"]:checked') ? 
+                            this.querySelector('input[name="payment"]:checked').value : '';
+        
+        // Debug: Show what values we got
+        console.log('Name:', name);
+        console.log('Email:', email);
+        console.log('Phone:', phone);
+        console.log('Package:', package);
+        console.log('Payment Method:', paymentMethod);
         
         // Check if all fields are filled
-        if (!name || !email || !phone || !package) {
-            alert('❌ Please fill in all fields before submitting!');
+        if (!name) {
+            alert('❌ Please enter your name!');
+            this.querySelector('input[type="text"]').focus();
+            return;
+        }
+        
+        if (!email) {
+            alert('❌ Please enter your email address!');
+            this.querySelector('input[type="email"]').focus();
+            return;
+        }
+        
+        if (!phone) {
+            alert('❌ Please enter your WhatsApp number!');
+            this.querySelector('input[type="tel"]').focus();
+            return;
+        }
+        
+        if (!package || package === '') {
+            alert('❌ Please select a package (Daily, Weekly, or Monthly)!');
+            if (packageSelect) packageSelect.focus();
             return;
         }
         
@@ -255,7 +282,8 @@ if (subscriptionForm) {
         
         // Ensure it starts with country code
         if (!cleanPhone.startsWith('251')) {
-            alert('❌ Please enter a valid Ethiopian phone number starting with 251');
+            alert('❌ Please enter a valid Ethiopian phone number starting with 251\n\nExample: +251 912 345 678');
+            this.querySelector('input[type="tel"]').focus();
             return;
         }
         
@@ -294,9 +322,9 @@ if (subscriptionForm) {
         this.querySelector('#mobile-money').checked = true;
         
         // Reset select to first option
-        packageSelect.selectedIndex = 0;
+        if (packageSelect) packageSelect.selectedIndex = 0;
     });
-}
+            }
 
 // ===== AUTO-FORMAT PHONE NUMBER =====
 const phoneInput = document.querySelector('input[type="tel"]');
