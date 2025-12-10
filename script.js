@@ -331,3 +331,227 @@ if (phoneInput) {
         }
     });
                        }
+// ===== JSON DATABASE FOR RESULTS =====
+
+async function loadResultsFromJSON() {
+    try {
+        console.log('Loading results from JSON database...');
+        
+        // Fetch the JSON file from your GitHub repository
+        const response = await fetch('results.json');
+        
+        if (!response.ok) {
+            throw new Error(`Failed to load results: ${response.status}`);
+        }
+        
+        const data = await response.json();
+        console.log('Results loaded successfully:', data);
+        
+        // Display the results
+        displayResults(data);
+        
+    } catch (error) {
+        console.error('Error loading results from JSON:', error);
+        
+        // Fallback: Show static results
+        showFallbackResults();
+        showErrorMessage('Could not load live results. Showing cached data.');
+    }
+}
+
+function displayResults(data) {
+    const resultsContainer = document.getElementById('results-table-body');
+    
+    if (!resultsContainer) {
+        console.error('Results container not found');
+        return;
+    }
+    
+    // Clear loading message
+    resultsContainer.innerHTML = '';
+    
+    // Check if we have predictions
+    if (!data.predictions || data.predictions.length === 0) {
+        resultsContainer.innerHTML = `
+            <div class="no-results">
+                <i class="fas fa-exclamation-circle"></i>
+                <h4>No results available</h4>
+                <p>Check back later for updated results.</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Create each result row
+    data.predictions.forEach(prediction => {
+        const resultRow = createResultRow(prediction);
+        resultsContainer.appendChild(resultRow);
+    });
+    
+    // Update summary statistics
+    updateSummaryStatistics(data);
+    
+    console.log(`Displayed ${data.predictions.length} results`);
+}
+
+function createResultRow(prediction) {
+    const row = document.createElement('div');
+    row.className = `table-row ${prediction.outcome}`;
+    
+    // Set background based on outcome
+    if (prediction.outcome === 'won') {
+        row.style.background = 'rgba(0, 184, 148, 0.05)';
+        row.style.borderLeft = '3px solid #00B894';
+    } else {
+        row.style.background = 'rgba(255, 107, 53, 0.05)';
+        row.style.borderLeft = '3px solid #FF4757';
+    }
+    
+    // Set row content
+    row.innerHTML = `
+        <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">
+            ${prediction.fixture}
+            <br>
+            <span class="league" style="color: ${prediction.outcome === 'won' ? '#64D2FF' : '#FF9E6D'};">
+                ${prediction.league}
+            </span>
+        </div>
+        <div data-label="Bet Type" style="color: #E8EAEF;">${prediction.betType}</div>
+        <div data-label="Odds" style="color: #FFD700; font-weight: 700;">${prediction.odds}</div>
+        <div data-label="Result" style="color: ${prediction.outcome === 'won' ? '#64D2FF' : '#FF9E6D'}; font-weight: 700;">${prediction.result}</div>
+        <div data-label="Outcome">
+            <span class="status ${prediction.outcome}" style="background: ${prediction.outcome === 'won' ? 'rgba(0, 184, 148, 0.2)' : 'rgba(255, 71, 87, 0.2)'}; color: ${prediction.outcome === 'won' ? '#00E6A1' : '#FF6B6B'}; border: 1px solid ${prediction.outcome === 'won' ? 'rgba(0, 230, 161, 0.4)' : 'rgba(255, 107, 107, 0.4)'};">
+                ${prediction.outcome === 'won' ? '✅ WIN' : '❌ LOSE'}
+            </span>
+        </div>
+    `;
+    
+    return row;
+}
+
+function updateSummaryStatistics(data) {
+    // Update the stats boxes
+    const totalWins = data.totalWins || 0;
+    const totalLosses = data.totalLosses || 0;
+    const winRate = data.winRate || '0%';
+    const totalOdds = data.totalOdds || 0;
+    
+    // Find and update stat boxes
+    document.querySelectorAll('.stat-box').forEach((box, index) => {
+        switch(index) {
+            case 0: // Yesterday's Record
+                box.querySelector('.stat-value').textContent = `${totalWins}-${totalLosses}`;
+                break;
+            case 1: // Win Rate
+                box.querySelector('.stat-value').textContent = winRate;
+                break;
+            case 2: // Total Odds
+                box.querySelector('.stat-value').textContent = totalOdds;
+                break;
+            case 3: // Slip Status
+                const slipStatus = totalLosses > 0 ? 'Lost' : 'Won';
+                box.querySelector('.stat-value').textContent = slipStatus;
+                box.querySelector('.stat-value').style.color = slipStatus === 'Won' ? '#00E6A1' : '#FF6B6B';
+                box.querySelector('p').textContent = totalLosses > 0 ? `${totalLosses} losses broke accumulator` : 'Perfect accumulator won!';
+                break;
+        }
+    });
+    
+    // Update section subtitle
+    const subtitle = document.querySelector('#results .section-subtitle');
+    if (subtitle) {
+        subtitle.textContent = `${data.lastUpdated} - ${totalWins} Wins out of ${totalWins + totalLosses} Predictions`;
+    }
+}
+
+function showFallbackResults() {
+    const resultsContainer = document.getElementById('results-table-body');
+    
+    if (!resultsContainer) return;
+    
+    resultsContainer.innerHTML = `
+        <div class="table-row won">
+            <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">Fleetwood v Salford<br><span class="league" style="color: #FF9E6D;">League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span></div>
+            <div data-label="Bet Type" style="color: #E8EAEF;">Draw & BTTS</div>
+            <div data-label="Odds" style="color: #FFD700; font-weight: 700;">4.33</div>
+            <div data-label="Result" style="color: #FF9E6D; font-weight: 700;">1-1</div>
+            <div data-label="Outcome"><span class="status won">✅ WIN</span></div>
+        </div>
+        <div class="table-row won">
+            <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">Barrow v Tranmere<br><span class="league" style="color: #FF9E6D;">League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span></div>
+            <div data-label="Bet Type" style="color: #E8EAEF;">Away & Over 2.5</div>
+            <div data-label="Odds" style="color: #FFD700; font-weight: 700;">4.33</div>
+            <div data-label="Result" style="color: #FF9E6D; font-weight: 700;">0-3</div>
+            <div data-label="Outcome"><span class="status won">✅ WIN</span></div>
+        </div>
+        <div class="table-row won">
+            <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">Notts Co v MK Dons<br><span class="league" style="color: #FF9E6D;">League Two 🏴󠁧󠁢󠁥󠁮󠁧󠁿</span></div>
+            <div data-label="Bet Type" style="color: #E8EAEF;">Home & BTTS</div>
+            <div data-label="Odds" style="color: #FFD700; font-weight: 700;">5.50</div>
+            <div data-label="Result" style="color: #FF9E6D; font-weight: 700;">3-2</div>
+            <div data-label="Outcome"><span class="status won">✅ WIN</span></div>
+        </div>
+    `;
+}
+
+function showErrorMessage(message) {
+    const alertDiv = document.createElement('div');
+    alertDiv.className = 'json-error-alert';
+    alertDiv.style.cssText = `
+        background: rgba(255, 107, 53, 0.1);
+        border: 2px solid #FF6B35;
+        color: #FF6B35;
+        padding: 10px 15px;
+        border-radius: 8px;
+        margin: 10px 0;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    `;
+    
+    alertDiv.innerHTML = `
+        <i class="fas fa-exclamation-triangle"></i>
+        <span>${message}</span>
+    `;
+    
+    // Insert at the beginning of results section
+    const resultsSection = document.querySelector('#results .container');
+    if (resultsSection) {
+        resultsSection.insertBefore(alertDiv, resultsSection.firstChild);
+        
+        // Remove after 10 seconds
+        setTimeout(() => {
+            if (alertDiv.parentNode) {
+                alertDiv.parentNode.removeChild(alertDiv);
+            }
+        }, 10000);
+    }
+}
+
+// ===== UPDATE PREDICTIONS FROM JSON =====
+async function loadPredictionsFromJSON() {
+    try {
+        // You can create a separate predictions.json file for today's predictions
+        const response = await fetch('predictions.json');
+        const data = await response.json();
+        
+        if (data && data.predictions) {
+            updatePredictionsDisplay(data.predictions);
+        }
+    } catch (error) {
+        console.log('Using static predictions:', error);
+        // Keep existing static predictions
+    }
+}
+
+// ===== INITIALIZE ON PAGE LOAD =====
+document.addEventListener('DOMContentLoaded', function() {
+    // Load results from JSON
+    setTimeout(() => {
+        loadResultsFromJSON();
+    }, 1500); // Delay to show loading animation
+    
+    // Load predictions from JSON (optional)
+    // loadPredictionsFromJSON();
+});
