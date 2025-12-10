@@ -681,3 +681,331 @@ document.addEventListener('DOMContentLoaded', function() {
         loadTodayPredictions();
     }, 2000);
 });
+// ===== LOAD COMPLETE DATA FROM SINGLE JSON =====
+async function loadCompleteData() {
+    try {
+        console.log('Loading complete website data...');
+        
+        // Load from data.json
+        const response = await fetch('data.json');
+        const data = await response.json();
+        
+        if (!data) {
+            console.log('No data found');
+            return;
+        }
+        
+        // Update hero section
+        updateHeroSection(data.hero);
+        
+        // Update top prediction
+        updateTopPrediction(data.topPrediction);
+        
+        // Update today's predictions
+        updateTodayPredictions(data.todayPredictions);
+        
+        // Update yesterday's results
+        updateYesterdayResults(data.yesterdayResults);
+        
+        // Update last updated time
+        updateLastUpdated(data.lastUpdated);
+        
+        console.log('✅ All sections updated from data.json');
+        
+    } catch (error) {
+        console.error('Error loading data:', error);
+        // Fallback to existing content
+    }
+}
+
+function updateHeroSection(heroData) {
+    if (!heroData) return;
+    
+    // Update hero title and subtitle
+    const heroTitle = document.querySelector('.hero-title');
+    const heroSubtitle = document.querySelector('.hero-subtitle');
+    
+    if (heroTitle && heroData.title) {
+        heroTitle.innerHTML = heroData.title.replace('ACCUMULATOR', '<span class="highlight">ACCUMULATOR</span>');
+    }
+    
+    if (heroSubtitle && heroData.subtitle) {
+        heroSubtitle.textContent = heroData.subtitle;
+    }
+    
+    // Update hero badges
+    const heroBadge = document.querySelector('.hero-badge');
+    if (heroBadge && heroData.badges) {
+        heroBadge.innerHTML = heroData.badges.map(badge => `
+            <span class="win-rate" style="background-color: ${badge.color || '#00B894'}">
+                ${badge.icon ? `<i class="fas fa-${badge.icon}"></i>` : ''}
+                ${badge.text}
+            </span>
+        `).join('');
+    }
+    
+    // Update hero stats
+    const heroStats = document.querySelector('.hero-stats');
+    if (heroStats && heroData.stats) {
+        heroStats.innerHTML = heroData.stats.map(stat => `
+            <div class="stat">
+                <h3 style="color: ${stat.color || '#FF6B35'}">${stat.value}</h3>
+                <p>${stat.label}</p>
+            </div>
+        `).join('');
+    }
+    
+    // Update hero results
+    const resultsList = document.querySelector('.results-list');
+    if (resultsList && heroData.results) {
+        resultsList.innerHTML = heroData.results.map(result => `
+            <div class="result-item won">
+                <div class="match-info">
+                    <span class="match-time">${result.time}</span>
+                    <span class="match-teams">${result.fixture}</span>
+                    <div class="match-detail">
+                        <span class="detail-label">${result.league}</span>
+                        <span class="detail-value">${result.betType}</span>
+                    </div>
+                </div>
+                <div class="bet-info">
+                    <span class="bet-type" style="background: ${result.betColor || '#FFD700'}; color: #000;">${result.betType}</span>
+                    <span class="bet-odds">@${result.odds}</span>
+                    <span class="status won">✅</span>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Update winning calculations
+    if (heroData.calculations) {
+        const calculationGrid = document.querySelector('.calculation-grid');
+        if (calculationGrid) {
+            calculationGrid.innerHTML = heroData.calculations.winningExamples.map(example => `
+                <div class="calc-item">
+                    <span>With $${example.stake} Stake:</span>
+                    <strong class="won">$${example.win}</strong>
+                </div>
+            `).join('');
+        }
+        
+        const profitNote = document.querySelector('.profit-note');
+        if (profitNote && heroData.calculations.profitNote) {
+            profitNote.textContent = heroData.calculations.profitNote;
+        }
+    }
+}
+
+function updateTopPrediction(topData) {
+    if (!topData || !topData.mainMatch) return;
+    
+    // Update section subtitle
+    const subtitle = document.querySelector('#top-prediction .section-subtitle');
+    if (subtitle) {
+        subtitle.textContent = topData.subtitle || '';
+    }
+    
+    // Update main match
+    const matchHeader = document.querySelector('.match-header');
+    if (matchHeader) {
+        matchHeader.innerHTML = `
+            <span class="match-league"><i class="fas fa-crown"></i> ${topData.mainMatch.league}</span>
+            <span class="match-time">${topData.mainMatch.time}</span>
+            <span class="match-date">Today, ${topData.date}</span>
+        `;
+    }
+    
+    // Update teams
+    const teams = document.querySelector('.teams');
+    if (teams) {
+        teams.innerHTML = `
+            <div class="team">
+                <div class="team-logo" style="background-color: ${topData.mainMatch.team1.color}; color: white;">
+                    ${topData.mainMatch.team1.code}
+                </div>
+                <span class="team-name">${topData.mainMatch.team1.name}</span>
+            </div>
+            <div class="vs">VS</div>
+            <div class="team">
+                <div class="team-logo" style="background-color: ${topData.mainMatch.team2.color}; color: white;">
+                    ${topData.mainMatch.team2.code}
+                </div>
+                <span class="team-name">${topData.mainMatch.team2.name}</span>
+            </div>
+        `;
+    }
+    
+    // Update prediction
+    const predictionMain = document.querySelector('.prediction-main');
+    if (predictionMain) {
+        predictionMain.innerHTML = `
+            <div class="prediction-type">
+                <span class="type-label">PREDICTION:</span>
+                <span class="type-value">${topData.mainMatch.prediction}</span>
+            </div>
+            <div class="prediction-odds">
+                <span class="odds-label">ODDS:</span>
+                <span class="odds-value">@${topData.mainMatch.odds}</span>
+            </div>
+        `;
+    }
+    
+    // Update confidence
+    const confidenceFill = document.querySelector('.confidence-fill');
+    const confidencePercent = document.querySelector('.confidence-percent');
+    if (confidenceFill && confidencePercent) {
+        confidenceFill.style.width = `${topData.mainMatch.confidence}%`;
+        confidencePercent.textContent = `${topData.mainMatch.confidence}% Confidence`;
+    }
+}
+
+function updateTodayPredictions(todayData) {
+    if (!todayData || !todayData.predictions) return;
+    
+    // Update section subtitle
+    const subtitle = document.querySelector('#predictions .section-subtitle');
+    if (subtitle) {
+        subtitle.textContent = todayData.subtitle || '';
+    }
+    
+    // Update predictions grid
+    const predictionsGrid = document.querySelector('.predictions-grid');
+    if (predictionsGrid) {
+        predictionsGrid.innerHTML = todayData.predictions.map(prediction => `
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> ${prediction.league}</span>
+                    <span class="match-time">${prediction.time}</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo" style="background-color: ${prediction.team1.color}; color: white;">
+                            ${prediction.team1.code}
+                        </div>
+                        <span class="team-name">${prediction.team1.name}</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo" style="background-color: ${prediction.team2.color}; color: white;">
+                            ${prediction.team2.code}
+                        </div>
+                        <span class="team-name">${prediction.team2.name}</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">${prediction.prediction}</span>
+                    <span class="prediction-odd">@${prediction.odds}</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${prediction.confidence}%"></div>
+                    </div>
+                    <span>${prediction.confidence}% Confidence</span>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Update winning examples
+    if (todayData.winningExamples) {
+        const todayWinning = document.querySelector('#predictions .winning-calculation');
+        if (todayWinning) {
+            todayWinning.querySelector('.calculation-grid').innerHTML = todayData.winningExamples.map(example => `
+                <div class="calc-item">
+                    <span>With $${example.stake} Stake:</span>
+                    <strong class="won">$${example.win}</strong>
+                </div>
+            `).join('');
+        }
+    }
+}
+
+function updateYesterdayResults(resultsData) {
+    if (!resultsData || !resultsData.results) return;
+    
+    // Update section subtitle
+    const subtitle = document.querySelector('#results .section-subtitle');
+    if (subtitle) {
+        subtitle.textContent = resultsData.subtitle || '';
+    }
+    
+    // Update results table
+    const tableBody = document.querySelector('.table-body');
+    if (tableBody) {
+        tableBody.innerHTML = resultsData.results.map(result => `
+            <div class="table-row ${result.outcome}" style="background: ${result.outcome === 'won' ? 'rgba(0, 184, 148, 0.05)' : 'rgba(255, 107, 53, 0.05)'}; border-left: 3px solid ${result.outcome === 'won' ? '#00B894' : '#FF4757'}">
+                <div data-label="Fixture" style="color: #FFFFFF; font-weight: 600;">
+                    ${result.fixture}<br>
+                    <span class="league" style="color: ${result.outcome === 'won' ? '#64D2FF' : '#FF9E6D'}">
+                        ${result.league}
+                    </span>
+                </div>
+                <div data-label="Bet Type" style="color: #E8EAEF;">${result.betType}</div>
+                <div data-label="Odds" style="color: #FFD700; font-weight: 700;">${result.odds}</div>
+                <div data-label="Result" style="color: ${result.outcome === 'won' ? '#64D2FF' : '#FF9E6D'}; font-weight: 700;">${result.result}</div>
+                <div data-label="Outcome">
+                    <span class="status ${result.outcome}" style="background: ${result.outcome === 'won' ? 'rgba(0, 184, 148, 0.2)' : 'rgba(255, 71, 87, 0.2)'}; color: ${result.outcome === 'won' ? '#00E6A1' : '#FF6B6B'}; border: 1px solid ${result.outcome === 'won' ? 'rgba(0, 230, 161, 0.4)' : 'rgba(255, 107, 107, 0.4)'}">
+                        ${result.outcome === 'won' ? '✅ WIN' : '❌ LOSE'}
+                    </span>
+                </div>
+            </div>
+        `).join('');
+    }
+    
+    // Update stats boxes
+    if (resultsData.stats) {
+        const statBoxes = document.querySelectorAll('.stat-box');
+        
+        if (statBoxes.length >= 4) {
+            // Box 1: Record
+            statBoxes[0].querySelector('.stat-value').textContent = resultsData.stats.record || '0-0-0';
+            
+            // Box 2: Win Rate
+            statBoxes[1].querySelector('.stat-value').textContent = resultsData.stats.winRate || '0%';
+            
+            // Box 3: Total Odds
+            statBoxes[2].querySelector('.stat-value').textContent = resultsData.stats.totalOdds || '0';
+            
+            // Box 4: Status
+            const statusValue = statBoxes[3].querySelector('.stat-value');
+            const statusText = resultsData.stats.status || 'Unknown';
+            statusValue.textContent = statusText;
+            statusValue.style.color = statusText === 'Excellent' ? '#00E6A1' : 
+                                     statusText === 'Good' ? '#FFD700' : '#FF6B6B';
+            
+            const statusDesc = statBoxes[3].querySelector('p');
+            if (statusDesc) {
+                statusDesc.textContent = `${resultsData.stats.losses || 0} losses`;
+            }
+        }
+    }
+}
+
+function updateLastUpdated(timestamp) {
+    if (timestamp) {
+        const date = new Date(timestamp);
+        const formatted = date.toLocaleString('en-US', {
+            weekday: 'long',
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        
+        // You can add a last updated indicator somewhere on your page
+        console.log('Last updated:', formatted);
+    }
+}
+
+// Load data when page loads
+document.addEventListener('DOMContentLoaded', function() {
+    // Load complete data
+    setTimeout(() => {
+        loadCompleteData();
+    }, 1000);
+    
+    // Auto-refresh every 5 minutes
+    setInterval(loadCompleteData, 5 * 60 * 1000);
+});
