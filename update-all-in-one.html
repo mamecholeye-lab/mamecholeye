@@ -48,6 +48,7 @@
             .form-row { flex-direction: column; }
             .tab { padding: 10px 15px; font-size: 14px; }
         }
+        
         /* Top Prediction Specific Styles */
         input[type="color"] {
             width: 60px;
@@ -265,115 +266,147 @@
 
                 <h3 style="color:#FF9E6D; margin:20px 0 15px 0;">🏆 Main Match</h3>
 
+                <div class="form-group">
+                    <label>League:</label>
+                    <div class="form-row">
+                        <div class="form-group" style="flex: 2;">
+                            <input type="text" id="top-league-input" list="league-options" 
+                                   placeholder="Type or select league" value="Champions League">
+                            <datalist id="league-options">
+                                <option>Champions League</option>
+                                <option>Premier League</option>
+                                <option>La Liga</option>
+                                <option>Serie A</option>
+                                <option>Bundesliga</option>
+                                <option>Ligue 1</option>
+                                <option>English Championship</option>
+                                <option>English League One</option>
+                                <option>English League Two</option>
+                                <option>Europa League</option>
+                                <option>Conference League</option>
+                                <option>FA Cup</option>
+                                <option>Carabao Cup</option>
+                                <option>Scottish Premiership</option>
+                                <option>Welsh Premier League</option>
+                                <option>Irish Premier Division</option>
+                                <option>Major League Soccer</option>
+                                <option>Brazilian Série A</option>
+                                <option>Argentinian Primera</option>
+                                <option>Saudi Pro League</option>
+                                <option>Turkish Süper Lig</option>
+                                <option>Dutch Eredivisie</option>
+                                <option>Portuguese Primeira Liga</option>
+                                <option>Belgian Pro League</option>
+                                <option>Russian Premier League</option>
+                                <option>Ukrainian Premier League</option>
+                                <option>Greek Super League</option>
+                                <option>Danish Superliga</option>
+                                <option>Swedish Allsvenskan</option>
+                                <option>Norwegian Eliteserien</option>
+                                <option>Finnish Veikkausliiga</option>
+                                <option>Swiss Super League</option>
+                                <option>Austrian Bundesliga</option>
+                                <option>Polish Ekstraklasa</option>
+                                <option>Czech First League</option>
+                                <option>Israeli Premier League</option>
+                                <option>Egyptian Premier League</option>
+                                <option>Moroccan Botola</option>
+                                <option>South African PSL</option>
+                                <option>Japanese J1 League</option>
+                                <option>Korean K League 1</option>
+                                <option>Chinese Super League</option>
+                                <option>Australian A-League</option>
+                                <option>Indian Super League</option>
+                            </datalist>
+                        </div>
+                        <div class="form-group" style="flex: 1;">
+                            <select id="league-flag">
+                                <option value="🇪🇺">🇪🇺 Europe</option>
+                                <option value="🏴󠁧󠁢󠁥󠁮󠁧󠁿">🏴󠁧󠁢󠁥󠁮󠁧󠁿 England</option>
+                                <option value="🇪🇸">🇪🇸 Spain</option>
+                                <option value="🇮🇹">🇮🇹 Italy</option>
+                                <option value="🇩🇪">🇩🇪 Germany</option>
+                                <option value="🇫🇷">🇫🇷 France</option>
+                                <option value="🏴󠁧󠁢󠁳󠁣󠁴󠁿">🏴󠁧󠁢󠁳󠁣󠁴󠁿 Scotland</option>
+                                <option value="🏴󠁧󠁢󠁷󠁬󠁳󠁿">🏴󠁧󠁢󠁷󠁬󠁳󠁿 Wales</option>
+                                <option value="🇮🇪">🇮🇪 Ireland</option>
+                                <option value="🇺🇸">🇺🇸 USA</option>
+                                <option value="🇧🇷">🇧🇷 Brazil</option>
+                                <option value="🇦🇷">🇦🇷 Argentina</option>
+                                <option value="🇸🇦">🇸🇦 Saudi</option>
+                                <option value="🇹🇷">🇹🇷 Turkey</option>
+                                <option value="🇳🇱">🇳🇱 Netherlands</option>
+                                <option value="🇵🇹">🇵🇹 Portugal</option>
+                                <option value="🇧🇪">🇧🇪 Belgium</option>
+                                <option value="🌍">🌍 Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
-                        <label>League:</label>
-                        <select id="top-league">
-                            <option value="Champions League 🇪🇺">Champions League 🇪🇺</option>
-                            <option value="Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿">Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿</option>
-                            <option value="La Liga 🇪🇸">La Liga 🇪🇸</option>
-                            <option value="Serie A 🇮🇹">Serie A 🇮🇹</option>
-                            <option value="Bundesliga 🇩🇪">Bundesliga 🇩🇪</option>
-                            <option value="Ligue 1 🇫🇷">Ligue 1 🇫🇷</option>
-                        </select>
+                        <label>Time:</label>
+                        <input type="text" id="top-time" value="21:00">
                     </div>
                     <div class="form-group">
-                        <label>Time:</label>
-                        <input type="text" id="top-time" value="20:45">
+                        <label>Date:</label>
+                        <input type="text" id="top-date" value="December 9, 2025">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Team 1 Name:</label>
-                        <input type="text" id="top-team1" placeholder="e.g., Real Madrid">
+                        <input type="text" id="top-team1" placeholder="e.g., Atalanta">
                     </div>
                     <div class="form-group">
                         <label>Team 1 Color:</label>
-                        <input type="color" id="top-team1-color" value="#DC052D">
+                        <input type="color" id="top-team1-color" value="#0000FF">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Team 2 Name:</label>
-                        <input type="text" id="top-team2" placeholder="e.g., PSG">
+                        <input type="text" id="top-team2" placeholder="e.g., Chelsea">
                     </div>
                     <div class="form-group">
                         <label>Team 2 Color:</label>
-                        <input type="color" id="top-team2-color" value="#004170">
+                        <input type="color" id="top-team2-color" value="#034694">
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Prediction:</label>
-                        <select id="top-prediction">
-                            <option value="1 & Under 3.5 Goals">1 & Under 3.5 Goals</option>
-                            <option value="1X (Double Chance)">1X (Double Chance)</option>
-                            <option value="BTTS Yes">BTTS Yes</option>
-                            <option value="Over 2.5 Goals">Over 2.5 Goals</option>
-                            <option value="Home Win (1)">Home Win (1)</option>
-                            <option value="Away Win (2)">Away Win (2)</option>
-                        </select>
+                        <input type="text" id="top-prediction" list="prediction-options" placeholder="Type or select prediction" value="BTTS Yes">
+                        <datalist id="prediction-options">
+                            <option>1X (Double Chance)</option>
+                            <option>BTTS Yes</option>
+                            <option>Over 2.5 Goals</option>
+                            <option>Under 2.5 Goals</option>
+                            <option>Home Win (1)</option>
+                            <option>Away Win (2)</option>
+                            <option>Draw (X)</option>
+                            <option>1 & BTTS</option>
+                            <option>2 & BTTS</option>
+                            <option>Draw & BTTS</option>
+                            <option>Home & Over 2.5</option>
+                            <option>Away & Over 2.5</option>
+                            <option>Home to Nil</option>
+                            <option>Away to Nil</option>
+                        </datalist>
                     </div>
                     <div class="form-group">
                         <label>Odds:</label>
-                        <input type="number" step="0.01" id="top-odds" value="2.50">
+                        <input type="number" step="0.01" id="top-odds" value="1.54">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label>Confidence %:</label>
-                    <input type="number" id="top-confidence" value="75" min="1" max="100">
-                </div>
-
-                <h3 style="color:#FF9E6D; margin:20px 0 15px 0;">📊 Optional: Secondary Match</h3>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox" id="include-secondary" onchange="toggleSecondary()">
-                        Include Secondary Match for Accumulator
-                    </label>
-                </div>
-
-                <div id="secondary-match" style="display:none;">
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>League:</label>
-                            <input type="text" id="sec-league" placeholder="Champions League 🇪🇺">
-                        </div>
-                        <div class="form-group">
-                            <label>Time:</label>
-                            <input type="text" id="sec-time" placeholder="23:00">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Team 1:</label>
-                            <input type="text" id="sec-team1" placeholder="Monaco">
-                        </div>
-                        <div class="form-group">
-                            <label>Team 2:</label>
-                            <input type="text" id="sec-team2" placeholder="Galatasaray">
-                        </div>
-                    </div>
-
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label>Prediction:</label>
-                            <input type="text" id="sec-prediction" placeholder="Away Win (2)">
-                        </div>
-                        <div class="form-group">
-                            <label>Odds:</label>
-                            <input type="number" step="0.01" id="sec-odds" value="3.10">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <label>Confidence %:</label>
-                        <input type="number" id="sec-confidence" value="45" min="1" max="100">
-                    </div>
+                    <input type="number" id="top-confidence" value="87" min="1" max="100">
                 </div>
 
                 <button class="btn btn-success" onclick="saveTopData()">💾 Save Top Prediction</button>
@@ -764,113 +797,57 @@
         }
 
         // ===== TOP PREDICTION FUNCTIONS =====
-        function toggleSecondary() {
-            const secondaryDiv = document.getElementById('secondary-match');
-            const checkbox = document.getElementById('include-secondary');
-            secondaryDiv.style.display = checkbox.checked ? 'block' : 'none';
-        }
-
         function saveTopData() {
-            const team1Name = document.getElementById('top-team1').value || "Team 1";
-            const team2Name = document.getElementById('top-team2').value || "Team 2";
+            const leagueName = document.getElementById('top-league-input').value || "Champions League";
+            const flag = document.getElementById('league-flag').value || "🇪🇺";
             
             const topData = {
                 title: document.getElementById('top-title').value || "Top Prediction of the Day",
                 subtitle: document.getElementById('top-subtitle-input').value || "Today's Premium Selection",
                 badge: document.getElementById('top-badge-input').value || "PREMIUM PICK",
+                date: document.getElementById('top-date').value || "December 9, 2025",
                 mainMatch: {
-                    league: document.getElementById('top-league').value || "Champions League 🇪🇺",
+                    league: leagueName + ' ' + flag,
                     time: document.getElementById('top-time').value || "21:00",
                     team1: {
-                        name: team1Name,
-                        code: team1Name.substring(0, 3).toUpperCase(),
-                        color: document.getElementById('top-team1-color').value || "#DC052D"
+                        name: document.getElementById('top-team1').value || "Atalanta",
+                        code: (document.getElementById('top-team1').value || "ATA").substring(0, 3).toUpperCase(),
+                        color: document.getElementById('top-team1-color').value || "#0000FF"
                     },
                     team2: {
-                        name: team2Name,
-                        code: team2Name.substring(0, 3).toUpperCase(),
-                        color: document.getElementById('top-team2-color').value || "#004170"
+                        name: document.getElementById('top-team2').value || "Chelsea",
+                        code: (document.getElementById('top-team2').value || "CHE").substring(0, 3).toUpperCase(),
+                        color: document.getElementById('top-team2-color').value || "#034694"
                     },
-                    prediction: document.getElementById('top-prediction').value || "1X (Double Chance)",
-                    odds: parseFloat(document.getElementById('top-odds').value) || 2.50,
-                    confidence: parseInt(document.getElementById('top-confidence').value) || 70,
-                    riskLevel: getRiskLevel(parseInt(document.getElementById('top-confidence').value) || 70)
+                    prediction: document.getElementById('top-prediction').value || "BTTS Yes",
+                    odds: parseFloat(document.getElementById('top-odds').value) || 1.54,
+                    confidence: parseInt(document.getElementById('top-confidence').value) || 87,
+                    riskLevel: getRiskLevel(parseInt(document.getElementById('top-confidence').value) || 87)
                 }
             };
 
-            // Add secondary match if enabled
-            const includeSecondary = document.getElementById('include-secondary').checked;
-            const secTeam1 = document.getElementById('sec-team1').value;
-            const secTeam2 = document.getElementById('sec-team2').value;
-            
-            if (includeSecondary && secTeam1 && secTeam2) {
-                topData.secondaryMatch = {
-                    league: document.getElementById('sec-league').value || "Champions League 🇪🇺",
-                    time: document.getElementById('sec-time').value || "23:00",
-                    team1: {
-                        name: secTeam1,
-                        code: secTeam1.substring(0, 3).toUpperCase(),
-                        color: "#F0202A"
-                    },
-                    team2: {
-                        name: secTeam2,
-                        code: secTeam2.substring(0, 3).toUpperCase(),
-                        color: "#F9A01B"
-                    },
-                    prediction: document.getElementById('sec-prediction').value || "Away Win (2)",
-                    odds: parseFloat(document.getElementById('sec-odds').value) || 3.10,
-                    confidence: parseInt(document.getElementById('sec-confidence').value) || 45,
-                    riskLevel: getRiskLevel(parseInt(document.getElementById('sec-confidence').value) || 45)
-                };
-
-                // Add accumulator
-                const totalOdds = (topData.mainMatch.odds * topData.secondaryMatch.odds).toFixed(2);
-                topData.accumulator = {
-                    totalOdds: totalOdds,
-                    matches: [
-                        {
-                            match: `${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name} (${topData.mainMatch.prediction})`,
-                            odds: topData.mainMatch.odds
-                        },
-                        {
-                            match: `${topData.secondaryMatch.team1.name} vs ${topData.secondaryMatch.team2.name} (${topData.secondaryMatch.prediction})`,
-                            odds: topData.secondaryMatch.odds
-                        }
-                    ],
-                    winningExamples: [
-                        {stake: 20, win: (20 * totalOdds).toFixed(2)},
-                        {stake: 50, win: (50 * totalOdds).toFixed(2)},
-                        {stake: 100, win: (100 * totalOdds).toFixed(2)}
-                    ],
-                    tip: "Double accumulator offers good value. Recommended stake: 1-2% of bankroll.",
-                    warning: "Higher risk due to away win pick"
-                };
-            }
-
             localStorage.setItem('topData', JSON.stringify(topData));
             
-            let message = `✅ Top prediction saved!\n\n• ${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name}\n• ${topData.mainMatch.prediction} @${topData.mainMatch.odds}\n• ${topData.mainMatch.confidence}% confidence`;
-            
-            if (includeSecondary) {
-                message += `\n• Includes accumulator @${topData.accumulator.totalOdds}`;
-            }
+            let message = `✅ Top prediction saved!\n\n• ${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name}\n• ${topData.mainMatch.prediction} @${topData.mainMatch.odds}\n• ${topData.mainMatch.confidence}% confidence\n• League: ${topData.mainMatch.league}`;
             
             showAlert(message);
         }
 
         function loadTopSample() {
             document.getElementById('top-title').value = 'Top Prediction of the Day';
-            document.getElementById('top-subtitle-input').value = 'December 12, 2025 - Champions League Special';
-            document.getElementById('top-badge-input').value = 'CHAMPIONS LEAGUE SPECIAL';
-            document.getElementById('top-league').value = 'Champions League 🇪🇺';
+            document.getElementById('top-subtitle-input').value = 'December 9, 2025 - Champions League Special';
+            document.getElementById('top-badge-input').value = '87% CONFIDENCE • MEDIUM RISK';
+            document.getElementById('top-league-input').value = 'Champions League';
+            document.getElementById('league-flag').value = '🇪🇺';
             document.getElementById('top-time').value = '21:00';
-            document.getElementById('top-team1').value = 'Real Madrid';
-            document.getElementById('top-team1-color').value = '#FFFFFF';
-            document.getElementById('top-team2').value = 'PSG';
-            document.getElementById('top-team2-color').value = '#004170';
-            document.getElementById('top-prediction').value = '1 & Over 2.5 Goals';
-            document.getElementById('top-odds').value = 2.80;
-            document.getElementById('top-confidence').value = 75;
+            document.getElementById('top-date').value = 'December 9, 2025';
+            document.getElementById('top-team1').value = 'Atalanta';
+            document.getElementById('top-team1-color').value = '#0000FF';
+            document.getElementById('top-team2').value = 'Chelsea';
+            document.getElementById('top-team2-color').value = '#034694';
+            document.getElementById('top-prediction').value = 'BTTS Yes';
+            document.getElementById('top-odds').value = 1.54;
+            document.getElementById('top-confidence').value = 87;
         }
 
         function getRiskLevel(confidence) {
@@ -918,6 +895,43 @@
                     }
                 }
 
+                // Load top prediction data
+                if (data.topPrediction) {
+                    document.getElementById('top-title').value = data.topPrediction.title || 'Top Prediction of the Day';
+                    document.getElementById('top-subtitle-input').value = data.topPrediction.subtitle || '';
+                    document.getElementById('top-badge-input').value = data.topPrediction.badge || '';
+                    document.getElementById('top-date').value = data.topPrediction.date || '';
+
+                    if (data.topPrediction.mainMatch) {
+                        const leagueText = data.topPrediction.mainMatch.league || '';
+                        
+                        // Extract league name and flag
+                        const flags = ['🇪🇺', '🏴󠁧󠁢󠁥󠁮󠁧󠁿', '🇪🇸', '🇮🇹', '🇩🇪', '🇫🇷', '🏴󠁧󠁢󠁳󠁣󠁴󠁿', '🏴󠁧󠁢󠁷󠁬󠁳󠁿', '🇮🇪', '🇺🇸', '🇧🇷', '🇦🇷', '🇸🇦', '🇹🇷', '🇳🇱', '🇵🇹', '🇧🇪', '🌍'];
+                        
+                        let leagueName = leagueText;
+                        let selectedFlag = '🇪🇺';
+                        
+                        for (const flag of flags) {
+                            if (leagueText.includes(flag)) {
+                                selectedFlag = flag;
+                                leagueName = leagueText.replace(flag, '').trim();
+                                break;
+                            }
+                        }
+                        
+                        document.getElementById('top-league-input').value = leagueName;
+                        document.getElementById('league-flag').value = selectedFlag;
+                        document.getElementById('top-time').value = data.topPrediction.mainMatch.time || '';
+                        document.getElementById('top-team1').value = data.topPrediction.mainMatch.team1?.name || '';
+                        document.getElementById('top-team1-color').value = data.topPrediction.mainMatch.team1?.color || '#0000FF';
+                        document.getElementById('top-team2').value = data.topPrediction.mainMatch.team2?.name || '';
+                        document.getElementById('top-team2-color').value = data.topPrediction.mainMatch.team2?.color || '#034694';
+                        document.getElementById('top-prediction').value = data.topPrediction.mainMatch.prediction || '';
+                        document.getElementById('top-odds').value = data.topPrediction.mainMatch.odds || 1.54;
+                        document.getElementById('top-confidence').value = data.topPrediction.mainMatch.confidence || 87;
+                    }
+                }
+
                 // Set update date
                 const updateDate = data.lastUpdated || new Date().toISOString();
                 document.getElementById('update-date').value = updateDate.slice(0, 16);
@@ -961,7 +975,7 @@
                     stats: heroData.stats || [],
                     results: (heroData.matches || []).map((match, index) => ({
                         time: match.time,
-                        league: "League",
+                        league: "League Two",
                         fixture: match.fixture,
                         betType: match.betType,
                         betColor: index === 0 ? "#FFD700" : index === 1 ? "#00B894" : "#FF6B35",
@@ -980,6 +994,7 @@
                 },
                 topPrediction: {
                     date: formattedDate,
+                    title: "TOP PREDICTION OF THE DAY",
                     subtitle: topData.subtitle || "Today's Premium Selection",
                     badge: topData.badge || "PREMIUM PICK",
                     mainMatch: topData.mainMatch
@@ -1028,16 +1043,6 @@
                     results: resultsData.results || []
                 }
             };
-
-            // Add secondary match if exists
-            if (topData.secondaryMatch) {
-                completeData.topPrediction.secondaryMatch = topData.secondaryMatch;
-            }
-
-            // Add accumulator if exists
-            if (topData.accumulator) {
-                completeData.topPrediction.accumulator = topData.accumulator;
-            }
 
             // Display JSON
             document.getElementById('json-text').value = JSON.stringify(completeData, null, 2);
@@ -1089,22 +1094,23 @@
             return {
                 subtitle: "Today's Premium Selection",
                 badge: "PREMIUM PICK",
+                date: "December 9, 2025",
                 mainMatch: {
                     league: "Champions League 🇪🇺",
                     time: "21:00",
                     team1: {
-                        name: "Real Madrid",
-                        code: "RMA",
-                        color: "#FFFFFF"
+                        name: "Atalanta",
+                        code: "ATA",
+                        color: "#0000FF"
                     },
                     team2: {
-                        name: "PSG",
-                        code: "PSG",
-                        color: "#004170"
+                        name: "Chelsea",
+                        code: "CHE",
+                        color: "#034694"
                     },
-                    prediction: "1 & Over 2.5 Goals",
-                    odds: 2.80,
-                    confidence: 75,
+                    prediction: "BTTS Yes",
+                    odds: 1.54,
+                    confidence: 87,
                     riskLevel: "MEDIUM RISK"
                 }
             };
@@ -1168,7 +1174,9 @@
                 'cardiff': '#1C4A9A',
                 'atalanta': '#0000FF',
                 'penybont': '#FF0000',
-                'barry town': '#0000FF'
+                'barry town': '#0000FF',
+                'leyton orient': '#FF6600',
+                'luton': '#FF69B4'
             };
             
             const key = teamName.toLowerCase();
