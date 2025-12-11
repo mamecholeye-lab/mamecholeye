@@ -367,6 +367,94 @@ function updateTodayPredictions(predictionsData) {
     console.log('✅ Today\'s predictions displayed');
 }
 
+// ===== UPDATE TODAY'S PREDICTIONS =====
+function updateTodayPredictions(predictionsData) {
+    // This function updates the predictions grid
+    console.log('⚽ Today predictions updated');
+}
+
+// ===== UPDATE SHOW MORE PREDICTIONS =====
+function updateMorePredictions(predictionsData) {
+    console.log('📋 Updating "Show More" predictions...');
+    
+    const moreContainer = document.getElementById('morePredictions');
+    if (!moreContainer) {
+        console.error('❌ More predictions container not found');
+        return;
+    }
+
+    // Check if we have data
+    if (!predictionsData || !predictionsData.predictions || predictionsData.predictions.length <= 4) {
+        console.log('⚠️ Not enough predictions for "Show More"');
+        moreContainer.innerHTML = '<p style="text-align:center; padding:20px; color:#FF6B35;">No additional predictions available</p>';
+        return;
+    }
+
+    console.log(`📋 Loading predictions 5-${predictionsData.predictions.length} for "Show More"`);
+    
+    // Create new grid for additional predictions
+    let html = '<div class="predictions-grid" style="margin-top: 40px;">';
+    
+    // Start from index 4 (prediction 5)
+    predictionsData.predictions.slice(4).forEach((pred, index) => {
+        const actualIndex = index + 5; // Prediction number (5, 6, 7...)
+        
+        // Clean up data
+        const team1Name = (pred.team1?.name || 'Team 1').trim();
+        const team2Name = (pred.team2?.name || 'Team 2').trim();
+        const team1Code = pred.team1?.code || team1Name.substring(0, 3).toUpperCase();
+        const team2Code = pred.team2?.code || team2Name.substring(0, 3).toUpperCase();
+        const league = (pred.league || 'Europa League').trim() + ' 🇪🇺';
+        
+        html += `
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> ${league}</span>
+                    <span class="match-time">${pred.time || '20:45'}</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo" style="background-color: #${getTeamColor(team1Code)}; color: white;">${team1Code}</div>
+                        <span class="team-name">${team1Name}</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo" style="background-color: #${getTeamColor(team2Code)}; color: white;">${team2Code}</div>
+                        <span class="team-name">${team2Name}</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">${pred.prediction || '1X'}</span>
+                    <span class="prediction-odd">@${pred.odds || '1.00'}</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${pred.confidence || 70}%"></div>
+                    </div>
+                    <span>${pred.confidence || 70}% Confidence</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    html += '</div>';
+    moreContainer.innerHTML = html;
+    console.log(`✅ "Show More" section updated with ${predictionsData.predictions.length - 4} additional predictions`);
+}
+
+// Helper function for team colors
+function getTeamColor(teamCode) {
+    const colors = {
+        'LUD': '0000FF', 'PAO': 'FF0000', 'MID': '008000', 'GEN': 'FFA500',
+        'NIC': 'FF69B4', 'BRA': '800080', 'STU': '000080', 'MAC': 'FFD700',
+        'UTR': '00CED1', 'NOT': 'DC143C', 'YOU': '32CD32', 'LIL': '8A2BE2',
+        'SAM': 'FF4500', 'AEK': '0000CD', 'SHK': 'FF1493', 'SLO': '2E8B57',
+        'HAM': 'FF6347', 'SHA': '4682B4', 'CRE': '8B0000'
+    };
+    return colors[teamCode] || '333333';
+}
+
 // ===== UPDATE YESTERDAY RESULTS =====
 function updateYesterdayResults(resultsData) {
     // This function updates results section
