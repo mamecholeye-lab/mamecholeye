@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-11T10:24:54.713Z",
+  "lastUpdated": "2025-12-11T10:24",
   "hero": {
     "date": "December 11, 2025",
     "title": "103.12 ACCUMULATOR WON",
@@ -20,7 +20,7 @@
         "league": "League Two",
         "fixture": "Fleetwood 1 – 1 Salford city",
         "betType": "Draw & BTTS",
-        "betColor": "#FFD700",
+        "betClass": "bet-gold",
         "odds": 4.33,
         "status": "won"
       },
@@ -29,7 +29,7 @@
         "league": "League Two",
         "fixture": "Barrow 0 – 3 Tranmere",
         "betType": "Away & Over 2.5",
-        "betColor": "#00B894",
+        "betClass": "bet-green",
         "odds": 4.33,
         "status": "won"
       },
@@ -38,7 +38,7 @@
         "league": "League Two",
         "fixture": "Notts Co 3 – 2 MK Dons",
         "betType": "Home & BTTS",
-        "betColor": "#FF6B35",
+        "betClass": "bet-orange",
         "odds": 5.5,
         "status": "won"
       }
@@ -65,44 +65,227 @@
   "topPrediction": {
     "date": "December 11, 2025",
     "title": "TOP PREDICTION OF THE DAY",
-    "subtitle": "Today's best betting opportunity with 16% confidence",
-    "badge": "16% CONFIDENCE • HIGH RISK",
+    "subtitle": "December 11, 2025 - Europa League Special",
+    "badge": "38.8% CONFIDENCE • HIGH RISK",
     "mainMatch": {
-      "league": "Europa league  🇪🇺",
+      "league": "Europa League 🇪🇺",
       "time": "20:45",
       "team1": {
-        "name": "Ludogorets ",
-        "code": "LUD",
-        "color": "#0000ff"
+        "name": "Utrecht ",
+        "code": "UTR",
+        "color": "#0000ff",
+        "colorClass": "team-color-utrecht-"
       },
       "team2": {
-        "name": "PAOK ",
-        "code": "PAO",
-        "color": "#034694"
+        "name": "Nottingham ",
+        "code": "NOT",
+        "color": "#034694",
+        "colorClass": "team-color-nottingham-"
       },
-      "prediction": "1",
-      "odds": 3.74,
-      "confidence": 16,
-      "riskLevel": "HIGH RISK"
+      "prediction": "Home Win (1)",
+      "odds": 4.86,
+      "confidence": 87,
+      "riskLevel": "LOW RISK"
     }
   },
   "todayPredictions": {
-    "subtitle": "December 11, 2025 - 0 Premium Picks with 1.00 Total Odds",
-    "totalPredictions": 0,
-    "totalOdds": "1.00",
-    "predictions": [],
+    "subtitle": "December 11, 2025 - 10 Premium Picks with 188.92 Total Odds",
+    "totalPredictions": 10,
+    "totalOdds": "188.92",
+    "predictions": [
+      {
+        "league": "Europa league ",
+        "time": "20:45",
+        "fixture": "Ludogorets and  v Paok",
+        "team1": {
+          "name": "Ludogorets and ",
+          "code": "LUD",
+          "colorClass": "team-color-ludogorets-and-"
+        },
+        "team2": {
+          "name": "Paok",
+          "code": "PAO",
+          "colorClass": "team-color-paok"
+        },
+        "prediction": "12",
+        "odds": 1.28,
+        "confidence": 70
+      },
+      {
+        "league": "Europa League ",
+        "time": "20:45",
+        "fixture": "Midtjylland v Genk",
+        "team1": {
+          "name": "Midtjylland",
+          "code": "MID",
+          "colorClass": "team-color-midtjylland"
+        },
+        "team2": {
+          "name": "Genk",
+          "code": "GEN",
+          "colorClass": "team-color-genk"
+        },
+        "prediction": "1",
+        "odds": 1.83,
+        "confidence": 70
+      },
+      {
+        "league": "Europa League ",
+        "time": "20:45",
+        "fixture": "Nice v Braga",
+        "team1": {
+          "name": "Nice",
+          "code": "NIC",
+          "colorClass": "team-color-nice"
+        },
+        "team2": {
+          "name": "Braga",
+          "code": "BRA",
+          "colorClass": "team-color-braga"
+        },
+        "prediction": "Btts yes ",
+        "odds": 1.7,
+        "confidence": 70
+      },
+      {
+        "league": "Europa League ",
+        "time": "20:45",
+        "fixture": "Stuttgart  v Maccabi Tel Aviv ",
+        "team1": {
+          "name": "Stuttgart ",
+          "code": "STU",
+          "colorClass": "team-color-stuttgart-"
+        },
+        "team2": {
+          "name": "Maccabi Tel Aviv ",
+          "code": "MAC",
+          "colorClass": "team-color-maccabi-tel-aviv-"
+        },
+        "prediction": "over 2.5",
+        "odds": 1.4,
+        "confidence": 70
+      },
+      {
+        "league": "Europa League ",
+        "time": "20:45",
+        "fixture": "Utrecht  v Nottingham ",
+        "team1": {
+          "name": "Utrecht ",
+          "code": "UTR",
+          "colorClass": "team-color-utrecht-"
+        },
+        "team2": {
+          "name": "Nottingham ",
+          "code": "NOT",
+          "colorClass": "team-color-nottingham-"
+        },
+        "prediction": "Over 2.5",
+        "odds": 1.91,
+        "confidence": 70
+      },
+      {
+        "league": "Europa League ",
+        "time": "20:45",
+        "fixture": "Young Boys  v Lille",
+        "team1": {
+          "name": "Young Boys ",
+          "code": "YOU",
+          "colorClass": "team-color-young-boys-"
+        },
+        "team2": {
+          "name": "Lille",
+          "code": "LIL",
+          "colorClass": "team-color-lille"
+        },
+        "prediction": "12",
+        "odds": 1.2,
+        "confidence": 70
+      },
+      {
+        "league": "Europa Conference League ",
+        "time": "20:45",
+        "fixture": "Samsunspor  v AEK Athend",
+        "team1": {
+          "name": "Samsunspor ",
+          "code": "SAM",
+          "colorClass": "team-color-samsunspor-"
+        },
+        "team2": {
+          "name": "AEK Athend",
+          "code": "AEK",
+          "colorClass": "team-color-aek-athend"
+        },
+        "prediction": "2",
+        "odds": 2.6,
+        "confidence": 70
+      },
+      {
+        "league": "Europa Conference League ",
+        "time": "20:45",
+        "fixture": "Shkendija  v Slovan Bratislava ",
+        "team1": {
+          "name": "Shkendija ",
+          "code": "SHK",
+          "colorClass": "team-color-shkendija-"
+        },
+        "team2": {
+          "name": "Slovan Bratislava ",
+          "code": "SLO",
+          "colorClass": "team-color-slovan-bratislava-"
+        },
+        "prediction": "2",
+        "odds": 2.23,
+        "confidence": 70
+      },
+      {
+        "league": "Europa Conference League ",
+        "time": "23:00",
+        "fixture": "Hamrun spartans v Shakhtar Donetsk ",
+        "team1": {
+          "name": "Hamrun spartans",
+          "code": "HAM",
+          "colorClass": "team-color-hamrun-spartans"
+        },
+        "team2": {
+          "name": "Shakhtar Donetsk ",
+          "code": "SHA",
+          "colorClass": "team-color-shakhtar-donetsk-"
+        },
+        "prediction": "over 2.5",
+        "odds": 1.7,
+        "confidence": 70
+      },
+      {
+        "league": "Europa League ",
+        "time": "20:45",
+        "fixture": "Sturm graz v Crevena Zvezda",
+        "team1": {
+          "name": "Sturm graz",
+          "code": "STU",
+          "colorClass": "team-color-sturm-graz"
+        },
+        "team2": {
+          "name": "Crevena Zvezda",
+          "code": "CRE",
+          "colorClass": "team-color-crevena-zvezda"
+        },
+        "prediction": "Btts yes ",
+        "odds": 1.5,
+        "confidence": 70
+      }
+    ],
     "winningExamples": [
       {
         "stake": 10,
-        "win": "10.00"
+        "win": "1889.20"
       },
       {
         "stake": 50,
-        "win": "50.00"
+        "win": "9446.00"
       },
       {
         "stake": 100,
-        "win": "100.00"
+        "win": "18892.00"
       }
     ]
   },
@@ -122,11 +305,11 @@
     "results": [
       {
         "fixture": "Villarreal v Fc Copenhagen ",
-        "league": "Europa champions league ",
         "betType": "2/2 (Half time/Full time)",
         "odds": 12,
         "result": "2-3",
-        "outcome": "won"
+        "outcome": "won",
+        "statusClass": "won"
       }
     ]
   }
