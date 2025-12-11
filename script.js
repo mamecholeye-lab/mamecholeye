@@ -1,6 +1,47 @@
 // ===== RMAME Predictions - Clean Working Version =====
 console.log('📱 RMAME Predictions - Loading...');
 
+// ===== GLOBAL LOADING STATE =====
+let isCurrentlyLoading = false;
+let lastLoadTime = 0;
+
+// ===== INITIALIZE WEBSITE (PREVENT MULTIPLE LOADS) =====
+function initializeWebsite() {
+    // Prevent multiple simultaneous loads
+    if (isCurrentlyLoading) {
+        console.log('🔄 Already loading, skipping duplicate call');
+        return;
+    }
+    
+    // Prevent loading too frequently (at least 2 seconds between loads)
+    const now = Date.now();
+    if (now - lastLoadTime < 2000) {
+        console.log('⏰ Loading too fast, waiting...');
+        return;
+    }
+    
+    isCurrentlyLoading = true;
+    lastLoadTime = now;
+    
+    console.log('🏁 Initializing website (fresh start)...');
+
+    // Setup all functionality
+    setupMobileMenu();
+    setupShowMorePredictions();
+    setupBackToTop();
+    setupWhatsAppSharing();
+    setupSubscriptionForm();
+    setupSmoothScrolling();
+    setupVisitorCounter();
+    hideLoader();
+
+    // Load data ONCE
+    loadAllData().finally(() => {
+        isCurrentlyLoading = false;
+        console.log('✅ Website fully initialized');
+    });
+}
+
 // ===== INITIALIZE WEBSITE =====
 function initializeWebsite() {
     console.log('🏁 Initializing website...');
