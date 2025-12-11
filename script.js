@@ -258,38 +258,66 @@ function updateYesterdayResults(resultsData) {
     console.log('📊 Yesterday results updated');
 }
 
-// ===== UPDATE RESULTS TABLE =====
+// ===== UPDATE RESULTS TABLE (FIXED - NO CACHE) =====
 function updateResultsTable(results) {
+    console.log('📊 Updating results table with FRESH data...');
+    
     const tableBody = document.getElementById('results-table-body');
-    if (!tableBody) return;
-
-    if (!results || results.length === 0) {
-        tableBody.innerHTML = `
-            <div class="table-row">
-                <div>No results available</div>
-                <div>-</div>
-                <div>-</div>
-                <div>-</div>
-                <div>-</div>
-            </div>
-        `;
+    if (!tableBody) {
+        console.error('❌ Results table body not found');
         return;
     }
 
+    // FINAL CLEAR - just to be 100% sure
+    tableBody.innerHTML = '';
+
+    // Validate input
+    if (!results || !Array.isArray(results) || results.length === 0) {
+        console.log('⚠️ No valid results array provided');
+        showNoResultsMessage();
+        return;
+    }
+
+    console.log(`✅ Building ${results.length} FRESH rows from scratch`);
+    
+    // Generate UNIQUE HTML with timestamp to prevent caching
+    const uniqueId = Date.now();
     let html = '';
-    results.forEach(result => {
+    
+    results.forEach((result, index) => {
+        // Create unique ID for each row to prevent cache matching
+        const rowId = `result-${uniqueId}-${index}`;
+        
         html += `
-            <div class="table-row ${result.outcome}">
-                <div>${result.fixture || ''}</div>
-                <div>${result.betType || ''}</div>
-                <div>@${result.odds || ''}</div>
-                <div>${result.result || ''}</div>
-                <div class="status ${result.outcome || ''}">${result.outcome?.toUpperCase() || ''}</div>
+            <div class="table-row ${result.outcome || ''}" id="${rowId}" data-timestamp="${uniqueId}">
+                <div>${result.fixture || 'No fixture'}</div>
+                <div>${result.betType || 'No bet type'}</div>
+                <div>@${result.odds || '0.00'}</div>
+                <div>${result.result || '-'}</div>
+                <div class="status ${result.outcome || ''}">${(result.outcome || '').toUpperCase()}</div>
             </div>
         `;
     });
 
+    // Set the COMPLETELY NEW HTML
     tableBody.innerHTML = html;
+    
+    // Remove any old rows that might still exist
+    removeOldTableRows(uniqueId);
+    
+    console.log(`✅ Results table updated with ${results.length} FRESH rows (ID: ${uniqueId})`);
+}
+
+// ===== REMOVE OLD TABLE ROWS =====
+function removeOldTableRows(currentTimestamp) {
+    const allRows = document.querySelectorAll('.table-row');
+    allRows.forEach(row => {
+        const rowTimestamp = row.getAttribute('data-timestamp');
+        if (rowTimestamp && parseInt(rowTimestamp) < currentTimestamp) {
+            row.remove();
+            console.log('🧹 Removed old cached row');
+        }
+    });
 }
 
 // ===== FALLBACK DATA =====
