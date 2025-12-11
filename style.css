@@ -2507,3 +2507,296 @@ section::before {
     animation: spin 1s linear infinite;
     margin: 0 auto 20px;
 }
+/* ===== TOP PREDICTION COLORS FOR DARK BACKGROUND ===== */
+
+.top-prediction-card {
+    background: rgba(30, 33, 47, 0.9);
+    border-radius: 15px;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    padding: 25px;
+    margin-top: 20px;
+}
+
+.match-details {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 20px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.match-header {
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.2), rgba(255, 142, 83, 0.1));
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid rgba(255, 107, 53, 0.3);
+}
+
+.match-header .match-league {
+    color: #FF9E6D; /* Orange text */
+    font-weight: 600;
+    font-size: 16px;
+}
+
+.match-header .match-time {
+    color: #64D2FF; /* Light blue */
+    background: rgba(100, 210, 255, 0.1);
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-weight: 600;
+}
+
+.match-header .match-date {
+    color: #B0B3C5; /* Light gray */
+    font-size: 14px;
+    display: block;
+    margin-top: 8px;
+}
+
+.team-name {
+    color: #FFFFFF; /* White for team names */
+    font-weight: 600;
+    font-size: 18px;
+    margin-top: 10px;
+}
+
+.vs {
+    color: #FF6B35; /* Orange for VS */
+    font-weight: 800;
+    font-size: 20px;
+    margin: 0 15px;
+}
+
+.prediction-main {
+    background: rgba(0, 184, 148, 0.1);
+    border: 1px solid rgba(0, 184, 148, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 25px 0;
+}
+
+.type-label {
+    color: #B0B3C5; /* Light gray */
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.type-value {
+    color: #FFD700; /* Gold for prediction value */
+    font-weight: 700;
+    font-size: 18px;
+    margin-left: 10px;
+}
+
+.odds-label {
+    color: #B0B3C5; /* Light gray */
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.odds-value {
+    color: #00E6A1; /* Green for odds */
+    font-weight: 800;
+    font-size: 20px;
+    margin-left: 10px;
+    background: rgba(0, 184, 148, 0.15);
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+
+.confidence-high {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    margin: 20px 0;
+}
+
+.confidence-header {
+    color: #FFD700; /* Gold */
+    font-weight: 600;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.confidence-percent {
+    color: #FFFFFF; /* White */
+    font-weight: 600;
+    margin-top: 10px;
+    display: block;
+}
+
+.profit-info {
+    background: rgba(255, 107, 53, 0.1);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    border-radius: 10px;
+    padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.profit-item span {
+    color: #B0B3C5; /* Light gray */
+    font-size: 14px;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.profit-item strong {
+    color: #FFFFFF; /* White */
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.profit-item .won {
+    color: #00E6A1; /* Green for win amount */
+}
+
+.analysis-section {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.analysis-section h4 {
+    color: #FF6B35; /* Orange */
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.analysis-points {
+    list-style: none;
+    padding: 0;
+}
+
+.analysis-points li {
+    color: #E8EAEF; /* Light gray-blue */
+    margin-bottom: 10px;
+    padding: 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 8px;
+    border-left: 3px solid #00B894;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.analysis-points li i {
+    color: #00B894; /* Green check */
+}
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.stat {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 15px;
+    border-radius: 8px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.stat h5 {
+    color: #FFD700; /* Gold for numbers */
+    font-size: 22px;
+    font-weight: 800;
+    margin-bottom: 5px;
+}
+
+.stat p {
+    color: #B0B3C5; /* Light gray */
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* For accumulator section */
+.double-accumulator {
+    background: rgba(30, 33, 47, 0.9);
+    border: 1px solid rgba(255, 107, 53, 0.3);
+    border-radius: 10px;
+    padding: 20px;
+    margin-top: 25px;
+}
+
+.double-accumulator h4 {
+    color: #FF9E6D; /* Light orange */
+    font-size: 18px;
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.acc-item {
+    color: #E8EAEF; /* Light text */
+    padding: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    display: flex;
+    justify-content: space-between;
+}
+
+.acc-item strong {
+    color: #FFD700; /* Gold for odds */
+}
+
+.acc-total {
+    background: rgba(255, 107, 53, 0.1);
+    color: #FFFFFF;
+    padding: 15px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.acc-total strong {
+    color: #FFD700; /* Gold for total odds */
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.risk-warning {
+    background: rgba(255, 215, 0, 0.1);
+    border: 1px solid rgba(255, 215, 0, 0.3);
+    color: #FFD700;
+    padding: 12px;
+    border-radius: 8px;
+    margin-top: 15px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* Mobile responsive */
+@media (max-width: 768px) {
+    .top-prediction-card {
+        padding: 15px;
+    }
+    
+    .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+    
+    .profit-info {
+        flex-direction: column;
+        gap: 15px;
+    }
+    
+    .team-name {
+        font-size: 16px;
+    }
+}
