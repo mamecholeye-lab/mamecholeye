@@ -2869,3 +2869,97 @@ section::before {
 .stat h5 {
     color: #FFD700 !important;
 }
+/* ===== FORCE OVERRIDE INLINE STYLES FROM CONTROL PANEL ===== */
+
+/* Results table overrides */
+.results-table *[style*="color"] {
+    color: inherit !important;
+}
+
+.table-row div {
+    color: #E8EAEF !important;
+}
+
+.status.won {
+    color: #00E6A1 !important;
+    background: rgba(0, 184, 148, 0.1) !important;
+}
+
+.status.lost {
+    color: #FF6B6B !important;
+    background: rgba(255, 107, 107, 0.1) !important;
+}
+
+.table-row.won {
+    background: rgba(0, 184, 148, 0.05) !important;
+    border-left: 3px solid #00B894 !important;
+}
+
+.table-row.lost {
+    background: rgba(255, 107, 107, 0.05) !important;
+    border-left: 3px solid #FF4757 !important;
+}
+
+/* Stats box overrides */
+.stat-box h4 {
+    color: #FF9E6D !important;
+}
+
+.stat-box .stat-value {
+    color: #FFFFFF !important;
+}
+
+.stat-box .stat-value.won {
+    color: #00E6A1 !important;
+}
+
+.stat-box .stat-value.lost {
+    color: #FF6B6B !important;
+}
+
+.stat-box p {
+    color: #B0B3C5 !important;
+}
+
+/* Results analysis overrides */
+.results-analysis h4 {
+    color: #64D2FF !important;
+}
+
+.results-analysis p {
+    color: #E8EAEF !important;
+}
+
+.analysis-tips p {
+    color: #FFD700 !important;
+}
+
+/* Override ALL background colors */
+.results-table,
+.table-header,
+.stat-box,
+.results-analysis,
+.analysis-tips {
+    background: inherit !important;
+}
+
+/* Specific background colors */
+.results-table {
+    background: rgba(30, 33, 47, 0.9) !important;
+}
+
+.table-header {
+    background: linear-gradient(90deg, rgba(255, 107, 53, 0.8), rgba(255, 142, 83, 0.6)) !important;
+}
+
+.stat-box {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.results-analysis {
+    background: rgba(255, 255, 255, 0.05) !important;
+}
+
+.analysis-tips {
+    background: rgba(255, 215, 0, 0.1) !important;
+}
