@@ -1,4 +1,4 @@
-ok// ===== RMAME Predictions - Updated JavaScript for Your data.json =====
+// ===== RMAME Predictions - Updated JavaScript for Your data.json =====
 console.log('📱 RMAME Predictions Script - Loading...');
 
 // ===== INITIALIZE WEBSITE =====
