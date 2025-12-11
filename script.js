@@ -74,7 +74,7 @@ async function loadAllData() {
         
         // Force fresh fetch with timestamp
         const timestamp = new Date().getTime();
-        const response = await fetch(`data.json?v=${timestamp}`);
+        const response = await fetch('data.json?t=' + new Date().getTime() + '&r=' + Math.random());
         
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
