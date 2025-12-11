@@ -469,3 +469,36 @@ document.addEventListener('DOMContentLoaded', function() {
     console.log('🚀 Website loading...');
     initializeWebsite();
 });
+// ===== FIX INLINE STYLES FROM CONTROL PANEL =====
+function fixInlineStyles() {
+    console.log('🎨 Fixing inline styles from control panel...');
+    
+    // Fix results table
+    const tableRows = document.querySelectorAll('.table-row');
+    tableRows.forEach(row => {
+        if (row.style.background || row.style.color) {
+            row.removeAttribute('style');
+        }
+    });
+    
+    // Fix status colors
+    const statusElements = document.querySelectorAll('.status');
+    statusElements.forEach(el => {
+        if (el.style.color) {
+            el.removeAttribute('style');
+        }
+    });
+    
+    // Fix stat boxes
+    const statBoxes = document.querySelectorAll('.stat-box');
+    statBoxes.forEach(box => {
+        if (box.style.background || box.style.border) {
+            box.removeAttribute('style');
+        }
+    });
+    
+    console.log('✅ Inline styles fixed');
+}
+
+// Run after page loads
+setTimeout(fixInlineStyles, 1000);
