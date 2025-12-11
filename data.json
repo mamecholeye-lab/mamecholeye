@@ -1,7 +1,7 @@
 {
   "lastUpdated": "2025-12-11T10:24",
   "hero": {
-    "date": "December 11, 2025",
+    "date": "December 12, 2025",
     "title": "103.12 ACCUMULATOR WON",
     "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
     "stats": [
@@ -63,229 +63,211 @@
     }
   },
   "topPrediction": {
-    "date": "December 11, 2025",
+    "date": "December 12, 2025",
     "title": "TOP PREDICTION OF THE DAY",
-    "subtitle": "December 11, 2025 - Europa League Special",
-    "badge": "38.8% CONFIDENCE • HIGH RISK",
+    "subtitle": "December 12, 2025 - France National League Special",
+    "badge": "72% CONFIDENCE • MEDIUM  RISK",
     "mainMatch": {
-      "league": "Europa League 🇪🇺",
-      "time": "20:45",
+      "league": "National  🇫🇷",
+      "time": "21:30",
       "team1": {
-        "name": "Utrecht ",
-        "code": "UTR",
+        "name": "Stade Briochin",
+        "code": "STA",
         "color": "#0000ff",
-        "colorClass": "team-color-utrecht-"
+        "colorClass": "team-color-stade-briochin"
       },
       "team2": {
-        "name": "Nottingham ",
-        "code": "NOT",
+        "name": "Aubagne",
+        "code": "AUB",
         "color": "#034694",
-        "colorClass": "team-color-nottingham-"
+        "colorClass": "team-color-aubagne"
       },
-      "prediction": "Home Win (1)",
-      "odds": 4.86,
-      "confidence": 87,
-      "riskLevel": "LOW RISK"
+      "prediction": "2",
+      "odds": 2.5,
+      "confidence": 72,
+      "riskLevel": "MEDIUM RISK"
     }
   },
   "todayPredictions": {
-    "subtitle": "December 11, 2025 - 10 Premium Picks with 188.92 Total Odds",
-    "totalPredictions": 10,
-    "totalOdds": "188.92",
+    "subtitle": "December 12, 2025 - 9 Premium Picks with 26.07 Total Odds",
+    "totalPredictions": 9,
+    "totalOdds": "26.07",
     "predictions": [
       {
-        "league": "Europa league ",
-        "time": "20:45",
-        "fixture": "Ludogorets and  v Paok",
+        "league": "Austria 2. Liga",
+        "time": "20:00",
+        "fixture": "Schwarz-Weib Bregenz  v St. Polten",
         "team1": {
-          "name": "Ludogorets and ",
-          "code": "LUD",
-          "colorClass": "team-color-ludogorets-and-"
+          "name": "Schwarz-Weib Bregenz ",
+          "code": "SCH",
+          "colorClass": "team-color-schwarz-weib-bregenz-"
         },
         "team2": {
-          "name": "Paok",
-          "code": "PAO",
-          "colorClass": "team-color-paok"
+          "name": "St. Polten",
+          "code": "ST.",
+          "colorClass": "team-color-st.-polten"
         },
-        "prediction": "12",
-        "odds": 1.28,
-        "confidence": 70
+        "prediction": "2",
+        "odds": 1.57,
+        "confidence": 80
       },
       {
-        "league": "Europa League ",
-        "time": "20:45",
-        "fixture": "Midtjylland v Genk",
+        "league": "Romania Liga I",
+        "time": "21:30",
+        "fixture": "CFR Cluj v Csikszereda",
         "team1": {
-          "name": "Midtjylland",
-          "code": "MID",
-          "colorClass": "team-color-midtjylland"
+          "name": "CFR Cluj",
+          "code": "CFR",
+          "colorClass": "team-color-cfr-cluj"
         },
         "team2": {
-          "name": "Genk",
-          "code": "GEN",
-          "colorClass": "team-color-genk"
+          "name": "Csikszereda",
+          "code": "CSI",
+          "colorClass": "team-color-csikszereda"
         },
         "prediction": "1",
-        "odds": 1.83,
-        "confidence": 70
-      },
-      {
-        "league": "Europa League ",
-        "time": "20:45",
-        "fixture": "Nice v Braga",
-        "team1": {
-          "name": "Nice",
-          "code": "NIC",
-          "colorClass": "team-color-nice"
-        },
-        "team2": {
-          "name": "Braga",
-          "code": "BRA",
-          "colorClass": "team-color-braga"
-        },
-        "prediction": "Btts yes ",
-        "odds": 1.7,
-        "confidence": 70
-      },
-      {
-        "league": "Europa League ",
-        "time": "20:45",
-        "fixture": "Stuttgart  v Maccabi Tel Aviv ",
-        "team1": {
-          "name": "Stuttgart ",
-          "code": "STU",
-          "colorClass": "team-color-stuttgart-"
-        },
-        "team2": {
-          "name": "Maccabi Tel Aviv ",
-          "code": "MAC",
-          "colorClass": "team-color-maccabi-tel-aviv-"
-        },
-        "prediction": "over 2.5",
         "odds": 1.4,
-        "confidence": 70
+        "confidence": 60
       },
       {
-        "league": "Europa League ",
-        "time": "20:45",
-        "fixture": "Utrecht  v Nottingham ",
+        "league": "France National ",
+        "time": "22:00",
+        "fixture": "Rouen v Quevilly Rouen",
         "team1": {
-          "name": "Utrecht ",
-          "code": "UTR",
-          "colorClass": "team-color-utrecht-"
+          "name": "Rouen",
+          "code": "ROU",
+          "colorClass": "team-color-rouen"
         },
         "team2": {
-          "name": "Nottingham ",
-          "code": "NOT",
-          "colorClass": "team-color-nottingham-"
+          "name": "Quevilly Rouen",
+          "code": "QUE",
+          "colorClass": "team-color-quevilly-rouen"
         },
-        "prediction": "Over 2.5",
-        "odds": 1.91,
-        "confidence": 70
+        "prediction": "1",
+        "odds": 1.55,
+        "confidence": 80
       },
       {
-        "league": "Europa League ",
-        "time": "20:45",
-        "fixture": "Young Boys  v Lille",
+        "league": "Netherlands Eerste divisie",
+        "time": "22:00",
+        "fixture": "Top Oss v ADO Den Haag",
         "team1": {
-          "name": "Young Boys ",
-          "code": "YOU",
-          "colorClass": "team-color-young-boys-"
+          "name": "Top Oss",
+          "code": "TOP",
+          "colorClass": "team-color-top-oss"
         },
         "team2": {
-          "name": "Lille",
-          "code": "LIL",
-          "colorClass": "team-color-lille"
-        },
-        "prediction": "12",
-        "odds": 1.2,
-        "confidence": 70
-      },
-      {
-        "league": "Europa Conference League ",
-        "time": "20:45",
-        "fixture": "Samsunspor  v AEK Athend",
-        "team1": {
-          "name": "Samsunspor ",
-          "code": "SAM",
-          "colorClass": "team-color-samsunspor-"
-        },
-        "team2": {
-          "name": "AEK Athend",
-          "code": "AEK",
-          "colorClass": "team-color-aek-athend"
+          "name": "ADO Den Haag",
+          "code": "ADO",
+          "colorClass": "team-color-ado-den-haag"
         },
         "prediction": "2",
-        "odds": 2.6,
-        "confidence": 70
+        "odds": 1.35,
+        "confidence": 72
       },
       {
-        "league": "Europa Conference League ",
-        "time": "20:45",
-        "fixture": "Shkendija  v Slovan Bratislava ",
+        "league": "France Ligue 2",
+        "time": "22:00",
+        "fixture": "Pau v Amiens SC",
         "team1": {
-          "name": "Shkendija ",
-          "code": "SHK",
-          "colorClass": "team-color-shkendija-"
+          "name": "Pau",
+          "code": "PAU",
+          "colorClass": "team-color-pau"
         },
         "team2": {
-          "name": "Slovan Bratislava ",
-          "code": "SLO",
-          "colorClass": "team-color-slovan-bratislava-"
+          "name": "Amiens SC",
+          "code": "AMI",
+          "colorClass": "team-color-amiens-sc"
         },
-        "prediction": "2",
-        "odds": 2.23,
-        "confidence": 70
+        "prediction": "1",
+        "odds": 1.53,
+        "confidence": 71
       },
       {
-        "league": "Europa Conference League ",
+        "league": "Switzerland Challenge League ",
+        "time": "22:15",
+        "fixture": "Aarau  v Etoile Carouge",
+        "team1": {
+          "name": "Aarau ",
+          "code": "AAR",
+          "colorClass": "team-color-aarau-"
+        },
+        "team2": {
+          "name": "Etoile Carouge",
+          "code": "ETO",
+          "colorClass": "team-color-etoile-carouge"
+        },
+        "prediction": "1",
+        "odds": 1.51,
+        "confidence": 65
+      },
+      {
+        "league": "Northern Ireland NIFL Premiership",
+        "time": "22:45",
+        "fixture": "Coleraine v Bangor",
+        "team1": {
+          "name": "Coleraine",
+          "code": "COL",
+          "colorClass": "team-color-coleraine"
+        },
+        "team2": {
+          "name": "Bangor",
+          "code": "BAN",
+          "colorClass": "team-color-bangor"
+        },
+        "prediction": "1",
+        "odds": 1.28,
+        "confidence": 65
+      },
+      {
+        "league": "France Feminine Division 1",
         "time": "23:00",
-        "fixture": "Hamrun spartans v Shakhtar Donetsk ",
+        "fixture": "PSG  Women v Montpellier  Women",
         "team1": {
-          "name": "Hamrun spartans",
-          "code": "HAM",
-          "colorClass": "team-color-hamrun-spartans"
+          "name": "PSG  Women",
+          "code": "PSG",
+          "colorClass": "team-color-psg-women"
         },
         "team2": {
-          "name": "Shakhtar Donetsk ",
-          "code": "SHA",
-          "colorClass": "team-color-shakhtar-donetsk-"
+          "name": "Montpellier  Women",
+          "code": "MON",
+          "colorClass": "team-color-montpellier-women"
         },
-        "prediction": "over 2.5",
-        "odds": 1.7,
-        "confidence": 70
+        "prediction": "1",
+        "odds": 1.35,
+        "confidence": 60
       },
       {
-        "league": "Europa League ",
-        "time": "20:45",
-        "fixture": "Sturm graz v Crevena Zvezda",
+        "league": "Gibraltar Premier Division ",
+        "time": "23",
+        "fixture": "Mons Calpe v St. Joseph's",
         "team1": {
-          "name": "Sturm graz",
-          "code": "STU",
-          "colorClass": "team-color-sturm-graz"
+          "name": "Mons Calpe",
+          "code": "MON",
+          "colorClass": "team-color-mons-calpe"
         },
         "team2": {
-          "name": "Crevena Zvezda",
-          "code": "CRE",
-          "colorClass": "team-color-crevena-zvezda"
+          "name": "St. Joseph's",
+          "code": "ST.",
+          "colorClass": "team-color-st.-joseph's"
         },
-        "prediction": "Btts yes ",
-        "odds": 1.5,
-        "confidence": 70
+        "prediction": "2",
+        "odds": 1.42,
+        "confidence": 41
       }
     ],
     "winningExamples": [
       {
         "stake": 10,
-        "win": "1889.20"
+        "win": "260.70"
       },
       {
         "stake": 50,
-        "win": "9446.00"
+        "win": "1303.50"
       },
       {
         "stake": 100,
-        "win": "18892.00"
+        "win": "2607.00"
       }
     ]
   },
