@@ -21,25 +21,25 @@ function initializeWebsite() {
     console.log('✅ Website fully initialized');
 }
 
-// ===== LOAD HERO DATA FROM JSON =====
 async function loadHeroData() {
     try {
         const response = await fetch('data.json?v=' + Date.now());
         const data = await response.json();
-        
+
         if (data.hero) {
             updateHeroSection(data.hero);
         }
-        
+
         if (data.topPrediction) {
-            updateTopPredictionSection(data.topPrediction);
+            updateTopPrediction(data.topPrediction);  // ← THIS LINE MUST EXIST
         }
-        
+
         // Show success indicator
         showDataLoadedIndicator();
-        
+
     } catch (error) {
         console.log('📋 Using hardcoded data (JSON error)');
+        // Fallback data here
     }
 }
 
