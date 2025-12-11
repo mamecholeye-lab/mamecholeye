@@ -368,12 +368,6 @@ function updateTodayPredictions(predictionsData) {
     console.log('✅ Today\'s predictions displayed');
 }
 
-// ===== UPDATE TODAY'S PREDICTIONS =====
-function updateTodayPredictions(predictionsData) {
-    // This function updates the predictions grid
-    console.log('⚽ Today predictions updated');
-}
-
 // ===== UPDATE SHOW MORE PREDICTIONS =====
 function updateMorePredictions(predictionsData) {
     console.log('📋 Updating "Show More" predictions...');
