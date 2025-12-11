@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-11T07:19:49.125Z",
+  "lastUpdated": "2025-12-11T07:32:12.635Z",
   "hero": {
     "date": "December 11, 2025",
     "title": "103.12 ACCUMULATOR WON",
@@ -64,25 +64,25 @@
   },
   "topPrediction": {
     "date": "December 11, 2025",
-    "subtitle": "December 12, 2025 - Champions League Special",
-    "badge": "CHAMPIONS LEAGUE SPECIAL",
+    "subtitle": "December 12, 2025 - Europa League Special",
+    "badge": "EUROPA LEAGUE SPECIAL",
     "mainMatch": {
       "league": "Champions League 🇪🇺",
-      "time": "21:00",
+      "time": "20:45",
       "team1": {
-        "name": "Real Madrid",
-        "code": "REA",
+        "name": "Ludogorets",
+        "code": "LUD",
         "color": "#ffffff"
       },
       "team2": {
-        "name": "PSG",
-        "code": "PSG",
+        "name": "PAOK",
+        "code": "PAO",
         "color": "#004170"
       },
-      "prediction": "1X (Double Chance)",
-      "odds": 2.8,
-      "confidence": 75,
-      "riskLevel": "MEDIUM RISK"
+      "prediction": "Home Win (1)",
+      "odds": 3.74,
+      "confidence": 16,
+      "riskLevel": "HIGH RISK"
     }
   },
   "todayPredictions": {
