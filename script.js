@@ -287,10 +287,84 @@ function updateTopPrediction(topData) {
     console.log('✅ Top prediction updated');
 }
 
-// ===== UPDATE TODAY'S PREDICTIONS =====
+// ===== UPDATE TODAY'S PREDICTIONS (FIXED FOR YOUR JSON) =====
 function updateTodayPredictions(predictionsData) {
-    // This function updates the predictions grid
-    console.log('⚽ Today predictions updated');
+    console.log('⚽ Loading today\'s predictions...');
+    
+    const predictionsGrid = document.querySelector('.predictions-grid');
+    if (!predictionsGrid) {
+        console.error('❌ Predictions grid not found');
+        return;
+    }
+
+    // Check if we have data
+    if (!predictionsData || !predictionsData.predictions || predictionsData.predictions.length === 0) {
+        console.log('⚠️ No predictions data available');
+        predictionsGrid.innerHTML = `
+            <div class="no-predictions" style="grid-column: 1/-1; text-align:center; padding:40px; color:#FF6B35;">
+                <h3>📅 No Predictions for Today</h3>
+                <p>Check back later for today's matches</p>
+            </div>
+        `;
+        return;
+    }
+
+    console.log(`✅ Found ${predictionsData.predictions.length} predictions`);
+    
+    // Clear and rebuild
+    predictionsGrid.innerHTML = '';
+    
+    let html = '';
+    predictionsData.predictions.slice(0, 4).forEach((pred, index) => {
+        // Extract team names from fixture if team1/team2 not available
+        let team1Name = pred.team1?.name || 'Team 1';
+        let team2Name = pred.team2?.name || 'Team 2';
+        
+        // Clean up names (remove extra spaces)
+        team1Name = team1Name.trim();
+        team2Name = team2Name.trim();
+        
+        // Get team codes
+        const team1Code = pred.team1?.code || team1Name.substring(0, 3).toUpperCase();
+        const team2Code = pred.team2?.code || team2Name.substring(0, 3).toUpperCase();
+        
+        // Clean league name
+        const league = (pred.league || 'Europa League').trim() + ' 🇪🇺';
+        
+        html += `
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> ${league}</span>
+                    <span class="match-time">${pred.time || '20:45'}</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo" style="background-color: #0000FF; color: white;">${team1Code}</div>
+                        <span class="team-name">${team1Name}</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo" style="background-color: #FF0000; color: white;">${team2Code}</div>
+                        <span class="team-name">${team2Name}</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">${pred.prediction || '1X'}</span>
+                    <span class="prediction-odd">@${pred.odds || '1.00'}</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${pred.confidence || 70}%"></div>
+                    </div>
+                    <span>${pred.confidence || 70}% Confidence</span>
+                </div>
+            </div>
+        `;
+    });
+    
+    predictionsGrid.innerHTML = html;
+    console.log('✅ Today\'s predictions displayed');
 }
 
 // ===== UPDATE YESTERDAY RESULTS =====
