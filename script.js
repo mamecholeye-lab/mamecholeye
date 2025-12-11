@@ -93,8 +93,9 @@ async function loadAllData() {
         }
 
         if (data.todayPredictions) {
-            updateTodayPredictions(data.todayPredictions);
-        }
+    updateTodayPredictions(data.todayPredictions);
+    updateMorePredictions(data.todayPredictions);  // ADD THIS LINE
+}
 
         if (data.yesterdayResults) {
             // Clear results table COMPLETELY before adding new data
