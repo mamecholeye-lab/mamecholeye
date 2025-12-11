@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-12-11T07:32:12.635Z",
+  "lastUpdated": "2025-12-11T07:32",
   "hero": {
     "date": "December 11, 2025",
     "title": "103.12 ACCUMULATOR WON",
@@ -64,25 +64,25 @@
   },
   "topPrediction": {
     "date": "December 11, 2025",
-    "subtitle": "December 12, 2025 - Europa League Special",
-    "badge": "EUROPA LEAGUE SPECIAL",
+    "subtitle": "December 12, 2025 - Champions League Special",
+    "badge": "CHAMPIONS LEAGUE SPECIAL",
     "mainMatch": {
       "league": "Champions League 🇪🇺",
-      "time": "20:45",
+      "time": "21:00",
       "team1": {
-        "name": "Ludogorets",
-        "code": "LUD",
+        "name": "Real Madrid",
+        "code": "REA",
         "color": "#ffffff"
       },
       "team2": {
-        "name": "PAOK",
-        "code": "PAO",
+        "name": "PSG",
+        "code": "PSG",
         "color": "#004170"
       },
-      "prediction": "Home Win (1)",
-      "odds": 3.74,
-      "confidence": 16,
-      "riskLevel": "HIGH RISK"
+      "prediction": "1X (Double Chance)",
+      "odds": 2.8,
+      "confidence": 75,
+      "riskLevel": "MEDIUM RISK"
     }
   },
   "todayPredictions": {
@@ -112,7 +112,7 @@
       "winRate": "83.3%",
       "wins": 10,
       "total": 12,
-      "totalOdds": "1.00",
+      "totalOdds": "1.82",
       "status": "Good",
       "losses": 2
     },
@@ -120,99 +120,11 @@
     "insight": "Focus on high confidence predictions for better results.",
     "results": [
       {
-        "fixture": "Stevenge vs cardiff",
-        "league": "Btts yes ",
-        "betType": "1x",
-        "odds": 0,
-        "result": "0-1",
-        "outcome": "won"
-      },
-      {
         "fixture": "Penybont v Barry Town ",
-        "league": "",
+        "league": "Wales Cymur premier ",
         "betType": "Btts yes ",
-        "odds": 0,
+        "odds": 1.82,
         "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Atalanta v Chelsea ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "2-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Leyton orient vs Luton ",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "QPR v Birmingham ",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "2-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Shrewsbury v Grimsby ",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Shams Azar v Gol Gohar",
-        "league": "",
-        "betType": "1x",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Inter Milan v Liverpool ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "0-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Fleetwood v Salford ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "1-1",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Genk 2 v Anderlecht res",
-        "league": "",
-        "betType": "Over 2.5",
-        "odds": 0,
-        "result": "3-2",
-        "outcome": "won"
-      },
-      {
-        "fixture": "PSV v Atletico Madrid ",
-        "league": "",
-        "betType": "Over 2.5",
-        "odds": 0,
-        "result": "2-3",
-        "outcome": "won"
-      },
-      {
-        "fixture": "Union SG v Marseille ",
-        "league": "",
-        "betType": "Btts yes ",
-        "odds": 0,
-        "result": "2-3",
         "outcome": "won"
       }
     ]
