@@ -21,14 +21,28 @@ function initializeWebsite() {
     console.log('✅ Website fully initialized');
 }
 
-// ===== LOAD ALL DATA =====
+// ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
 async function loadAllData() {
     try {
-        console.log('📥 Loading data from JSON...');
-        const response = await fetch('data.json?v=' + Date.now());
+        console.log('🧹 Clearing all old data first...');
+        
+        // IMPORTANT: Clear all dynamic content before loading new data
+        clearAllDynamicContent();
+        
+        console.log('📥 Loading FRESH data from JSON...');
+        
+        // Force fresh fetch with timestamp
+        const timestamp = new Date().getTime();
+        const response = await fetch(`data.json?v=${timestamp}`);
+        
+        if (!response.ok) {
+            throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+        }
+        
         const data = await response.json();
+        console.log('✅ Fresh data loaded, now updating...');
 
-        // Update each section
+        // Update sections ONE BY ONE (not overlapping)
         if (data.hero) {
             updateHeroSection(data.hero);
         }
@@ -42,15 +56,73 @@ async function loadAllData() {
         }
 
         if (data.yesterdayResults) {
+            // Clear results table COMPLETELY before adding new data
+            clearResultsTableCompletely();
+            
             updateYesterdayResults(data.yesterdayResults);
-            updateResultsTable(data.yesterdayResults.results || []);
+            
+            // Wait a tiny bit to ensure previous data is gone
+            await new Promise(resolve => setTimeout(resolve, 50));
+            
+            // Now add FRESH results
+            if (data.yesterdayResults.results && Array.isArray(data.yesterdayResults.results)) {
+                updateResultsTable(data.yesterdayResults.results);
+            } else {
+                console.log('⚠️ No results array found');
+                showNoResultsMessage();
+            }
         }
 
-        console.log('✅ All data loaded successfully');
+        console.log('✅ All fresh data loaded successfully - NO OLD DATA MIXING');
 
     } catch (error) {
-        console.log('⚠️ Error loading data, using fallback');
+        console.error('❌ Error loading data:', error);
         loadFallbackData();
+    }
+}
+
+// ===== CLEAR ALL DYNAMIC CONTENT =====
+function clearAllDynamicContent() {
+    console.log('🧹 Clearing all dynamic content...');
+    
+    // 1. Clear results table
+    const resultsBody = document.getElementById('results-table-body');
+    if (resultsBody) {
+        resultsBody.innerHTML = '<div class="loading-results"><div class="loading-spinner"></div><p>Loading fresh results...</p></div>';
+    }
+    
+    // 2. Clear top prediction
+    const topContent = document.getElementById('top-prediction-content');
+    if (topContent) {
+        topContent.innerHTML = '<div class="loading-top"><div class="loading-spinner"></div><p>Loading fresh prediction...</p></div>';
+    }
+    
+    // 3. Clear any other cache-sensitive elements
+    const dynamicElements = document.querySelectorAll('[data-dynamic]');
+    dynamicElements.forEach(el => {
+        el.innerHTML = '';
+    });
+}
+
+// ===== CLEAR RESULTS TABLE COMPLETELY =====
+function clearResultsTableCompletely() {
+    const tableBody = document.getElementById('results-table-body');
+    if (tableBody) {
+        // Use textContent instead of innerHTML for complete removal
+        tableBody.textContent = '';
+        console.log('✅ Results table completely cleared');
+    }
+}
+
+// ===== SHOW NO RESULTS MESSAGE =====
+function showNoResultsMessage() {
+    const tableBody = document.getElementById('results-table-body');
+    if (tableBody) {
+        tableBody.innerHTML = `
+            <div class="table-row no-results">
+                <div colspan="5">No results data available. Please check back later.</div>
+            </div>
+        `;
     }
 }
 
