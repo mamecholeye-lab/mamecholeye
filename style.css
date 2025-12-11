@@ -2947,7 +2947,18 @@ section::before {
 .results-table {
     background: rgba(30, 33, 47, 0.9) !important;
 }
+/* Dark mode compatible color classes */
+.team-color-atalanta { background-color: #0000FF; }
+.team-color-chelsea { background-color: #034694; }
+.team-color-stevenage { background-color: #DA291C; }
+.team-color-cardiff { background-color: #1C4A9A; }
 
+.bet-gold { background: linear-gradient(90deg, #FFD700, #FFED4E); color: #000; }
+.bet-green { background: linear-gradient(90deg, #00B894, #00E6A1); color: white; }
+.bet-orange { background: linear-gradient(90deg, #FF6B35, #FF8B35); color: white; }
+
+.status.won { color: #00E6A1; background: rgba(0, 184, 148, 0.1); }
+.status.lost { color: #FF6B6B; background: rgba(255, 107, 107, 0.1); }
 .table-header {
     background: linear-gradient(90deg, rgba(255, 107, 53, 0.8), rgba(255, 142, 83, 0.6)) !important;
 }
