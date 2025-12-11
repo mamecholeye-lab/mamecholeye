@@ -374,7 +374,7 @@ function setupWhatsAppSharing() {
     };
 }
 
-// Subscription Form
+// ===== SUBSCRIPTION FORM =====
 function setupSubscriptionForm() {
     const form = document.getElementById('subscribe');
     if (!form) return;
@@ -402,11 +402,36 @@ function setupSubscriptionForm() {
         e.preventDefault();
 
         const name = this.querySelector('input[type="text"]')?.value || '';
+        const email = this.querySelector('input[type="email"]')?.value || '';
         const phone = this.querySelector('input[type="tel"]')?.value || '';
-        const packageType = this.querySelector('select')?.value || '';
+        const packageSelect = this.querySelector('select');
+        const packageType = packageSelect?.value || '';
+        const packageText = packageSelect?.options[packageSelect.selectedIndex]?.text || '';
+        
+        // Get selected payment method
+        const paymentMethod = this.querySelector('input[name="payment"]:checked')?.value || 'mobile-money';
+        const paymentText = paymentMethod === 'mobile-money' ? 'Mobile Money' : 'Bank Transfer';
 
-        const message = `Name: ${name}%0APhone: ${phone}%0APackage: ${packageType}`;
-        window.open(`https://wa.me/251979380726?text=${message}`, '_blank');
+        // Create formatted WhatsApp message
+        const message = `📋 NEW SUBSCRIPTION REQUEST
+
+Name: ${name}
+Email: ${email}
+Phone: ${phone}
+Package: ${packageText}
+Payment: ${paymentText}
+
+Please send payment details.`;
+
+        // Send via WhatsApp
+        const whatsappNumber = '251979380726';
+        const encodedMessage = encodeURIComponent(message);
+        window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
+        
+        // Show confirmation
+        setTimeout(() => {
+            alert('✅ Subscription request sent! Check WhatsApp for payment details.');
+        }, 500);
     });
 }
 
