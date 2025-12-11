@@ -226,15 +226,30 @@ function updateHeroCalculations(calculations) {
 
 // ===== UPDATE TOP PREDICTION SECTION =====
 function updateTopPrediction(topData) {
-    if (!topData || !topData.mainMatch) return;
+    console.log('🎯 Updating top prediction...');
     
     const topPredictionContent = document.getElementById('top-prediction-content');
-    if (!topPredictionContent) return;
+    if (!topPredictionContent) {
+        console.log('❌ Top prediction container not found');
+        return;
+    }
     
-    // Update section subtitle
+    // If no data, show error
+    if (!topData) {
+        console.log('❌ No top prediction data');
+        topPredictionContent.innerHTML = `
+            <div class="loading-top">
+                <div class="loading-spinner"></div>
+                <p>No prediction data available</p>
+            </div>
+        `;
+        return;
+    }
+    
+    // Update subtitle
     const subtitle = document.getElementById('top-subtitle');
-    if (subtitle) {
-        subtitle.textContent = topData.subtitle || '';
+    if (subtitle && topData.subtitle) {
+        subtitle.textContent = topData.subtitle;
     }
     
     // Update badge
@@ -243,52 +258,54 @@ function updateTopPrediction(topData) {
         badge.innerHTML = `<i class="fas fa-fire"></i> ${topData.badge}`;
     }
     
-    // Create complete top prediction HTML
-    topPredictionContent.innerHTML = `
+    // Create HTML content
+    const match = topData.mainMatch || {};
+    
+    const html = `
         <div class="top-prediction-card">
             <div class="match-details">
                 <div class="match-header">
-                    <span class="match-league"><i class="fas fa-crown"></i> ${topData.mainMatch.league}</span>
-                    <span class="match-time">${topData.mainMatch.time}</span>
-                    <span class="match-date">Today, ${topData.date}</span>
+                    <span class="match-league"><i class="fas fa-crown"></i> ${match.league || 'Premium Match'}</span>
+                    <span class="match-time">${match.time || '21:00'}</span>
+                    <span class="match-date">Today, ${topData.date || 'December 9, 2025'}</span>
                 </div>
                 
                 <div class="teams">
                     <div class="team">
-                        <div class="team-logo" style="background-color: ${topData.mainMatch.team1.color}; color: white;">
-                            ${topData.mainMatch.team1.code}
+                        <div class="team-logo" style="background-color: ${match.team1?.color || '#FF6B35'}; color: white;">
+                            ${match.team1?.code || 'HOME'}
                         </div>
-                        <span class="team-name">${topData.mainMatch.team1.name}</span>
+                        <span class="team-name">${match.team1?.name || 'Home Team'}</span>
                     </div>
                     <div class="vs">VS</div>
                     <div class="team">
-                        <div class="team-logo" style="background-color: ${topData.mainMatch.team2.color}; color: white;">
-                            ${topData.mainMatch.team2.code}
+                        <div class="team-logo" style="background-color: ${match.team2?.color || '#0984E3'}; color: white;">
+                            ${match.team2?.code || 'AWAY'}
                         </div>
-                        <span class="team-name">${topData.mainMatch.team2.name}</span>
+                        <span class="team-name">${match.team2?.name || 'Away Team'}</span>
                     </div>
                 </div>
                 
                 <div class="prediction-main">
                     <div class="prediction-type">
-                        <span class="type-label">PREDICTION:</span>
-                        <span class="type-value">${topData.mainMatch.prediction}</span>
+                        <span class="type-label">RMAME PREDICTION:</span>
+                        <span class="type-value">${match.prediction || '1X (Double Chance)'}</span>
                     </div>
                     <div class="prediction-odds">
                         <span class="odds-label">ODDS:</span>
-                        <span class="odds-value">@${topData.mainMatch.odds}</span>
+                        <span class="odds-value">@${match.odds || '1.41'}</span>
                     </div>
                 </div>
                 
                 <div class="confidence-high">
                     <div class="confidence-header">
                         <i class="fas fa-bullseye"></i>
-                        <span>${topData.mainMatch.riskLevel || 'MEDIUM RISK'}</span>
+                        <span>${match.riskLevel || 'MEDIUM RISK'}</span>
                     </div>
                     <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: ${topData.mainMatch.confidence}%"></div>
+                        <div class="confidence-fill" style="width: ${match.confidence || 75}%"></div>
                     </div>
-                    <span class="confidence-percent">${topData.mainMatch.confidence}% Confidence</span>
+                    <span class="confidence-percent">${match.confidence || 75}% Confidence</span>
                 </div>
                 
                 <div class="profit-info">
@@ -298,136 +315,15 @@ function updateTopPrediction(topData) {
                     </div>
                     <div class="profit-item">
                         <span>Potential Win:</span>
-                        <strong class="won">$${(20 * topData.mainMatch.odds).toFixed(2)}</strong>
+                        <strong class="won">$${(20 * (match.odds || 1.41)).toFixed(2)}</strong>
                     </div>
                 </div>
             </div>
-            
-            <div class="analysis-section">
-                <h4><i class="fas fa-chart-line"></i> Analysis:</h4>
-                <ul class="analysis-points">
-                    ${(topData.mainMatch.analysis || [
-                        'Strong home advantage',
-                        'Good recent form',
-                        'Head-to-head record favorable',
-                        'High probability of success'
-                    ]).map(point => `<li><i class="fas fa-check-circle"></i> ${point}</li>`).join('')}
-                </ul>
-                
-                <div class="stats-grid">
-                    <div class="stat">
-                        <h5>${topData.mainMatch.odds}</h5>
-                        <p>Odds</p>
-                    </div>
-                    <div class="stat">
-                        <h5>${topData.mainMatch.confidence}%</h5>
-                        <p>Confidence</p>
-                    </div>
-                    <div class="stat">
-                        <h5>+${((topData.mainMatch.odds - 1) * 100).toFixed(0)}%</h5>
-                        <p>Value</p>
-                    </div>
-                    <div class="stat">
-                        <h5>${Math.round(topData.mainMatch.confidence / 2)}%</h5>
-                        <p>Win Probability</p>
-                    </div>
-                </div>
-                
-                ${topData.secondaryMatch ? `
-                <div class="match-details" style="margin-top: 25px;">
-                    <div class="match-header">
-                        <span class="match-league"><i class="fas fa-trophy"></i> ${topData.secondaryMatch.league}</span>
-                        <span class="match-time">${topData.secondaryMatch.time}</span>
-                    </div>
-                    
-                    <div class="teams">
-                        <div class="team">
-                            <div class="team-logo" style="background-color: ${topData.secondaryMatch.team1.color}; color: white;">
-                                ${topData.secondaryMatch.team1.code}
-                            </div>
-                            <span class="team-name">${topData.secondaryMatch.team1.name}</span>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-logo" style="background-color: ${topData.secondaryMatch.team2.color}; color: white;">
-                                ${topData.secondaryMatch.team2.code}
-                            </div>
-                            <span class="team-name">${topData.secondaryMatch.team2.name}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="prediction-main">
-                        <div class="prediction-type">
-                            <span class="type-label">PREDICTION:</span>
-                            <span class="type-value">${topData.secondaryMatch.prediction}</span>
-                        </div>
-                        <div class="prediction-odds">
-                            <span class="odds-label">ODDS:</span>
-                            <span class="odds-value">@${topData.secondaryMatch.odds}</span>
-                        </div>
-                    </div>
-                    
-                    <div class="confidence-high">
-                        <div class="confidence-header">
-                            <i class="fas fa-bullseye"></i>
-                            <span>${topData.secondaryMatch.riskLevel || 'HIGH RISK'}</span>
-                        </div>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: ${topData.secondaryMatch.confidence}%"></div>
-                        </div>
-                        <span class="confidence-percent">${topData.secondaryMatch.confidence}% Confidence</span>
-                    </div>
-                </div>
-                ` : ''}
-            </div>
-            
-            ${topData.accumulator ? `
-            <div class="bet-advice">
-                <div class="double-accumulator">
-                    <h4><i class="fas fa-layer-group"></i> ACCUMULATOR:</h4>
-                    <div class="accumulator-details">
-                        ${(topData.accumulator.matches || []).map(match => `
-                        <div class="acc-item">
-                            <span>${match.match}</span>
-                            <strong>@${match.odds}</strong>
-                        </div>
-                        `).join('')}
-                        <div class="acc-divider">
-                            <i class="fas fa-times"></i>
-                        </div>
-                        <div class="acc-total">
-                            <span>TOTAL ODDS:</span>
-                            <strong class="highlight">${topData.accumulator.totalOdds}</strong>
-                        </div>
-                    </div>
-                    
-                    <div class="winning-calculation" style="margin-top: 20px;">
-                        <div class="calculation-grid">
-                            ${(topData.accumulator.winningExamples || []).map(example => `
-                            <div class="calc-item">
-                                <span>With $${example.stake} Stake:</span>
-                                <strong class="won">$${example.win}</strong>
-                            </div>
-                            `).join('')}
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="stake-suggestion">
-                    <p><i class="fas fa-lightbulb"></i> <strong>Expert Tip:</strong> ${topData.accumulator.tip || 'Recommended stake: 1-2% of bankroll.'}</p>
-                    ${topData.accumulator.warning ? `
-                    <div class="risk-warning">
-                        <i class="fas fa-exclamation-triangle"></i>
-                        <span>${topData.accumulator.warning}</span>
-                    </div>
-                    ` : ''}
-                </div>
-            </div>
-            ` : ''}
         </div>
     `;
     
-    console.log('✅ Top prediction updated:', topData.mainMatch.fixture);
+    topPredictionContent.innerHTML = html;
+    console.log('✅ Top prediction updated successfully');
 }
 
 // ===== LOAD TODAY'S PREDICTIONS =====
@@ -991,89 +887,3 @@ function testTopPredictionUpdate() {
 setTimeout(() => {
     testTopPredictionUpdate();
 }, 2000);
-// ===== SAFE FIX FOR TOP PREDICTION =====
-function safeFixTopPrediction() {
-    console.log('🔧 Applying safe fix for top prediction');
-    
-    const topContent = document.getElementById('top-prediction-content');
-    if (!topContent) {
-        console.log('❌ Top content element not found');
-        return;
-    }
-    
-    // Only apply fix if content is still loading
-    if (topContent.innerHTML.includes('loading') || topContent.innerHTML.includes('Loading')) {
-        console.log('⚠️ Top prediction still loading, applying fix');
-        
-        topContent.innerHTML = `
-            <div class="top-prediction-card">
-                <div class="match-details">
-                    <div class="match-header">
-                        <span class="match-league"><i class="fas fa-crown"></i> Champions League 🇪🇺</span>
-                        <span class="match-time">21:00</span>
-                        <span class="match-date">Today, December 9, 2025</span>
-                    </div>
-                    
-                    <div class="teams">
-                        <div class="team">
-                            <div class="team-logo" style="background-color: #0000FF; color: white;">ATA</div>
-                            <span class="team-name">Atalanta</span>
-                        </div>
-                        <div class="vs">VS</div>
-                        <div class="team">
-                            <div class="team-logo" style="background-color: #034694; color: white;">CHE</div>
-                            <span class="team-name">Chelsea</span>
-                        </div>
-                    </div>
-                    
-                    <div class="prediction-main">
-                        <div class="prediction-type">
-                            <span class="type-label">RMAME PREDICTION:</span>
-                            <span class="type-value">BTTS Yes</span>
-                        </div>
-                        <div class="prediction-odds">
-                            <span class="odds-label">ODDS:</span>
-                            <span class="odds-value">@1.54</span>
-                        </div>
-                    </div>
-                    
-                    <div class="confidence-high">
-                        <div class="confidence-header">
-                            <i class="fas fa-bullseye"></i>
-                            <span>MEDIUM RISK</span>
-                        </div>
-                        <div class="confidence-bar">
-                            <div class="confidence-fill" style="width: 87%"></div>
-                        </div>
-                        <span class="confidence-percent">87% Confidence</span>
-                    </div>
-                    
-                    <div class="profit-info">
-                        <div class="profit-item">
-                            <span>Stake:</span>
-                            <strong>$20.00</strong>
-                        </div>
-                        <div class="profit-item">
-                            <span>Potential Win:</span>
-                            <strong class="won">$30.80</strong>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        `;
-        
-        // Update badge and subtitle
-        const badge = document.getElementById('top-badge');
-        if (badge) badge.innerHTML = '<i class="fas fa-fire"></i> 87% CONFIDENCE • MEDIUM RISK';
-        
-        const subtitle = document.getElementById('top-subtitle');
-        if (subtitle) subtitle.textContent = "Today's best betting opportunity with 87% confidence";
-        
-        console.log('✅ Top prediction fixed successfully');
-    } else {
-        console.log('✅ Top prediction already loaded, no fix needed');
-    }
-}
-
-// Apply fix after 3 seconds (if still loading)
-setTimeout(safeFixTopPrediction, 3000);
