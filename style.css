@@ -2800,3 +2800,72 @@ section::before {
         font-size: 16px;
     }
 }
+/* ===== FORCE OVERRIDE INLINE STYLES ===== */
+
+/* Override team logo colors */
+.team-logo[style*="background-color"] {
+    background-color: var(--team-color) !important;
+    color: inherit !important;
+}
+
+/* Override all text colors */
+.team-name,
+.type-value,
+.odds-value,
+.confidence-percent,
+.stat h5,
+.acc-item strong,
+.acc-total strong {
+    color: inherit !important;
+}
+
+/* Specific overrides for top prediction */
+.top-prediction-card *[style*="color"] {
+    color: inherit !important;
+}
+
+/* Force specific colors for elements */
+.team-name {
+    color: #FFFFFF !important;
+}
+
+.type-value {
+    color: #FFD700 !important;
+}
+
+.odds-value {
+    color: #00E6A1 !important;
+}
+
+.confidence-percent {
+    color: #FFFFFF !important;
+}
+
+.match-header .match-league {
+    color: #FF9E6D !important;
+}
+
+.match-header .match-time {
+    color: #64D2FF !important;
+    background: rgba(100, 210, 255, 0.1) !important;
+}
+
+.vs {
+    color: #FF6B35 !important;
+}
+
+.profit-item .won {
+    color: #00E6A1 !important;
+}
+
+.analysis-points li {
+    color: #E8EAEF !important;
+}
+
+.analysis-points li i {
+    color: #00B894 !important;
+}
+
+.stat h5 {
+    color: #FFD700 !important;
+}
