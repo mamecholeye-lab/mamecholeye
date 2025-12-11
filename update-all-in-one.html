@@ -518,6 +518,41 @@
     </div>
 
     <script>
+        // ===== DARK MODE COMPATIBLE COLOR SCHEME =====
+        const DARK_COLORS = {
+            // Text colors for dark background
+            text: {
+                primary: "#FFFFFF",        // White for important text
+                secondary: "#E8EAEF",      // Light gray for regular text
+                muted: "#B0B3C5",          // Gray for labels
+                success: "#00E6A1",        // Green for won
+                danger: "#FF6B6B",         // Red for lost
+                warning: "#FFD700",        // Gold for warnings
+                info: "#64D2FF",           // Blue for info
+                highlight: "#FF6B35"       // Orange for highlights
+            },
+            
+            // Background colors
+            bg: {
+                primary: "rgba(30, 33, 47, 0.9)",
+                secondary: "rgba(255, 255, 255, 0.05)",
+                success: "rgba(0, 184, 148, 0.1)",
+                danger: "rgba(255, 107, 107, 0.1)",
+                warning: "rgba(255, 215, 0, 0.1)",
+                info: "rgba(100, 210, 255, 0.1)",
+                highlight: "rgba(255, 107, 53, 0.1)"
+            },
+            
+            // Border colors
+            border: {
+                primary: "rgba(255, 255, 255, 0.1)",
+                success: "rgba(0, 184, 148, 0.3)",
+                danger: "rgba(255, 107, 107, 0.3)",
+                warning: "rgba(255, 215, 0, 0.3)",
+                highlight: "rgba(255, 107, 53, 0.3)"
+            }
+        };
+
         // ===== INITIALIZATION =====
         let todayPredictionCount = 0;
         let resultCount = 0;
@@ -965,7 +1000,7 @@
                 year: 'numeric' 
             });
 
-            // Generate complete data structure
+            // ===== GENERATE DARK MODE COMPATIBLE JSON =====
             const completeData = {
                 lastUpdated: document.getElementById('update-date').value || today.toISOString(),
                 hero: {
@@ -978,7 +1013,7 @@
                         league: "League Two",
                         fixture: match.fixture,
                         betType: match.betType,
-                        betColor: index === 0 ? "#FFD700" : index === 1 ? "#00B894" : "#FF6B35",
+                        betClass: index === 0 ? "bet-gold" : index === 1 ? "bet-green" : "bet-orange",
                         odds: match.odds,
                         status: "won"
                     })),
@@ -997,7 +1032,26 @@
                     title: "TOP PREDICTION OF THE DAY",
                     subtitle: topData.subtitle || "Today's Premium Selection",
                     badge: topData.badge || "PREMIUM PICK",
-                    mainMatch: topData.mainMatch
+                    mainMatch: {
+                        league: topData.mainMatch.league,
+                        time: topData.mainMatch.time,
+                        team1: {
+                            name: topData.mainMatch.team1.name,
+                            code: topData.mainMatch.team1.code,
+                            color: topData.mainMatch.team1.color,
+                            colorClass: "team-color-" + topData.mainMatch.team1.name.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: topData.mainMatch.team2.name,
+                            code: topData.mainMatch.team2.code,
+                            color: topData.mainMatch.team2.color,
+                            colorClass: "team-color-" + topData.mainMatch.team2.name.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: topData.mainMatch.prediction,
+                        odds: topData.mainMatch.odds,
+                        confidence: topData.mainMatch.confidence,
+                        riskLevel: topData.mainMatch.riskLevel
+                    }
                 },
                 todayPredictions: {
                     subtitle: `${formattedDate} - ${totalPredictions} Premium Picks with ${totalOdds} Total Odds`,
@@ -1010,12 +1064,12 @@
                         team1: {
                             name: pred.team1,
                             code: pred.team1.substring(0,3).toUpperCase(),
-                            color: getTeamColor(pred.team1)
+                            colorClass: "team-color-" + pred.team1.toLowerCase().replace(/\s+/g, '-')
                         },
                         team2: {
                             name: pred.team2,
                             code: pred.team2.substring(0,3).toUpperCase(),
-                            color: getTeamColor(pred.team2)
+                            colorClass: "team-color-" + pred.team2.toLowerCase().replace(/\s+/g, '-')
                         },
                         prediction: pred.prediction,
                         odds: pred.odds,
@@ -1040,7 +1094,14 @@
                     },
                     analysis: `Performance with ${resultsData.wins} wins out of ${resultsData.total} predictions (${winRate} accuracy).`,
                     insight: "Focus on high confidence predictions for better results.",
-                    results: resultsData.results || []
+                    results: resultsData.results.map(result => ({
+                        fixture: result.fixture,
+                        betType: result.betType,
+                        odds: result.odds,
+                        result: result.result,
+                        outcome: result.outcome,
+                        statusClass: result.outcome
+                    }))
                 }
             };
 
@@ -1101,12 +1162,14 @@
                     team1: {
                         name: "Atalanta",
                         code: "ATA",
-                        color: "#0000FF"
+                        color: "#0000FF",
+                        colorClass: "team-color-atalanta"
                     },
                     team2: {
                         name: "Chelsea",
                         code: "CHE",
-                        color: "#034694"
+                        color: "#034694",
+                        colorClass: "team-color-chelsea"
                     },
                     prediction: "BTTS Yes",
                     odds: 1.54,
@@ -1146,41 +1209,11 @@
                         betType: "Double Chance: 1X",
                         odds: 1.41,
                         result: "0-1",
-                        outcome: "lost"
+                        outcome: "lost",
+                        statusClass: "lost"
                     }
                 ]
             };
-        }
-
-        function getTeamColor(teamName) {
-            const colorMap = {
-                'real madrid': '#FFFFFF',
-                'barcelona': '#A50044',
-                'man city': '#6CABDD',
-                'man united': '#DA291C',
-                'liverpool': '#C8102E',
-                'chelsea': '#034694',
-                'arsenal': '#EF0107',
-                'psg': '#004170',
-                'bayern': '#DC052D',
-                'dortmund': '#FDE100',
-                'juventus': '#000000',
-                'milan': '#000000',
-                'inter': '#0066B3',
-                'atletico': '#CB3524',
-                'monaco': '#F0202A',
-                'galatasaray': '#F9A01B',
-                'stevenage': '#DA291C',
-                'cardiff': '#1C4A9A',
-                'atalanta': '#0000FF',
-                'penybont': '#FF0000',
-                'barry town': '#0000FF',
-                'leyton orient': '#FF6600',
-                'luton': '#FF69B4'
-            };
-            
-            const key = teamName.toLowerCase();
-            return colorMap[key] || '#FF6B35';
         }
 
         function copyCompleteJSON() {
