@@ -1,65 +1,269 @@
-"topPrediction": {
-  "date": "December 9, 2025",
-  "title": "TOP PREDICTION OF THE DAY",
-  "subtitle": "Today's best betting opportunity with 87% confidence",
-  "badge": "87% CONFIDENCE • MEDIUM RISK",
-  "mainMatch": {
-    "fixture": "Atalanta v Chelsea",
-    "league": "Champions League 🇪🇺",
-    "time": "21:00",
-    "team1": {
-      "name": "Atalanta",
-      "code": "ATA",
-      "color": "#0000FF"
+{
+  "lastUpdated": "December 9, 2025",
+  "hero": {
+    "title": "103.12 ACCUMULATOR WON",
+    "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
+    "date": "December 9, 2025",
+    "stats": [
+      {"value": "3/3", "label": "Perfect Wins"},
+      {"value": "103.12", "label": "Total Odds"},
+      {"value": "34.37", "label": "Avg Odds"},
+      {"value": "100%", "label": "Win Rate"}
+    ],
+    "results": [
+      {
+        "time": "19:45",
+        "fixture": "Fleetwood 1 – 1 Salford city",
+        "league": "League Two",
+        "betType": "Draw & BTTS",
+        "betColor": "#FFD700",
+        "odds": 4.33,
+        "status": "won"
+      },
+      {
+        "time": "20:00",
+        "fixture": "Barrow 0 – 3 Tranmere",
+        "league": "League Two",
+        "betType": "Away & Over 2.5",
+        "betColor": "#00B894",
+        "odds": 4.33,
+        "status": "won"
+      },
+      {
+        "time": "19:45",
+        "fixture": "Notts Co 3 – 2 MK Dons",
+        "league": "League Two",
+        "betType": "Home & BTTS",
+        "betColor": "#FF6B35",
+        "odds": 5.5,
+        "status": "won"
+      }
+    ],
+    "calculations": {
+      "totalOdds": 103.12,
+      "profitNote": "3-match accumulator with 103.12 odds = 10,312% PROFIT!",
+      "winningExamples": [
+        {"stake": "10", "win": "1,031.20"},
+        {"stake": "50", "win": "5,156.00"},
+        {"stake": "100", "win": "10,312.00"}
+      ]
+    }
+  },
+  "topPrediction": {
+    "date": "December 9, 2025",
+    "title": "TOP PREDICTION OF THE DAY",
+    "subtitle": "Today's best betting opportunity with 87% confidence",
+    "badge": "87% CONFIDENCE • MEDIUM RISK",
+    "mainMatch": {
+      "fixture": "Atalanta v Chelsea",
+      "league": "Champions League 🇪🇺",
+      "time": "21:00",
+      "team1": {
+        "name": "Atalanta",
+        "code": "ATA",
+        "color": "#0000FF"
+      },
+      "team2": {
+        "name": "Chelsea",
+        "code": "CHE",
+        "color": "#034694"
+      },
+      "prediction": "BTTS Yes",
+      "odds": 1.54,
+      "confidence": 87,
+      "riskLevel": "MEDIUM RISK",
+      "analysis": [
+        "Both teams scoring in 8/10 recent matches",
+        "Chelsea strong offensive form",
+        "Atalanta solid home scoring record",
+        "High probability of goals both ends"
+      ]
     },
-    "team2": {
-      "name": "Chelsea",
-      "code": "CHE",
-      "color": "#034694"
+    "secondaryMatch": {
+      "fixture": "Inter Milan v Liverpool",
+      "league": "Champions League 🇪🇺",
+      "time": "21:00",
+      "team1": {
+        "name": "Inter Milan",
+        "code": "INT",
+        "color": "#0000FF"
+      },
+      "team2": {
+        "name": "Liverpool",
+        "code": "LIV",
+        "color": "#C8102E"
+      },
+      "prediction": "BTTS Yes",
+      "odds": 1.54,
+      "confidence": 78,
+      "riskLevel": "HIGH RISK"
     },
-    "prediction": "BTTS Yes",
-    "odds": 1.54,
-    "confidence": 87,
-    "riskLevel": "MEDIUM RISK",
-    "analysis": [
-      "Both teams scoring in 8/10 recent matches",
-      "Chelsea strong offensive form",
-      "Atalanta solid home scoring record",
-      "High probability of goals both ends"
+    "accumulator": {
+      "matches": [
+        {"match": "Atalanta v Chelsea - BTTS Yes", "odds": 1.54},
+        {"match": "Inter Milan v Liverpool - BTTS Yes", "odds": 1.54},
+        {"match": "PSV v Atletico Madrid - Over 2.5 Goals", "odds": 1.49}
+      ],
+      "totalOdds": 3.52,
+      "winningExamples": [
+        {"stake": "20", "win": "70.40"},
+        {"stake": "50", "win": "176.00"},
+        {"stake": "100", "win": "352.00"}
+      ],
+      "tip": "Recommended stake: 2-5% of bankroll for this medium-risk accumulator.",
+      "warning": "Champions League matches can be unpredictable. Consider single bets for higher safety."
+    }
+  },
+  "todayPredictions": {
+    "subtitle": "December 9, 2025 - 12 Premium Picks with 163.9 Total Odds",
+    "totalPredictions": 12,
+    "totalOdds": 163.9,
+    "predictions": [
+      {
+        "fixture": "Stevenage v Cardiff",
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "time": "20:45",
+        "team1": {"name": "Stevenage", "code": "STE", "color": "#DA291C"},
+        "team2": {"name": "Cardiff", "code": "CAR", "color": "#1C4A9A"},
+        "prediction": "1X (Double Chance)",
+        "odds": 1.41,
+        "confidence": 75
+      },
+      {
+        "fixture": "Penybont v Barry Town",
+        "league": "Welsh Premier League 🏴󠁧󠁢󠁷󠁬󠁳󠁿",
+        "time": "19:45",
+        "team1": {"name": "Penybont", "code": "PEN", "color": "#FF0000"},
+        "team2": {"name": "Barry Town", "code": "BAR", "color": "#0000FF"},
+        "prediction": "BTTS Yes",
+        "odds": 1.6,
+        "confidence": 68
+      },
+      {
+        "fixture": "Leyton Orient v Luton",
+        "league": "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+        "time": "21:00",
+        "team1": {"name": "Leyton Orient", "code": "LEY", "color": "#FF6600"},
+        "team2": {"name": "Luton", "code": "LUT", "color": "#FF69B4"},
+        "prediction": "1X (Double Chance)",
+        "odds": 1.46,
+        "confidence": 72
+      },
+      {
+        "fixture": "Atalanta v Chelsea",
+        "league": "Champions League 🇪🇺",
+        "time": "21:00",
+        "team1": {"name": "Atalanta", "code": "ATA", "color": "#0000FF"},
+        "team2": {"name": "Chelsea", "code": "CHE", "color": "#034694"},
+        "prediction": "BTTS Yes",
+        "odds": 1.54,
+        "confidence": 70
+      }
+    ],
+    "winningExamples": [
+      {"stake": "10", "win": "1,639.00"},
+      {"stake": "50", "win": "8,195.00"},
+      {"stake": "100", "win": "16,390.00"}
     ]
   },
-  "secondaryMatch": {
-    "fixture": "Inter Milan v Liverpool",
-    "league": "Champions League 🇪🇺",
-    "time": "21:00",
-    "team1": {
-      "name": "Inter Milan",
-      "code": "INT",
-      "color": "#0000FF"
+  "yesterdayResults": {
+    "subtitle": "December 9, 2025 - 10 Wins out of 12 Predictions",
+    "stats": {
+      "record": "10-0-2",
+      "winRate": "83.3%",
+      "wins": "10",
+      "total": "12",
+      "totalOdds": 163.9,
+      "status": "Lost",
+      "losses": "2"
     },
-    "team2": {
-      "name": "Liverpool",
-      "code": "LIV",
-      "color": "#C8102E"
-    },
-    "prediction": "BTTS Yes",
-    "odds": 1.54,
-    "confidence": 78,
-    "riskLevel": "HIGH RISK"
-  },
-  "accumulator": {
-    "matches": [
-      {"match": "Atalanta v Chelsea - BTTS Yes", "odds": 1.54},
-      {"match": "Inter Milan v Liverpool - BTTS Yes", "odds": 1.54},
-      {"match": "PSV v Atletico Madrid - Over 2.5 Goals", "odds": 1.49}
-    ],
-    "totalOdds": 3.52,
-    "winningExamples": [
-      {"stake": "20", "win": "70.40"},
-      {"stake": "50", "win": "176.00"},
-      {"stake": "100", "win": "352.00"}
-    ],
-    "tip": "Recommended stake: 2-5% of bankroll for this medium-risk accumulator.",
-    "warning": "Champions League matches can be unpredictable. Consider single bets for higher safety."
+    "analysis": "Excellent performance with 10 wins out of 12 predictions (83.3% accuracy). The accumulator had huge potential at 163.9 odds, but was broken by Stevenage vs Cardiff (0-1) and Inter Milan vs Liverpool (0-1) BTTS bets that failed.",
+    "insight": "Double Chance bets (1X) performed perfectly (5/5 wins). BTTS bets went 4/5 (80%). Consider focusing on Double Chance markets for higher consistency.",
+    "results": [
+      {
+        "fixture": "Stevenage 0-1 Cardiff",
+        "betType": "Double Chance: 1X",
+        "odds": 1.41,
+        "result": "0-1",
+        "outcome": "lost"
+      },
+      {
+        "fixture": "Penybont 2-2 Barry Town",
+        "betType": "BTTS Yes",
+        "odds": 1.6,
+        "result": "2-2",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Leyton Orient 1-1 Luton",
+        "betType": "Double Chance: 1X",
+        "odds": 1.46,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Atalanta 2-1 Chelsea",
+        "betType": "BTTS Yes",
+        "odds": 1.54,
+        "result": "2-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "QPR 2-0 Birmingham",
+        "betType": "Double Chance: 1X",
+        "odds": 1.46,
+        "result": "2-0",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Shrewsbury 1-0 Grimsby",
+        "betType": "Double Chance: 1X",
+        "odds": 1.52,
+        "result": "1-0",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Shams Azar 2-1 Gol Gohar",
+        "betType": "Double Chance: 1X",
+        "odds": 1.49,
+        "result": "2-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Inter Milan 0-1 Liverpool",
+        "betType": "BTTS Yes",
+        "odds": 1.54,
+        "result": "0-1",
+        "outcome": "lost"
+      },
+      {
+        "fixture": "Fleetwood 1-1 Salford",
+        "betType": "BTTS Yes",
+        "odds": 1.56,
+        "result": "1-1",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Genk II 3-2 Anderlecht Res.",
+        "betType": "Over 2.5 Goals",
+        "odds": 1.49,
+        "result": "3-2",
+        "outcome": "won"
+      },
+      {
+        "fixture": "PSV 2-3 Atletico Madrid",
+        "betType": "Over 2.5 Goals",
+        "odds": 1.49,
+        "result": "2-3",
+        "outcome": "won"
+      },
+      {
+        "fixture": "Union SG 2-1 Marseille",
+        "betType": "BTTS Yes",
+        "odds": 1.52,
+        "result": "2-1",
+        "outcome": "won"
+      }
+    ]
   }
 }
