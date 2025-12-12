@@ -756,22 +756,25 @@ function setupSubscriptionForm() {
 
     const phoneInput = document.getElementById('phoneInput');
     if (phoneInput) {
-        phoneInput.addEventListener('input', function(e) {
-            let value = e.target.value.replace(/\D/g, '');
+  // Change placeholder for global numbers
+phoneInput.placeholder = "Phone with country code";
 
-            if (value.startsWith('251')) {
-                value = '+251' + value.substring(3);
-            } else if (value.startsWith('0')) {
-                value = '+251' + value.substring(1);
-            }
+// Allow ANY phone number from ANY country
+phoneInput.addEventListener('input', function(e) {
+    // Allow: numbers, plus sign, spaces, dashes
+    let value = e.target.value;
+    value = value.replace(/[^\d+\s\-]/g, '');
+    e.target.value = value;
+});
 
-            if (value.length > 13) {
-                value = value.substring(0, 13);
-            }
-
-            e.target.value = value;
-        });
-    }
+// Add help text below the input
+const helpText = document.createElement('small');
+helpText.textContent = "Examples: +1 2345678900 (USA), +44 7911123456 (UK), +251 912345678 (Ethiopia)";
+helpText.style.display = "block";
+helpText.style.marginTop = "5px";
+helpText.style.color = "#666";
+helpText.style.fontSize = "12px";
+phoneInput.parentNode.appendChild(helpText);     
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
