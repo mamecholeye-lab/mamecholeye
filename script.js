@@ -775,7 +775,7 @@ helpText.style.marginTop = "5px";
 helpText.style.color = "#666";
 helpText.style.fontSize = "12px";
 phoneInput.parentNode.appendChild(helpText);     
-
+}
     form.addEventListener('submit', function(e) {
         e.preventDefault();
 
