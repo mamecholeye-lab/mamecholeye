@@ -12,17 +12,17 @@ function initializeWebsite() {
         console.log('🔄 Already loading, skipping duplicate call');
         return;
     }
-    
+
     // Prevent loading too frequently (at least 2 seconds between loads)
     const now = Date.now();
     if (now - lastLoadTime < 2000) {
         console.log('⏰ Loading too fast, waiting...');
         return;
     }
-    
+
     isCurrentlyLoading = true;
     lastLoadTime = now;
-    
+
     console.log('🏁 Initializing website (fresh start)...');
 
     // Setup all functionality
@@ -42,44 +42,24 @@ function initializeWebsite() {
     });
 }
 
-// ===== INITIALIZE WEBSITE =====
-function initializeWebsite() {
-    console.log('🏁 Initializing website...');
-
-    // Setup all functionality
-    setupMobileMenu();
-    setupShowMorePredictions();
-    setupBackToTop();
-    setupWhatsAppSharing();
-    setupSubscriptionForm();
-    setupSmoothScrolling();
-    setupVisitorCounter();
-    hideLoader();
-
-    // Load data
-    loadAllData();
-
-    console.log('✅ Website fully initialized');
-}
-
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
 async function loadAllData() {
     try {
         console.log('🧹 Clearing all old data first...');
-        
+
         // IMPORTANT: Clear all dynamic content before loading new data
         clearAllDynamicContent();
-        
+
         console.log('📥 Loading FRESH data from JSON...');
-        
+
         // Force fresh fetch with timestamp
         const timestamp = new Date().getTime();
         const response = await fetch('data.json?t=' + new Date().getTime() + '&r=' + Math.random());
-        
+
         if (!response.ok) {
             throw new Error(`HTTP ${response.status}: ${response.statusText}`);
         }
-        
+
         const data = await response.json();
         console.log('✅ Fresh data loaded, now updating...');
 
@@ -93,19 +73,20 @@ async function loadAllData() {
         }
 
         if (data.todayPredictions) {
-    updateTodayPredictions(data.todayPredictions);
-    updateMorePredictions(data.todayPredictions);  // ADD THIS LINE
-}
+            updateTodayPredictions(data.todayPredictions);
+            updateMorePredictions(data.todayPredictions);
+            updateWinningExamples(data.todayPredictions); // ADDED THIS LINE
+        }
 
         if (data.yesterdayResults) {
             // Clear results table COMPLETELY before adding new data
             clearResultsTableCompletely();
-            
+
             updateYesterdayResults(data.yesterdayResults);
-            
+
             // Wait a tiny bit to ensure previous data is gone
             await new Promise(resolve => setTimeout(resolve, 50));
-            
+
             // Now add FRESH results
             if (data.yesterdayResults.results && Array.isArray(data.yesterdayResults.results)) {
                 updateResultsTable(data.yesterdayResults.results);
@@ -126,19 +107,19 @@ async function loadAllData() {
 // ===== CLEAR ALL DYNAMIC CONTENT =====
 function clearAllDynamicContent() {
     console.log('🧹 Clearing all dynamic content...');
-    
+
     // 1. Clear results table
     const resultsBody = document.getElementById('results-table-body');
     if (resultsBody) {
         resultsBody.innerHTML = '<div class="loading-results"><div class="loading-spinner"></div><p>Loading fresh results...</p></div>';
     }
-    
+
     // 2. Clear top prediction
     const topContent = document.getElementById('top-prediction-content');
     if (topContent) {
         topContent.innerHTML = '<div class="loading-top"><div class="loading-spinner"></div><p>Loading fresh prediction...</p></div>';
     }
-    
+
     // 3. Clear any other cache-sensitive elements
     const dynamicElements = document.querySelectorAll('[data-dynamic]');
     dynamicElements.forEach(el => {
@@ -171,7 +152,7 @@ function showNoResultsMessage() {
 // ===== UPDATE HERO SECTION =====
 function updateHeroSection(heroData) {
     if (!heroData) return;
-    
+
     // Update title
     const heroTitle = document.querySelector('.hero-title');
     if (heroTitle && heroData.title) {
@@ -203,7 +184,7 @@ function updateHeroSection(heroData) {
 // ===== UPDATE TOP PREDICTION =====
 function updateTopPrediction(topData) {
     console.log('🎯 Updating top prediction');
-    
+
     const topContent = document.getElementById('top-prediction-content');
     if (!topContent) return;
 
@@ -221,7 +202,7 @@ function updateTopPrediction(topData) {
 
     // Get match data
     const match = topData.mainMatch || {};
-    
+
     // Create HTML
     const html = `
         <div class="top-prediction-card">
@@ -251,7 +232,7 @@ function updateTopPrediction(topData) {
                 <div class="prediction-main">
                     <div class="prediction-type">
                         <span class="type-label">RMAME PREDICTION:</span>
-                        <span class="type-value">${match.prediction || 'BTTS Yes'}</span>
+                        <span class="type-value">${getPredictionText(match.prediction) || 'BTTS Yes'}</span>
                     </div>
                     <div class="prediction-odds">
                         <span class="odds-label">ODDS:</span>
@@ -283,7 +264,7 @@ function updateTopPrediction(topData) {
             </div>
         </div>
     `;
-    
+
     topContent.innerHTML = html;
     console.log('✅ Top prediction updated');
 }
@@ -291,12 +272,19 @@ function updateTopPrediction(topData) {
 // ===== UPDATE TODAY'S PREDICTIONS (FIXED FOR YOUR JSON) =====
 function updateTodayPredictions(predictionsData) {
     console.log('⚽ Loading today\'s predictions...');
-    
+
     const predictionsGrid = document.querySelector('.predictions-grid');
     if (!predictionsGrid) {
         console.error('❌ Predictions grid not found');
         return;
     }
+
+    // ===== FIX 1: UPDATE DATE FROM JSON =====
+    const predictionsSubtitle = document.querySelector('.predictions-section .section-subtitle');
+    if (predictionsSubtitle && predictionsData.subtitle) {
+        predictionsSubtitle.textContent = predictionsData.subtitle;
+    }
+    // ===== END FIX 1 =====
 
     // Check if we have data
     if (!predictionsData || !predictionsData.predictions || predictionsData.predictions.length === 0) {
@@ -311,96 +299,27 @@ function updateTodayPredictions(predictionsData) {
     }
 
     console.log(`✅ Found ${predictionsData.predictions.length} predictions`);
-    
+
     // Clear and rebuild
     predictionsGrid.innerHTML = '';
-    
+
     let html = '';
     predictionsData.predictions.slice(0, 4).forEach((pred, index) => {
         // Extract team names from fixture if team1/team2 not available
         let team1Name = pred.team1?.name || 'Team 1';
         let team2Name = pred.team2?.name || 'Team 2';
-        
+
         // Clean up names (remove extra spaces)
         team1Name = team1Name.trim();
         team2Name = team2Name.trim();
-        
+
         // Get team codes
         const team1Code = pred.team1?.code || team1Name.substring(0, 3).toUpperCase();
         const team2Code = pred.team2?.code || team2Name.substring(0, 3).toUpperCase();
-        
+
         // Clean league name
-        const league = (pred.league || 'Europa League').trim() + ' 🇪🇺';
-        
-        html += `
-            <div class="match-card">
-                <div class="match-header">
-                    <span class="match-league"><i class="fas fa-trophy"></i> ${league}</span>
-                    <span class="match-time">${pred.time || '20:45'}</span>
-                </div>
-                <div class="teams">
-                    <div class="team">
-                        <div class="team-logo" style="background-color: #0000FF; color: white;">${team1Code}</div>
-                        <span class="team-name">${team1Name}</span>
-                    </div>
-                    <div class="vs">VS</div>
-                    <div class="team">
-                        <div class="team-logo" style="background-color: #FF0000; color: white;">${team2Code}</div>
-                        <span class="team-name">${team2Name}</span>
-                    </div>
-                </div>
-                <div class="prediction">
-                    <span class="prediction-label">RMAME TIP:</span>
-                    <span class="prediction-value">${pred.prediction || '1X'}</span>
-                    <span class="prediction-odd">@${pred.odds || '1.00'}</span>
-                </div>
-                <div class="confidence">
-                    <div class="confidence-bar">
-                        <div class="confidence-fill" style="width: ${pred.confidence || 70}%"></div>
-                    </div>
-                    <span>${pred.confidence || 70}% Confidence</span>
-                </div>
-            </div>
-        `;
-    });
-    
-    predictionsGrid.innerHTML = html;
-    console.log('✅ Today\'s predictions displayed');
-}
+        const league = (pred.league || 'Europa League').trim();
 
-// ===== UPDATE SHOW MORE PREDICTIONS =====
-function updateMorePredictions(predictionsData) {
-    console.log('📋 Updating "Show More" predictions...');
-    
-    const moreContainer = document.getElementById('morePredictions');
-    if (!moreContainer) {
-        console.error('❌ More predictions container not found');
-        return;
-    }
-
-    // Check if we have data
-    if (!predictionsData || !predictionsData.predictions || predictionsData.predictions.length <= 4) {
-        console.log('⚠️ Not enough predictions for "Show More"');
-        moreContainer.innerHTML = '<p style="text-align:center; padding:20px; color:#FF6B35;">No additional predictions available</p>';
-        return;
-    }
-
-    console.log(`📋 Loading predictions 5-${predictionsData.predictions.length} for "Show More"`);
-    
-    // Create new grid for additional predictions
-    let html = '<div class="predictions-grid" style="margin-top: 40px;">';
-    
-    // Start from index 4 (prediction 5)
-    predictionsData.predictions.slice(4).forEach((pred, index) => {
-        const actualIndex = index + 5; // Prediction number (5, 6, 7...)
-        
-        // Clean up data
-        const team1Name = (pred.team1?.name || 'Team 1').trim();
-        const team2Name = (pred.team2?.name || 'Team 2').trim();
-        const team1Code = pred.team1?.code || team1Name.substring(0, 3).toUpperCase();
-        const team2Code = pred.team2?.code || team2Name.substring(0, 3).toUpperCase();
-        const league = (pred.league || 'Europa League').trim() + ' 🇪🇺';
-        
         html += `
             <div class="match-card">
                 <div class="match-header">
@@ -420,7 +339,7 @@ function updateMorePredictions(predictionsData) {
                 </div>
                 <div class="prediction">
                     <span class="prediction-label">RMAME TIP:</span>
-                    <span class="prediction-value">${pred.prediction || '1X'}</span>
+                    <span class="prediction-value">${getPredictionText(pred.prediction)}</span>
                     <span class="prediction-odd">@${pred.odds || '1.00'}</span>
                 </div>
                 <div class="confidence">
@@ -432,34 +351,164 @@ function updateMorePredictions(predictionsData) {
             </div>
         `;
     });
-    
+
+    predictionsGrid.innerHTML = html;
+    console.log('✅ Today\'s predictions displayed');
+}
+
+// ===== UPDATE SHOW MORE PREDICTIONS =====
+function updateMorePredictions(predictionsData) {
+    console.log('📋 Updating "Show More" predictions...');
+
+    const moreContainer = document.getElementById('morePredictions');
+    if (!moreContainer) {
+        console.error('❌ More predictions container not found');
+        return;
+    }
+
+    // Check if we have data
+    if (!predictionsData || !predictionsData.predictions || predictionsData.predictions.length <= 4) {
+        console.log('⚠️ Not enough predictions for "Show More"');
+        moreContainer.innerHTML = '<p style="text-align:center; padding:20px; color:#FF6B35;">No additional predictions available</p>';
+        return;
+    }
+
+    console.log(`📋 Loading predictions 5-${predictionsData.predictions.length} for "Show More"`);
+
+    // Create new grid for additional predictions
+    let html = '<div class="predictions-grid" style="margin-top: 40px;">';
+
+    // Start from index 4 (prediction 5)
+    predictionsData.predictions.slice(4).forEach((pred, index) => {
+        const actualIndex = index + 5; // Prediction number (5, 6, 7...)
+
+        // Clean up data
+        const team1Name = (pred.team1?.name || 'Team 1').trim();
+        const team2Name = (pred.team2?.name || 'Team 2').trim();
+        const team1Code = pred.team1?.code || team1Name.substring(0, 3).toUpperCase();
+        const team2Code = pred.team2?.code || team2Name.substring(0, 3).toUpperCase();
+        const league = (pred.league || 'Europa League').trim();
+
+        html += `
+            <div class="match-card">
+                <div class="match-header">
+                    <span class="match-league"><i class="fas fa-trophy"></i> ${league}</span>
+                    <span class="match-time">${pred.time || '20:45'}</span>
+                </div>
+                <div class="teams">
+                    <div class="team">
+                        <div class="team-logo" style="background-color: #${getTeamColor(team1Code)}; color: white;">${team1Code}</div>
+                        <span class="team-name">${team1Name}</span>
+                    </div>
+                    <div class="vs">VS</div>
+                    <div class="team">
+                        <div class="team-logo" style="background-color: #${getTeamColor(team2Code)}; color: white;">${team2Code}</div>
+                        <span class="team-name">${team2Name}</span>
+                    </div>
+                </div>
+                <div class="prediction">
+                    <span class="prediction-label">RMAME TIP:</span>
+                    <span class="prediction-value">${getPredictionText(pred.prediction)}</span>
+                    <span class="prediction-odd">@${pred.odds || '1.00'}</span>
+                </div>
+                <div class="confidence">
+                    <div class="confidence-bar">
+                        <div class="confidence-fill" style="width: ${pred.confidence || 70}%"></div>
+                    </div>
+                    <span>${pred.confidence || 70}% Confidence</span>
+                </div>
+            </div>
+        `;
+    });
+
     html += '</div>';
     moreContainer.innerHTML = html;
     console.log(`✅ "Show More" section updated with ${predictionsData.predictions.length - 4} additional predictions`);
 }
 
-// Helper function for team colors
-function getTeamColor(teamCode) {
-    const colors = {
-        'LUD': '0000FF', 'PAO': 'FF0000', 'MID': '008000', 'GEN': 'FFA500',
-        'NIC': 'FF69B4', 'BRA': '800080', 'STU': '000080', 'MAC': 'FFD700',
-        'UTR': '00CED1', 'NOT': 'DC143C', 'YOU': '32CD32', 'LIL': '8A2BE2',
-        'SAM': 'FF4500', 'AEK': '0000CD', 'SHK': 'FF1493', 'SLO': '2E8B57',
-        'HAM': 'FF6347', 'SHA': '4682B4', 'CRE': '8B0000'
-    };
-    return colors[teamCode] || '333333';
+// ===== UPDATE WINNING EXAMPLES (NEW FUNCTION) =====
+function updateWinningExamples(predictionsData) {
+    console.log('💰 Updating winning examples...');
+    
+    // First, try to find existing winning-examples container
+    let examplesContainer = document.querySelector('.winning-examples');
+    
+    // If it doesn't exist, create it and insert it in the right place
+    if (!examplesContainer) {
+        console.log('📦 Creating winning-examples container...');
+        
+        // Find the predictions section
+        const predictionsSection = document.querySelector('.predictions-section .container');
+        if (!predictionsSection) {
+            console.error('❌ Predictions section not found');
+            return;
+        }
+        
+        // Create the winning examples container
+        examplesContainer = document.createElement('div');
+        examplesContainer.className = 'winning-examples';
+        
+        // Insert it after the morePredictions div
+        const morePredictionsDiv = document.getElementById('morePredictions');
+        if (morePredictionsDiv) {
+            morePredictionsDiv.insertAdjacentElement('afterend', examplesContainer);
+        } else {
+            // If morePredictions doesn't exist, add at end of container
+            predictionsSection.appendChild(examplesContainer);
+        }
+    }
+
+    // Check if we have winning examples
+    if (!predictionsData.winningExamples || !Array.isArray(predictionsData.winningExamples)) {
+        console.log('⚠️ No winning examples data');
+        examplesContainer.innerHTML = '<p style="text-align:center; padding:20px; color:#FF6B35;">No winning examples available</p>';
+        return;
+    }
+
+    // Create HTML for winning examples
+    let html = `
+        <div class="examples-header">
+            <h3><i class="fas fa-calculator"></i> ${predictionsData.totalPredictions || 9}-Match Accumulator Calculator</h3>
+            <p>Total Odds: <strong>${predictionsData.totalOdds || '26.07'}</strong></p>
+        </div>
+        <div class="examples-grid">
+    `;
+
+    predictionsData.winningExamples.forEach((example, index) => {
+        html += `
+            <div class="example-item">
+                <div class="example-stake">
+                    <span>Stake:</span>
+                    <strong>$${example.stake}</strong>
+                </div>
+                <div class="example-win">
+                    <span>Potential Win:</span>
+                    <strong class="won">$${example.win}</strong>
+                </div>
+            </div>
+        `;
+    });
+
+    html += `
+        </div>
+        <div class="profit-note">
+            <p><i class="fas fa-chart-line"></i> ${predictionsData.totalPredictions || 9}-match accumulator = ${((parseFloat(predictionsData.totalOdds || 26.07) - 1) * 100).toFixed(2)}% PROFIT!</p>
+        </div>
+    `;
+
+    examplesContainer.innerHTML = html;
+    console.log('✅ Winning examples updated and placed correctly');
 }
 
 // ===== UPDATE YESTERDAY RESULTS =====
 function updateYesterdayResults(resultsData) {
-    // This function updates results section
     console.log('📊 Yesterday results updated');
 }
 
 // ===== UPDATE RESULTS TABLE (FIXED - NO CACHE) =====
 function updateResultsTable(results) {
     console.log('📊 Updating results table with FRESH data...');
-    
+
     const tableBody = document.getElementById('results-table-body');
     if (!tableBody) {
         console.error('❌ Results table body not found');
@@ -477,15 +526,15 @@ function updateResultsTable(results) {
     }
 
     console.log(`✅ Building ${results.length} FRESH rows from scratch`);
-    
+
     // Generate UNIQUE HTML with timestamp to prevent caching
     const uniqueId = Date.now();
     let html = '';
-    
+
     results.forEach((result, index) => {
         // Create unique ID for each row to prevent cache matching
         const rowId = `result-${uniqueId}-${index}`;
-        
+
         html += `
             <div class="table-row ${result.outcome || ''}" id="${rowId}" data-timestamp="${uniqueId}">
                 <div>${result.fixture || 'No fixture'}</div>
@@ -499,10 +548,10 @@ function updateResultsTable(results) {
 
     // Set the COMPLETELY NEW HTML
     tableBody.innerHTML = html;
-    
+
     // Remove any old rows that might still exist
     removeOldTableRows(uniqueId);
-    
+
     console.log(`✅ Results table updated with ${results.length} FRESH rows (ID: ${uniqueId})`);
 }
 
@@ -518,10 +567,38 @@ function removeOldTableRows(currentTimestamp) {
     });
 }
 
+// ===== HELPER FUNCTIONS =====
+
+// Helper function for team colors
+function getTeamColor(teamCode) {
+    const colors = {
+        'LUD': '0000FF', 'PAO': 'FF0000', 'MID': '008000', 'GEN': 'FFA500',
+        'NIC': 'FF69B4', 'BRA': '800080', 'STU': '000080', 'MAC': 'FFD700',
+        'UTR': '00CED1', 'NOT': 'DC143C', 'YOU': '32CD32', 'LIL': '8A2BE2',
+        'SAM': 'FF4500', 'AEK': '0000CD', 'SHK': 'FF1493', 'SLO': '2E8B57',
+        'HAM': 'FF6347', 'SHA': '4682B4', 'CRE': '8B0000',
+        'SCH': '0000FF', 'ST.': 'FF0000', 'CFR': '0000CD', 'CSI': 'FF0000',
+        'ROU': '0000FF', 'QUE': 'FF0000', 'TOP': '008000', 'ADO': 'FF0000',
+        'PAU': '0000FF', 'AMI': 'FF0000', 'AAR': '0000CD', 'ETO': 'FF0000',
+        'COL': '0000FF', 'BAN': 'FF0000', 'PSG': '0000CD', 'MON': 'FF0000'
+    };
+    return colors[teamCode] || '333333';
+}
+
+// Helper function to get prediction text
+function getPredictionText(predictionCode) {
+    if (!predictionCode) return 'Home Win';
+    
+    if (predictionCode === '1') return 'Home Win';
+    if (predictionCode === '2') return 'Away Win';
+    if (predictionCode === 'X') return 'Draw';
+    return predictionCode;
+}
+
 // ===== FALLBACK DATA =====
 function loadFallbackData() {
     console.log('📋 Loading fallback data');
-    
+
     // Update top prediction with fallback
     const topContent = document.getElementById('top-prediction-content');
     if (topContent) {
@@ -586,7 +663,7 @@ function loadFallbackData() {
     // Update badge and subtitle
     const badge = document.getElementById('top-badge');
     if (badge) badge.innerHTML = '<i class="fas fa-fire"></i> 87% CONFIDENCE • MEDIUM RISK';
-    
+
     const subtitle = document.getElementById('top-subtitle');
     if (subtitle) subtitle.textContent = "Today's best betting opportunity with 87% confidence";
 }
@@ -705,7 +782,7 @@ function setupSubscriptionForm() {
         const packageSelect = this.querySelector('select');
         const packageType = packageSelect?.value || '';
         const packageText = packageSelect?.options[packageSelect.selectedIndex]?.text || '';
-        
+
         // Get selected payment method
         const paymentMethod = this.querySelector('input[name="payment"]:checked')?.value || 'mobile-money';
         const paymentText = paymentMethod === 'mobile-money' ? 'Mobile Money' : 'Bank Transfer';
@@ -725,7 +802,7 @@ Please send payment details.`;
         const whatsappNumber = '251979380726';
         const encodedMessage = encodeURIComponent(message);
         window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
-        
+
         // Show confirmation
         setTimeout(() => {
             alert('✅ Subscription request sent! Check WhatsApp for payment details.');
@@ -787,15 +864,10 @@ function hideLoader() {
     }
 }
 
-// ===== INITIALIZE =====
-document.addEventListener('DOMContentLoaded', function() {
-    console.log('🚀 Website loading...');
-    initializeWebsite();
-});
 // ===== FIX INLINE STYLES FROM CONTROL PANEL =====
 function fixInlineStyles() {
     console.log('🎨 Fixing inline styles from control panel...');
-    
+
     // Fix results table
     const tableRows = document.querySelectorAll('.table-row');
     tableRows.forEach(row => {
@@ -803,7 +875,7 @@ function fixInlineStyles() {
             row.removeAttribute('style');
         }
     });
-    
+
     // Fix status colors
     const statusElements = document.querySelectorAll('.status');
     statusElements.forEach(el => {
@@ -811,7 +883,7 @@ function fixInlineStyles() {
             el.removeAttribute('style');
         }
     });
-    
+
     // Fix stat boxes
     const statBoxes = document.querySelectorAll('.stat-box');
     statBoxes.forEach(box => {
@@ -819,9 +891,15 @@ function fixInlineStyles() {
             box.removeAttribute('style');
         }
     });
-    
+
     console.log('✅ Inline styles fixed');
 }
 
 // Run after page loads
 setTimeout(fixInlineStyles, 1000);
+
+// ===== INITIALIZE =====
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('🚀 Website loading...');
+    initializeWebsite();
+});
