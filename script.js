@@ -33,7 +33,7 @@ function initializeWebsite() {
     setupSubscriptionForm();
     setupSmoothScrolling();
     setupVisitorCounter();
-    clearHardcodedContent();  // <-- ADDED THIS LINE
+    clearHardcodedContent();  // <-- CHANGE 1: ADDED THIS LINE
     hideLoader();
 
     // Load data ONCE
@@ -46,7 +46,7 @@ function initializeWebsite() {
 // ===== CLEAR HARDCODED CONTENT =====
 function clearHardcodedContent() {
     console.log('🧹 Marking hardcoded content for update');
-    // Add attribute to help with caching
+    // Just adds an attribute to help with caching
     document.querySelectorAll('.stat-value, .stat-box p').forEach(el => {
         el.setAttribute('data-updated', 'true');
     });
@@ -62,35 +62,52 @@ function overrideHardcodedStats(resultsData) {
     }
     
     const stats = resultsData.stats;
+    
+    // Update stat boxes if they exist
     const statBoxes = document.querySelectorAll('.stat-box');
     
     if (statBoxes.length >= 4) {
         // Box 1: Yesterday's Record
-        const recordValue = statBoxes[0].querySelector('.stat-value');
-        if (recordValue) recordValue.textContent = stats.record || '7-0-3';
+        const recordBox = statBoxes[0];
+        const recordValue = recordBox.querySelector('.stat-value');
+        if (recordValue) {
+            recordValue.textContent = stats.record || '7-0-3';
+        }
         
         // Box 2: Win Rate
-        const winRateValue = statBoxes[1].querySelector('.stat-value');
-        const winRateLabel = statBoxes[1].querySelector('p');
-        if (winRateValue) winRateValue.textContent = stats.winRate || '70.0%';
-        if (winRateLabel) winRateLabel.innerHTML = `${stats.wins || 7}/${stats.total || 10} Wins`;
+        const winRateBox = statBoxes[1];
+        const winRateValue = winRateBox.querySelector('.stat-value');
+        const winRateLabel = winRateBox.querySelector('p');
+        if (winRateValue) {
+            winRateValue.textContent = stats.winRate || '70.0%';
+        }
+        if (winRateLabel) {
+            winRateLabel.innerHTML = `${stats.wins || 7}/${stats.total || 10} Wins`;
+        }
         
         // Box 3: Total Odds
-        const oddsValue = statBoxes[2].querySelector('.stat-value');
-        if (oddsValue) oddsValue.textContent = stats.totalOdds || '65.18';
+        const oddsBox = statBoxes[2];
+        const oddsValue = oddsBox.querySelector('.stat-value');
+        if (oddsValue) {
+            oddsValue.textContent = stats.totalOdds || '65.18';
+        }
         
         // Box 4: Slip Status
-        const statusValue = statBoxes[3].querySelector('.stat-value');
-        const statusLabel = statBoxes[3].querySelector('p');
+        const statusBox = statBoxes[3];
+        const statusValue = statusBox.querySelector('.stat-value');
+        const statusLabel = statusBox.querySelector('p');
         if (statusValue) {
             statusValue.textContent = stats.status || 'Good';
+            // Update color
             if (stats.status === 'Lost') {
                 statusValue.style.color = '#FF6B6B';
             } else {
                 statusValue.style.color = '#00E6A1';
             }
         }
-        if (statusLabel) statusLabel.innerHTML = `${stats.losses || 3} losses broke accumulator`;
+        if (statusLabel) {
+            statusLabel.innerHTML = `${stats.losses || 3} losses broke accumulator`;
+        }
     }
     
     // Update analysis text
@@ -110,43 +127,8 @@ function overrideHardcodedStats(resultsData) {
     if (resultsSubtitle && resultsData.subtitle) {
         resultsSubtitle.textContent = resultsData.subtitle;
     }
-}
-
-    // ===== REMOVE WRONG WINNING CALCULATIONS =====
-function removeWrongWinningCalculations() {
-    console.log('🔄 Looking for old $1,639 calculation...');
     
-    // Wait for page to load completely
-    setTimeout(() => {
-        // Find ONLY the paragraph that says "12 Match Accumulator"
-        const allParagraphs = document.querySelectorAll('p');
-        
-        allParagraphs.forEach(p => {
-            const text = p.textContent || '';
-            
-            // ONLY target the EXACT paragraph that has this text:
-            if (text === '🔥 12 Match Accumulator: Total Odds: 163.9 - Potential 16,390% Return!') {
-                console.log('✅ Found and removing old calculation note');
-                p.remove();
-            }
-        });
-        
-        // Find ONLY the calculation grid with $1,639.00
-        const calcItems = document.querySelectorAll('.calc-item');
-        
-        calcItems.forEach(item => {
-            const text = item.textContent || '';
-            if (text.includes('$1,639.00')) {
-                console.log('✅ Found and removing $1,639.00 calculation');
-                // Remove the parent container (the whole calculation grid)
-                const parent = item.closest('.winning-calculation, .calculation-grid');
-                if (parent) {
-                    parent.remove();
-                }
-            }
-        });
-        
-    }, 2000); // Wait 2 seconds to be safe
+    console.log('✅ Hardcoded stats overridden');
 }
 
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
@@ -182,15 +164,15 @@ async function loadAllData() {
         if (data.todayPredictions) {
             updateTodayPredictions(data.todayPredictions);
             updateMorePredictions(data.todayPredictions);
-            updateWinningExamples(data.todayPredictions);
-            removeWrongWinningCalculations(); // <-- ADDED THIS LINE
+            updateWinningExamples(data.todayPredictions); // ADDED THIS LINE
         }
 
         if (data.yesterdayResults) {
             // Clear results table COMPLETELY before adding new data
             clearResultsTableCompletely();
 
-            overrideHardcodedStats(data.yesterdayResults);  // <-- ADDED THIS LINE
+            // CHANGE 2: ADDED THIS LINE - Override hardcoded stats
+            overrideHardcodedStats(data.yesterdayResults);
             updateYesterdayResults(data.yesterdayResults);
 
             // Wait a tiny bit to ensure previous data is gone
