@@ -1,7 +1,7 @@
 {
   "lastUpdated": "2025-12-11T10:24",
   "hero": {
-    "date": "December 12, 2025",
+    "date": "December 13, 2025",
     "title": "103.12 ACCUMULATOR WON",
     "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
     "stats": [
@@ -63,233 +63,503 @@
     }
   },
   "topPrediction": {
-    "date": "December 12, 2025",
+    "date": "December 13, 2025",
     "title": "TOP PREDICTION OF THE DAY",
-    "subtitle": "December 12, 2025 - France National League Special",
-    "badge": "72% CONFIDENCE • MEDIUM  RISK",
+    "subtitle": "December 13, 2025 - Portugal Liga Portugal Special",
+    "badge": "77% CONFIDENCE • MEDIUM  RISK",
     "mainMatch": {
-      "league": "National  🇫🇷",
-      "time": "21:30",
+      "league": "Portuguese Primeira Liga 🇵🇹",
+      "time": "18:30",
       "team1": {
-        "name": "Stade Briochin",
-        "code": "STA",
+        "name": "Casa Pia ",
+        "code": "CAS",
         "color": "#0000ff",
-        "colorClass": "team-color-stade-briochin"
+        "colorClass": "team-color-casa-pia-"
       },
       "team2": {
-        "name": "Aubagne",
-        "code": "AUB",
+        "name": "Gil Vicente ",
+        "code": "GIL",
         "color": "#034694",
-        "colorClass": "team-color-aubagne"
+        "colorClass": "team-color-gil-vicente-"
       },
       "prediction": "2",
-      "odds": 2.5,
-      "confidence": 72,
+      "odds": 2.23,
+      "confidence": 77,
       "riskLevel": "MEDIUM RISK"
     }
   },
   "todayPredictions": {
-    "subtitle": "December 12, 2025 - 9 Premium Picks with 26.07 Total Odds",
-    "totalPredictions": 9,
-    "totalOdds": "26.07",
+    "subtitle": "December 13, 2025 - 20 Premium Picks with 2420055.15 Total Odds",
+    "totalPredictions": 20,
+    "totalOdds": "2420055.15",
     "predictions": [
       {
-        "league": "Austria 2. Liga",
-        "time": "20:00",
-        "fixture": "Schwarz-Weib Bregenz  v St. Polten",
+        "league": "Australia A. League ",
+        "time": "09:00 ",
+        "fixture": "Western Sydney Wonderers v Brisbane Roar",
         "team1": {
-          "name": "Schwarz-Weib Bregenz ",
-          "code": "SCH",
-          "colorClass": "team-color-schwarz-weib-bregenz-"
+          "name": "Western Sydney Wonderers",
+          "code": "WES",
+          "colorClass": "team-color-western-sydney-wonderers"
         },
         "team2": {
-          "name": "St. Polten",
-          "code": "ST.",
-          "colorClass": "team-color-st.-polten"
+          "name": "Brisbane Roar",
+          "code": "BRI",
+          "colorClass": "team-color-brisbane-roar"
+        },
+        "prediction": "1",
+        "odds": 2,
+        "confidence": 40
+      },
+      {
+        "league": "Australia A. League ",
+        "time": "11:35",
+        "fixture": "Melbourne Victory FC v Adelaide United ",
+        "team1": {
+          "name": "Melbourne Victory FC",
+          "code": "MEL",
+          "colorClass": "team-color-melbourne-victory-fc"
+        },
+        "team2": {
+          "name": "Adelaide United ",
+          "code": "ADE",
+          "colorClass": "team-color-adelaide-united-"
+        },
+        "prediction": "1",
+        "odds": 2.2,
+        "confidence": 57
+      },
+      {
+        "league": "Romania Liga II",
+        "time": "12:00",
+        "fixture": "CSM Satu Mare v Afumati",
+        "team1": {
+          "name": "CSM Satu Mare",
+          "code": "CSM",
+          "colorClass": "team-color-csm-satu-mare"
+        },
+        "team2": {
+          "name": "Afumati",
+          "code": "AFU",
+          "colorClass": "team-color-afumati"
         },
         "prediction": "2",
-        "odds": 1.57,
+        "odds": 2.15,
         "confidence": 80
       },
       {
-        "league": "Romania Liga I",
-        "time": "21:30",
-        "fixture": "CFR Cluj v Csikszereda",
+        "league": "Turkey 1.Lig",
+        "time": "13:30",
+        "fixture": "Serik Belediyespor v Manisa BBSK",
         "team1": {
-          "name": "CFR Cluj",
-          "code": "CFR",
-          "colorClass": "team-color-cfr-cluj"
+          "name": "Serik Belediyespor",
+          "code": "SER",
+          "colorClass": "team-color-serik-belediyespor"
         },
         "team2": {
-          "name": "Csikszereda",
-          "code": "CSI",
-          "colorClass": "team-color-csikszereda"
+          "name": "Manisa BBSK",
+          "code": "MAN",
+          "colorClass": "team-color-manisa-bbsk"
         },
         "prediction": "1",
-        "odds": 1.4,
+        "odds": 2.17,
+        "confidence": 67
+      },
+      {
+        "league": "English League Two",
+        "time": "15:30",
+        "fixture": "Bristol Rovers v Swindon Town",
+        "team1": {
+          "name": "Bristol Rovers",
+          "code": "BRI",
+          "colorClass": "team-color-bristol-rovers"
+        },
+        "team2": {
+          "name": "Swindon Town",
+          "code": "SWI",
+          "colorClass": "team-color-swindon-town"
+        },
+        "prediction": "2",
+        "odds": 2.3,
+        "confidence": 85
+      },
+      {
+        "league": "Cyprus second League ",
+        "time": "15:30",
+        "fixture": "Ahinoras/Onisilos v ASIL Lysi",
+        "team1": {
+          "name": "Ahinoras/Onisilos",
+          "code": "AHI",
+          "colorClass": "team-color-ahinoras/onisilos"
+        },
+        "team2": {
+          "name": "ASIL Lysi",
+          "code": "ASI",
+          "colorClass": "team-color-asil-lysi"
+        },
+        "prediction": "2",
+        "odds": 1.92,
         "confidence": 60
       },
       {
-        "league": "France National ",
-        "time": "22:00",
-        "fixture": "Rouen v Quevilly Rouen",
+        "league": "Albania First Division ",
+        "time": "15:30",
+        "fixture": "Laci v Skenderbeu",
         "team1": {
-          "name": "Rouen",
-          "code": "ROU",
-          "colorClass": "team-color-rouen"
+          "name": "Laci",
+          "code": "LAC",
+          "colorClass": "team-color-laci"
         },
         "team2": {
-          "name": "Quevilly Rouen",
-          "code": "QUE",
-          "colorClass": "team-color-quevilly-rouen"
+          "name": "Skenderbeu",
+          "code": "SKE",
+          "colorClass": "team-color-skenderbeu"
         },
         "prediction": "1",
-        "odds": 1.55,
+        "odds": 2.14,
+        "confidence": 45
+      },
+      {
+        "league": "Turkey Super Lig ",
+        "time": "17:00",
+        "fixture": "Kayserispor v Alanyaspor",
+        "team1": {
+          "name": "Kayserispor",
+          "code": "KAY",
+          "colorClass": "team-color-kayserispor"
+        },
+        "team2": {
+          "name": "Alanyaspor",
+          "code": "ALA",
+          "colorClass": "team-color-alanyaspor"
+        },
+        "prediction": "2",
+        "odds": 2.2,
+        "confidence": 65
+      },
+      {
+        "league": "Portugal Liga Portugal 2",
+        "time": "17:00",
+        "fixture": "Academico Viseu v Farense",
+        "team1": {
+          "name": "Academico Viseu",
+          "code": "ACA",
+          "colorClass": "team-color-academico-viseu"
+        },
+        "team2": {
+          "name": "Farense",
+          "code": "FAR",
+          "colorClass": "team-color-farense"
+        },
+        "prediction": "1",
+        "odds": 2.21,
+        "confidence": 58
+      },
+      {
+        "league": "English League Two ",
+        "time": "18:00",
+        "fixture": "Barnsley  v Leyton Orient ",
+        "team1": {
+          "name": "Barnsley ",
+          "code": "BAR",
+          "colorClass": "team-color-barnsley-"
+        },
+        "team2": {
+          "name": "Leyton Orient ",
+          "code": "LEY",
+          "colorClass": "team-color-leyton-orient-"
+        },
+        "prediction": "1",
+        "odds": 2.19,
+        "confidence": 45
+      },
+      {
+        "league": "Scotland League One ",
+        "time": "18:00",
+        "fixture": "Montrose  v Stenhousemuir",
+        "team1": {
+          "name": "Montrose ",
+          "code": "MON",
+          "colorClass": "team-color-montrose-"
+        },
+        "team2": {
+          "name": "Stenhousemuir",
+          "code": "STE",
+          "colorClass": "team-color-stenhousemuir"
+        },
+        "prediction": "2",
+        "odds": 2.2,
+        "confidence": 60
+      },
+      {
+        "league": "English Championships ",
+        "time": "18:00",
+        "fixture": "Middlesbrough v QPR",
+        "team1": {
+          "name": "Middlesbrough",
+          "code": "MID",
+          "colorClass": "team-color-middlesbrough"
+        },
+        "team2": {
+          "name": "QPR",
+          "code": "QPR",
+          "colorClass": "team-color-qpr"
+        },
+        "prediction": "1",
+        "odds": 1.97,
+        "confidence": 62
+      },
+      {
+        "league": "English League One ",
+        "time": "18:00",
+        "fixture": "Bradford City  v Reading ",
+        "team1": {
+          "name": "Bradford City ",
+          "code": "BRA",
+          "colorClass": "team-color-bradford-city-"
+        },
+        "team2": {
+          "name": "Reading ",
+          "code": "REA",
+          "colorClass": "team-color-reading-"
+        },
+        "prediction": "1",
+        "odds": 1.91,
         "confidence": 80
       },
       {
-        "league": "Netherlands Eerste divisie",
-        "time": "22:00",
-        "fixture": "Top Oss v ADO Den Haag",
+        "league": "Northern Ireland NIFL Championships ",
+        "time": "18:00",
+        "fixture": "Ards v Newington Youth",
         "team1": {
-          "name": "Top Oss",
-          "code": "TOP",
-          "colorClass": "team-color-top-oss"
+          "name": "Ards",
+          "code": "ARD",
+          "colorClass": "team-color-ards"
         },
         "team2": {
-          "name": "ADO Den Haag",
-          "code": "ADO",
-          "colorClass": "team-color-ado-den-haag"
+          "name": "Newington Youth",
+          "code": "NEW",
+          "colorClass": "team-color-newington-youth"
         },
         "prediction": "2",
-        "odds": 1.35,
-        "confidence": 72
-      },
-      {
-        "league": "France Ligue 2",
-        "time": "22:00",
-        "fixture": "Pau v Amiens SC",
-        "team1": {
-          "name": "Pau",
-          "code": "PAU",
-          "colorClass": "team-color-pau"
-        },
-        "team2": {
-          "name": "Amiens SC",
-          "code": "AMI",
-          "colorClass": "team-color-amiens-sc"
-        },
-        "prediction": "1",
-        "odds": 1.53,
-        "confidence": 71
-      },
-      {
-        "league": "Switzerland Challenge League ",
-        "time": "22:15",
-        "fixture": "Aarau  v Etoile Carouge",
-        "team1": {
-          "name": "Aarau ",
-          "code": "AAR",
-          "colorClass": "team-color-aarau-"
-        },
-        "team2": {
-          "name": "Etoile Carouge",
-          "code": "ETO",
-          "colorClass": "team-color-etoile-carouge"
-        },
-        "prediction": "1",
-        "odds": 1.51,
-        "confidence": 65
-      },
-      {
-        "league": "Northern Ireland NIFL Premiership",
-        "time": "22:45",
-        "fixture": "Coleraine v Bangor",
-        "team1": {
-          "name": "Coleraine",
-          "code": "COL",
-          "colorClass": "team-color-coleraine"
-        },
-        "team2": {
-          "name": "Bangor",
-          "code": "BAN",
-          "colorClass": "team-color-bangor"
-        },
-        "prediction": "1",
-        "odds": 1.28,
-        "confidence": 65
-      },
-      {
-        "league": "France Feminine Division 1",
-        "time": "23:00",
-        "fixture": "PSG  Women v Montpellier  Women",
-        "team1": {
-          "name": "PSG  Women",
-          "code": "PSG",
-          "colorClass": "team-color-psg-women"
-        },
-        "team2": {
-          "name": "Montpellier  Women",
-          "code": "MON",
-          "colorClass": "team-color-montpellier-women"
-        },
-        "prediction": "1",
-        "odds": 1.35,
+        "odds": 2.15,
         "confidence": 60
       },
       {
-        "league": "Gibraltar Premier Division ",
-        "time": "23",
-        "fixture": "Mons Calpe v St. Joseph's",
+        "league": "Portugal Liga Portugal ",
+        "time": "18:30",
+        "fixture": "Casa Pia v Gil Vicente",
         "team1": {
-          "name": "Mons Calpe",
-          "code": "MON",
-          "colorClass": "team-color-mons-calpe"
+          "name": "Casa Pia",
+          "code": "CAS",
+          "colorClass": "team-color-casa-pia"
         },
         "team2": {
-          "name": "St. Joseph's",
-          "code": "ST.",
-          "colorClass": "team-color-st.-joseph's"
+          "name": "Gil Vicente",
+          "code": "GIL",
+          "colorClass": "team-color-gil-vicente"
         },
         "prediction": "2",
-        "odds": 1.42,
-        "confidence": 41
+        "odds": 2.23,
+        "confidence": 75
+      },
+      {
+        "league": "Netherlands Eredivisie",
+        "time": "18:30",
+        "fixture": "Telstar v NEC",
+        "team1": {
+          "name": "Telstar",
+          "code": "TEL",
+          "colorClass": "team-color-telstar"
+        },
+        "team2": {
+          "name": "NEC",
+          "code": "NEC",
+          "colorClass": "team-color-nec"
+        },
+        "prediction": "2",
+        "odds": 1.97,
+        "confidence": 80
+      },
+      {
+        "league": "Germany 3.Liga",
+        "time": "12:30",
+        "fixture": "Verl v Rot-Weiss Essen",
+        "team1": {
+          "name": "Verl",
+          "code": "VER",
+          "colorClass": "team-color-verl"
+        },
+        "team2": {
+          "name": "Rot-Weiss Essen",
+          "code": "ROT",
+          "colorClass": "team-color-rot-weiss-essen"
+        },
+        "prediction": "1",
+        "odds": 2.1,
+        "confidence": 40
+      },
+      {
+        "league": "Greece Super League ",
+        "time": "19:00",
+        "fixture": "OFI Crete v Panserraikos",
+        "team1": {
+          "name": "OFI Crete",
+          "code": "OFI",
+          "colorClass": "team-color-ofi-crete"
+        },
+        "team2": {
+          "name": "Panserraikos",
+          "code": "PAN",
+          "colorClass": "team-color-panserraikos"
+        },
+        "prediction": "1",
+        "odds": 1.85,
+        "confidence": 40
+      },
+      {
+        "league": "Austria BundesLiga",
+        "time": "19:00",
+        "fixture": "Grazer AK v Lask Linz",
+        "team1": {
+          "name": "Grazer AK",
+          "code": "GRA",
+          "colorClass": "team-color-grazer-ak"
+        },
+        "team2": {
+          "name": "Lask Linz",
+          "code": "LAS",
+          "colorClass": "team-color-lask-linz"
+        },
+        "prediction": "2",
+        "odds": 2.03,
+        "confidence": 70
+      },
+      {
+        "league": "Italy Serie B",
+        "time": "19:15",
+        "fixture": "Catanzaro  v Avellino",
+        "team1": {
+          "name": "Catanzaro ",
+          "code": "CAT",
+          "colorClass": "team-color-catanzaro-"
+        },
+        "team2": {
+          "name": "Avellino",
+          "code": "AVE",
+          "colorClass": "team-color-avellino"
+        },
+        "prediction": "1",
+        "odds": 1.9,
+        "confidence": 52
       }
     ],
     "winningExamples": [
       {
         "stake": 10,
-        "win": "260.70"
+        "win": "24200551.50"
       },
       {
         "stake": 50,
-        "win": "1303.50"
+        "win": "121002757.50"
       },
       {
         "stake": 100,
-        "win": "2607.00"
+        "win": "242005515.00"
       }
     ]
   },
   "yesterdayResults": {
-    "subtitle": "1 Wins out of 1 Predictions",
+    "subtitle": "7 Wins out of 10 Predictions",
     "stats": {
-      "record": "1-0-2",
-      "winRate": "100.0%",
-      "wins": 1,
-      "total": 1,
-      "totalOdds": "12.00",
-      "status": "Poor",
-      "losses": 2
+      "record": "7-0-3",
+      "winRate": "70.0%",
+      "wins": 7,
+      "total": 10,
+      "totalOdds": "65.18",
+      "status": "Good",
+      "losses": 3
     },
-    "analysis": "Performance with 1 wins out of 1 predictions (100.0% accuracy).",
+    "analysis": "Performance with 7 wins out of 10 predictions (70.0% accuracy).",
     "insight": "Focus on high confidence predictions for better results.",
     "results": [
       {
-        "fixture": "Villarreal v Fc Copenhagen ",
-        "betType": "2/2 (Half time/Full time)",
-        "odds": 12,
-        "result": "2-3",
+        "fixture": "Stade Briochin v Aubagne ",
+        "betType": "2",
+        "odds": 2.5,
+        "result": "1-3",
+        "outcome": "won",
+        "statusClass": "won"
+      },
+      {
+        "fixture": "Schwarz-Weib Bregenz v St. Polten ",
+        "betType": "2",
+        "odds": 1.57,
+        "result": "2-1",
+        "outcome": "lost",
+        "statusClass": "lost"
+      },
+      {
+        "fixture": "CFR Cluj v Csikszereda ",
+        "betType": "1",
+        "odds": 1.4,
+        "result": "3-1",
+        "outcome": "won",
+        "statusClass": "won"
+      },
+      {
+        "fixture": "Rouen v Quevilly Rouen ",
+        "betType": "1",
+        "odds": 1.55,
+        "result": "1-0",
+        "outcome": "won",
+        "statusClass": "won"
+      },
+      {
+        "fixture": "Top Oss v ADO Den Haag ",
+        "betType": "2",
+        "odds": 1.35,
+        "result": "3-4",
+        "outcome": "won",
+        "statusClass": "won"
+      },
+      {
+        "fixture": "Pau v Amiens",
+        "betType": "1",
+        "odds": 1.53,
+        "result": "1-2",
+        "outcome": "lost",
+        "statusClass": "lost"
+      },
+      {
+        "fixture": "Aarau v Etoile Carouge ",
+        "betType": "1",
+        "odds": 1.51,
+        "result": "2-1",
+        "outcome": "won",
+        "statusClass": "won"
+      },
+      {
+        "fixture": "Coleraine v Bangor ",
+        "betType": "1",
+        "odds": 1.28,
+        "result": "2-0",
+        "outcome": "won",
+        "statusClass": "won"
+      },
+      {
+        "fixture": "PSG Women v Montpellier Women ",
+        "betType": "1",
+        "odds": 1.35,
+        "result": "2-2",
+        "outcome": "lost",
+        "statusClass": "lost"
+      },
+      {
+        "fixture": "Mons Calpe v St Joseph's",
+        "betType": "2",
+        "odds": 1.42,
+        "result": "1-3",
         "outcome": "won",
         "statusClass": "won"
       }
