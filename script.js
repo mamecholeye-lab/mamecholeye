@@ -112,8 +112,6 @@ function overrideHardcodedStats(resultsData) {
     }
 }
 
-// ===== REMOVE WRONG WINNING CALCULATIONS =====
-function removeWrongWinningCalculations() {
     // ===== REMOVE WRONG WINNING CALCULATIONS - SIMPLE VERSION =====
 function removeWrongWinningCalculations() {
     console.log('🧹 Simple cleanup of wrong calculations...');
