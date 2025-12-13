@@ -114,27 +114,39 @@ function overrideHardcodedStats(resultsData) {
 
     // ===== REMOVE WRONG WINNING CALCULATIONS =====
 function removeWrongWinningCalculations() {
-    console.log('🔄 Simple cleanup running...');
+    console.log('🔄 Looking for old $1,639 calculation...');
     
-    // Just wait a bit and then remove the specific text
+    // Wait for page to load completely
     setTimeout(() => {
-        // Find all elements
-        const elements = document.querySelectorAll('p, div, span');
+        // Find ONLY the paragraph that says "12 Match Accumulator"
+        const allParagraphs = document.querySelectorAll('p');
         
-        elements.forEach(el => {
-            const text = el.textContent || '';
+        allParagraphs.forEach(p => {
+            const text = p.textContent || '';
             
-            // ONLY remove if it has BOTH: "12 Match" AND "$1,639"
-            // AND is in Today's Predictions section
-            if (text.includes('12 Match') && text.includes('$1,639')) {
-                const parentSection = el.closest('#predictions, .predictions-section');
-                if (parentSection) {
-                    console.log('✅ Removing old calculation');
-                    el.remove();
+            // ONLY target the EXACT paragraph that has this text:
+            if (text === '🔥 12 Match Accumulator: Total Odds: 163.9 - Potential 16,390% Return!') {
+                console.log('✅ Found and removing old calculation note');
+                p.remove();
+            }
+        });
+        
+        // Find ONLY the calculation grid with $1,639.00
+        const calcItems = document.querySelectorAll('.calc-item');
+        
+        calcItems.forEach(item => {
+            const text = item.textContent || '';
+            if (text.includes('$1,639.00')) {
+                console.log('✅ Found and removing $1,639.00 calculation');
+                // Remove the parent container (the whole calculation grid)
+                const parent = item.closest('.winning-calculation, .calculation-grid');
+                if (parent) {
+                    parent.remove();
                 }
             }
         });
-    }, 1000); // Wait 1 second for page to load
+        
+    }, 2000); // Wait 2 seconds to be safe
 }
 
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
