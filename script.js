@@ -112,42 +112,29 @@ function overrideHardcodedStats(resultsData) {
     }
 }
 
-    // ===== REMOVE WRONG WINNING CALCULATIONS - SIMPLE VERSION =====
+    // ===== REMOVE WRONG WINNING CALCULATIONS =====
 function removeWrongWinningCalculations() {
-    console.log('🧹 Simple cleanup of wrong calculations...');
+    console.log('🔄 Simple cleanup running...');
     
-    // Find the predictions section
-    const predictionsSection = document.querySelector('.predictions-section');
-    if (!predictionsSection) return;
-    
-    // Look for the specific hardcoded paragraph
-    const hardcodedParagraph = predictionsSection.querySelector('p.note');
-    
-    if (hardcodedParagraph && hardcodedParagraph.textContent.includes('12 Match Accumulator')) {
-        console.log('🗑️ Removing: "12 Match Accumulator" paragraph');
-        hardcodedParagraph.remove();
-    }
-    
-    // Look for the hardcoded winning-calculation div
-    const hardcodedCalc = predictionsSection.querySelector('.winning-calculation');
-    
-    if (hardcodedCalc && hardcodedCalc.textContent.includes('$1,639.00')) {
-        console.log('🗑️ Removing: "$1,639.00" calculation grid');
-        hardcodedCalc.remove();
-    }
-    
-    // Look for any calculation-grid that has old data
-    const calculationGrids = predictionsSection.querySelectorAll('.calculation-grid');
-    
-    calculationGrids.forEach(grid => {
-        if (grid.textContent.includes('$1,639.00') && 
-            !grid.textContent.includes('242005515')) {
-            console.log('🗑️ Removing old calculation grid');
-            grid.parentElement?.remove();
-        }
-    });
-    
-    console.log('✅ Only removed hardcoded content from Today\'s Predictions');
+    // Just wait a bit and then remove the specific text
+    setTimeout(() => {
+        // Find all elements
+        const elements = document.querySelectorAll('p, div, span');
+        
+        elements.forEach(el => {
+            const text = el.textContent || '';
+            
+            // ONLY remove if it has BOTH: "12 Match" AND "$1,639"
+            // AND is in Today's Predictions section
+            if (text.includes('12 Match') && text.includes('$1,639')) {
+                const parentSection = el.closest('#predictions, .predictions-section');
+                if (parentSection) {
+                    console.log('✅ Removing old calculation');
+                    el.remove();
+                }
+            }
+        });
+    }, 1000); // Wait 1 second for page to load
 }
 
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
