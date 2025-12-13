@@ -33,6 +33,7 @@ function initializeWebsite() {
     setupSubscriptionForm();
     setupSmoothScrolling();
     setupVisitorCounter();
+    clearHardcodedContent();  // <-- CHANGE 1: ADDED THIS LINE
     hideLoader();
 
     // Load data ONCE
@@ -40,6 +41,94 @@ function initializeWebsite() {
         isCurrentlyLoading = false;
         console.log('✅ Website fully initialized');
     });
+}
+
+// ===== CLEAR HARDCODED CONTENT =====
+function clearHardcodedContent() {
+    console.log('🧹 Marking hardcoded content for update');
+    // Just adds an attribute to help with caching
+    document.querySelectorAll('.stat-value, .stat-box p').forEach(el => {
+        el.setAttribute('data-updated', 'true');
+    });
+}
+
+// ===== OVERRIDE HARDCODED STATS =====
+function overrideHardcodedStats(resultsData) {
+    console.log('🎯 Overriding hardcoded stats with JSON data');
+    
+    if (!resultsData || !resultsData.stats) {
+        console.log('⚠️ No stats data found');
+        return;
+    }
+    
+    const stats = resultsData.stats;
+    
+    // Update stat boxes if they exist
+    const statBoxes = document.querySelectorAll('.stat-box');
+    
+    if (statBoxes.length >= 4) {
+        // Box 1: Yesterday's Record
+        const recordBox = statBoxes[0];
+        const recordValue = recordBox.querySelector('.stat-value');
+        if (recordValue) {
+            recordValue.textContent = stats.record || '7-0-3';
+        }
+        
+        // Box 2: Win Rate
+        const winRateBox = statBoxes[1];
+        const winRateValue = winRateBox.querySelector('.stat-value');
+        const winRateLabel = winRateBox.querySelector('p');
+        if (winRateValue) {
+            winRateValue.textContent = stats.winRate || '70.0%';
+        }
+        if (winRateLabel) {
+            winRateLabel.innerHTML = `${stats.wins || 7}/${stats.total || 10} Wins`;
+        }
+        
+        // Box 3: Total Odds
+        const oddsBox = statBoxes[2];
+        const oddsValue = oddsBox.querySelector('.stat-value');
+        if (oddsValue) {
+            oddsValue.textContent = stats.totalOdds || '65.18';
+        }
+        
+        // Box 4: Slip Status
+        const statusBox = statBoxes[3];
+        const statusValue = statusBox.querySelector('.stat-value');
+        const statusLabel = statusBox.querySelector('p');
+        if (statusValue) {
+            statusValue.textContent = stats.status || 'Good';
+            // Update color
+            if (stats.status === 'Lost') {
+                statusValue.style.color = '#FF6B6B';
+            } else {
+                statusValue.style.color = '#00E6A1';
+            }
+        }
+        if (statusLabel) {
+            statusLabel.innerHTML = `${stats.losses || 3} losses broke accumulator`;
+        }
+    }
+    
+    // Update analysis text
+    const analysisParagraph = document.querySelector('.results-analysis p');
+    if (analysisParagraph && resultsData.analysis) {
+        analysisParagraph.innerHTML = resultsData.analysis;
+    }
+    
+    // Update insight text
+    const insightParagraph = document.querySelector('.analysis-tips p');
+    if (insightParagraph && resultsData.insight) {
+        insightParagraph.innerHTML = `<i class="fas fa-lightbulb"></i> <strong>Key Insight:</strong> ${resultsData.insight}`;
+    }
+    
+    // Update subtitle
+    const resultsSubtitle = document.querySelector('.results-section .section-subtitle');
+    if (resultsSubtitle && resultsData.subtitle) {
+        resultsSubtitle.textContent = resultsData.subtitle;
+    }
+    
+    console.log('✅ Hardcoded stats overridden');
 }
 
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
@@ -82,6 +171,8 @@ async function loadAllData() {
             // Clear results table COMPLETELY before adding new data
             clearResultsTableCompletely();
 
+            // CHANGE 2: ADDED THIS LINE - Override hardcoded stats
+            overrideHardcodedStats(data.yesterdayResults);
             updateYesterdayResults(data.yesterdayResults);
 
             // Wait a tiny bit to ensure previous data is gone
@@ -429,25 +520,25 @@ function updateMorePredictions(predictionsData) {
 // ===== UPDATE WINNING EXAMPLES (NEW FUNCTION) =====
 function updateWinningExamples(predictionsData) {
     console.log('💰 Updating winning examples...');
-    
+
     // First, try to find existing winning-examples container
     let examplesContainer = document.querySelector('.winning-examples');
-    
+
     // If it doesn't exist, create it and insert it in the right place
     if (!examplesContainer) {
         console.log('📦 Creating winning-examples container...');
-        
+
         // Find the predictions section
         const predictionsSection = document.querySelector('.predictions-section .container');
         if (!predictionsSection) {
             console.error('❌ Predictions section not found');
             return;
         }
-        
+
         // Create the winning examples container
         examplesContainer = document.createElement('div');
         examplesContainer.className = 'winning-examples';
-        
+
         // Insert it after the morePredictions div
         const morePredictionsDiv = document.getElementById('morePredictions');
         if (morePredictionsDiv) {
@@ -588,7 +679,7 @@ function getTeamColor(teamCode) {
 // Helper function to get prediction text
 function getPredictionText(predictionCode) {
     if (!predictionCode) return 'Home Win';
-    
+
     if (predictionCode === '1') return 'Home Win';
     if (predictionCode === '2') return 'Away Win';
     if (predictionCode === 'X') return 'Draw';
