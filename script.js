@@ -114,40 +114,43 @@ function overrideHardcodedStats(resultsData) {
 
 // ===== REMOVE WRONG WINNING CALCULATIONS =====
 function removeWrongWinningCalculations() {
-    console.log('🧹 Removing wrong winning calculations from Today\'s Predictions...');
+    // ===== REMOVE WRONG WINNING CALCULATIONS - SIMPLE VERSION =====
+function removeWrongWinningCalculations() {
+    console.log('🧹 Simple cleanup of wrong calculations...');
     
-    // Find the predictions section container
-    const predictionsContainer = document.querySelector('.predictions-section .container');
-    if (!predictionsContainer) return;
+    // Find the predictions section
+    const predictionsSection = document.querySelector('.predictions-section');
+    if (!predictionsSection) return;
     
-    // Look for elements that contain the OLD 12-match accumulator text
-    const allElements = predictionsContainer.querySelectorAll('p, div, .premium-offer, .note, .winning-calculation');
+    // Look for the specific hardcoded paragraph
+    const hardcodedParagraph = predictionsSection.querySelector('p.note');
     
-    allElements.forEach(element => {
-        const text = element.textContent || '';
-        
-        // Check if this is the OLD 12-match accumulator content that should ONLY be in Packages section
-        if (text.includes('12 Match Accumulator') || 
-            text.includes('163.9') || 
-            text.includes('16,390%') ||
-            text.includes('$1,639.00') ||
-            text.includes('With $10 Stake')) {
-            
-            console.log('🗑️ Removing wrong calculation from Today\'s Predictions:', text.substring(0, 50));
-            
-            // Check if this element is inside the Packages section
-            const isInPackagesSection = element.closest('#packages, .packages-section');
-            
-            // ONLY remove if it's NOT in the Packages section
-            if (!isInPackagesSection) {
-                element.remove();
-            }
+    if (hardcodedParagraph && hardcodedParagraph.textContent.includes('12 Match Accumulator')) {
+        console.log('🗑️ Removing: "12 Match Accumulator" paragraph');
+        hardcodedParagraph.remove();
+    }
+    
+    // Look for the hardcoded winning-calculation div
+    const hardcodedCalc = predictionsSection.querySelector('.winning-calculation');
+    
+    if (hardcodedCalc && hardcodedCalc.textContent.includes('$1,639.00')) {
+        console.log('🗑️ Removing: "$1,639.00" calculation grid');
+        hardcodedCalc.remove();
+    }
+    
+    // Look for any calculation-grid that has old data
+    const calculationGrids = predictionsSection.querySelectorAll('.calculation-grid');
+    
+    calculationGrids.forEach(grid => {
+        if (grid.textContent.includes('$1,639.00') && 
+            !grid.textContent.includes('242005515')) {
+            console.log('🗑️ Removing old calculation grid');
+            grid.parentElement?.remove();
         }
     });
     
-    console.log('✅ Wrong winning calculations removed');
+    console.log('✅ Only removed hardcoded content from Today\'s Predictions');
 }
-
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
 async function loadAllData() {
     try {
