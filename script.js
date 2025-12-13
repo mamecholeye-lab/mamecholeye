@@ -33,7 +33,7 @@ function initializeWebsite() {
     setupSubscriptionForm();
     setupSmoothScrolling();
     setupVisitorCounter();
-    clearHardcodedContent();  // <-- CHANGE 1: ADDED THIS LINE
+    clearHardcodedContent();  // <-- ADDED THIS LINE
     hideLoader();
 
     // Load data ONCE
@@ -46,7 +46,7 @@ function initializeWebsite() {
 // ===== CLEAR HARDCODED CONTENT =====
 function clearHardcodedContent() {
     console.log('🧹 Marking hardcoded content for update');
-    // Just adds an attribute to help with caching
+    // Add attribute to help with caching
     document.querySelectorAll('.stat-value, .stat-box p').forEach(el => {
         el.setAttribute('data-updated', 'true');
     });
@@ -62,52 +62,35 @@ function overrideHardcodedStats(resultsData) {
     }
     
     const stats = resultsData.stats;
-    
-    // Update stat boxes if they exist
     const statBoxes = document.querySelectorAll('.stat-box');
     
     if (statBoxes.length >= 4) {
         // Box 1: Yesterday's Record
-        const recordBox = statBoxes[0];
-        const recordValue = recordBox.querySelector('.stat-value');
-        if (recordValue) {
-            recordValue.textContent = stats.record || '7-0-3';
-        }
+        const recordValue = statBoxes[0].querySelector('.stat-value');
+        if (recordValue) recordValue.textContent = stats.record || '7-0-3';
         
         // Box 2: Win Rate
-        const winRateBox = statBoxes[1];
-        const winRateValue = winRateBox.querySelector('.stat-value');
-        const winRateLabel = winRateBox.querySelector('p');
-        if (winRateValue) {
-            winRateValue.textContent = stats.winRate || '70.0%';
-        }
-        if (winRateLabel) {
-            winRateLabel.innerHTML = `${stats.wins || 7}/${stats.total || 10} Wins`;
-        }
+        const winRateValue = statBoxes[1].querySelector('.stat-value');
+        const winRateLabel = statBoxes[1].querySelector('p');
+        if (winRateValue) winRateValue.textContent = stats.winRate || '70.0%';
+        if (winRateLabel) winRateLabel.innerHTML = `${stats.wins || 7}/${stats.total || 10} Wins`;
         
         // Box 3: Total Odds
-        const oddsBox = statBoxes[2];
-        const oddsValue = oddsBox.querySelector('.stat-value');
-        if (oddsValue) {
-            oddsValue.textContent = stats.totalOdds || '65.18';
-        }
+        const oddsValue = statBoxes[2].querySelector('.stat-value');
+        if (oddsValue) oddsValue.textContent = stats.totalOdds || '65.18';
         
         // Box 4: Slip Status
-        const statusBox = statBoxes[3];
-        const statusValue = statusBox.querySelector('.stat-value');
-        const statusLabel = statusBox.querySelector('p');
+        const statusValue = statBoxes[3].querySelector('.stat-value');
+        const statusLabel = statBoxes[3].querySelector('p');
         if (statusValue) {
             statusValue.textContent = stats.status || 'Good';
-            // Update color
             if (stats.status === 'Lost') {
                 statusValue.style.color = '#FF6B6B';
             } else {
                 statusValue.style.color = '#00E6A1';
             }
         }
-        if (statusLabel) {
-            statusLabel.innerHTML = `${stats.losses || 3} losses broke accumulator`;
-        }
+        if (statusLabel) statusLabel.innerHTML = `${stats.losses || 3} losses broke accumulator`;
     }
     
     // Update analysis text
@@ -127,8 +110,42 @@ function overrideHardcodedStats(resultsData) {
     if (resultsSubtitle && resultsData.subtitle) {
         resultsSubtitle.textContent = resultsData.subtitle;
     }
+}
+
+// ===== REMOVE WRONG WINNING CALCULATIONS =====
+function removeWrongWinningCalculations() {
+    console.log('🧹 Removing wrong winning calculations from Today\'s Predictions...');
     
-    console.log('✅ Hardcoded stats overridden');
+    // Find the predictions section container
+    const predictionsContainer = document.querySelector('.predictions-section .container');
+    if (!predictionsContainer) return;
+    
+    // Look for elements that contain the OLD 12-match accumulator text
+    const allElements = predictionsContainer.querySelectorAll('p, div, .premium-offer, .note, .winning-calculation');
+    
+    allElements.forEach(element => {
+        const text = element.textContent || '';
+        
+        // Check if this is the OLD 12-match accumulator content that should ONLY be in Packages section
+        if (text.includes('12 Match Accumulator') || 
+            text.includes('163.9') || 
+            text.includes('16,390%') ||
+            text.includes('$1,639.00') ||
+            text.includes('With $10 Stake')) {
+            
+            console.log('🗑️ Removing wrong calculation from Today\'s Predictions:', text.substring(0, 50));
+            
+            // Check if this element is inside the Packages section
+            const isInPackagesSection = element.closest('#packages, .packages-section');
+            
+            // ONLY remove if it's NOT in the Packages section
+            if (!isInPackagesSection) {
+                element.remove();
+            }
+        }
+    });
+    
+    console.log('✅ Wrong winning calculations removed');
 }
 
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
@@ -164,15 +181,15 @@ async function loadAllData() {
         if (data.todayPredictions) {
             updateTodayPredictions(data.todayPredictions);
             updateMorePredictions(data.todayPredictions);
-            updateWinningExamples(data.todayPredictions); // ADDED THIS LINE
+            updateWinningExamples(data.todayPredictions);
+            removeWrongWinningCalculations(); // <-- ADDED THIS LINE
         }
 
         if (data.yesterdayResults) {
             // Clear results table COMPLETELY before adding new data
             clearResultsTableCompletely();
 
-            // CHANGE 2: ADDED THIS LINE - Override hardcoded stats
-            overrideHardcodedStats(data.yesterdayResults);
+            overrideHardcodedStats(data.yesterdayResults);  // <-- ADDED THIS LINE
             updateYesterdayResults(data.yesterdayResults);
 
             // Wait a tiny bit to ensure previous data is gone
