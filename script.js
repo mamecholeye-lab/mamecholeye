@@ -149,6 +149,7 @@ function removeWrongWinningCalculations() {
     
     console.log('✅ Only removed hardcoded content from Today\'s Predictions');
 }
+
 // ===== LOAD ALL DATA (FIXED - NO CACHE MIXING) =====
 async function loadAllData() {
     try {
