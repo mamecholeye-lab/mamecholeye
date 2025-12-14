@@ -7,7 +7,7 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial; background: #0f172a; color: white; padding: 20px; }
-        .container { max-width: 1000px; margin: 0 auto; }
+        .container { max-width: 1200px; margin: 0 auto; }
 
         /* Tabs */
         .tabs { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
@@ -35,36 +35,27 @@
         .btn-primary { background: #0984E3; }
         .btn-warning { background: #FFD700; color: black; }
         .btn-danger { background: #FF4757; }
+        .btn-info { background: #6c5ce7; }
 
         /* JSON Output */
         .json-output { background: #0f172a; padding: 20px; border-radius: 10px; margin-top: 30px; display: none; }
         #json-text { font-family: monospace; height: 400px; background: #1a1a2e; color: #00E6A1; }
 
         /* Preview */
-        .preview-box { background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #334155; }
+        .preview-box { background: #1e293b; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 1px solid #334155; position: relative; }
 
         /* Responsive */
         @media (max-width: 768px) {
             .form-row { flex-direction: column; }
             .tab { padding: 10px 15px; font-size: 14px; }
         }
-        
+
         /* Top Prediction Specific Styles */
         input[type="color"] {
             width: 60px;
             height: 40px;
             padding: 2px;
             cursor: pointer;
-        }
-
-        #secondary-match {
-            transition: all 0.3s ease;
-            animation: fadeIn 0.5s ease;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-10px); }
-            to { opacity: 1; transform: translateY(0); }
         }
 
         /* Form validation */
@@ -88,6 +79,60 @@
             display: none;
             z-index: 1000;
         }
+
+        /* Date display */
+        .date-display {
+            background: #FF6B35;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            font-weight: bold;
+            display: inline-block;
+        }
+
+        /* Delete button */
+        .delete-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: #FF4757;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        /* Match status */
+        .match-status {
+            padding: 4px 8px;
+            border-radius: 4px;
+            font-size: 12px;
+            margin-left: 10px;
+        }
+        .status-pending { background: #f39c12; color: white; }
+        .status-completed { background: #00B894; color: white; }
+        .status-future { background: #0984E3; color: white; }
+
+        /* Date Navigation */
+        .date-nav {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .date-tab {
+            background: #334155;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            flex: 1;
+            text-align: center;
+        }
+        .date-tab.active {
+            background: #FF6B35;
+        }
     </style>
 </head>
 <body>
@@ -99,6 +144,8 @@
             <div class="tab active" onclick="switchTab('hero')">🏆 Hero Section</div>
             <div class="tab" onclick="switchTab('top')">🎯 Top Prediction</div>
             <div class="tab" onclick="switchTab('today')">⚽ Today's Predictions</div>
+            <div class="tab" onclick="switchTab('tomorrow')">📅 Tomorrow's Predictions</div>
+            <div class="tab" onclick="switchTab('dayafter')">📆 Day After Tomorrow</div>
             <div class="tab" onclick="switchTab('results')">📊 Yesterday's Results</div>
             <div class="tab" onclick="switchTab('generate')">🚀 Generate JSON</div>
         </div>
@@ -107,6 +154,7 @@
         <div id="hero-tab" class="tab-content active">
             <div class="section-card">
                 <h2 class="section-title">🏆 Hero Section Configuration</h2>
+                <div class="date-display">Date: <span id="hero-date-display"></span></div>
 
                 <div class="form-group">
                     <label>Hero Title:</label>
@@ -241,6 +289,7 @@
                 </div>
 
                 <button class="btn btn-success" onclick="saveHeroData()">💾 Save Hero Data</button>
+                <button class="btn btn-primary" onclick="loadSavedHeroData()">📂 Load Saved Data</button>
             </div>
         </div>
 
@@ -248,6 +297,7 @@
         <div id="top-tab" class="tab-content">
             <div class="section-card">
                 <h2 class="section-title">🎯 Top Prediction Configuration</h2>
+                <div class="date-display">Date: <span id="top-date-display"></span></div>
 
                 <div class="form-group">
                     <label>Section Title:</label>
@@ -346,12 +396,12 @@
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label>Time:</label>
-                        <input type="text" id="top-time" value="21:00">
+                        <label>Match Date:</label>
+                        <input type="date" id="top-match-date">
                     </div>
                     <div class="form-group">
-                        <label>Date:</label>
-                        <input type="text" id="top-date" value="December 9, 2025">
+                        <label>Time:</label>
+                        <input type="text" id="top-time" value="21:00">
                     </div>
                 </div>
 
@@ -410,7 +460,7 @@
                 </div>
 
                 <button class="btn btn-success" onclick="saveTopData()">💾 Save Top Prediction</button>
-                <button class="btn btn-primary" onclick="loadTopSample()">📊 Load Sample</button>
+                <button class="btn btn-primary" onclick="loadSavedTopData()">📂 Load Saved Data</button>
             </div>
         </div>
 
@@ -418,6 +468,7 @@
         <div id="today-tab" class="tab-content">
             <div class="section-card">
                 <h2 class="section-title">⚽ Today's Predictions</h2>
+                <div class="date-display">Date: <span id="today-date-display"></span></div>
 
                 <div class="form-group">
                     <label>Section Title:</label>
@@ -435,6 +486,59 @@
 
                 <button class="btn btn-primary" onclick="addTodayPrediction()">➕ Add Prediction</button>
                 <button class="btn btn-success" onclick="saveTodayData()">💾 Save Today's Predictions</button>
+                <button class="btn btn-info" onclick="loadSavedTodayData()">📂 Load Saved Data</button>
+            </div>
+        </div>
+
+        <!-- Tomorrow's Predictions Tab -->
+        <div id="tomorrow-tab" class="tab-content">
+            <div class="section-card">
+                <h2 class="section-title">📅 Tomorrow's Predictions</h2>
+                <div class="date-display">Date: <span id="tomorrow-date-display"></span></div>
+
+                <div class="form-group">
+                    <label>Section Title:</label>
+                    <input type="text" id="tomorrow-title" value="Tomorrow's Premium Picks">
+                </div>
+
+                <div class="form-group">
+                    <label>Subtitle:</label>
+                    <input type="text" id="tomorrow-subtitle" value="Premium Picks for Tomorrow">
+                </div>
+
+                <div id="tomorrow-predictions-container">
+                    <!-- Predictions will be added here -->
+                </div>
+
+                <button class="btn btn-primary" onclick="addTomorrowPrediction()">➕ Add Prediction</button>
+                <button class="btn btn-success" onclick="saveTomorrowData()">💾 Save Tomorrow's Predictions</button>
+                <button class="btn btn-info" onclick="loadSavedTomorrowData()">📂 Load Saved Data</button>
+            </div>
+        </div>
+
+        <!-- Day After Tomorrow Tab -->
+        <div id="dayafter-tab" class="tab-content">
+            <div class="section-card">
+                <h2 class="section-title">📆 Day After Tomorrow Predictions</h2>
+                <div class="date-display">Date: <span id="dayafter-date-display"></span></div>
+
+                <div class="form-group">
+                    <label>Section Title:</label>
+                    <input type="text" id="dayafter-title" value="Day After Tomorrow Predictions">
+                </div>
+
+                <div class="form-group">
+                    <label>Subtitle:</label>
+                    <input type="text" id="dayafter-subtitle" value="Premium Picks for Day After Tomorrow">
+                </div>
+
+                <div id="dayafter-predictions-container">
+                    <!-- Predictions will be added here -->
+                </div>
+
+                <button class="btn btn-primary" onclick="addDayAfterPrediction()">➕ Add Prediction</button>
+                <button class="btn btn-success" onclick="saveDayAfterData()">💾 Save Day After Predictions</button>
+                <button class="btn btn-info" onclick="loadSavedDayAfterData()">📂 Load Saved Data</button>
             </div>
         </div>
 
@@ -442,6 +546,7 @@
         <div id="results-tab" class="tab-content">
             <div class="section-card">
                 <h2 class="section-title">📊 Yesterday's Results</h2>
+                <div class="date-display">Date: <span id="results-date-display"></span></div>
 
                 <div class="form-group">
                     <label>Total Predictions:</label>
@@ -459,12 +564,22 @@
                     </div>
                 </div>
 
+                <div class="form-group">
+                    <button class="btn btn-primary" onclick="autoMigrateYesterdayResults()">
+                        🔄 Auto-Migrate Yesterday's Matches
+                    </button>
+                    <span style="margin-left:10px; color:#94a3b8; font-size:14px;">
+                        This will move completed matches from Today's Predictions to Results
+                    </span>
+                </div>
+
                 <div id="results-container">
                     <!-- Results will be added here -->
                 </div>
 
                 <button class="btn btn-primary" onclick="addResult()">➕ Add Result</button>
                 <button class="btn btn-success" onclick="saveResultsData()">💾 Save Results</button>
+                <button class="btn btn-info" onclick="loadSavedResultsData()">📂 Load Saved Data</button>
             </div>
         </div>
 
@@ -518,68 +633,164 @@
     </div>
 
     <script>
-        // ===== DARK MODE COMPATIBLE COLOR SCHEME =====
-        const DARK_COLORS = {
-            // Text colors for dark background
-            text: {
-                primary: "#FFFFFF",        // White for important text
-                secondary: "#E8EAEF",      // Light gray for regular text
-                muted: "#B0B3C5",          // Gray for labels
-                success: "#00E6A1",        // Green for won
-                danger: "#FF6B6B",         // Red for lost
-                warning: "#FFD700",        // Gold for warnings
-                info: "#64D2FF",           // Blue for info
-                highlight: "#FF6B35"       // Orange for highlights
-            },
-            
-            // Background colors
-            bg: {
-                primary: "rgba(30, 33, 47, 0.9)",
-                secondary: "rgba(255, 255, 255, 0.05)",
-                success: "rgba(0, 184, 148, 0.1)",
-                danger: "rgba(255, 107, 107, 0.1)",
-                warning: "rgba(255, 215, 0, 0.1)",
-                info: "rgba(100, 210, 255, 0.1)",
-                highlight: "rgba(255, 107, 53, 0.1)"
-            },
-            
-            // Border colors
-            border: {
-                primary: "rgba(255, 255, 255, 0.1)",
-                success: "rgba(0, 184, 148, 0.3)",
-                danger: "rgba(255, 107, 107, 0.3)",
-                warning: "rgba(255, 215, 0, 0.3)",
-                highlight: "rgba(255, 107, 53, 0.3)"
-            }
-        };
-
-        // ===== INITIALIZATION =====
+        // ===== GLOBAL VARIABLES =====
         let todayPredictionCount = 0;
+        let tomorrowPredictionCount = 0;
+        let dayAfterPredictionCount = 0;
         let resultCount = 0;
 
-        // Initialize when page loads
+        // ===== DATE MANAGEMENT =====
+        function formatDate(date) {
+            return date.toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+            });
+        }
+
+        function getToday() {
+            return new Date();
+        }
+
+        function getTomorrow() {
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            return tomorrow;
+        }
+
+        function getDayAfterTomorrow() {
+            const dayAfter = new Date();
+            dayAfter.setDate(dayAfter.getDate() + 2);
+            return dayAfter;
+        }
+
+        function getYesterday() {
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
+            return yesterday;
+        }
+
+        function updateDateDisplays() {
+            document.getElementById('hero-date-display').textContent = formatDate(getToday());
+            document.getElementById('top-date-display').textContent = formatDate(getToday());
+            document.getElementById('today-date-display').textContent = formatDate(getToday());
+            document.getElementById('tomorrow-date-display').textContent = formatDate(getTomorrow());
+            document.getElementById('dayafter-date-display').textContent = formatDate(getDayAfterTomorrow());
+            document.getElementById('results-date-display').textContent = formatDate(getYesterday());
+        }
+
+        // ===== INITIALIZATION =====
         window.onload = function() {
             console.log('RMAME Control Panel initialized');
-            
-            // Set default date
-            const now = new Date();
-            document.getElementById('update-date').value = now.toISOString().slice(0, 16);
-            
-            // Add some initial predictions
+
+            // Update date displays
+            updateDateDisplays();
+
+            // Set default dates in date inputs
+            document.getElementById('update-date').value = getToday().toISOString().slice(0, 16);
+            document.getElementById('top-match-date').value = getToday().toISOString().slice(0, 10);
+
+            // Add initial predictions
             addTodayPrediction();
+            addTomorrowPrediction();
+            addDayAfterPrediction();
             addResult();
-            
-            // Load sample top prediction after a short delay
+
+            // Load saved data from localStorage
+            loadAllSavedData();
+
+            // Start auto-save timer
+            setInterval(autoSaveAllData, 30000); // Auto-save every 30 seconds
+
+            // Show loaded counts
             setTimeout(() => {
-                loadTopSample();
-                saveTopData();
-            }, 500);
-            
-            // Try to load current data from GitHub
-            setTimeout(() => {
-                loadCurrentData();
+                showAlert('✅ All saved data loaded successfully!');
             }, 1000);
         };
+
+        // ===== AUTO-SAVE SYSTEM =====
+        function autoSaveAllData() {
+            try {
+                saveHeroData();
+                saveTopData();
+                saveTodayData();
+                saveTomorrowData();
+                saveDayAfterData();
+                saveResultsData();
+                
+                // Show auto-save indicator
+                const indicator = document.createElement('div');
+                indicator.className = 'auto-save';
+                indicator.textContent = '💾 Auto-saved';
+                document.body.appendChild(indicator);
+                
+                setTimeout(() => {
+                    indicator.style.display = 'block';
+                    setTimeout(() => {
+                        indicator.style.display = 'none';
+                        setTimeout(() => {
+                            document.body.removeChild(indicator);
+                        }, 500);
+                    }, 2000);
+                }, 100);
+                
+            } catch (error) {
+                console.error('Auto-save error:', error);
+            }
+        }
+
+        // ===== LOAD SAVED DATA =====
+        function loadAllSavedData() {
+            loadSavedHeroData();
+            loadSavedTopData();
+            loadSavedTodayData();
+            loadSavedTomorrowData();
+            loadSavedDayAfterData();
+            loadSavedResultsData();
+        }
+
+        function loadSavedHeroData() {
+            try {
+                const saved = localStorage.getItem('heroData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('hero-title').value = data.title || '';
+                    document.getElementById('hero-subtitle').value = data.subtitle || '';
+                    
+                    if (data.stats && data.stats.length >= 4) {
+                        document.getElementById('stat1-value').value = data.stats[0].value || '';
+                        document.getElementById('stat1-label').value = data.stats[0].label || '';
+                        document.getElementById('stat2-value').value = data.stats[1].value || '';
+                        document.getElementById('stat2-label').value = data.stats[1].label || '';
+                        document.getElementById('stat3-value').value = data.stats[2].value || '';
+                        document.getElementById('stat3-label').value = data.stats[2].label || '';
+                        document.getElementById('stat4-value').value = data.stats[3].value || '';
+                        document.getElementById('stat4-label').value = data.stats[3].label || '';
+                    }
+                    
+                    if (data.matches && data.matches.length >= 3) {
+                        document.getElementById('hero-match1-time').value = data.matches[0].time || '';
+                        document.getElementById('hero-match1-fixture').value = data.matches[0].fixture || '';
+                        document.getElementById('hero-match1-bet').value = data.matches[0].betType || '';
+                        document.getElementById('hero-match1-odds').value = data.matches[0].odds || '';
+                        
+                        document.getElementById('hero-match2-time').value = data.matches[1].time || '';
+                        document.getElementById('hero-match2-fixture').value = data.matches[1].fixture || '';
+                        document.getElementById('hero-match2-bet').value = data.matches[1].betType || '';
+                        document.getElementById('hero-match2-odds').value = data.matches[1].odds || '';
+                        
+                        document.getElementById('hero-match3-time').value = data.matches[2].time || '';
+                        document.getElementById('hero-match3-fixture').value = data.matches[2].fixture || '';
+                        document.getElementById('hero-match3-bet').value = data.matches[2].betType || '';
+                        document.getElementById('hero-match3-odds').value = data.matches[2].odds || '';
+                    }
+                    console.log('Hero data loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading hero data:', error);
+            }
+        }
 
         // ===== TAB FUNCTIONS =====
         function switchTab(tabName) {
@@ -587,15 +798,15 @@
             document.querySelectorAll('.tab-content').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
+
             // Remove active from all tab buttons
             document.querySelectorAll('.tab').forEach(tab => {
                 tab.classList.remove('active');
             });
-            
+
             // Show selected tab
             document.getElementById(tabName + '-tab').classList.add('active');
-            
+
             // Activate tab button
             document.querySelectorAll('.tab').forEach(tab => {
                 if (tab.textContent.includes(tabName.charAt(0).toUpperCase() + tabName.slice(1))) {
@@ -650,7 +861,7 @@
             };
 
             localStorage.setItem('heroData', JSON.stringify(heroData));
-            showAlert('✅ Hero data saved locally!');
+            console.log('Hero data saved to localStorage');
         }
 
         // ===== TODAY'S PREDICTIONS FUNCTIONS =====
@@ -660,7 +871,8 @@
 
             const predictionHTML = `
                 <div class="preview-box" id="today-prediction-${todayPredictionCount}">
-                    <h4>Prediction ${todayPredictionCount}</h4>
+                    <button class="delete-btn" onclick="removeTodayPrediction(${todayPredictionCount})">×</button>
+                    <h4>Prediction ${todayPredictionCount} <span class="match-status status-pending">TODAY</span></h4>
                     <div class="form-row">
                         <div class="form-group">
                             <label>League:</label>
@@ -695,7 +907,20 @@
                             <input type="number" class="today-confidence" value="70" min="1" max="100">
                         </div>
                     </div>
-                    <button class="btn btn-danger" onclick="removeTodayPrediction(${todayPredictionCount})" style="padding:5px 10px; font-size:12px;">Remove</button>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Actual Score:</label>
+                            <input type="text" class="today-actual-score" placeholder="0-1 (leave empty if not played)">
+                        </div>
+                        <div class="form-group">
+                            <label>Status:</label>
+                            <select class="today-status">
+                                <option value="pending">Pending</option>
+                                <option value="won">Won</option>
+                                <option value="lost">Lost</option>
+                            </select>
+                        </div>
+                    </div>
                 </div>
             `;
 
@@ -719,6 +944,8 @@
                 const prediction = element.querySelector('.today-prediction').value;
                 const odds = parseFloat(element.querySelector('.today-odds').value) || 0;
                 const confidence = parseInt(element.querySelector('.today-confidence').value) || 70;
+                const actualScore = element.querySelector('.today-actual-score').value;
+                const status = element.querySelector('.today-status').value;
 
                 if (team1 && team2) {
                     predictions.push({
@@ -728,7 +955,10 @@
                         team2: team2,
                         prediction: prediction || "1X (Double Chance)",
                         odds: odds || 1.41,
-                        confidence: confidence
+                        confidence: confidence,
+                        actualScore: actualScore,
+                        status: status,
+                        date: formatDate(getToday())
                     });
                 }
             });
@@ -740,16 +970,499 @@
             };
 
             localStorage.setItem('todayData', JSON.stringify(todayData));
-            showAlert(`✅ Saved ${predictions.length} predictions!`);
+            console.log(`Saved ${predictions.length} today predictions`);
+        }
+
+        function loadSavedTodayData() {
+            try {
+                const saved = localStorage.getItem('todayData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('today-title').value = data.title || "Today's Premium Picks";
+                    document.getElementById('today-subtitle').value = data.subtitle || "Premium Picks";
+                    
+                    const container = document.getElementById('today-predictions-container');
+                    container.innerHTML = '';
+                    
+                    if (data.predictions && data.predictions.length > 0) {
+                        data.predictions.forEach((pred, index) => {
+                            todayPredictionCount = index + 1;
+                            const predictionHTML = `
+                                <div class="preview-box" id="today-prediction-${todayPredictionCount}">
+                                    <button class="delete-btn" onclick="removeTodayPrediction(${todayPredictionCount})">×</button>
+                                    <h4>Prediction ${todayPredictionCount} <span class="match-status status-pending">TODAY</span></h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>League:</label>
+                                            <input type="text" class="today-league" value="${pred.league || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Time:</label>
+                                            <input type="text" class="today-time" value="${pred.time || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Team 1:</label>
+                                            <input type="text" class="today-team1" value="${pred.team1 || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Team 2:</label>
+                                            <input type="text" class="today-team2" value="${pred.team2 || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Prediction:</label>
+                                            <input type="text" class="today-prediction" value="${pred.prediction || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Odds:</label>
+                                            <input type="number" step="0.01" class="today-odds" value="${pred.odds || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Confidence %:</label>
+                                            <input type="number" class="today-confidence" value="${pred.confidence || 70}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Actual Score:</label>
+                                            <input type="text" class="today-actual-score" value="${pred.actualScore || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Status:</label>
+                                            <select class="today-status">
+                                                <option value="pending" ${pred.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                                <option value="won" ${pred.status === 'won' ? 'selected' : ''}>Won</option>
+                                                <option value="lost" ${pred.status === 'lost' ? 'selected' : ''}>Lost</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', predictionHTML);
+                        });
+                    }
+                    console.log('Today predictions loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading today data:', error);
+            }
+        }
+
+        // ===== TOMORROW'S PREDICTIONS FUNCTIONS =====
+        function addTomorrowPrediction() {
+            tomorrowPredictionCount++;
+            const container = document.getElementById('tomorrow-predictions-container');
+
+            const predictionHTML = `
+                <div class="preview-box" id="tomorrow-prediction-${tomorrowPredictionCount}">
+                    <button class="delete-btn" onclick="removeTomorrowPrediction(${tomorrowPredictionCount})">×</button>
+                    <h4>Prediction ${tomorrowPredictionCount} <span class="match-status status-future">TOMORROW</span></h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>League:</label>
+                            <input type="text" class="tomorrow-league" placeholder="Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿">
+                        </div>
+                        <div class="form-group">
+                            <label>Time:</label>
+                            <input type="text" class="tomorrow-time" placeholder="15:00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Team 1:</label>
+                            <input type="text" class="tomorrow-team1" placeholder="Team A">
+                        </div>
+                        <div class="form-group">
+                            <label>Team 2:</label>
+                            <input type="text" class="tomorrow-team2" placeholder="Team B">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prediction:</label>
+                            <input type="text" class="tomorrow-prediction" placeholder="BTTS Yes">
+                        </div>
+                        <div class="form-group">
+                            <label>Odds:</label>
+                            <input type="number" step="0.01" class="tomorrow-odds" placeholder="1.75">
+                        </div>
+                        <div class="form-group">
+                            <label>Confidence %:</label>
+                            <input type="number" class="tomorrow-confidence" value="65" min="1" max="100">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', predictionHTML);
+        }
+
+        function removeTomorrowPrediction(id) {
+            const element = document.getElementById(`tomorrow-prediction-${id}`);
+            if (element) element.remove();
+        }
+
+        function saveTomorrowData() {
+            const predictions = [];
+            const predictionElements = document.querySelectorAll('[id^="tomorrow-prediction-"]');
+
+            predictionElements.forEach(element => {
+                const league = element.querySelector('.tomorrow-league').value;
+                const time = element.querySelector('.tomorrow-time').value;
+                const team1 = element.querySelector('.tomorrow-team1').value;
+                const team2 = element.querySelector('.tomorrow-team2').value;
+                const prediction = element.querySelector('.tomorrow-prediction').value;
+                const odds = parseFloat(element.querySelector('.tomorrow-odds').value) || 0;
+                const confidence = parseInt(element.querySelector('.tomorrow-confidence').value) || 65;
+
+                if (team1 && team2) {
+                    predictions.push({
+                        league: league || "Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+                        time: time || "15:00",
+                        team1: team1,
+                        team2: team2,
+                        prediction: prediction || "BTTS Yes",
+                        odds: odds || 1.75,
+                        confidence: confidence,
+                        date: formatDate(getTomorrow())
+                    });
+                }
+            });
+
+            const tomorrowData = {
+                title: document.getElementById('tomorrow-title').value || "Tomorrow's Premium Picks",
+                subtitle: document.getElementById('tomorrow-subtitle').value || "Premium Picks for Tomorrow",
+                predictions: predictions
+            };
+
+            localStorage.setItem('tomorrowData', JSON.stringify(tomorrowData));
+            console.log(`Saved ${predictions.length} tomorrow predictions`);
+        }
+
+        function loadSavedTomorrowData() {
+            try {
+                const saved = localStorage.getItem('tomorrowData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('tomorrow-title').value = data.title || "Tomorrow's Premium Picks";
+                    document.getElementById('tomorrow-subtitle').value = data.subtitle || "Premium Picks for Tomorrow";
+                    
+                    const container = document.getElementById('tomorrow-predictions-container');
+                    container.innerHTML = '';
+                    
+                    if (data.predictions && data.predictions.length > 0) {
+                        data.predictions.forEach((pred, index) => {
+                            tomorrowPredictionCount = index + 1;
+                            const predictionHTML = `
+                                <div class="preview-box" id="tomorrow-prediction-${tomorrowPredictionCount}">
+                                    <button class="delete-btn" onclick="removeTomorrowPrediction(${tomorrowPredictionCount})">×</button>
+                                    <h4>Prediction ${tomorrowPredictionCount} <span class="match-status status-future">TOMORROW</span></h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>League:</label>
+                                            <input type="text" class="tomorrow-league" value="${pred.league || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Time:</label>
+                                            <input type="text" class="tomorrow-time" value="${pred.time || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Team 1:</label>
+                                            <input type="text" class="tomorrow-team1" value="${pred.team1 || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Team 2:</label>
+                                            <input type="text" class="tomorrow-team2" value="${pred.team2 || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Prediction:</label>
+                                            <input type="text" class="tomorrow-prediction" value="${pred.prediction || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Odds:</label>
+                                            <input type="number" step="0.01" class="tomorrow-odds" value="${pred.odds || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Confidence %:</label>
+                                            <input type="number" class="tomorrow-confidence" value="${pred.confidence || 65}">
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', predictionHTML);
+                        });
+                    }
+                    console.log('Tomorrow predictions loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading tomorrow data:', error);
+            }
+        }
+
+        // ===== DAY AFTER TOMORROW FUNCTIONS =====
+        function addDayAfterPrediction() {
+            dayAfterPredictionCount++;
+            const container = document.getElementById('dayafter-predictions-container');
+
+            const predictionHTML = `
+                <div class="preview-box" id="dayafter-prediction-${dayAfterPredictionCount}">
+                    <button class="delete-btn" onclick="removeDayAfterPrediction(${dayAfterPredictionCount})">×</button>
+                    <h4>Prediction ${dayAfterPredictionCount} <span class="match-status status-future">DAY AFTER</span></h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>League:</label>
+                            <input type="text" class="dayafter-league" placeholder="La Liga 🇪🇸">
+                        </div>
+                        <div class="form-group">
+                            <label>Time:</label>
+                            <input type="text" class="dayafter-time" placeholder="20:00">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Team 1:</label>
+                            <input type="text" class="dayafter-team1" placeholder="Team X">
+                        </div>
+                        <div class="form-group">
+                            <label>Team 2:</label>
+                            <input type="text" class="dayafter-team2" placeholder="Team Y">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Prediction:</label>
+                            <input type="text" class="dayafter-prediction" placeholder="Over 2.5 Goals">
+                        </div>
+                        <div class="form-group">
+                            <label>Odds:</label>
+                            <input type="number" step="0.01" class="dayafter-odds" placeholder="1.85">
+                        </div>
+                        <div class="form-group">
+                            <label>Confidence %:</label>
+                            <input type="number" class="dayafter-confidence" value="60" min="1" max="100">
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', predictionHTML);
+        }
+
+        function removeDayAfterPrediction(id) {
+            const element = document.getElementById(`dayafter-prediction-${id}`);
+            if (element) element.remove();
+        }
+
+        function saveDayAfterData() {
+            const predictions = [];
+            const predictionElements = document.querySelectorAll('[id^="dayafter-prediction-"]');
+
+            predictionElements.forEach(element => {
+                const league = element.querySelector('.dayafter-league').value;
+                const time = element.querySelector('.dayafter-time').value;
+                const team1 = element.querySelector('.dayafter-team1').value;
+                const team2 = element.querySelector('.dayafter-team2').value;
+                const prediction = element.querySelector('.dayafter-prediction').value;
+                const odds = parseFloat(element.querySelector('.dayafter-odds').value) || 0;
+                const confidence = parseInt(element.querySelector('.dayafter-confidence').value) || 60;
+
+                if (team1 && team2) {
+                    predictions.push({
+                        league: league || "La Liga 🇪🇸",
+                        time: time || "20:00",
+                        team1: team1,
+                        team2: team2,
+                        prediction: prediction || "Over 2.5 Goals",
+                        odds: odds || 1.85,
+                        confidence: confidence,
+                        date: formatDate(getDayAfterTomorrow())
+                    });
+                }
+            });
+
+            const dayAfterData = {
+                title: document.getElementById('dayafter-title').value || "Day After Tomorrow Predictions",
+                subtitle: document.getElementById('dayafter-subtitle').value || "Premium Picks for Day After Tomorrow",
+                predictions: predictions
+            };
+
+            localStorage.setItem('dayAfterData', JSON.stringify(dayAfterData));
+            console.log(`Saved ${predictions.length} day after predictions`);
+        }
+
+        function loadSavedDayAfterData() {
+            try {
+                const saved = localStorage.getItem('dayAfterData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('dayafter-title').value = data.title || "Day After Tomorrow Predictions";
+                    document.getElementById('dayafter-subtitle').value = data.subtitle || "Premium Picks for Day After Tomorrow";
+                    
+                    const container = document.getElementById('dayafter-predictions-container');
+                    container.innerHTML = '';
+                    
+                    if (data.predictions && data.predictions.length > 0) {
+                        data.predictions.forEach((pred, index) => {
+                            dayAfterPredictionCount = index + 1;
+                            const predictionHTML = `
+                                <div class="preview-box" id="dayafter-prediction-${dayAfterPredictionCount}">
+                                    <button class="delete-btn" onclick="removeDayAfterPrediction(${dayAfterPredictionCount})">×</button>
+                                    <h4>Prediction ${dayAfterPredictionCount} <span class="match-status status-future">DAY AFTER</span></h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>League:</label>
+                                            <input type="text" class="dayafter-league" value="${pred.league || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Time:</label>
+                                            <input type="text" class="dayafter-time" value="${pred.time || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Team 1:</label>
+                                            <input type="text" class="dayafter-team1" value="${pred.team1 || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Team 2:</label>
+                                            <input type="text" class="dayafter-team2" value="${pred.team2 || ''}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Prediction:</label>
+                                            <input type="text" class="dayafter-prediction" value="${pred.prediction || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Odds:</label>
+                                            <input type="number" step="0.01" class="dayafter-odds" value="${pred.odds || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Confidence %:</label>
+                                            <input type="number" class="dayafter-confidence" value="${pred.confidence || 60}">
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', predictionHTML);
+                        });
+                    }
+                    console.log('Day after predictions loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading day after data:', error);
+            }
         }
 
         // ===== RESULTS FUNCTIONS =====
+        function autoMigrateYesterdayResults() {
+            // Get completed matches from today's predictions
+            const completedMatches = [];
+            const todayPredictionElements = document.querySelectorAll('[id^="today-prediction-"]');
+
+            todayPredictionElements.forEach(element => {
+                const status = element.querySelector('.today-status').value;
+                const actualScore = element.querySelector('.today-actual-score').value;
+
+                if (status !== 'pending' && actualScore) {
+                    const league = element.querySelector('.today-league').value;
+                    const time = element.querySelector('.today-time').value;
+                    const team1 = element.querySelector('.today-team1').value;
+                    const team2 = element.querySelector('.today-team2').value;
+                    const prediction = element.querySelector('.today-prediction').value;
+                    const odds = parseFloat(element.querySelector('.today-odds').value) || 0;
+
+                    completedMatches.push({
+                        fixture: `${team1} v ${team2}`,
+                        league: league,
+                        time: time,
+                        betType: prediction,
+                        odds: odds,
+                        result: actualScore,
+                        outcome: status === 'won' ? 'won' : 'lost'
+                    });
+                }
+            });
+
+            // Add completed matches to results
+            completedMatches.forEach(match => {
+                addResultFromMatch(match);
+            });
+
+            if (completedMatches.length > 0) {
+                showAlert(`✅ ${completedMatches.length} completed matches migrated to results!`);
+            } else {
+                showAlert('ℹ️ No completed matches found in today\'s predictions.');
+            }
+        }
+
+        function addResultFromMatch(match) {
+            resultCount++;
+            const container = document.getElementById('results-container');
+
+            const resultHTML = `
+                <div class="preview-box" id="result-${resultCount}">
+                    <button class="delete-btn" onclick="removeResult(${resultCount})">×</button>
+                    <h4>Result ${resultCount}</h4>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Fixture:</label>
+                            <input type="text" class="result-fixture" value="${match.fixture}">
+                        </div>
+                        <div class="form-group">
+                            <label>League:</label>
+                            <input type="text" class="result-league" value="${match.league}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Time:</label>
+                            <input type="text" class="result-time" value="${match.time}">
+                        </div>
+                        <div class="form-group">
+                            <label>Bet Type:</label>
+                            <input type="text" class="result-bet" value="${match.betType}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Odds:</label>
+                            <input type="number" step="0.01" class="result-odds" value="${match.odds}">
+                        </div>
+                        <div class="form-group">
+                            <label>Result Score:</label>
+                            <input type="text" class="result-score" value="${match.result}">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label>Outcome:</label>
+                            <select class="result-outcome">
+                                <option value="won" ${match.outcome === 'won' ? 'selected' : ''}>✅ Won</option>
+                                <option value="lost" ${match.outcome === 'lost' ? 'selected' : ''}>❌ Lost</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            container.insertAdjacentHTML('beforeend', resultHTML);
+        }
+
         function addResult() {
             resultCount++;
             const container = document.getElementById('results-container');
 
             const resultHTML = `
                 <div class="preview-box" id="result-${resultCount}">
+                    <button class="delete-btn" onclick="removeResult(${resultCount})">×</button>
                     <h4>Result ${resultCount}</h4>
                     <div class="form-row">
                         <div class="form-group">
@@ -763,19 +1476,25 @@
                     </div>
                     <div class="form-row">
                         <div class="form-group">
-                            <label>Bet Type:</label>
-                            <input type="text" class="result-bet" placeholder="1X (Double Chance)">
+                            <label>Time:</label>
+                            <input type="text" class="result-time" placeholder="20:45">
                         </div>
                         <div class="form-group">
-                            <label>Odds:</label>
-                            <input type="number" step="0.01" class="result-odds" placeholder="1.41">
+                            <label>Bet Type:</label>
+                            <input type="text" class="result-bet" placeholder="1X (Double Chance)">
                         </div>
                     </div>
                     <div class="form-row">
                         <div class="form-group">
+                            <label>Odds:</label>
+                            <input type="number" step="0.01" class="result-odds" placeholder="1.41">
+                        </div>
+                        <div class="form-group">
                             <label>Result Score:</label>
                             <input type="text" class="result-score" placeholder="0-1">
                         </div>
+                    </div>
+                    <div class="form-row">
                         <div class="form-group">
                             <label>Outcome:</label>
                             <select class="result-outcome">
@@ -784,7 +1503,6 @@
                             </select>
                         </div>
                     </div>
-                    <button class="btn btn-danger" onclick="removeResult(${resultCount})" style="padding:5px 10px; font-size:12px;">Remove</button>
                 </div>
             `;
 
@@ -803,6 +1521,7 @@
             resultElements.forEach(element => {
                 const fixture = element.querySelector('.result-fixture').value;
                 const league = element.querySelector('.result-league').value;
+                const time = element.querySelector('.result-time').value;
                 const betType = element.querySelector('.result-bet').value;
                 const odds = parseFloat(element.querySelector('.result-odds').value) || 0;
                 const resultScore = element.querySelector('.result-score').value;
@@ -812,10 +1531,12 @@
                     results.push({
                         fixture: fixture,
                         league: league || "League",
+                        time: time,
                         betType: betType,
                         odds: odds,
                         result: resultScore,
-                        outcome: outcome
+                        outcome: outcome,
+                        date: formatDate(getYesterday())
                     });
                 }
             });
@@ -828,19 +1549,91 @@
             };
 
             localStorage.setItem('resultsData', JSON.stringify(resultsData));
-            showAlert(`✅ Saved ${results.length} results!`);
+            console.log(`Saved ${results.length} results`);
+        }
+
+        function loadSavedResultsData() {
+            try {
+                const saved = localStorage.getItem('resultsData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('results-total').value = data.total || 0;
+                    document.getElementById('results-wins').value = data.wins || 0;
+                    document.getElementById('results-losses').value = data.losses || 0;
+                    
+                    const container = document.getElementById('results-container');
+                    container.innerHTML = '';
+                    
+                    if (data.results && data.results.length > 0) {
+                        data.results.forEach((result, index) => {
+                            resultCount = index + 1;
+                            const resultHTML = `
+                                <div class="preview-box" id="result-${resultCount}">
+                                    <button class="delete-btn" onclick="removeResult(${resultCount})">×</button>
+                                    <h4>Result ${resultCount}</h4>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Fixture:</label>
+                                            <input type="text" class="result-fixture" value="${result.fixture}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>League:</label>
+                                            <input type="text" class="result-league" value="${result.league}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Time:</label>
+                                            <input type="text" class="result-time" value="${result.time || ''}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Bet Type:</label>
+                                            <input type="text" class="result-bet" value="${result.betType}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Odds:</label>
+                                            <input type="number" step="0.01" class="result-odds" value="${result.odds}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>Result Score:</label>
+                                            <input type="text" class="result-score" value="${result.result}">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label>Outcome:</label>
+                                            <select class="result-outcome">
+                                                <option value="won" ${result.outcome === 'won' ? 'selected' : ''}>✅ Won</option>
+                                                <option value="lost" ${result.outcome === 'lost' ? 'selected' : ''}>❌ Lost</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                            container.insertAdjacentHTML('beforeend', resultHTML);
+                        });
+                    }
+                    console.log('Results loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading results data:', error);
+            }
         }
 
         // ===== TOP PREDICTION FUNCTIONS =====
         function saveTopData() {
             const leagueName = document.getElementById('top-league-input').value || "Champions League";
             const flag = document.getElementById('league-flag').value || "🇪🇺";
-            
+            const matchDate = document.getElementById('top-match-date').value || getToday().toISOString().slice(0, 10);
+
             const topData = {
                 title: document.getElementById('top-title').value || "Top Prediction of the Day",
                 subtitle: document.getElementById('top-subtitle-input').value || "Today's Premium Selection",
                 badge: document.getElementById('top-badge-input').value || "PREMIUM PICK",
-                date: document.getElementById('top-date').value || "December 9, 2025",
+                date: formatDate(new Date(matchDate)),
+                matchDate: matchDate,
                 mainMatch: {
                     league: leagueName + ' ' + flag,
                     time: document.getElementById('top-time').value || "21:00",
@@ -862,27 +1655,53 @@
             };
 
             localStorage.setItem('topData', JSON.stringify(topData));
-            
-            let message = `✅ Top prediction saved!\n\n• ${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name}\n• ${topData.mainMatch.prediction} @${topData.mainMatch.odds}\n• ${topData.mainMatch.confidence}% confidence\n• League: ${topData.mainMatch.league}`;
-            
-            showAlert(message);
+            console.log('Top prediction saved to localStorage');
         }
 
-        function loadTopSample() {
-            document.getElementById('top-title').value = 'Top Prediction of the Day';
-            document.getElementById('top-subtitle-input').value = 'December 9, 2025 - Champions League Special';
-            document.getElementById('top-badge-input').value = '87% CONFIDENCE • MEDIUM RISK';
-            document.getElementById('top-league-input').value = 'Champions League';
-            document.getElementById('league-flag').value = '🇪🇺';
-            document.getElementById('top-time').value = '21:00';
-            document.getElementById('top-date').value = 'December 9, 2025';
-            document.getElementById('top-team1').value = 'Atalanta';
-            document.getElementById('top-team1-color').value = '#0000FF';
-            document.getElementById('top-team2').value = 'Chelsea';
-            document.getElementById('top-team2-color').value = '#034694';
-            document.getElementById('top-prediction').value = 'BTTS Yes';
-            document.getElementById('top-odds').value = 1.54;
-            document.getElementById('top-confidence').value = 87;
+        function loadSavedTopData() {
+            try {
+                const saved = localStorage.getItem('topData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById('top-title').value = data.title || "Top Prediction of the Day";
+                    document.getElementById('top-subtitle-input').value = data.subtitle || "";
+                    document.getElementById('top-badge-input').value = data.badge || "PREMIUM PICK";
+                    
+                    if (data.matchDate) {
+                        document.getElementById('top-match-date').value = data.matchDate;
+                    }
+                    
+                    if (data.mainMatch) {
+                        const leagueText = data.mainMatch.league || '';
+                        const flags = ['🇪🇺', '🏴󠁧󠁢󠁥󠁮󠁧󠁿', '🇪🇸', '🇮🇹', '🇩🇪', '🇫🇷', '🏴󠁧󠁢󠁳󠁣󠁴󠁿', '🏴󠁧󠁢󠁷󠁬󠁳󠁿', '🇮🇪', '🇺🇸', '🇧🇷', '🇦🇷', '🇸🇦', '🇹🇷', '🇳🇱', '🇵🇹', '🇧🇪', '🌍'];
+                        
+                        let leagueName = leagueText;
+                        let selectedFlag = '🇪🇺';
+                        
+                        for (const flag of flags) {
+                            if (leagueText.includes(flag)) {
+                                selectedFlag = flag;
+                                leagueName = leagueText.replace(flag, '').trim();
+                                break;
+                            }
+                        }
+                        
+                        document.getElementById('top-league-input').value = leagueName;
+                        document.getElementById('league-flag').value = selectedFlag;
+                        document.getElementById('top-time').value = data.mainMatch.time || "21:00";
+                        document.getElementById('top-team1').value = data.mainMatch.team1?.name || "";
+                        document.getElementById('top-team1-color').value = data.mainMatch.team1?.color || "#0000FF";
+                        document.getElementById('top-team2').value = data.mainMatch.team2?.name || "";
+                        document.getElementById('top-team2-color').value = data.mainMatch.team2?.color || "#034694";
+                        document.getElementById('top-prediction').value = data.mainMatch.prediction || "";
+                        document.getElementById('top-odds').value = data.mainMatch.odds || 1.54;
+                        document.getElementById('top-confidence').value = data.mainMatch.confidence || 87;
+                    }
+                    console.log('Top prediction loaded from localStorage');
+                }
+            } catch (error) {
+                console.error('Error loading top data:', error);
+            }
         }
 
         function getRiskLevel(confidence) {
@@ -900,7 +1719,7 @@
                 if (data.hero) {
                     document.getElementById('hero-title').value = data.hero.title || '';
                     document.getElementById('hero-subtitle').value = data.hero.subtitle || '';
-                    
+
                     if (data.hero.stats && data.hero.stats.length >= 4) {
                         document.getElementById('stat1-value').value = data.hero.stats[0].value || '';
                         document.getElementById('stat1-label').value = data.hero.stats[0].label || '';
@@ -911,18 +1730,18 @@
                         document.getElementById('stat4-value').value = data.hero.stats[3].value || '';
                         document.getElementById('stat4-label').value = data.hero.stats[3].label || '';
                     }
-                    
+
                     if (data.hero.results && data.hero.results.length >= 3) {
                         document.getElementById('hero-match1-time').value = data.hero.results[0].time || '';
                         document.getElementById('hero-match1-fixture').value = data.hero.results[0].fixture || '';
                         document.getElementById('hero-match1-bet').value = data.hero.results[0].betType || '';
                         document.getElementById('hero-match1-odds').value = data.hero.results[0].odds || '';
-                        
+
                         document.getElementById('hero-match2-time').value = data.hero.results[1].time || '';
                         document.getElementById('hero-match2-fixture').value = data.hero.results[1].fixture || '';
                         document.getElementById('hero-match2-bet').value = data.hero.results[1].betType || '';
                         document.getElementById('hero-match2-odds').value = data.hero.results[1].odds || '';
-                        
+
                         document.getElementById('hero-match3-time').value = data.hero.results[2].time || '';
                         document.getElementById('hero-match3-fixture').value = data.hero.results[2].fixture || '';
                         document.getElementById('hero-match3-bet').value = data.hero.results[2].betType || '';
@@ -935,17 +1754,23 @@
                     document.getElementById('top-title').value = data.topPrediction.title || 'Top Prediction of the Day';
                     document.getElementById('top-subtitle-input').value = data.topPrediction.subtitle || '';
                     document.getElementById('top-badge-input').value = data.topPrediction.badge || '';
-                    document.getElementById('top-date').value = data.topPrediction.date || '';
+                    
+                    if (data.topPrediction.date) {
+                        try {
+                            const date = new Date(data.topPrediction.date);
+                            document.getElementById('top-match-date').value = date.toISOString().slice(0, 10);
+                        } catch (e) {
+                            document.getElementById('top-match-date').value = getToday().toISOString().slice(0, 10);
+                        }
+                    }
 
                     if (data.topPrediction.mainMatch) {
                         const leagueText = data.topPrediction.mainMatch.league || '';
-                        
-                        // Extract league name and flag
                         const flags = ['🇪🇺', '🏴󠁧󠁢󠁥󠁮󠁧󠁿', '🇪🇸', '🇮🇹', '🇩🇪', '🇫🇷', '🏴󠁧󠁢󠁳󠁣󠁴󠁿', '🏴󠁧󠁢󠁷󠁬󠁳󠁿', '🇮🇪', '🇺🇸', '🇧🇷', '🇦🇷', '🇸🇦', '🇹🇷', '🇳🇱', '🇵🇹', '🇧🇪', '🌍'];
-                        
+
                         let leagueName = leagueText;
                         let selectedFlag = '🇪🇺';
-                        
+
                         for (const flag of flags) {
                             if (leagueText.includes(flag)) {
                                 selectedFlag = flag;
@@ -953,7 +1778,7 @@
                                 break;
                             }
                         }
-                        
+
                         document.getElementById('top-league-input').value = leagueName;
                         document.getElementById('league-flag').value = selectedFlag;
                         document.getElementById('top-time').value = data.topPrediction.mainMatch.time || '';
@@ -984,27 +1809,30 @@
             const heroData = JSON.parse(localStorage.getItem('heroData')) || getDefaultHeroData();
             const topData = JSON.parse(localStorage.getItem('topData')) || getDefaultTopData();
             const todayData = JSON.parse(localStorage.getItem('todayData')) || getDefaultTodayData();
+            const tomorrowData = JSON.parse(localStorage.getItem('tomorrowData')) || getDefaultTomorrowData();
+            const dayAfterData = JSON.parse(localStorage.getItem('dayAfterData')) || getDefaultDayAfterData();
             const resultsData = JSON.parse(localStorage.getItem('resultsData')) || getDefaultResultsData();
 
             // Calculate statistics
-            const totalPredictions = todayData.predictions.length;
-            const totalOdds = todayData.predictions.reduce((total, pred) => total * (pred.odds || 1), 1).toFixed(2);
+            const totalTodayPredictions = todayData.predictions.length;
+            const totalTodayOdds = todayData.predictions.reduce((total, pred) => total * (pred.odds || 1), 1).toFixed(2);
             const winRate = resultsData.total > 0 ? 
                 ((resultsData.wins / resultsData.total) * 100).toFixed(1) + '%' : '0%';
 
-            // Generate today's date
+            // Generate dates
             const today = new Date();
-            const formattedDate = today.toLocaleDateString('en-US', { 
-                month: 'long', 
-                day: 'numeric', 
-                year: 'numeric' 
-            });
+            const tomorrow = new Date();
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const dayAfter = new Date();
+            dayAfter.setDate(dayAfter.getDate() + 2);
+            const yesterday = new Date();
+            yesterday.setDate(yesterday.getDate() - 1);
 
-            // ===== GENERATE DARK MODE COMPATIBLE JSON =====
+            // ===== GENERATE COMPLETE JSON =====
             const completeData = {
                 lastUpdated: document.getElementById('update-date').value || today.toISOString(),
                 hero: {
-                    date: formattedDate,
+                    date: formatDate(today),
                     title: heroData.title || "ACCUMULATOR WON",
                     subtitle: heroData.subtitle || "",
                     stats: heroData.stats || [],
@@ -1028,7 +1856,7 @@
                     }
                 },
                 topPrediction: {
-                    date: formattedDate,
+                    date: topData.date || formatDate(today),
                     title: "TOP PREDICTION OF THE DAY",
                     subtitle: topData.subtitle || "Today's Premium Selection",
                     badge: topData.badge || "PREMIUM PICK",
@@ -1054,9 +1882,10 @@
                     }
                 },
                 todayPredictions: {
-                    subtitle: `${formattedDate} - ${totalPredictions} Premium Picks with ${totalOdds} Total Odds`,
-                    totalPredictions: totalPredictions,
-                    totalOdds: totalOdds,
+                    date: formatDate(today),
+                    subtitle: `${formatDate(today)} - ${totalTodayPredictions} Premium Picks with ${totalTodayOdds} Total Odds`,
+                    totalPredictions: totalTodayPredictions,
+                    totalOdds: totalTodayOdds,
                     predictions: todayData.predictions.map(pred => ({
                         league: pred.league,
                         time: pred.time,
@@ -1073,15 +1902,66 @@
                         },
                         prediction: pred.prediction,
                         odds: pred.odds,
-                        confidence: pred.confidence
+                        confidence: pred.confidence,
+                        status: pred.status,
+                        actualScore: pred.actualScore
                     })),
                     winningExamples: [
-                        {stake: 10, win: (10 * totalOdds).toFixed(2)},
-                        {stake: 50, win: (50 * totalOdds).toFixed(2)},
-                        {stake: 100, win: (100 * totalOdds).toFixed(2)}
+                        {stake: 10, win: (10 * totalTodayOdds).toFixed(2)},
+                        {stake: 50, win: (50 * totalTodayOdds).toFixed(2)},
+                        {stake: 100, win: (100 * totalTodayOdds).toFixed(2)}
                     ]
                 },
+                tomorrowPredictions: {
+                    date: formatDate(tomorrow),
+                    title: tomorrowData.title || "Tomorrow's Predictions",
+                    subtitle: `${formatDate(tomorrow)} - ${tomorrowData.predictions.length} Premium Picks`,
+                    totalPredictions: tomorrowData.predictions.length,
+                    predictions: tomorrowData.predictions.map(pred => ({
+                        league: pred.league,
+                        time: pred.time,
+                        fixture: `${pred.team1} v ${pred.team2}`,
+                        team1: {
+                            name: pred.team1,
+                            code: pred.team1.substring(0,3).toUpperCase(),
+                            colorClass: "team-color-" + pred.team1.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: pred.team2,
+                            code: pred.team2.substring(0,3).toUpperCase(),
+                            colorClass: "team-color-" + pred.team2.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: pred.prediction,
+                        odds: pred.odds,
+                        confidence: pred.confidence
+                    }))
+                },
+                dayAfterPredictions: {
+                    date: formatDate(dayAfter),
+                    title: dayAfterData.title || "Day After Tomorrow Predictions",
+                    subtitle: `${formatDate(dayAfter)} - ${dayAfterData.predictions.length} Premium Picks`,
+                    totalPredictions: dayAfterData.predictions.length,
+                    predictions: dayAfterData.predictions.map(pred => ({
+                        league: pred.league,
+                        time: pred.time,
+                        fixture: `${pred.team1} v ${pred.team2}`,
+                        team1: {
+                            name: pred.team1,
+                            code: pred.team1.substring(0,3).toUpperCase(),
+                            colorClass: "team-color-" + pred.team1.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: pred.team2,
+                            code: pred.team2.substring(0,3).toUpperCase(),
+                            colorClass: "team-color-" + pred.team2.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: pred.prediction,
+                        odds: pred.odds,
+                        confidence: pred.confidence
+                    }))
+                },
                 yesterdayResults: {
+                    date: formatDate(yesterday),
                     subtitle: `${resultsData.wins} Wins out of ${resultsData.total} Predictions`,
                     stats: {
                         record: `${resultsData.wins}-0-${resultsData.losses}`,
@@ -1100,7 +1980,9 @@
                         odds: result.odds,
                         result: result.result,
                         outcome: result.outcome,
-                        statusClass: result.outcome
+                        statusClass: result.outcome,
+                        time: result.time,
+                        league: result.league
                     }))
                 }
             };
@@ -1114,7 +1996,7 @@
                 document.getElementById('json-output').scrollIntoView({ behavior: 'smooth' });
             }, 100);
 
-            showAlert(`✅ Complete JSON generated!\n\n• Hero: 3 matches\n• Top: ${topData.mainMatch.team1.name} vs ${topData.mainMatch.team2.name}\n• Today: ${totalPredictions} predictions\n• Results: ${resultsData.results.length} matches`);
+            showAlert(`✅ Complete JSON generated!\n\n• Hero: 3 matches\n• Top Prediction\n• Today: ${totalTodayPredictions} predictions\n• Tomorrow: ${tomorrowData.predictions.length} predictions\n• Day After: ${dayAfterData.predictions.length} predictions\n• Results: ${resultsData.results.length} matches`);
         }
 
         // ===== UTILITY FUNCTIONS =====
@@ -1155,7 +2037,8 @@
             return {
                 subtitle: "Today's Premium Selection",
                 badge: "PREMIUM PICK",
-                date: "December 9, 2025",
+                date: formatDate(getToday()),
+                matchDate: getToday().toISOString().slice(0, 10),
                 mainMatch: {
                     league: "Champions League 🇪🇺",
                     time: "21:00",
@@ -1191,7 +2074,45 @@
                         team2: "Cardiff",
                         prediction: "1X (Double Chance)",
                         odds: 1.41,
-                        confidence: 75
+                        confidence: 75,
+                        status: "pending",
+                        actualScore: ""
+                    }
+                ]
+            };
+        }
+
+        function getDefaultTomorrowData() {
+            return {
+                title: "Tomorrow's Premium Picks",
+                subtitle: "Premium Picks for Tomorrow",
+                predictions: [
+                    {
+                        league: "Premier League 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+                        time: "15:00",
+                        team1: "Team A",
+                        team2: "Team B",
+                        prediction: "BTTS Yes",
+                        odds: 1.75,
+                        confidence: 65
+                    }
+                ]
+            };
+        }
+
+        function getDefaultDayAfterData() {
+            return {
+                title: "Day After Tomorrow Predictions",
+                subtitle: "Premium Picks for Day After Tomorrow",
+                predictions: [
+                    {
+                        league: "La Liga 🇪🇸",
+                        time: "20:00",
+                        team1: "Team X",
+                        team2: "Team Y",
+                        prediction: "Over 2.5 Goals",
+                        odds: 1.85,
+                        confidence: 60
                     }
                 ]
             };
@@ -1206,6 +2127,7 @@
                     {
                         fixture: "Stevenage v Cardiff",
                         league: "English Championship 🏴󠁧󠁢󠁥󠁮󠁧󠁿",
+                        time: "20:45",
                         betType: "Double Chance: 1X",
                         odds: 1.41,
                         result: "0-1",
