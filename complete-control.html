@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚽ RMAME - COMPLETE SIMPLE CONTROL</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: Arial; background: #0f172a; color: white; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; }
+        
+        /* Header */
+        .header { 
+            text-align: center; 
+            margin-bottom: 20px; 
+            padding: 15px;
+            background: rgba(255, 107, 53, 0.1);
+            border-radius: 10px;
+            border: 1px solid #FF6B35;
+        }
+        .header h1 { color: #FF6B35; margin-bottom: 5px; font-size: 24px; }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 20px;
+            background: #1e293b;
+            padding: 5px;
+            border-radius: 10px;
+        }
+        .tab {
+            flex: 1;
+            padding: 12px;
+            background: #334155;
+            border: none;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+        }
+        .tab.active {
+            background: #FF6B35;
+            font-weight: bold;
+        }
+        
+        /* Tab Content */
+        .tab-content {
+            display: none;
+            background: #1e293b;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #334155;
+        }
+        .tab-content.active { display: block; }
+        
+        /* Forms */
+        .form-group { margin-bottom: 15px; }
+        label { display: block; color: #94a3b8; margin-bottom: 5px; font-size: 14px; }
+        input, select, textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: white;
+            border-radius: 5px;
+        }
+        .form-row { display: flex; gap: 10px; }
+        .form-row > * { flex: 1; }
+        
+        /* Match Cards */
+        .match-card {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #334155;
+        }
+        
+        /* Buttons */
+        .btn {
+            padding: 12px 20px;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin: 5px;
+        }
+        .btn-primary { background: #FF6B35; color: white; }
+        .btn-success { background: #00B894; color: white; }
+        
+        /* JSON Box */
+        .json-box {
+            background: #0f172a;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 20px;
+            border: 1px solid #334155;
+            display: none;
+        }
+        #json-output {
+            width: 100%;
+            height: 300px;
+            background: #1a1a2e;
+            color: #00E6A1;
+            font-family: monospace;
+            padding: 15px;
+            border: 1px solid #334155;
+            border-radius: 5px;
+            resize: vertical;
+        }
+        
+        /* Stats */
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px;
+            margin: 20px 0;
+        }
+        .stat-box {
+            background: #1e293b;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            border: 1px solid #334155;
+        }
+        .stat-value {
+            font-size: 20px;
+            color: #FF6B35;
+            font-weight: bold;
+        }
+        .stat-label {
+            color: #94a3b8;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <h1>⚽ RMAME COMPLETE CONTROL</h1>
+            <p style="color: #94a3b8;">All-in-One: Hero + Top Prediction + Matches → Generate JSON</p>
+        </div>
+        
+        <!-- Tabs -->
+        <div class="tabs">
+            <button class="tab active" onclick="switchTab('hero')">🏆 Hero</button>
+            <button class="tab" onclick="switchTab('top')">🎯 Top Pick</button>
+            <button class="tab" onclick="switchTab('matches')">⚽ Matches</button>
+            <button class="tab" onclick="switchTab('generate')">🚀 Generate</button>
+        </div>
+        
+        <!-- Hero Tab -->
+        <div id="hero-tab" class="tab-content active">
+            <h3 style="color: #FF9E6D; margin-bottom: 15px;">🏆 HERO SECTION</h3>
+            
+            <div class="form-group">
+                <label>Hero Title:</label>
+                <input type="text" id="hero-title" value="103.12 ACCUMULATOR WON">
+            </div>
+            
+            <div class="form-group">
+                <label>Hero Subtitle:</label>
+                <textarea id="hero-subtitle" rows="2">Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds.</textarea>
+            </div>
+            
+            <h4 style="color: #FF9E6D; margin: 20px 0 10px 0;">📊 Hero Stats</h4>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Stat 1:</label>
+                    <input type="text" id="stat1-value" value="3/3" placeholder="Value">
+                    <input type="text" id="stat1-label" value="Perfect Wins" placeholder="Label" style="margin-top: 5px;">
+                </div>
+                <div class="form-group">
+                    <label>Stat 2:</label>
+                    <input type="text" id="stat2-value" value="103.12" placeholder="Value">
+                    <input type="text" id="stat2-label" value="Total Odds" placeholder="Label" style="margin-top: 5px;">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Stat 3:</label>
+                    <input type="text" id="stat3-value" value="34.37" placeholder="Value">
+                    <input type="text" id="stat3-label" value="Avg Odds" placeholder="Label" style="margin-top: 5px;">
+                </div>
+                <div class="form-group">
+                    <label>Stat 4:</label>
+                    <input type="text" id="stat4-value" value="100%" placeholder="Value">
+                    <input type="text" id="stat4-label" value="Win Rate" placeholder="Label" style="margin-top: 5px;">
+                </div>
+            </div>
+            
+            <h4 style="color: #FF9E6D; margin: 20px 0 10px 0;">🎯 Hero Matches (3-match accumulator)</h4>
+            <div class="match-card">
+                <div class="form-row">
+                    <input type="text" id="hero-match1" placeholder="Match 1: Fleetwood 1-1 Salford" value="Fleetwood 1 – 1 Salford">
+                    <input type="text" id="hero-bet1" placeholder="Bet Type" value="Draw & BTTS">
+                    <input type="number" step="0.01" id="hero-odds1" placeholder="Odds" value="4.33">
+                </div>
+            </div>
+            <div class="match-card">
+                <div class="form-row">
+                    <input type="text" id="hero-match2" placeholder="Match 2" value="Barrow 0 – 3 Tranmere">
+                    <input type="text" id="hero-bet2" placeholder="Bet Type" value="Away & Over 2.5">
+                    <input type="number" step="0.01" id="hero-odds2" placeholder="Odds" value="4.33">
+                </div>
+            </div>
+            <div class="match-card">
+                <div class="form-row">
+                    <input type="text" id="hero-match3" placeholder="Match 3" value="Notts Co 3 – 2 MK Dons">
+                    <input type="text" id="hero-bet3" placeholder="Bet Type" value="Home & BTTS">
+                    <input type="number" step="0.01" id="hero-odds3" placeholder="Odds" value="5.5">
+                </div>
+            </div>
+        </div>
+        
+        <!-- Top Prediction Tab -->
+        <div id="top-tab" class="tab-content">
+            <h3 style="color: #FF9E6D; margin-bottom: 15px;">🎯 TOP PREDICTION</h3>
+            
+            <div class="form-group">
+                <label>League:</label>
+                <input type="text" id="top-league" value="Dutch Eredivisie 🇪🇺">
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Team 1:</label>
+                    <input type="text" id="top-team1" value="Ajax" placeholder="Home Team">
+                </div>
+                <div class="form-group">
+                    <label>Team 2:</label>
+                    <input type="text" id="top-team2" value="Feyenord" placeholder="Away Team">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Time:</label>
+                    <input type="text" id="top-time" value="21:00">
+                </div>
+                <div class="form-group">
+                    <label>Prediction:</label>
+                    <input type="text" id="top-prediction" value="1 & BTTS">
+                </div>
+            </div>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Odds:</label>
+                    <input type="number" step="0.01" id="top-odds" value="4.4">
+                </div>
+                <div class="form-group">
+                    <label>Confidence %:</label>
+                    <input type="number" id="top-confidence" value="50" min="1" max="100">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Risk Level:</label>
+                <select id="top-risk">
+                    <option value="HIGH RISK" selected>HIGH RISK</option>
+                    <option value="MEDIUM RISK">MEDIUM RISK</option>
+                    <option value="LOW RISK">LOW RISK</option>
+                </select>
+            </div>
+        </div>
+        
+        <!-- Matches Tab -->
+        <div id="matches-tab" class="tab-content">
+            <h3 style="color: #FF9E6D; margin-bottom: 15px;">⚽ TODAY'S MATCHES</h3>
+            
+            <!-- Add Match Form -->
+            <div class="match-card" style="background: rgba(255, 107, 53, 0.1);">
+                <h4 style="color: #FF9E6D; margin-bottom: 10px;">➕ ADD NEW MATCH</h4>
+                <div class="form-row">
+                    <input type="text" id="new-team1" placeholder="Home Team">
+                    <input type="text" id="new-team2" placeholder="Away Team">
+                </div>
+                <div class="form-row">
+                    <input type="text" id="new-league" placeholder="League" list="leagues">
+                    <input type="text" id="new-prediction" placeholder="Prediction" list="predictions">
+                    <input type="number" step="0.01" id="new-odds" placeholder="Odds" value="2.0">
+                </div>
+                <datalist id="leagues">
+                    <option>Premier League</option><option>Champions League</option>
+                    <option>La Liga</option><option>Serie A</option><option>Bundesliga</option>
+                </datalist>
+                <datalist id="predictions">
+                    <option>1 (Home Win)</option><option>2 (Away Win)</option>
+                    <option>X (Draw)</option><option>1 & BTTS</option><option>2 & BTTS</option>
+                </datalist>
+                <button class="btn btn-primary" onclick="addMatch()" style="width: 100%; margin-top: 10px;">
+                    ➕ Add Match
+                </button>
+            </div>
+            
+            <!-- Match List -->
+            <h4 style="color: #FF9E6D; margin: 20px 0 10px 0;">📋 TODAY'S MATCHES</h4>
+            <div id="matches-list">
+                <!-- Matches will appear here -->
+            </div>
+        </div>
+        
+        <!-- Generate Tab -->
+        <div id="generate-tab" class="tab-content">
+            <h3 style="color: #FF9E6D; margin-bottom: 15px;">🚀 GENERATE COMPLETE JSON</h3>
+            
+            <div class="stats" id="stats-display">
+                <div class="stat-box">
+                    <div class="stat-value" id="today-count">0</div>
+                    <div class="stat-label">Today's Matches</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="total-odds">0.00</div>
+                    <div class="stat-label">Total Odds</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="results-count">0</div>
+                    <div class="stat-label">Results</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="win-rate">0%</div>
+                    <div class="stat-label">Win Rate</div>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin: 30px 0;">
+                <button class="btn btn-success" onclick="generateCompleteJSON()" style="font-size: 18px; padding: 15px 30px;">
+                    🚀 GENERATE COMPLETE JSON
+                </button>
+                <p style="color: #94a3b8; margin-top: 10px;">
+                    Automatically updates dates, migrates matches, and creates perfect JSON
+                </p>
+            </div>
+            
+            <!-- JSON Output -->
+            <div class="json-box" id="json-box">
+                <h4 style="color: #FF9E6D; margin-bottom: 10px;">📋 COPY THIS JSON</h4>
+                <textarea id="json-output" readonly></textarea>
+                <div style="margin-top: 15px; text-align: center;">
+                    <button class="btn btn-success" onclick="copyJSON()">📋 Copy JSON</button>
+                    <button class="btn" onclick="testJSON()" style="background: #FFD700; color: black;">🧪 Test JSON</button>
+                </div>
+                <div style="margin-top: 15px; padding: 15px; background: rgba(255, 107, 53, 0.1); border-radius: 5px;">
+                    <h4 style="color: #FF6B35; font-size: 14px;">📝 HOW TO UPDATE WEBSITE:</h4>
+                    <p style="color: #94a3b8; margin-top: 5px; font-size: 13px;">
+                        1. Copy JSON above<br>
+                        2. Go to <a href="https://github.com/mamecholeye-lab/mamecholeye/edit/main/data.json" style="color: #FF6B35;">GitHub data.json</a><br>
+                        3. Delete old → Paste new → Commit<br>
+                        4. Wait 2 minutes - Done!
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ===== DATA STORAGE =====
+        let todayMatches = [];
+        let results = [];
+        
+        // ===== INITIALIZE =====
+        window.onload = function() {
+            loadSavedData();
+            showMatches();
+            updateStats();
+        };
+        
+        // ===== TAB FUNCTIONS =====
+        function switchTab(tabName) {
+            // Hide all tabs
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Remove active from buttons
+            document.querySelectorAll('.tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected tab
+            document.getElementById(tabName + '-tab').classList.add('active');
+            
+            // Activate button
+            document.querySelectorAll('.tab').forEach(tab => {
+                if (tab.textContent.includes(tabName)) {
+                    tab.classList.add('active');
+                }
+            });
+        }
+        
+        // ===== MATCH FUNCTIONS =====
+        function addMatch() {
+            const team1 = document.getElementById('new-team1').value.trim();
+            const team2 = document.getElementById('new-team2').value.trim();
+            const league = document.getElementById('new-league').value.trim() || "League";
+            const prediction = document.getElementById('new-prediction').value.trim() || "1";
+            const odds = parseFloat(document.getElementById('new-odds').value) || 2.0;
+            
+            if (!team1 || !team2) {
+                alert("Enter both team names!");
+                return;
+            }
+            
+            const match = {
+                id: Date.now(),
+                team1: team1,
+                team2: team2,
+                league: league,
+                prediction: prediction,
+                odds: odds,
+                time: "15:00",
+                status: "pending",
+                score: "",
+                confidence: 70
+            };
+            
+            todayMatches.push(match);
+            showMatches();
+            updateStats();
+            saveToLocal();
+            
+            // Clear form
+            document.getElementById('new-team1').value = '';
+            document.getElementById('new-team2').value = '';
+            document.getElementById('new-league').value = '';
+            document.getElementById('new-prediction').value = '';
+            
+            alert(`✅ Added: ${team1} vs ${team2}`);
+        }
+        
+        function showMatches() {
+            const container = document.getElementById('matches-list');
+            if (todayMatches.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align: center; padding: 30px; color: #94a3b8;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">⚽</div>
+                        No matches added yet
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            todayMatches.forEach((match, index) => {
+                container.innerHTML += `
+                    <div class="match-card">
+                        <div style="display: flex; justify-content: space-between; align-items: start;">
+                            <div>
+                                <strong>${match.team1} vs ${match.team2}</strong><br>
+                                <small style="color: #94a3b8;">${match.league} • ${match.prediction} • Odds: ${match.odds}</small>
+                            </div>
+                            <div>
+                                <select onchange="updateMatchStatus(${index}, this.value)" style="padding: 5px; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 5px; margin-bottom: 5px;">
+                                    <option value="pending" ${match.status === 'pending' ? 'selected' : ''}>Pending</option>
+                                    <option value="won" ${match.status === 'won' ? 'selected' : ''}>Won</option>
+                                    <option value="lost" ${match.status === 'lost' ? 'selected' : ''}>Lost</option>
+                                </select><br>
+                                <input type="text" placeholder="Score" value="${match.score}" onchange="updateMatchScore(${index}, this.value)" style="padding: 5px; width: 80px; background: #1e293b; color: white; border: 1px solid #334155; border-radius: 5px;">
+                                <button onclick="removeMatch(${index})" style="padding: 5px 10px; margin-left: 5px; background: #FF4757; color: white; border: none; border-radius: 3px; cursor: pointer;">X</button>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        function updateMatchStatus(index, status) {
+            todayMatches[index].status = status;
+            saveToLocal();
+        }
+        
+        function updateMatchScore(index, score) {
+            todayMatches[index].score = score;
+            saveToLocal();
+        }
+        
+        function removeMatch(index) {
+            if (confirm("Delete this match?")) {
+                todayMatches.splice(index, 1);
+                showMatches();
+                updateStats();
+                saveToLocal();
+            }
+        }
+        
+        // ===== AUTO-MIGRATION =====
+        function autoMigrate() {
+            const completed = todayMatches.filter(m => m.status === 'won' || m.status === 'lost');
+            
+            completed.forEach(match => {
+                results.push({
+                    fixture: `${match.team1} v ${match.team2}`,
+                    league: match.league,
+                    time: match.time,
+                    prediction: match.prediction,
+                    odds: match.odds,
+                    score: match.score || "N/A",
+                    outcome: match.status
+                });
+            });
+            
+            todayMatches = todayMatches.filter(m => m.status === 'pending');
+            
+            if (completed.length > 0) {
+                console.log(`Auto-migrated ${completed.length} matches`);
+            }
+            
+            updateStats();
+        }
+        
+        // ===== STATS =====
+        function updateStats() {
+            document.getElementById('today-count').textContent = todayMatches.length;
+            document.getElementById('results-count').textContent = results.length;
+            
+            const totalOdds = todayMatches.reduce((total, match) => total * match.odds, 1).toFixed(2);
+            document.getElementById('total-odds').textContent = totalOdds;
+            
+            const wins = results.filter(r => r.outcome === 'won').length;
+            const winRate = results.length > 0 ? Math.round((wins / results.length) * 100) : 0;
+            document.getElementById('win-rate').textContent = winRate + '%';
+        }
+        
+        // ===== GENERATE COMPLETE JSON =====
+        function generateCompleteJSON() {
+            // Auto-migrate first
+            autoMigrate();
+            
+            // Get form values
+            const heroTitle = document.getElementById('hero-title').value;
+            const heroSubtitle = document.getElementById('hero-subtitle').value;
+            
+            // Calculate hero total odds
+            const heroOdds1 = parseFloat(document.getElementById('hero-odds1').value) || 4.33;
+            const heroOdds2 = parseFloat(document.getElementById('hero-odds2').value) || 4.33;
+            const heroOdds3 = parseFloat(document.getElementById('hero-odds3').value) || 5.5;
+            const heroTotalOdds = (heroOdds1 * heroOdds2 * heroOdds3).toFixed(2);
+            const heroAvgOdds = (heroTotalOdds / 3).toFixed(2);
+            
+            // Calculate today's total odds
+            const todayTotalOdds = todayMatches.reduce((total, match) => total * match.odds, 1).toFixed(2);
+            
+            // Calculate results stats
+            const totalResults = results.length;
+            const wins = results.filter(r => r.outcome === 'won').length;
+            const losses = results.filter(r => r.outcome === 'lost').length;
+            const winRate = totalResults > 0 ? ((wins / totalResults) * 100).toFixed(1) + '%' : '0%';
+            
+            // Get current dates
+            const now = new Date();
+            const today = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yestDate = yesterday.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomDate = tomorrow.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // ===== BUILD COMPLETE JSON =====
+            const completeData = {
+                lastUpdated: now.toISOString(),
+                
+                // HERO SECTION
+                hero: {
+                    date: today,
+                    title: heroTitle,
+                    subtitle: heroSubtitle,
+                    stats: [
+                        { value: document.getElementById('stat1-value').value || "3/3", label: document.getElementById('stat1-label').value || "Perfect Wins" },
+                        { value: heroTotalOdds, label: document.getElementById('stat2-label').value || "Total Odds" },
+                        { value: heroAvgOdds, label: document.getElementById('stat3-label').value || "Avg Odds" },
+                        { value: document.getElementById('stat4-value').value || "100%", label: document.getElementById('stat4-label').value || "Win Rate" }
+                    ],
+                    results: [
+                        {
+                            time: "19:45",
+                            league: "League Two",
+                            fixture: document.getElementById('hero-match1').value || "Fleetwood 1 – 1 Salford",
+                            betType: document.getElementById('hero-bet1').value || "Draw & BTTS",
+                            betClass: "bet-gold",
+                            odds: heroOdds1,
+                            status: "won"
+                        },
+                        {
+                            time: "20:00",
+                            league: "League Two",
+                            fixture: document.getElementById('hero-match2').value || "Barrow 0 – 3 Tranmere",
+                            betType: document.getElementById('hero-bet2').value || "Away & Over 2.5",
+                            betClass: "bet-green",
+                            odds: heroOdds2,
+                            status: "won"
+                        },
+                        {
+                            time: "19:45",
+                            league: "League Two",
+                            fixture: document.getElementById('hero-match3').value || "Notts Co 3 – 2 MK Dons",
+                            betType: document.getElementById('hero-bet3').value || "Home & BTTS",
+                            betClass: "bet-orange",
+                            odds: heroOdds3,
+                            status: "won"
+                        }
+                    ],
+                    calculations: {
+                        totalOdds: heroTotalOdds,
+                        winningExamples: [
+                            { stake: 10, win: (10 * heroTotalOdds).toFixed(2) },
+                            { stake: 50, win: (50 * heroTotalOdds).toFixed(2) },
+                            { stake: 100, win: (100 * heroTotalOdds).toFixed(2) }
+                        ],
+                        profitNote: `3-match accumulator = ${(heroTotalOdds * 100).toFixed(0)}% PROFIT!`
+                    }
+                },
+                
+                // TOP PREDICTION
+                topPrediction: {
+                    date: today,
+                    title: "TOP PREDICTION OF THE DAY",
+                    subtitle: "Today's Premium Selection",
+                    badge: "PREMIUM PICK",
+                    mainMatch: {
+                        league: document.getElementById('top-league').value || "Dutch Eredivisie 🇪🇺",
+                        time: document.getElementById('top-time').value || "21:00",
+                        team1: {
+                            name: document.getElementById('top-team1').value || "Ajax",
+                            code: (document.getElementById('top-team1').value || "AJA").substring(0, 3).toUpperCase(),
+                            color: "#0000ff",
+                            colorClass: "team-color-" + (document.getElementById('top-team1').value || "ajax").toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: document.getElementById('top-team2').value || "Feyenord",
+                            code: (document.getElementById('top-team2').value || "FEY").substring(0, 3).toUpperCase(),
+                            color: "#034694",
+                            colorClass: "team-color-" + (document.getElementById('top-team2').value || "feyenord").toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: document.getElementById('top-prediction').value || "1 & BTTS",
+                        odds: parseFloat(document.getElementById('top-odds').value) || 4.4,
+                        confidence: parseInt(document.getElementById('top-confidence').value) || 50,
+                        riskLevel: document.getElementById('top-risk').value || "HIGH RISK"
+                    }
+                },
+                
+                // TODAY'S PREDICTIONS
+                todayPredictions: {
+                    date: today,
+                    subtitle: `${today} - ${todayMatches.length} Premium Picks with ${todayTotalOdds} Total Odds`,
+                    totalPredictions: todayMatches.length,
+                    totalOdds: todayTotalOdds,
+                    predictions: todayMatches.map(match => ({
+                        league: match.league,
+                        time: match.time,
+                        fixture: `${match.team1} v ${match.team2}`,
+                        team1: {
+                            name: match.team1,
+                            code: match.team1.substring(0, 3).toUpperCase(),
+                            colorClass: "team-color-" + match.team1.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: match.team2,
+                            code: match.team2.substring(0, 3).toUpperCase(),
+                            colorClass: "team-color-" + match.team2.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: match.prediction,
+                        odds: match.odds,
+                        confidence: match.confidence,
+                        status: match.status,
+                        actualScore: match.score
+                    })),
+                    winningExamples: [
+                        { stake: 10, win: (10 * todayTotalOdds).toFixed(2) },
+                        { stake: 50, win: (50 * todayTotalOdds).toFixed(2) },
+                        { stake: 100, win: (100 * todayTotalOdds).toFixed(2) }
+                    ]
+                },
+                
+                // TOMORROW'S PREDICTIONS
+                tomorrowPredictions: {
+                    date: tomDate,
+                    title: "Tomorrow's Premium Picks",
+                    subtitle: `${tomDate} - 0 Premium Picks`,
+                    totalPredictions: 0,
+                    predictions: []
+                },
+                
+                // YESTERDAY'S RESULTS
+                yesterdayResults: {
+                    date: yestDate,
+                    subtitle: `${wins} Wins out of ${totalResults} Predictions`,
+                    stats: {
+                        record: `${wins}-0-${losses}`,
+                        winRate: winRate,
+                        wins: wins,
+                        total: totalResults,
+                        totalOdds: results.length > 0 ? results.reduce((total, r) => total * (r.odds || 1), 1).toFixed(2) : "0.00",
+                        status: wins > losses ? "Good" : "Poor",
+                        losses: losses
+                    },
+                    analysis: `Performance with ${wins} wins out of ${totalResults} predictions (${winRate} accuracy).`,
+                    insight: "Focus on high confidence predictions for better results.",
+                    results: results.map(r => ({
+                        fixture: r.fixture,
+                        betType: r.prediction,
+                        odds: r.odds,
+                        result: r.score,
+                        outcome: r.outcome,
+                        statusClass: r.outcome,
+                        time: r.time,
+                        league: r.league
+                    }))
+                }
+            };
+            
+            // Display JSON
+            document.getElementById('json-output').value = JSON.stringify(completeData, null, 2);
+            document.getElementById('json-box').style.display = 'block';
+            
+            // Scroll to JSON
+            setTimeout(() => {
+                document.getElementById('json-box').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+            
+            // Save data
+            saveToLocal();
+            
+            alert(`✅ JSON Generated!\n• Hero: 3 matches\n• Top Prediction: ${document.getElementById('top-team1').value} vs ${document.getElementById('top-team2').value}\n• Today: ${todayMatches.length} matches\n• Results: ${results.length} matches`);
+        }
+        
+        // ===== STORAGE =====
+        function saveToLocal() {
+            const data = {
+                todayMatches: todayMatches,
+                results: results,
+                heroTitle: document.getElementById('hero-title').value,
+                heroSubtitle: document.getElementById('hero-subtitle').value,
+                topLeague: document.getElementById('top-league').value,
+                topTeam1: document.getElementById('top-team1').value,
+                topTeam2: document.getElementById('top-team2').value
+            };
+            localStorage.setItem('rmameCompleteData', JSON.stringify(data));
+        }
+        
+        function loadSavedData() {
+            try {
+                const saved = localStorage.getItem('rmameCompleteData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    todayMatches = data.todayMatches || [];
+                    results = data.results || [];
+                    
+                    // Load form values
+                    if (data.heroTitle) document.getElementById('hero-title').value = data.heroTitle;
+                    if (data.heroSubtitle) document.getElementById('hero-subtitle').value = data.heroSubtitle;
+                    if (data.topLeague) document.getElementById('top-league').value = data.topLeague;
+                    if (data.topTeam1) document.getElementById('top-team1').value = data.topTeam1;
+                    if (data.topTeam2) document.getElementById('top-team2').value = data.topTeam2;
+                    
+                    showMatches();
+                    updateStats();
+                }
+            } catch (e) {
+                console.log("Starting fresh");
+            }
+        }
+        
+        // ===== UTILITIES =====
+        function copyJSON() {
+            const jsonText = document.getElementById('json-output');
+            jsonText.select();
+            navigator.clipboard.writeText(jsonText.value)
+                .then(() => alert("✅ JSON copied! Paste to GitHub."))
+                .catch(() => {
+                    document.execCommand('copy');
+                    alert("✅ JSON copied!");
+                });
+        }
+        
+        function testJSON() {
+            try {
+                const jsonText = document.getElementById('json-output').value;
+                JSON.parse(jsonText);
+                alert("✅ JSON is valid!");
+            } catch (e) {
+                alert("❌ JSON error: " + e.message);
+            }
+        }
+    </script>
+</body>
+</html>
