@@ -1,7 +1,7 @@
 {
-  "lastUpdated": "2025-12-14T01:31",
+  "lastUpdated": "2025-12-15T09:27:29.491Z",
   "hero": {
-    "date": "Sunday, December 14, 2025",
+    "date": "Monday, December 15, 2025",
     "title": "103.12 ACCUMULATOR WON",
     "subtitle": "Perfect 3/3 predictions won yesterday! Mega accumulator with 103.12 total odds. Join our winning streak!",
     "stats": [
@@ -52,740 +52,332 @@
       }
     ],
     "calculations": {
-      "totalOdds": 103.12,
+      "totalOdds": "103.12",
       "winningExamples": [
         {
           "stake": 10,
-          "win": 1031.2
+          "win": "1031.20"
         },
         {
           "stake": 50,
-          "win": 5156
+          "win": "5156.00"
         },
         {
           "stake": 100,
-          "win": 10312
+          "win": "10312.00"
         }
       ],
-      "profitNote": "3-match accumulator = 10,312% PROFIT!"
+      "profitNote": "3-match accumulator = 10312% PROFIT!"
     }
   },
   "topPrediction": {
-    "date": "Sunday, December 14, 2025",
+    "date": "Monday, December 15, 2025",
     "title": "TOP PREDICTION OF THE DAY",
     "subtitle": "Today's Premium Selection",
     "badge": "PREMIUM PICK",
     "mainMatch": {
-      "league": "Dutch Eredivisie 🇪🇺",
-      "time": "21:00",
+      "league": "",
+      "time": "",
       "team1": {
-        "name": "Ajax ",
-        "code": "AJA",
+        "name": "",
+        "code": "",
         "color": "#0000ff",
-        "colorClass": "team-color-ajax-"
+        "colorClass": "team-color-"
       },
       "team2": {
-        "name": "Feyenord ",
-        "code": "FEY",
+        "name": "",
+        "code": "",
         "color": "#034694",
-        "colorClass": "team-color-feyenord-"
+        "colorClass": "team-color-"
       },
-      "prediction": "1 & BTTS",
+      "prediction": "",
       "odds": 4.4,
       "confidence": 50,
       "riskLevel": "HIGH RISK"
     }
   },
   "todayPredictions": {
-    "date": "Sunday, December 14, 2025",
-    "subtitle": "Sunday, December 14, 2025 - 22 Premium Picks with 4925100.26 Total Odds",
-    "totalPredictions": 22,
-    "totalOdds": "4925100.26",
-    "predictions": [
-      {
-        "league": "Portugal Liga Portugal 2 ",
-        "time": "14:00",
-        "fixture": "Sporting CP II v FC Vizela ",
-        "team1": {
-          "name": "Sporting CP II",
-          "code": "SPO",
-          "colorClass": "team-color-sporting-cp-ii"
-        },
-        "team2": {
-          "name": "FC Vizela ",
-          "code": "FC ",
-          "colorClass": "team-color-fc-vizela-"
-        },
-        "prediction": "1",
-        "odds": 2.35,
-        "confidence": 62,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Turkey Super Lig ",
-        "time": "14:30",
-        "fixture": "Gaziantep  v Goztepe ",
-        "team1": {
-          "name": "Gaziantep ",
-          "code": "GAZ",
-          "colorClass": "team-color-gaziantep-"
-        },
-        "team2": {
-          "name": "Goztepe ",
-          "code": "GOZ",
-          "colorClass": "team-color-goztepe-"
-        },
-        "prediction": "2",
-        "odds": 2.2,
-        "confidence": 52,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "France Feminine Division ",
-        "time": "15:00",
-        "fixture": "Nantes W v Olympique Marseille W",
-        "team1": {
-          "name": "Nantes W",
-          "code": "NAN",
-          "colorClass": "team-color-nantes-w"
-        },
-        "team2": {
-          "name": "Olympique Marseille W",
-          "code": "OLY",
-          "colorClass": "team-color-olympique-marseille-w"
-        },
-        "prediction": "1",
-        "odds": 1.9,
-        "confidence": 45,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany Ober Liga Nordost Sud",
-        "time": "15:00",
-        "fixture": "Krieschow v Empor Glauchau",
-        "team1": {
-          "name": "Krieschow",
-          "code": "KRI",
-          "colorClass": "team-color-krieschow"
-        },
-        "team2": {
-          "name": "Empor Glauchau",
-          "code": "EMP",
-          "colorClass": "team-color-empor-glauchau"
-        },
-        "prediction": "1",
-        "odds": 2.08,
-        "confidence": 67,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany Nordost Sud ",
-        "time": "15:00",
-        "fixture": "VfL Halle v Auerbach ",
-        "team1": {
-          "name": "VfL Halle",
-          "code": "VFL",
-          "colorClass": "team-color-vfl-halle"
-        },
-        "team2": {
-          "name": "Auerbach ",
-          "code": "AUE",
-          "colorClass": "team-color-auerbach-"
-        },
-        "prediction": "1",
-        "odds": 2.3,
-        "confidence": 57,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany 2 Frauen BundesLiga ",
-        "time": "16:00",
-        "fixture": "Bochum W v Meppen W",
-        "team1": {
-          "name": "Bochum W",
-          "code": "BOC",
-          "colorClass": "team-color-bochum-w"
-        },
-        "team2": {
-          "name": "Meppen W",
-          "code": "MEP",
-          "colorClass": "team-color-meppen-w"
-        },
-        "prediction": "2",
-        "odds": 2,
-        "confidence": 55,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Spain La Liga ",
-        "time": "16:00",
-        "fixture": "Sevilla Fc v R.Oviedo",
-        "team1": {
-          "name": "Sevilla Fc",
-          "code": "SEV",
-          "colorClass": "team-color-sevilla-fc"
-        },
-        "team2": {
-          "name": "R.Oviedo",
-          "code": "R.O",
-          "colorClass": "team-color-r.oviedo"
-        },
-        "prediction": "1",
-        "odds": 1.94,
-        "confidence": 60,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Netherlands Derd Divisie Zondag",
-        "time": "16:00",
-        "fixture": "Gemert v GOES",
-        "team1": {
-          "name": "Gemert",
-          "code": "GEM",
-          "colorClass": "team-color-gemert"
-        },
-        "team2": {
-          "name": "GOES",
-          "code": "GOE",
-          "colorClass": "team-color-goes"
-        },
-        "prediction": "1",
-        "odds": 1.85,
-        "confidence": 60,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany 2. Frauen BundesLiga ",
-        "time": "16:00",
-        "fixture": "Andernach W v Borussia M'gladbach W",
-        "team1": {
-          "name": "Andernach W",
-          "code": "AND",
-          "colorClass": "team-color-andernach-w"
-        },
-        "team2": {
-          "name": "Borussia M'gladbach W",
-          "code": "BOR",
-          "colorClass": "team-color-borussia-m'gladbach-w"
-        },
-        "prediction": "1",
-        "odds": 2.16,
-        "confidence": 44,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany 2. Frauen BundesLiga ",
-        "time": "16:00",
-        "fixture": "Viktoria Berlin W v Turbine Postdam",
-        "team1": {
-          "name": "Viktoria Berlin W",
-          "code": "VIK",
-          "colorClass": "team-color-viktoria-berlin-w"
-        },
-        "team2": {
-          "name": "Turbine Postdam",
-          "code": "TUR",
-          "colorClass": "team-color-turbine-postdam"
-        },
-        "prediction": "1",
-        "odds": 2.17,
-        "confidence": 44,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Austria BundesLiga ",
-        "time": "16:30",
-        "fixture": "BW Linz  v Rapid Wein ",
-        "team1": {
-          "name": "BW Linz ",
-          "code": "BW ",
-          "colorClass": "team-color-bw-linz-"
-        },
-        "team2": {
-          "name": "Rapid Wein ",
-          "code": "RAP",
-          "colorClass": "team-color-rapid-wein-"
-        },
-        "prediction": "2",
-        "odds": 2.01,
-        "confidence": 65,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Italy Serie B Women",
-        "time": "16:30",
-        "fixture": "Trastevere W v Arezzo W",
-        "team1": {
-          "name": "Trastevere W",
-          "code": "TRA",
-          "colorClass": "team-color-trastevere-w"
-        },
-        "team2": {
-          "name": "Arezzo W",
-          "code": "ARE",
-          "colorClass": "team-color-arezzo-w"
-        },
-        "prediction": "2",
-        "odds": 1.91,
-        "confidence": 71,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Portugal Liga Portugal 2 ",
-        "time": "17:00",
-        "fixture": "CS Martimo  v Benfica II",
-        "team1": {
-          "name": "CS Martimo ",
-          "code": "CS ",
-          "colorClass": "team-color-cs-martimo-"
-        },
-        "team2": {
-          "name": "Benfica II",
-          "code": "BEN",
-          "colorClass": "team-color-benfica-ii"
-        },
-        "prediction": "1",
-        "odds": 1.85,
-        "confidence": 80,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Italy Serie A",
-        "time": "17:00",
-        "fixture": "Udinese v Napoli ",
-        "team1": {
-          "name": "Udinese",
-          "code": "UDI",
-          "colorClass": "team-color-udinese"
-        },
-        "team2": {
-          "name": "Napoli ",
-          "code": "NAP",
-          "colorClass": "team-color-napoli-"
-        },
-        "prediction": "2",
-        "odds": 1.89,
-        "confidence": 71,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "English Premier League ",
-        "time": "17:00",
-        "fixture": "Westham UTD  v Aston Villa ",
-        "team1": {
-          "name": "Westham UTD ",
-          "code": "WES",
-          "colorClass": "team-color-westham-utd-"
-        },
-        "team2": {
-          "name": "Aston Villa ",
-          "code": "AST",
-          "colorClass": "team-color-aston-villa-"
-        },
-        "prediction": "2",
-        "odds": 1.95,
-        "confidence": 80,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany BundesLiga ",
-        "time": "17:30",
-        "fixture": "Freiburg  v Borussia Dortmund ",
-        "team1": {
-          "name": "Freiburg ",
-          "code": "FRE",
-          "colorClass": "team-color-freiburg-"
-        },
-        "team2": {
-          "name": "Borussia Dortmund ",
-          "code": "BOR",
-          "colorClass": "team-color-borussia-dortmund-"
-        },
-        "prediction": "2",
-        "odds": 2.15,
-        "confidence": 60,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Switzerland Super League ",
-        "time": "18:30",
-        "fixture": "Lugano  v Servette",
-        "team1": {
-          "name": "Lugano ",
-          "code": "LUG",
-          "colorClass": "team-color-lugano-"
-        },
-        "team2": {
-          "name": "Servette",
-          "code": "SER",
-          "colorClass": "team-color-servette"
-        },
-        "prediction": "1",
-        "odds": 2.15,
-        "confidence": 55,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Turkey 1. Lig",
-        "time": "19:00",
-        "fixture": "Pendikspor v 76 igdir Belediyespor ",
-        "team1": {
-          "name": "Pendikspor",
-          "code": "PEN",
-          "colorClass": "team-color-pendikspor"
-        },
-        "team2": {
-          "name": "76 igdir Belediyespor ",
-          "code": "76 ",
-          "colorClass": "team-color-76-igdir-belediyespor-"
-        },
-        "prediction": "1",
-        "odds": 1.99,
-        "confidence": 60,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Cyprus First Division ",
-        "time": "20:00",
-        "fixture": "Apollon v Aris",
-        "team1": {
-          "name": "Apollon",
-          "code": "APO",
-          "colorClass": "team-color-apollon"
-        },
-        "team2": {
-          "name": "Aris",
-          "code": "ARI",
-          "colorClass": "team-color-aris"
-        },
-        "prediction": "2",
-        "odds": 2,
-        "confidence": 41,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Belgium Jupiler League ",
-        "time": "20:30",
-        "fixture": "Sporting Charleroi v Union Saint-Gilloise",
-        "team1": {
-          "name": "Sporting Charleroi",
-          "code": "SPO",
-          "colorClass": "team-color-sporting-charleroi"
-        },
-        "team2": {
-          "name": "Union Saint-Gilloise",
-          "code": "UNI",
-          "colorClass": "team-color-union-saint-gilloise"
-        },
-        "prediction": "2",
-        "odds": 1.89,
-        "confidence": 80,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "Germany Frauen BundesLiga ",
-        "time": "20:30",
-        "fixture": "RB Leipzig W v Hoffenheim W",
-        "team1": {
-          "name": "RB Leipzig W",
-          "code": "RB ",
-          "colorClass": "team-color-rb-leipzig-w"
-        },
-        "team2": {
-          "name": "Hoffenheim W",
-          "code": "HOF",
-          "colorClass": "team-color-hoffenheim-w"
-        },
-        "prediction": "2",
-        "odds": 1.85,
-        "confidence": 55,
-        "status": "pending",
-        "actualScore": ""
-      },
-      {
-        "league": "France Ligue I ",
-        "time": "22:45",
-        "fixture": "Olympique Marseille  v Monaco ",
-        "team1": {
-          "name": "Olympique Marseille ",
-          "code": "OLY",
-          "colorClass": "team-color-olympique-marseille-"
-        },
-        "team2": {
-          "name": "Monaco ",
-          "code": "MON",
-          "colorClass": "team-color-monaco-"
-        },
-        "prediction": "1",
-        "odds": 1.85,
-        "confidence": 60,
-        "status": "pending",
-        "actualScore": ""
-      }
-    ],
+    "date": "Monday, December 15, 2025",
+    "subtitle": "Monday, December 15, 2025 - 0 Premium Picks with 1.00 Total Odds",
+    "totalPredictions": 0,
+    "totalOdds": "1.00",
+    "predictions": [],
     "winningExamples": [
       {
         "stake": 10,
-        "win": "49251002.60"
+        "win": "10.00"
       },
       {
         "stake": 50,
-        "win": "246255013.00"
+        "win": "50.00"
       },
       {
         "stake": 100,
-        "win": "492510026.00"
+        "win": "100.00"
       }
     ]
   },
   "tomorrowPredictions": {
-    "date": "Monday, December 15, 2025",
+    "date": "Tuesday, December 16, 2025",
     "title": "Tomorrow's Premium Picks",
-    "subtitle": "Monday, December 15, 2025 - 0 Premium Picks",
+    "subtitle": "Tuesday, December 16, 2025 - 0 Premium Picks with 1.00 Total Odds",
     "totalPredictions": 0,
+    "totalOdds": "1.00",
     "predictions": []
   },
-  "dayAfterPredictions": {
-    "date": "Tuesday, December 16, 2025",
-    "title": "Day After Tomorrow Predictions",
-    "subtitle": "Tuesday, December 16, 2025 - 0 Premium Picks",
-    "totalPredictions": 0,
-    "predictions": []
+  "weekendPredictions": {
+    "saturday": {
+      "date": "Saturday, December 20, 2025",
+      "title": "Saturday Premium Picks",
+      "totalPredictions": 0,
+      "predictions": []
+    },
+    "sunday": {
+      "date": "Sunday, December 21, 2025",
+      "title": "Sunday Premium Picks",
+      "totalPredictions": 0,
+      "predictions": []
+    },
+    "totalOdds": "1.00",
+    "winningExamples": [
+      {
+        "stake": 10,
+        "win": "10.00"
+      },
+      {
+        "stake": 50,
+        "win": "50.00"
+      },
+      {
+        "stake": 100,
+        "win": "100.00"
+      }
+    ]
   },
   "yesterdayResults": {
-    "date": "Saturday, December 13, 2025",
-    "subtitle": "12 Wins out of 20 Predictions",
+    "date": "Sunday, December 14, 2025",
+    "subtitle": "11 Wins out of 21 Predictions",
     "stats": {
-      "record": "12-0-8",
-      "winRate": "60.0%",
-      "wins": 12,
-      "total": 20,
+      "record": "11-0-10",
+      "winRate": "52.4%",
+      "wins": 11,
+      "total": 21,
       "totalOdds": "1100025.07",
       "status": "Good",
-      "losses": 8
+      "losses": 10
     },
-    "analysis": "Performance with 12 wins out of 20 predictions (60.0% accuracy).",
+    "analysis": "Performance with 11 wins out of 21 predictions (52.4% accuracy).",
     "insight": "Focus on high confidence predictions for better results.",
     "results": [
       {
-        "fixture": "Western Sydney Wonderers v Brisbane Roar ",
-        "betType": "1",
-        "odds": 2,
-        "result": "0-0",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "09:00",
-        "league": "Australia A League "
-      },
-      {
-        "fixture": "Melbourne Victory v Adelaide United ",
-        "betType": "1",
-        "odds": 2.2,
-        "result": "2-1",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "11:35",
-        "league": "Australia A League "
-      },
-      {
-        "fixture": "CSM Satu Mare v Afumati ",
-        "betType": "2",
-        "odds": 2.15,
-        "result": "2-1",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "",
-        "league": "Romania Liga II"
-      },
-      {
-        "fixture": "Serik Belediyespor v Manisa BBSK ",
-        "betType": "1",
-        "odds": 2.17,
-        "result": "0-1",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "13:30",
-        "league": "Turkey 1. Lig "
-      },
-      {
-        "fixture": "Bristol Rovers v Swindon Town ",
-        "betType": "2",
-        "odds": 2.3,
-        "result": "0-3",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "15:30",
-        "league": "English League Two "
-      },
-      {
-        "fixture": "Ahinoras/ Onisilos v ASIL Lysi ",
-        "betType": "2",
-        "odds": 1.92,
-        "result": "0-1",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "15:30",
-        "league": "Cyprus second League "
-      },
-      {
-        "fixture": "Laci v Skenderbeu ",
-        "betType": "1",
-        "odds": 2.14,
-        "result": "2-1",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "15:30",
-        "league": "Albania First Division "
-      },
-      {
-        "fixture": "Keyserispor v Alanyaspor ",
-        "betType": "2",
-        "odds": 2.2,
-        "result": "0-0",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "17:00",
-        "league": "Turkey Super League "
-      },
-      {
-        "fixture": "Academico Viseu v Farense ",
-        "betType": "1",
-        "odds": 2.21,
-        "result": "3-0",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "17:00",
-        "league": "Portugal Liga Portugal 2 "
-      },
-      {
-        "fixture": "Barnsley v Leyton Orient ",
-        "betType": "1",
-        "odds": 2.19,
-        "result": "3-2",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "18:00",
-        "league": "English League Two "
-      },
-      {
-        "fixture": "Montrose v Stenhousemuir ",
-        "betType": "2",
-        "odds": 0,
-        "result": "3-0",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "18:00",
-        "league": "Scotland League One "
-      },
-      {
-        "fixture": "Middlesbrough v QPR",
-        "betType": "1",
-        "odds": 1.97,
-        "result": "3-1",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "18:00",
-        "league": "English Championships "
-      },
-      {
-        "fixture": "Bradford City v Reading ",
-        "betType": "1",
-        "odds": 1.91,
+        "fixture": "Ajax v Feyenord",
+        "betType": "1&yes",
+        "odds": 4.4,
         "result": "2-0",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Netherlands Eredivisie"
+      },
+      {
+        "fixture": "Sporting CP II v Vizela",
+        "betType": "1",
+        "odds": 2.35,
+        "result": "0-1",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Portugal Liga Portugal 2"
+      },
+      {
+        "fixture": "Gaziantep v Goztepe",
+        "betType": "2",
+        "odds": 2.2,
+        "result": "0-1",
         "outcome": "won",
         "statusClass": "won",
-        "time": "18:00",
-        "league": "English League One "
+        "time": "15:00",
+        "league": "Turkey Super Lig"
       },
       {
-        "fixture": "Ards v Newington Youth ",
-        "betType": "2",
-        "odds": 2.15,
-        "result": "3-3(pending) @78 min",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "18:00",
-        "league": "Northern Ireland NIFL Championships "
-      },
-      {
-        "fixture": "Casa Pia v Gil Vicente ",
-        "betType": "2",
-        "odds": 2.23,
-        "result": "1-1",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "18:30",
-        "league": "Portugal Liga Portugal "
-      },
-      {
-        "fixture": "Tel Star v NEC",
-        "betType": "2",
-        "odds": 1.97,
-        "result": "2-2",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "18:30",
-        "league": "Netherlands Eredivisie "
-      },
-      {
-        "fixture": "Verl v Rot-Weiss Essen ",
+        "fixture": "Nantes W v Olympique Marseille W",
         "betType": "1",
-        "odds": 2.1,
-        "result": "0-0",
-        "outcome": "lost",
-        "statusClass": "lost",
-        "time": "18:30",
-        "league": "Germany 3. Liga"
-      },
-      {
-        "fixture": "OFI Crete v Panserraikos ",
-        "betType": "1",
-        "odds": 1.85,
+        "odds": 1.9,
         "result": "3-0",
         "outcome": "won",
         "statusClass": "won",
-        "time": "19:00",
-        "league": "Greece Super League "
+        "time": "15:00",
+        "league": "France Feminine Division"
       },
       {
-        "fixture": "Grazer AK v Lask Linz ",
-        "betType": "2",
-        "odds": 2.03,
-        "result": "1-2",
-        "outcome": "won",
-        "statusClass": "won",
-        "time": "19:00",
-        "league": "Austria BundesLiga "
-      },
-      {
-        "fixture": "Catanzaro v Avellino ",
+        "fixture": "Krieshow v Empor Glauchau",
         "betType": "1",
         "odds": 1.9,
         "result": "1-0",
         "outcome": "won",
         "statusClass": "won",
-        "time": "19:15",
-        "league": "Italy Serie B "
+        "time": "15:00",
+        "league": "Germany Ober Liga Nordost Sud"
+      },
+      {
+        "fixture": "Bochum W v Meppen W",
+        "betType": "2",
+        "odds": 2,
+        "result": "0-1",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "Germany 2 Frauen BundesLiga"
+      },
+      {
+        "fixture": "Seville v R. Oviedo",
+        "betType": "1",
+        "odds": 1.94,
+        "result": "4-0",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "Spain La Liga"
+      },
+      {
+        "fixture": "Gemert v GOES",
+        "betType": "1",
+        "odds": 1.85,
+        "result": "3-3",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Netherlands Derd Divisie Zondang"
+      },
+      {
+        "fixture": "Andernatch  W v Borussia M'gladbach W",
+        "betType": "1",
+        "odds": 1.85,
+        "result": "5-1",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "Germany 2 Frauen BundesLiga"
+      },
+      {
+        "fixture": "Viktoria Berlin W v Turbine Postdam",
+        "betType": "1",
+        "odds": 2.17,
+        "result": "0-2",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Germany 2 Frauen BundesLiga"
+      },
+      {
+        "fixture": "Bw Linz v Rapid Wien",
+        "betType": "2",
+        "odds": 2.01,
+        "result": "1-1",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Austria BundesLiga"
+      },
+      {
+        "fixture": "Trastevere W v Arezzo W",
+        "betType": "2",
+        "odds": 1.91,
+        "result": "2-2",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Italy Serie B Women"
+      },
+      {
+        "fixture": "Udinese v Napoli",
+        "betType": "2",
+        "odds": 1.89,
+        "result": "1-0",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Italy Serie A"
+      },
+      {
+        "fixture": "Westham UTD v Aston Villa",
+        "betType": "2",
+        "odds": 1.95,
+        "result": "2-3",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "English Premier  League"
+      },
+      {
+        "fixture": "Frieburg v Borussia Dortmund",
+        "betType": "2",
+        "odds": 2.15,
+        "result": "1-1",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Germany BundesLiga"
+      },
+      {
+        "fixture": "Lugano v Servette",
+        "betType": "1",
+        "odds": 2.15,
+        "result": "4-2",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "Switzerland Super League"
+      },
+      {
+        "fixture": "Pendikspor v 76 igdir Belediyespor",
+        "betType": "1",
+        "odds": 1.99,
+        "result": "1-1",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Turkey 1.Lig"
+      },
+      {
+        "fixture": "Apollon v Aris",
+        "betType": "2",
+        "odds": 1.99,
+        "result": "0-2",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "Cyprus First Division"
+      },
+      {
+        "fixture": "Sporting Charleroi v Union Saint Gilloise",
+        "betType": "2",
+        "odds": 1.89,
+        "result": "1-1",
+        "outcome": "lost",
+        "statusClass": "lost",
+        "time": "15:00",
+        "league": "Belgium Pro League"
+      },
+      {
+        "fixture": "Rb Leipzig W v Hoffenheim W",
+        "betType": "2",
+        "odds": 1.85,
+        "result": "2-3",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "Germany Frauen BundesLiga"
+      },
+      {
+        "fixture": "Olympique Marseille v Monaco",
+        "betType": "1",
+        "odds": 1.85,
+        "result": "1-0",
+        "outcome": "won",
+        "statusClass": "won",
+        "time": "15:00",
+        "league": "France Ligue I"
       }
     ]
   }
