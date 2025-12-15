@@ -473,4 +473,322 @@
         
         function updateMatchStatus(index, status) {
             todayMatches[index].status = status;
- 
+            saveToLocal();
+        }
+        
+        function updateMatchScore(index, score) {
+            todayMatches[index].score = score;
+            saveToLocal();
+        }
+        
+        function removeMatch(index) {
+            if (confirm("Delete this match?")) {
+                todayMatches.splice(index, 1);
+                showMatches();
+                updateStats();
+                saveToLocal();
+            }
+        }
+        
+        // ===== AUTO-MIGRATION =====
+        function autoMigrate() {
+            const completed = todayMatches.filter(m => m.status === 'won' || m.status === 'lost');
+            
+            completed.forEach(match => {
+                results.push({
+                    fixture: `${match.team1} v ${match.team2}`,
+                    league: match.league,
+                    time: match.time,
+                    prediction: match.prediction,
+                    odds: match.odds,
+                    score: match.score || "N/A",
+                    outcome: match.status
+                });
+            });
+            
+            todayMatches = todayMatches.filter(m => m.status === 'pending');
+            
+            if (completed.length > 0) {
+                console.log(`Auto-migrated ${completed.length} matches`);
+            }
+            
+            updateStats();
+        }
+        
+        // ===== STATS =====
+        function updateStats() {
+            document.getElementById('today-count').textContent = todayMatches.length;
+            document.getElementById('results-count').textContent = results.length;
+            
+            const totalOdds = todayMatches.reduce((total, match) => total * match.odds, 1).toFixed(2);
+            document.getElementById('total-odds').textContent = totalOdds;
+            
+            const wins = results.filter(r => r.outcome === 'won').length;
+            const winRate = results.length > 0 ? Math.round((wins / results.length) * 100) : 0;
+            document.getElementById('win-rate').textContent = winRate + '%';
+        }
+        
+        // ===== GENERATE COMPLETE JSON =====
+        function generateCompleteJSON() {
+            // Auto-migrate first
+            autoMigrate();
+            
+            // Get form values
+            const heroTitle = document.getElementById('hero-title').value;
+            const heroSubtitle = document.getElementById('hero-subtitle').value;
+            
+            // Calculate hero total odds
+            const heroOdds1 = parseFloat(document.getElementById('hero-odds1').value) || 4.33;
+            const heroOdds2 = parseFloat(document.getElementById('hero-odds2').value) || 4.33;
+            const heroOdds3 = parseFloat(document.getElementById('hero-odds3').value) || 5.5;
+            const heroTotalOdds = (heroOdds1 * heroOdds2 * heroOdds3).toFixed(2);
+            const heroAvgOdds = (heroTotalOdds / 3).toFixed(2);
+            
+            // Calculate today's total odds
+            const todayTotalOdds = todayMatches.reduce((total, match) => total * match.odds, 1).toFixed(2);
+            
+            // Calculate results stats
+            const totalResults = results.length;
+            const wins = results.filter(r => r.outcome === 'won').length;
+            const losses = results.filter(r => r.outcome === 'lost').length;
+            const winRate = totalResults > 0 ? ((wins / totalResults) * 100).toFixed(1) + '%' : '0%';
+            
+            // Get current dates
+            const now = new Date();
+            const today = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            const yestDate = yesterday.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomDate = tomorrow.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // ===== BUILD COMPLETE JSON =====
+            const completeData = {
+                lastUpdated: now.toISOString(),
+                
+                // HERO SECTION
+                hero: {
+                    date: today,
+                    title: heroTitle,
+                    subtitle: heroSubtitle,
+                    stats: [
+                        { value: document.getElementById('stat1-value').value || "3/3", label: document.getElementById('stat1-label').value || "Perfect Wins" },
+                        { value: heroTotalOdds, label: document.getElementById('stat2-label').value || "Total Odds" },
+                        { value: heroAvgOdds, label: document.getElementById('stat3-label').value || "Avg Odds" },
+                        { value: document.getElementById('stat4-value').value || "100%", label: document.getElementById('stat4-label').value || "Win Rate" }
+                    ],
+                    results: [
+                        {
+                            time: "19:45",
+                            league: "League Two",
+                            fixture: document.getElementById('hero-match1').value || "Fleetwood 1 – 1 Salford",
+                            betType: document.getElementById('hero-bet1').value || "Draw & BTTS",
+                            betClass: "bet-gold",
+                            odds: heroOdds1,
+                            status: "won"
+                        },
+                        {
+                            time: "20:00",
+                            league: "League Two",
+                            fixture: document.getElementById('hero-match2').value || "Barrow 0 – 3 Tranmere",
+                            betType: document.getElementById('hero-bet2').value || "Away & Over 2.5",
+                            betClass: "bet-green",
+                            odds: heroOdds2,
+                            status: "won"
+                        },
+                        {
+                            time: "19:45",
+                            league: "League Two",
+                            fixture: document.getElementById('hero-match3').value || "Notts Co 3 – 2 MK Dons",
+                            betType: document.getElementById('hero-bet3').value || "Home & BTTS",
+                            betClass: "bet-orange",
+                            odds: heroOdds3,
+                            status: "won"
+                        }
+                    ],
+                    calculations: {
+                        totalOdds: heroTotalOdds,
+                        winningExamples: [
+                            { stake: 10, win: (10 * heroTotalOdds).toFixed(2) },
+                            { stake: 50, win: (50 * heroTotalOdds).toFixed(2) },
+                            { stake: 100, win: (100 * heroTotalOdds).toFixed(2) }
+                        ],
+                        profitNote: `3-match accumulator = ${(heroTotalOdds * 100).toFixed(0)}% PROFIT!`
+                    }
+                },
+                
+                // TOP PREDICTION
+                topPrediction: {
+                    date: today,
+                    title: "TOP PREDICTION OF THE DAY",
+                    subtitle: "Today's Premium Selection",
+                    badge: "PREMIUM PICK",
+                    mainMatch: {
+                        league: document.getElementById('top-league').value || "Dutch Eredivisie 🇪🇺",
+                        time: document.getElementById('top-time').value || "21:00",
+                        team1: {
+                            name: document.getElementById('top-team1').value || "Ajax",
+                            code: (document.getElementById('top-team1').value || "AJA").substring(0, 3).toUpperCase(),
+                            color: "#0000ff",
+                            colorClass: "team-color-" + (document.getElementById('top-team1').value || "ajax").toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: document.getElementById('top-team2').value || "Feyenord",
+                            code: (document.getElementById('top-team2').value || "FEY").substring(0, 3).toUpperCase(),
+                            color: "#034694",
+                            colorClass: "team-color-" + (document.getElementById('top-team2').value || "feyenord").toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: document.getElementById('top-prediction').value || "1 & BTTS",
+                        odds: parseFloat(document.getElementById('top-odds').value) || 4.4,
+                        confidence: parseInt(document.getElementById('top-confidence').value) || 50,
+                        riskLevel: document.getElementById('top-risk').value || "HIGH RISK"
+                    }
+                },
+                
+                // TODAY'S PREDICTIONS
+                todayPredictions: {
+                    date: today,
+                    subtitle: `${today} - ${todayMatches.length} Premium Picks with ${todayTotalOdds} Total Odds`,
+                    totalPredictions: todayMatches.length,
+                    totalOdds: todayTotalOdds,
+                    predictions: todayMatches.map(match => ({
+                        league: match.league,
+                        time: match.time,
+                        fixture: `${match.team1} v ${match.team2}`,
+                        team1: {
+                            name: match.team1,
+                            code: match.team1.substring(0, 3).toUpperCase(),
+                            colorClass: "team-color-" + match.team1.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: match.team2,
+                            code: match.team2.substring(0, 3).toUpperCase(),
+                            colorClass: "team-color-" + match.team2.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: match.prediction,
+                        odds: match.odds,
+                        confidence: match.confidence,
+                        status: match.status,
+                        actualScore: match.score
+                    })),
+                    winningExamples: [
+                        { stake: 10, win: (10 * todayTotalOdds).toFixed(2) },
+                        { stake: 50, win: (50 * todayTotalOdds).toFixed(2) },
+                        { stake: 100, win: (100 * todayTotalOdds).toFixed(2) }
+                    ]
+                },
+                
+                // TOMORROW'S PREDICTIONS
+                tomorrowPredictions: {
+                    date: tomDate,
+                    title: "Tomorrow's Premium Picks",
+                    subtitle: `${tomDate} - 0 Premium Picks`,
+                    totalPredictions: 0,
+                    predictions: []
+                },
+                
+                // YESTERDAY'S RESULTS
+                yesterdayResults: {
+                    date: yestDate,
+                    subtitle: `${wins} Wins out of ${totalResults} Predictions`,
+                    stats: {
+                        record: `${wins}-0-${losses}`,
+                        winRate: winRate,
+                        wins: wins,
+                        total: totalResults,
+                        totalOdds: results.length > 0 ? results.reduce((total, r) => total * (r.odds || 1), 1).toFixed(2) : "0.00",
+                        status: wins > losses ? "Good" : "Poor",
+                        losses: losses
+                    },
+                    analysis: `Performance with ${wins} wins out of ${totalResults} predictions (${winRate} accuracy).`,
+                    insight: "Focus on high confidence predictions for better results.",
+                    results: results.map(r => ({
+                        fixture: r.fixture,
+                        betType: r.prediction,
+                        odds: r.odds,
+                        result: r.score,
+                        outcome: r.outcome,
+                        statusClass: r.outcome,
+                        time: r.time,
+                        league: r.league
+                    }))
+                }
+            };
+            
+            // Display JSON
+            document.getElementById('json-output').value = JSON.stringify(completeData, null, 2);
+            document.getElementById('json-box').style.display = 'block';
+            
+            // Scroll to JSON
+            setTimeout(() => {
+                document.getElementById('json-box').scrollIntoView({ behavior: 'smooth' });
+            }, 100);
+            
+            // Save data
+            saveToLocal();
+            
+            alert(`✅ JSON Generated!\n• Hero: 3 matches\n• Top Prediction: ${document.getElementById('top-team1').value} vs ${document.getElementById('top-team2').value}\n• Today: ${todayMatches.length} matches\n• Results: ${results.length} matches`);
+        }
+        
+        // ===== STORAGE =====
+        function saveToLocal() {
+            const data = {
+                todayMatches: todayMatches,
+                results: results,
+                heroTitle: document.getElementById('hero-title').value,
+                heroSubtitle: document.getElementById('hero-subtitle').value,
+                topLeague: document.getElementById('top-league').value,
+                topTeam1: document.getElementById('top-team1').value,
+                topTeam2: document.getElementById('top-team2').value
+            };
+            localStorage.setItem('rmameCompleteData', JSON.stringify(data));
+        }
+        
+        function loadSavedData() {
+            try {
+                const saved = localStorage.getItem('rmameCompleteData');
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    todayMatches = data.todayMatches || [];
+                    results = data.results || [];
+                    
+                    // Load form values
+                    if (data.heroTitle) document.getElementById('hero-title').value = data.heroTitle;
+                    if (data.heroSubtitle) document.getElementById('hero-subtitle').value = data.heroSubtitle;
+                    if (data.topLeague) document.getElementById('top-league').value = data.topLeague;
+                    if (data.topTeam1) document.getElementById('top-team1').value = data.topTeam1;
+                    if (data.topTeam2) document.getElementById('top-team2').value = data.topTeam2;
+                    
+                    showMatches();
+                    updateStats();
+                }
+            } catch (e) {
+                console.log("Starting fresh");
+            }
+        }
+        
+        // ===== UTILITIES =====
+        function copyJSON() {
+            const jsonText = document.getElementById('json-output');
+            jsonText.select();
+            navigator.clipboard.writeText(jsonText.value)
+                .then(() => alert("✅ JSON copied! Paste to GitHub."))
+                .catch(() => {
+                    document.execCommand('copy');
+                    alert("✅ JSON copied!");
+                });
+        }
+        
+        function testJSON() {
+            try {
+                const jsonText = document.getElementById('json-output').value;
+                JSON.parse(jsonText);
+                alert("✅ JSON is valid!");
+            } catch (e) {
+                alert("❌ JSON error: " + e.message);
+            }
+        }
+    </script>
+</body>
+</html>
