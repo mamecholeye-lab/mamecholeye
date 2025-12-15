@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RMAME - COMPLETE SIMPLE CONTROL</title>
+    <title>RMAME - COMPLETE CONTROL</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial; background: #0f172a; color: white; padding: 20px; }
@@ -13,12 +13,13 @@
         .tabs { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 20px; }
         .tab { 
             background: #334155; 
-            padding: 12px 20px; 
+            padding: 12px 15px; 
             border-radius: 8px; 
             cursor: pointer; 
             flex: 1;
             text-align: center;
-            min-width: 150px;
+            min-width: 110px;
+            font-size: 14px;
         }
         .tab.active { background: #FF6B35; }
 
@@ -69,6 +70,7 @@
             display: inline-flex;
             align-items: center;
             gap: 5px;
+            font-size: 14px;
         }
         .btn-success { background: #00B894; }
         .btn-primary { background: #0984E3; }
@@ -119,22 +121,39 @@
         .status-won { background: #00B894; }
         .status-lost { background: #FF4757; }
 
+        /* Date Header */
+        .date-header {
+            background: rgba(255, 107, 53, 0.1);
+            padding: 10px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        .date-value {
+            color: #FF6B35;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .form-row { flex-direction: column; }
-            .tab { min-width: 120px; padding: 10px 15px; }
+            .tab { min-width: 100px; padding: 10px 12px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1 style="text-align:center; color:#FF6B35; margin-bottom:20px;">⚽ RMAME COMPLETE CONTROL</h1>
+        <h1 style="text-align:center; color:#FF6B35; margin-bottom:15px;">⚽ RMAME COMPLETE CONTROL</h1>
+        <p style="text-align:center; color:#94a3b8; margin-bottom:20px;">Hero + Top Pick + Today + Tomorrow + Weekend + Results</p>
         
         <!-- Tabs -->
         <div class="tabs">
             <div class="tab active" onclick="switchTab('hero')">🏆 Hero</div>
             <div class="tab" onclick="switchTab('top')">🎯 Top Pick</div>
             <div class="tab" onclick="switchTab('today')">⚽ Today</div>
+            <div class="tab" onclick="switchTab('tomorrow')">📅 Tomorrow</div>
+            <div class="tab" onclick="switchTab('weekend')">🎯 Weekend</div>
             <div class="tab" onclick="switchTab('results')">📊 Results</div>
             <div class="tab" onclick="switchTab('generate')">🚀 Generate</div>
         </div>
@@ -292,6 +311,11 @@
 
         <!-- ==================== TODAY'S MATCHES TAB ==================== -->
         <div id="today-tab" class="tab-content">
+            <div class="date-header">
+                <div style="color:#94a3b8; font-size:14px;">📅 TODAY</div>
+                <div class="date-value" id="today-date-display">Loading...</div>
+            </div>
+            
             <h2 style="color:#FF6B35; margin-bottom:15px;">⚽ Today's Matches</h2>
             
             <!-- Add Match Form -->
@@ -300,28 +324,28 @@
                 <div class="form-row">
                     <div class="form-group">
                         <label>Team 1:</label>
-                        <input type="text" id="new-team1" placeholder="Home Team">
+                        <input type="text" id="new-today-team1" placeholder="Home Team">
                     </div>
                     <div class="form-group">
                         <label>Team 2:</label>
-                        <input type="text" id="new-team2" placeholder="Away Team">
+                        <input type="text" id="new-today-team2" placeholder="Away Team">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label>League:</label>
-                        <input type="text" id="new-league" placeholder="League">
+                        <input type="text" id="new-today-league" placeholder="League">
                     </div>
                     <div class="form-group">
                         <label>Prediction:</label>
-                        <input type="text" id="new-prediction" placeholder="Prediction">
+                        <input type="text" id="new-today-prediction" placeholder="Prediction">
                     </div>
                     <div class="form-group">
                         <label>Odds:</label>
-                        <input type="number" step="0.01" id="new-odds" placeholder="Odds" value="2.0">
+                        <input type="number" step="0.01" id="new-today-odds" placeholder="Odds" value="2.0">
                     </div>
                 </div>
-                <button class="btn btn-primary" onclick="addTodayMatch()" style="width:100%;">➕ Add Match</button>
+                <button class="btn btn-primary" onclick="addTodayMatch()" style="width:100%;">➕ Add to Today</button>
             </div>
             
             <!-- Matches List -->
@@ -333,9 +357,129 @@
             <button class="btn btn-success" onclick="saveTodayData()">💾 Save Today's Matches</button>
         </div>
 
+        <!-- ==================== TOMORROW'S MATCHES TAB ==================== -->
+        <div id="tomorrow-tab" class="tab-content">
+            <div class="date-header">
+                <div style="color:#94a3b8; font-size:14px;">📅 TOMORROW</div>
+                <div class="date-value" id="tomorrow-date-display">Loading...</div>
+            </div>
+            
+            <h2 style="color:#FF6B35; margin-bottom:15px;">📅 Tomorrow's Matches</h2>
+            
+            <!-- Add Match Form -->
+            <div class="match-card" style="background:rgba(0,184,148,0.1);">
+                <h3 style="color:#00B894; margin-bottom:10px;">➕ Add New Match</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Team 1:</label>
+                        <input type="text" id="new-tomorrow-team1" placeholder="Home Team">
+                    </div>
+                    <div class="form-group">
+                        <label>Team 2:</label>
+                        <input type="text" id="new-tomorrow-team2" placeholder="Away Team">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>League:</label>
+                        <input type="text" id="new-tomorrow-league" placeholder="League">
+                    </div>
+                    <div class="form-group">
+                        <label>Prediction:</label>
+                        <input type="text" id="new-tomorrow-prediction" placeholder="Prediction">
+                    </div>
+                    <div class="form-group">
+                        <label>Odds:</label>
+                        <input type="number" step="0.01" id="new-tomorrow-odds" placeholder="Odds" value="2.0">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addTomorrowMatch()" style="width:100%; background:#00B894;">➕ Add to Tomorrow</button>
+            </div>
+            
+            <!-- Matches List -->
+            <h3 style="color:#00B894; margin:20px 0 10px 0;">📋 Tomorrow's Matches (<span id="tomorrow-count">0</span>)</h3>
+            <div id="tomorrow-matches-list">
+                <!-- Matches will be added here -->
+            </div>
+            
+            <button class="btn btn-success" onclick="saveTomorrowData()" style="background:#00B894;">💾 Save Tomorrow's Matches</button>
+        </div>
+
+        <!-- ==================== WEEKEND MATCHES TAB ==================== -->
+        <div id="weekend-tab" class="tab-content">
+            <div class="date-header">
+                <div style="color:#94a3b8; font-size:14px;">🎯 WEEKEND PREDICTIONS</div>
+                <div class="date-value" id="weekend-date-display">Saturday & Sunday</div>
+            </div>
+            
+            <h2 style="color:#FF6B35; margin-bottom:15px;">🎯 Weekend Predictions</h2>
+            
+            <!-- Add Match Form -->
+            <div class="match-card" style="background:rgba(255,215,0,0.1);">
+                <h3 style="color:#FFD700; margin-bottom:10px;">➕ Add Weekend Match</h3>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Day:</label>
+                        <select id="new-weekend-day">
+                            <option value="Saturday">Saturday</option>
+                            <option value="Sunday">Sunday</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Time:</label>
+                        <input type="text" id="new-weekend-time" placeholder="15:00">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Team 1:</label>
+                        <input type="text" id="new-weekend-team1" placeholder="Home Team">
+                    </div>
+                    <div class="form-group">
+                        <label>Team 2:</label>
+                        <input type="text" id="new-weekend-team2" placeholder="Away Team">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>League:</label>
+                        <input type="text" id="new-weekend-league" placeholder="League">
+                    </div>
+                    <div class="form-group">
+                        <label>Prediction:</label>
+                        <input type="text" id="new-weekend-prediction" placeholder="Prediction">
+                    </div>
+                    <div class="form-group">
+                        <label>Odds:</label>
+                        <input type="number" step="0.01" id="new-weekend-odds" placeholder="Odds" value="2.0">
+                    </div>
+                </div>
+                <button class="btn btn-primary" onclick="addWeekendMatch()" style="width:100%; background:#FFD700; color:black;">➕ Add to Weekend</button>
+            </div>
+            
+            <!-- Saturday Matches -->
+            <h3 style="color:#FFD700; margin:20px 0 10px 0;">📋 Saturday Matches (<span id="saturday-count">0</span>)</h3>
+            <div id="saturday-matches-list">
+                <!-- Saturday matches will be added here -->
+            </div>
+            
+            <!-- Sunday Matches -->
+            <h3 style="color:#FFD700; margin:20px 0 10px 0;">📋 Sunday Matches (<span id="sunday-count">0</span>)</h3>
+            <div id="sunday-matches-list">
+                <!-- Sunday matches will be added here -->
+            </div>
+            
+            <button class="btn btn-success" onclick="saveWeekendData()" style="background:#FFD700; color:black;">💾 Save Weekend Matches</button>
+        </div>
+
         <!-- ==================== RESULTS TAB ==================== -->
         <div id="results-tab" class="tab-content">
-            <h2 style="color:#FF6B35; margin-bottom:15px;">📊 Yesterday's Results</h2>
+            <div class="date-header">
+                <div style="color:#94a3b8; font-size:14px;">📊 YESTERDAY'S RESULTS</div>
+                <div class="date-value" id="yesterday-date-display">Loading...</div>
+            </div>
+            
+            <h2 style="color:#FF6B35; margin-bottom:15px;">📊 Results</h2>
             
             <div class="form-row">
                 <div class="form-group">
@@ -360,7 +504,7 @@
             </p>
             
             <!-- Results List -->
-            <h3 style="color:#FF9E6D; margin:20px 0 10px 0;">📋 Results List</h3>
+            <h3 style="color:#FF9E6D; margin:20px 0 10px 0;">📋 Results List (<span id="results-count">0</span>)</h3>
             <div id="results-list">
                 <!-- Results will be added here -->
             </div>
@@ -372,28 +516,40 @@
         <div id="generate-tab" class="tab-content">
             <h2 style="color:#FF6B35; margin-bottom:15px;">🚀 Generate Complete JSON</h2>
             
+            <!-- Stats Overview -->
             <div style="background:rgba(255,107,53,0.1); padding:15px; border-radius:8px; margin-bottom:20px;">
-                <h3 style="color:#FF9E6D;">📊 Current Stats</h3>
-                <div style="display:flex; gap:15px; margin-top:10px;">
-                    <div style="background:#1e293b; padding:10px; border-radius:5px; flex:1;">
-                        <div style="color:#FF6B35; font-size:20px; font-weight:bold;" id="gen-today-count">0</div>
-                        <div style="color:#94a3b8; font-size:12px;">Today's Matches</div>
+                <h3 style="color:#FF9E6D;">📊 Current Overview</h3>
+                <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px; margin-top:10px;">
+                    <div style="background:#1e293b; padding:10px; border-radius:5px;">
+                        <div style="color:#FF6B35; font-size:18px; font-weight:bold;" id="gen-today-count">0</div>
+                        <div style="color:#94a3b8; font-size:12px;">Today</div>
                     </div>
-                    <div style="background:#1e293b; padding:10px; border-radius:5px; flex:1;">
-                        <div style="color:#FF6B35; font-size:20px; font-weight:bold;" id="gen-results-count">0</div>
-                        <div style="color:#94a3b8; font-size:12px;">Results</div>
+                    <div style="background:#1e293b; padding:10px; border-radius:5px;">
+                        <div style="color:#00B894; font-size:18px; font-weight:bold;" id="gen-tomorrow-count">0</div>
+                        <div style="color:#94a3b8; font-size:12px;">Tomorrow</div>
                     </div>
-                    <div style="background:#1e293b; padding:10px; border-radius:5px; flex:1;">
-                        <div style="color:#FF6B35; font-size:20px; font-weight:bold;" id="gen-win-rate">0%</div>
+                    <div style="background:#1e293b; padding:10px; border-radius:5px;">
+                        <div style="color:#FFD700; font-size:18px; font-weight:bold;" id="gen-weekend-count">0</div>
+                        <div style="color:#94a3b8; font-size:12px;">Weekend</div>
+                    </div>
+                    <div style="background:#1e293b; padding:10px; border-radius:5px;">
+                        <div style="color:#FF6B35; font-size:18px; font-weight:bold;" id="gen-win-rate">0%</div>
                         <div style="color:#94a3b8; font-size:12px;">Win Rate</div>
                     </div>
                 </div>
             </div>
             
-            <button class="btn btn-success" onclick="generateCompleteJSON()" style="font-size:18px; padding:15px 30px;">
-                🚀 GENERATE COMPLETE JSON
-            </button>
+            <!-- Generate Button -->
+            <div style="text-align:center; margin:30px 0;">
+                <button class="btn btn-success" onclick="generateCompleteJSON()" style="font-size:16px; padding:15px 30px;">
+                    🚀 GENERATE COMPLETE JSON
+                </button>
+                <p style="color:#94a3b8; margin-top:10px; font-size:14px;">
+                    Includes: Hero + Top Pick + Today + Tomorrow + Weekend + Results
+                </p>
+            </div>
             
+            <!-- JSON Output -->
             <div class="json-box" id="json-box" style="display:none;">
                 <h3 style="color:#FF6B35; margin-bottom:10px;">📋 COMPLETE JSON OUTPUT</h3>
                 <textarea id="json-output" readonly></textarea>
@@ -403,15 +559,16 @@
                     <button class="btn btn-warning" onclick="testJSON()">🧪 Test JSON</button>
                 </div>
                 
+                <!-- Instructions -->
                 <div style="margin-top:15px; padding:15px; background:rgba(255,107,53,0.1); border-radius:5px;">
-                    <h4 style="color:#FF6B35;">📝 How to Update Website:</h4>
-                    <ol style="margin-top:10px; padding-left:20px; color:#94a3b8;">
+                    <h4 style="color:#FF6B35; font-size:14px;">📝 How to Update Website:</h4>
+                    <ol style="margin-top:10px; padding-left:20px; color:#94a3b8; font-size:13px;">
                         <li>Click "Copy JSON" above</li>
                         <li>Go to: <a href="https://github.com/mamecholeye-lab/mamecholeye/edit/main/data.json" style="color:#FF6B35;" target="_blank">GitHub data.json</a></li>
                         <li>Delete ALL old content</li>
                         <li>Paste the new JSON</li>
-                        <li>Click "Commit changes"</li>
-                        <li>Wait 2 minutes - website updates!</li>
+                        <li>Click "Commit changes" at bottom</li>
+                        <li>Wait 2 minutes - website updates automatically!</li>
                     </ol>
                 </div>
             </div>
@@ -421,16 +578,62 @@
     <script>
         // ===== GLOBAL DATA =====
         let todayMatches = [];
+        let tomorrowMatches = [];
+        let weekendMatches = {
+            saturday: [],
+            sunday: []
+        };
         let results = [];
         
         // ===== INITIALIZE =====
         window.onload = function() {
-            console.log("RMAME Control Panel Initialized");
+            console.log("RMAME Complete Control Panel Initialized");
+            
+            // Set dates
+            updateAllDates();
+            
+            // Load all saved data
             loadAllData();
+            
+            // Show initial data
             showTodayMatches();
+            showTomorrowMatches();
+            showWeekendMatches();
             showResults();
             updateStats();
         };
+        
+        // ===== DATE FUNCTIONS =====
+        function updateAllDates() {
+            const now = new Date();
+            
+            // Today
+            const today = now.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            document.getElementById('today-date-display').textContent = today;
+            
+            // Tomorrow
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            document.getElementById('tomorrow-date-display').textContent = tomorrow.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // Yesterday
+            const yesterday = new Date(now);
+            yesterday.setDate(yesterday.getDate() - 1);
+            document.getElementById('yesterday-date-display').textContent = yesterday.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // Weekend dates (next Saturday & Sunday)
+            const nextSaturday = new Date(now);
+            const daysUntilSaturday = (6 - now.getDay() + 7) % 7 || 7;
+            nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+            
+            const nextSunday = new Date(nextSaturday);
+            nextSunday.setDate(nextSaturday.getDate() + 1);
+            
+            document.getElementById('weekend-date-display').textContent = 
+                nextSaturday.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' }) + 
+                " & " + 
+                nextSunday.toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' });
+        }
         
         // ===== TAB FUNCTIONS =====
         function switchTab(tabName) {
@@ -513,11 +716,11 @@
         
         // ===== TODAY'S MATCHES =====
         function addTodayMatch() {
-            const team1 = document.getElementById('new-team1').value.trim();
-            const team2 = document.getElementById('new-team2').value.trim();
-            const league = document.getElementById('new-league').value.trim() || "League";
-            const prediction = document.getElementById('new-prediction').value.trim() || "1";
-            const odds = parseFloat(document.getElementById('new-odds').value) || 2.0;
+            const team1 = document.getElementById('new-today-team1').value.trim();
+            const team2 = document.getElementById('new-today-team2').value.trim();
+            const league = document.getElementById('new-today-league').value.trim() || "League";
+            const prediction = document.getElementById('new-today-prediction').value.trim() || "1";
+            const odds = parseFloat(document.getElementById('new-today-odds').value) || 2.0;
             
             if (!team1 || !team2) {
                 alert("Please enter both team names!");
@@ -542,11 +745,10 @@
             saveTodayData();
             
             // Clear form
-            document.getElementById('new-team1').value = '';
-            document.getElementById('new-team2').value = '';
-            document.getElementById('new-league').value = '';
-            document.getElementById('new-prediction').value = '';
-            document.getElementById('new-odds').value = '2.0';
+            document.getElementById('new-today-team1').value = '';
+            document.getElementById('new-today-team2').value = '';
+            document.getElementById('new-today-league').value = '';
+            document.getElementById('new-today-prediction').value = '';
             
             updateStats();
         }
@@ -559,8 +761,8 @@
             
             if (todayMatches.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align:center; padding:30px; color:#94a3b8;">
-                        <div style="font-size:40px; margin-bottom:10px;">⚽</div>
+                    <div style="text-align:center; padding:20px; color:#94a3b8; background:#0f172a; border-radius:5px; border:1px solid #334155;">
+                        <div style="font-size:30px; margin-bottom:5px;">⚽</div>
                         No matches added yet
                     </div>
                 `;
@@ -573,40 +775,21 @@
                     <div class="match-card">
                         <button class="delete-btn" onclick="deleteTodayMatch(${index})">×</button>
                         
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Teams:</label>
-                                <input type="text" value="${match.team1} vs ${match.team2}" readonly>
+                        <div style="display:flex; justify-content:space-between; align-items:start;">
+                            <div style="flex:1;">
+                                <div style="font-weight:bold; color:white;">${match.team1} vs ${match.team2}</div>
+                                <div style="color:#94a3b8; font-size:13px;">${match.league} • ${match.prediction} • Odds: ${match.odds}</div>
                             </div>
-                            <div class="form-group">
-                                <label>League:</label>
-                                <input type="text" value="${match.league}" onchange="updateTodayMatch(${index}, 'league', this.value)">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Prediction:</label>
-                                <input type="text" value="${match.prediction}" onchange="updateTodayMatch(${index}, 'prediction', this.value)">
-                            </div>
-                            <div class="form-group">
-                                <label>Odds:</label>
-                                <input type="number" step="0.01" value="${match.odds}" onchange="updateTodayMatch(${index}, 'odds', this.value)">
-                            </div>
-                        </div>
-                        
-                        <div class="form-row">
-                            <div class="form-group">
-                                <label>Status:</label>
-                                <select onchange="updateTodayMatch(${index}, 'status', this.value)">
+                            <div style="display:flex; flex-direction:column; gap:5px;">
+                                <select onchange="updateTodayMatch(${index}, 'status', this.value)" 
+                                        style="padding:5px; background:#1e293b; color:white; border:1px solid #334155; border-radius:3px; font-size:12px;">
                                     <option value="pending" ${match.status === 'pending' ? 'selected' : ''}>Pending</option>
                                     <option value="won" ${match.status === 'won' ? 'selected' : ''}>Won</option>
                                     <option value="lost" ${match.status === 'lost' ? 'selected' : ''}>Lost</option>
                                 </select>
-                            </div>
-                            <div class="form-group">
-                                <label>Score:</label>
-                                <input type="text" placeholder="0-0" value="${match.score || ''}" onchange="updateTodayMatch(${index}, 'score', this.value)">
+                                <input type="text" placeholder="Score" value="${match.score || ''}" 
+                                       onchange="updateTodayMatch(${index}, 'score', this.value)"
+                                       style="padding:5px; width:70px; background:#1e293b; color:white; border:1px solid #334155; border-radius:3px; font-size:12px;">
                             </div>
                         </div>
                     </div>
@@ -630,6 +813,209 @@
         
         function saveTodayData() {
             localStorage.setItem('todayMatches', JSON.stringify(todayMatches));
+        }
+        
+        // ===== TOMORROW'S MATCHES =====
+        function addTomorrowMatch() {
+            const team1 = document.getElementById('new-tomorrow-team1').value.trim();
+            const team2 = document.getElementById('new-tomorrow-team2').value.trim();
+            const league = document.getElementById('new-tomorrow-league').value.trim() || "League";
+            const prediction = document.getElementById('new-tomorrow-prediction').value.trim() || "1";
+            const odds = parseFloat(document.getElementById('new-tomorrow-odds').value) || 2.0;
+            
+            if (!team1 || !team2) {
+                alert("Please enter both team names!");
+                return;
+            }
+            
+            const match = {
+                id: Date.now(),
+                team1: team1,
+                team2: team2,
+                league: league,
+                prediction: prediction,
+                odds: odds,
+                time: "15:00",
+                confidence: 70
+            };
+            
+            tomorrowMatches.push(match);
+            showTomorrowMatches();
+            saveTomorrowData();
+            
+            // Clear form
+            document.getElementById('new-tomorrow-team1').value = '';
+            document.getElementById('new-tomorrow-team2').value = '';
+            document.getElementById('new-tomorrow-league').value = '';
+            document.getElementById('new-tomorrow-prediction').value = '';
+            
+            updateStats();
+        }
+        
+        function showTomorrowMatches() {
+            const container = document.getElementById('tomorrow-matches-list');
+            const countElement = document.getElementById('tomorrow-count');
+            
+            countElement.textContent = tomorrowMatches.length;
+            
+            if (tomorrowMatches.length === 0) {
+                container.innerHTML = `
+                    <div style="text-align:center; padding:20px; color:#94a3b8; background:#0f172a; border-radius:5px; border:1px solid #334155;">
+                        <div style="font-size:30px; margin-bottom:5px;">📅</div>
+                        No matches added yet
+                    </div>
+                `;
+                return;
+            }
+            
+            container.innerHTML = '';
+            tomorrowMatches.forEach((match, index) => {
+                container.innerHTML += `
+                    <div class="match-card">
+                        <button class="delete-btn" onclick="deleteTomorrowMatch(${index})">×</button>
+                        
+                        <div style="display:flex; justify-content:space-between; align-items:start;">
+                            <div style="flex:1;">
+                                <div style="font-weight:bold; color:white;">${match.team1} vs ${match.team2}</div>
+                                <div style="color:#94a3b8; font-size:13px;">${match.league} • ${match.prediction} • Odds: ${match.odds}</div>
+                            </div>
+                            <div>
+                                <span style="color:#00B894; font-size:12px;">TOMORROW</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+        
+        function deleteTomorrowMatch(index) {
+            if (confirm("Delete this match?")) {
+                tomorrowMatches.splice(index, 1);
+                showTomorrowMatches();
+                saveTomorrowData();
+                updateStats();
+            }
+        }
+        
+        function saveTomorrowData() {
+            localStorage.setItem('tomorrowMatches', JSON.stringify(tomorrowMatches));
+        }
+        
+        // ===== WEEKEND MATCHES =====
+        function addWeekendMatch() {
+            const day = document.getElementById('new-weekend-day').value;
+            const time = document.getElementById('new-weekend-time').value.trim() || "15:00";
+            const team1 = document.getElementById('new-weekend-team1').value.trim();
+            const team2 = document.getElementById('new-weekend-team2').value.trim();
+            const league = document.getElementById('new-weekend-league').value.trim() || "League";
+            const prediction = document.getElementById('new-weekend-prediction').value.trim() || "1";
+            const odds = parseFloat(document.getElementById('new-weekend-odds').value) || 2.0;
+            
+            if (!team1 || !team2) {
+                alert("Please enter both team names!");
+                return;
+            }
+            
+            const match = {
+                id: Date.now(),
+                day: day,
+                time: time,
+                team1: team1,
+                team2: team2,
+                league: league,
+                prediction: prediction,
+                odds: odds,
+                confidence: 70
+            };
+            
+            if (day === "Saturday") {
+                weekendMatches.saturday.push(match);
+            } else {
+                weekendMatches.sunday.push(match);
+            }
+            
+            showWeekendMatches();
+            saveWeekendData();
+            
+            // Clear form
+            document.getElementById('new-weekend-team1').value = '';
+            document.getElementById('new-weekend-team2').value = '';
+            document.getElementById('new-weekend-league').value = '';
+            document.getElementById('new-weekend-prediction').value = '';
+            document.getElementById('new-weekend-time').value = '15:00';
+            
+            updateStats();
+        }
+        
+        function showWeekendMatches() {
+            // Saturday
+            const satContainer = document.getElementById('saturday-matches-list');
+            const satCountElement = document.getElementById('saturday-count');
+            satCountElement.textContent = weekendMatches.saturday.length;
+            
+            if (weekendMatches.saturday.length === 0) {
+                satContainer.innerHTML = `
+                    <div style="text-align:center; padding:15px; color:#94a3b8; background:#0f172a; border-radius:5px; border:1px solid #334155; margin-bottom:15px;">
+                        <div style="font-size:24px; margin-bottom:5px;">📅</div>
+                        No Saturday matches
+                    </div>
+                `;
+            } else {
+                satContainer.innerHTML = '';
+                weekendMatches.saturday.forEach((match, index) => {
+                    satContainer.innerHTML += `
+                        <div class="match-card" style="border-left-color:#FFD700;">
+                            <button class="delete-btn" onclick="deleteWeekendMatch('saturday', ${index})">×</button>
+                            <div style="color:#FFD700; font-size:12px; margin-bottom:5px;">SATURDAY • ${match.time}</div>
+                            <div style="font-weight:bold; color:white;">${match.team1} vs ${match.team2}</div>
+                            <div style="color:#94a3b8; font-size:13px;">${match.league} • ${match.prediction} • Odds: ${match.odds}</div>
+                        </div>
+                    `;
+                });
+            }
+            
+            // Sunday
+            const sunContainer = document.getElementById('sunday-matches-list');
+            const sunCountElement = document.getElementById('sunday-count');
+            sunCountElement.textContent = weekendMatches.sunday.length;
+            
+            if (weekendMatches.sunday.length === 0) {
+                sunContainer.innerHTML = `
+                    <div style="text-align:center; padding:15px; color:#94a3b8; background:#0f172a; border-radius:5px; border:1px solid #334155;">
+                        <div style="font-size:24px; margin-bottom:5px;">📅</div>
+                        No Sunday matches
+                    </div>
+                `;
+            } else {
+                sunContainer.innerHTML = '';
+                weekendMatches.sunday.forEach((match, index) => {
+                    sunContainer.innerHTML += `
+                        <div class="match-card" style="border-left-color:#FFD700;">
+                            <button class="delete-btn" onclick="deleteWeekendMatch('sunday', ${index})">×</button>
+                            <div style="color:#FFD700; font-size:12px; margin-bottom:5px;">SUNDAY • ${match.time}</div>
+                            <div style="font-weight:bold; color:white;">${match.team1} vs ${match.team2}</div>
+                            <div style="color:#94a3b8; font-size:13px;">${match.league} • ${match.prediction} • Odds: ${match.odds}</div>
+                        </div>
+                    `;
+                });
+            }
+        }
+        
+        function deleteWeekendMatch(day, index) {
+            if (confirm("Delete this weekend match?")) {
+                if (day === "saturday") {
+                    weekendMatches.saturday.splice(index, 1);
+                } else {
+                    weekendMatches.sunday.splice(index, 1);
+                }
+                showWeekendMatches();
+                saveWeekendData();
+                updateStats();
+            }
+        }
+        
+        function saveWeekendData() {
+            localStorage.setItem('weekendMatches', JSON.stringify(weekendMatches));
         }
         
         // ===== RESULTS =====
@@ -671,12 +1057,14 @@
         
         function showResults() {
             const container = document.getElementById('results-list');
-            const resultsData = results.slice(0, 10); // Show last 10 results
+            const countElement = document.getElementById('results-count');
             
-            if (resultsData.length === 0) {
+            countElement.textContent = results.length;
+            
+            if (results.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align:center; padding:30px; color:#94a3b8;">
-                        <div style="font-size:40px; margin-bottom:10px;">📊</div>
+                    <div style="text-align:center; padding:20px; color:#94a3b8; background:#0f172a; border-radius:5px; border:1px solid #334155;">
+                        <div style="font-size:30px; margin-bottom:5px;">📊</div>
                         No results yet
                     </div>
                 `;
@@ -684,7 +1072,7 @@
             }
             
             container.innerHTML = '';
-            resultsData.forEach((result, index) => {
+            results.slice(0, 15).forEach((result, index) => {
                 container.innerHTML += `
                     <div class="match-card">
                         <div style="color:white; font-weight:bold; margin-bottom:5px;">
@@ -693,7 +1081,7 @@
                                 ${result.outcome.toUpperCase()}
                             </span>
                         </div>
-                        <div style="color:#94a3b8; font-size:14px;">
+                        <div style="color:#94a3b8; font-size:13px;">
                             ${result.league} • ${result.prediction} • Odds: ${result.odds} • Score: ${result.score}
                         </div>
                     </div>
@@ -715,7 +1103,8 @@
         // ===== STATS =====
         function updateStats() {
             document.getElementById('gen-today-count').textContent = todayMatches.length;
-            document.getElementById('gen-results-count').textContent = results.length;
+            document.getElementById('gen-tomorrow-count').textContent = tomorrowMatches.length;
+            document.getElementById('gen-weekend-count').textContent = weekendMatches.saturday.length + weekendMatches.sunday.length;
             
             const wins = results.filter(r => r.outcome === 'won').length;
             const winRate = results.length > 0 ? Math.round((wins / results.length) * 100) : 0;
@@ -724,8 +1113,8 @@
         
         // ===== LOAD ALL DATA =====
         function loadAllData() {
-            // Load hero data
             try {
+                // Load hero data
                 const heroData = JSON.parse(localStorage.getItem('heroData'));
                 if (heroData) {
                     document.getElementById('hero-title').value = heroData.title || "";
@@ -756,10 +1145,8 @@
                         document.getElementById('hero-odds3').value = heroData.matches[2].odds || "";
                     }
                 }
-            } catch (e) {}
-            
-            // Load top data
-            try {
+                
+                // Load top data
                 const topData = JSON.parse(localStorage.getItem('topData'));
                 if (topData) {
                     document.getElementById('top-league').value = topData.league || "";
@@ -771,18 +1158,26 @@
                     document.getElementById('top-confidence').value = topData.confidence || "";
                     document.getElementById('top-risk').value = topData.riskLevel || "HIGH RISK";
                 }
-            } catch (e) {}
-            
-            // Load today matches
-            try {
+                
+                // Load today matches
                 const todayData = JSON.parse(localStorage.getItem('todayMatches'));
                 if (todayData) {
                     todayMatches = todayData;
                 }
-            } catch (e) {}
-            
-            // Load results
-            try {
+                
+                // Load tomorrow matches
+                const tomorrowData = JSON.parse(localStorage.getItem('tomorrowMatches'));
+                if (tomorrowData) {
+                    tomorrowMatches = tomorrowData;
+                }
+                
+                // Load weekend matches
+                const weekendData = JSON.parse(localStorage.getItem('weekendMatches'));
+                if (weekendData) {
+                    weekendMatches = weekendData;
+                }
+                
+                // Load results
                 const resultsData = JSON.parse(localStorage.getItem('resultsData'));
                 if (resultsData) {
                     document.getElementById('results-total').value = resultsData.total || 0;
@@ -790,15 +1185,16 @@
                     document.getElementById('results-losses').value = resultsData.losses || 0;
                     results = resultsData.matches || [];
                 }
-            } catch (e) {}
-            
-            console.log("All data loaded from localStorage");
+            } catch (e) {
+                console.log("Starting fresh or error loading data:", e);
+            }
         }
         
         // ===== GENERATE COMPLETE JSON =====
         function generateCompleteJSON() {
             // Auto-migrate first
             autoMigrateResults();
+            updateAllDates();
             
             // Get hero data
             const heroOdds1 = parseFloat(document.getElementById('hero-odds1').value) || 4.33;
@@ -808,6 +1204,13 @@
             
             // Calculate today's total odds
             const todayTotalOdds = todayMatches.reduce((total, match) => total * (match.odds || 1), 1).toFixed(2);
+            
+            // Calculate tomorrow's total odds
+            const tomorrowTotalOdds = tomorrowMatches.reduce((total, match) => total * (match.odds || 1), 1).toFixed(2);
+            
+            // Calculate weekend total odds
+            const weekendAllMatches = [...weekendMatches.saturday, ...weekendMatches.sunday];
+            const weekendTotalOdds = weekendAllMatches.reduce((total, match) => total * (match.odds || 1), 1).toFixed(2);
             
             // Calculate results
             const totalResults = results.length;
@@ -825,10 +1228,21 @@
             tomorrow.setDate(tomorrow.getDate() + 1);
             const tomDate = tomorrow.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
             
-            // Build complete JSON
+            // Weekend dates
+            const nextSaturday = new Date(now);
+            const daysUntilSaturday = (6 - now.getDay() + 7) % 7 || 7;
+            nextSaturday.setDate(now.getDate() + daysUntilSaturday);
+            const satDate = nextSaturday.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            const nextSunday = new Date(nextSaturday);
+            nextSunday.setDate(nextSaturday.getDate() + 1);
+            const sunDate = nextSunday.toLocaleDateString('en-US', { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+            
+            // ===== BUILD COMPLETE JSON =====
             const completeData = {
                 lastUpdated: now.toISOString(),
                 
+                // HERO SECTION
                 hero: {
                     date: today,
                     title: document.getElementById('hero-title').value,
@@ -879,6 +1293,7 @@
                     }
                 },
                 
+                // TOP PREDICTION
                 topPrediction: {
                     date: today,
                     title: "TOP PREDICTION OF THE DAY",
@@ -906,6 +1321,7 @@
                     }
                 },
                 
+                // TODAY'S PREDICTIONS
                 todayPredictions: {
                     date: today,
                     subtitle: today + " - " + todayMatches.length + " Premium Picks with " + todayTotalOdds + " Total Odds",
@@ -938,14 +1354,90 @@
                     ]
                 },
                 
+                // TOMORROW'S PREDICTIONS
                 tomorrowPredictions: {
                     date: tomDate,
                     title: "Tomorrow's Premium Picks",
-                    subtitle: tomDate + " - 0 Premium Picks",
-                    totalPredictions: 0,
-                    predictions: []
+                    subtitle: tomDate + " - " + tomorrowMatches.length + " Premium Picks with " + tomorrowTotalOdds + " Total Odds",
+                    totalPredictions: tomorrowMatches.length,
+                    totalOdds: tomorrowTotalOdds,
+                    predictions: tomorrowMatches.map(match => ({
+                        league: match.league,
+                        time: match.time,
+                        fixture: match.team1 + " v " + match.team2,
+                        team1: {
+                            name: match.team1,
+                            code: match.team1.substring(0, 3).toUpperCase(),
+                            colorClass: "team-color-" + match.team1.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        team2: {
+                            name: match.team2,
+                            code: match.team2.substring(0, 3).toUpperCase(),
+                            colorClass: "team-color-" + match.team2.toLowerCase().replace(/\s+/g, '-')
+                        },
+                        prediction: match.prediction,
+                        odds: match.odds,
+                        confidence: match.confidence
+                    }))
                 },
                 
+                // WEEKEND PREDICTIONS (Combined Saturday & Sunday)
+                weekendPredictions: {
+                    saturday: {
+                        date: satDate,
+                        title: "Saturday Premium Picks",
+                        totalPredictions: weekendMatches.saturday.length,
+                        predictions: weekendMatches.saturday.map(match => ({
+                            league: match.league,
+                            time: match.time,
+                            fixture: match.team1 + " v " + match.team2,
+                            team1: {
+                                name: match.team1,
+                                code: match.team1.substring(0, 3).toUpperCase(),
+                                colorClass: "team-color-" + match.team1.toLowerCase().replace(/\s+/g, '-')
+                            },
+                            team2: {
+                                name: match.team2,
+                                code: match.team2.substring(0, 3).toUpperCase(),
+                                colorClass: "team-color-" + match.team2.toLowerCase().replace(/\s+/g, '-')
+                            },
+                            prediction: match.prediction,
+                            odds: match.odds,
+                            confidence: match.confidence
+                        }))
+                    },
+                    sunday: {
+                        date: sunDate,
+                        title: "Sunday Premium Picks",
+                        totalPredictions: weekendMatches.sunday.length,
+                        predictions: weekendMatches.sunday.map(match => ({
+                            league: match.league,
+                            time: match.time,
+                            fixture: match.team1 + " v " + match.team2,
+                            team1: {
+                                name: match.team1,
+                                code: match.team1.substring(0, 3).toUpperCase(),
+                                colorClass: "team-color-" + match.team1.toLowerCase().replace(/\s+/g, '-')
+                            },
+                            team2: {
+                                name: match.team2,
+                                code: match.team2.substring(0, 3).toUpperCase(),
+                                colorClass: "team-color-" + match.team2.toLowerCase().replace(/\s+/g, '-')
+                            },
+                            prediction: match.prediction,
+                            odds: match.odds,
+                            confidence: match.confidence
+                        }))
+                    },
+                    totalOdds: weekendTotalOdds,
+                    winningExamples: [
+                        { stake: 10, win: (10 * weekendTotalOdds).toFixed(2) },
+                        { stake: 50, win: (50 * weekendTotalOdds).toFixed(2) },
+                        { stake: 100, win: (100 * weekendTotalOdds).toFixed(2) }
+                    ]
+                },
+                
+                // YESTERDAY'S RESULTS
                 yesterdayResults: {
                     date: yestDate,
                     subtitle: wins + " Wins out of " + totalResults + " Predictions",
@@ -982,7 +1474,15 @@
                 document.getElementById('json-box').scrollIntoView({ behavior: 'smooth' });
             }, 100);
             
-            alert("✅ JSON Generated!\n• Hero: 3 matches\n• Top Prediction: 1 match\n• Today: " + todayMatches.length + " matches\n• Results: " + results.length + " matches");
+            // Save all data
+            saveHeroData();
+            saveTopData();
+            saveTodayData();
+            saveTomorrowData();
+            saveWeekendData();
+            saveResultsData();
+            
+            alert("✅ COMPLETE JSON Generated!\n\n• Hero: 3 matches\n• Top Prediction: 1 match\n• Today: " + todayMatches.length + " matches\n• Tomorrow: " + tomorrowMatches.length + " matches\n• Weekend: " + (weekendMatches.saturday.length + weekendMatches.sunday.length) + " matches\n• Results: " + results.length + " matches");
         }
         
         // ===== UTILITY FUNCTIONS =====
