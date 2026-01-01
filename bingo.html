@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RMAME Bingo Game</title>
+    <style>
+        body { font-family: Arial; text-align: center; padding: 20px; }
+        .bingo-card { 
+            display: grid; 
+            grid-template-columns: repeat(5, 60px);
+            gap: 5px; 
+            margin: 20px auto; 
+            width: 300px;
+        }
+        .bingo-cell { 
+            width: 60px; 
+            height: 60px; 
+            border: 2px solid #333; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
+            font-weight: bold;
+            background: white;
+            cursor: pointer;
+        }
+        .marked { background: yellow; }
+        .free { background: lightgreen; }
+        button { 
+            padding: 10px 20px; 
+            font-size: 16px; 
+            margin: 10px; 
+            cursor: pointer;
+        }
+        .telegram-btn {
+            background: #0088cc;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 5px;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>🎯 RMAME Bingo Game</h1>
+    
+    <!-- Telegram Bot Link -->
+    <a href="https://t.me/rmame_bingo_bot" class="telegram-btn" target="_blank">
+        🎲 Play on Telegram
+    </a>
+    
+    <!-- Or play on website -->
+    <button onclick="generateCard()">Generate Bingo Card</button>
+    <button onclick="callNumber()">Call Random Number</button>
+    
+    <div id="bingoCard"></div>
+    <div id="calledNumbers"></div>
+    
+    <script>
+        // Simple bingo game
+        let myCard = [];
+        let calledNumbers = [];
+        
+        function generateCard() {
+            myCard = [];
+            let html = '<div class="bingo-card">';
+            
+            // Create 5x5 card
+            for(let i=0; i<5; i++) {
+                for(let j=0; j<5; j++) {
+                    let number;
+                    if(i===2 && j===2) {
+                        number = "FREE";
+                    } else {
+                        // B:1-15, I:16-30, N:31-45, G:46-60, O:61-75
+                        number = Math.floor(Math.random() * 15) + 1 + (j * 15);
+                    }
+                    
+                    myCard.push({number: number, marked: (i===2 && j===2)});
+                    
+                    html += `<div class="bingo-cell ${(i===2 && j===2) ? 'free' : ''}" 
+                             onclick="markNumber(${i}, ${j})">${number}</div>`;
+                }
+            }
+            html += '</div>';
+            document.getElementById('bingoCard').innerHTML = html;
+        }
+        
+        function markNumber(row, col) {
+            const cells = document.querySelectorAll('.bingo-cell');
+            const index = row * 5 + col;
+            cells[index].classList.toggle('marked');
+            myCard[index].marked = !myCard[index].marked;
+            checkBingo();
+        }
+        
+        function callNumber() {
+            let number;
+            do {
+                number = Math.floor(Math.random() * 75) + 1;
+            } while(calledNumbers.includes(number));
+            
+            calledNumbers.push(number);
+            document.getElementById('calledNumbers').innerHTML = 
+                `<h3>Called Numbers: ${calledNumbers.join(', ')}</h3>`;
+        }
+        
+        function checkBingo() {
+            // Simple bingo check
+            alert("Bingo checking would happen here!");
+        }
+        
+        // Generate first card automatically
+        generateCard();
+    </script>
+</body>
+</html>
