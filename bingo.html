@@ -1,118 +1,167 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RMAME Bingo Game</title>
+    <title>RMABingo</title>
     <style>
-        body { font-family: Arial; text-align: center; padding: 20px; }
-        .bingo-card { 
-            display: grid; 
-            grid-template-columns: repeat(5, 60px);
-            gap: 5px; 
-            margin: 20px auto; 
-            width: 300px;
+        body { 
+            font-family: Arial; 
+            text-align: center; 
+            background: #0088cc;
+            padding: 20px;
+            color: white;
         }
-        .bingo-cell { 
-            width: 60px; 
-            height: 60px; 
-            border: 2px solid #333; 
-            display: flex; 
-            align-items: center; 
+        .card {
+            background: white;
+            color: black;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px auto;
+            max-width: 400px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        .row {
+            display: flex;
+            justify-content: center;
+            margin: 5px;
+        }
+        .number {
+            width: 50px;
+            height: 50px;
+            border: 2px solid #0088cc;
+            margin: 3px;
+            display: flex;
+            align-items: center;
             justify-content: center;
             font-weight: bold;
-            background: white;
+            border-radius: 8px;
             cursor: pointer;
         }
-        .marked { background: yellow; }
-        .free { background: lightgreen; }
-        button { 
-            padding: 10px 20px; 
-            font-size: 16px; 
-            margin: 10px; 
+        .marked {
+            background: yellow;
+        }
+        .free {
+            background: green;
+            color: white;
+        }
+        button {
+            background: white;
+            color: #0088cc;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 10px;
+            margin: 10px;
             cursor: pointer;
+            font-weight: bold;
         }
         .telegram-btn {
-            background: #0088cc;
-            color: white;
-            border: none;
-            padding: 12px 24px;
-            border-radius: 5px;
+            display: block;
+            background: white;
+            color: #0088cc;
             text-decoration: none;
-            display: inline-block;
-            margin: 10px;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px auto;
+            max-width: 300px;
+            font-size: 18px;
         }
     </style>
 </head>
 <body>
-    <h1>🎯 RMAME Bingo Game</h1>
     
-    <!-- Telegram Bot Link -->
+    <h1>🎯 RMABingo</h1>
+    <p>Play bingo in Telegram!</p>
+    
+    <!-- Telegram Button -->
     <a href="https://t.me/rmame_bingo_bot" class="telegram-btn" target="_blank">
-        🎲 Play on Telegram
+        🎲 PLAY ON TELEGRAM
     </a>
     
-    <!-- Or play on website -->
-    <button onclick="generateCard()">Generate Bingo Card</button>
-    <button onclick="callNumber()">Call Random Number</button>
+    <div class="card">
+        <h2>Your Bingo Card</h2>
+        <div id="bingoCard">
+            <!-- Card appears here -->
+        </div>
+        
+        <button onclick="newCard()">🔄 New Card</button>
+        <button onclick="callNumber()">🎲 Call Number</button>
+        <button onclick="checkBingo()">✅ Check Bingo</button>
+    </div>
     
-    <div id="bingoCard"></div>
-    <div id="calledNumbers"></div>
+    <h3>Numbers Called: <span id="numbers">None</span></h3>
     
     <script>
         // Simple bingo game
         let myCard = [];
-        let calledNumbers = [];
+        let called = [];
         
-        function generateCard() {
+        function newCard() {
             myCard = [];
-            let html = '<div class="bingo-card">';
+            let html = '';
             
-            // Create 5x5 card
+            // Make 5x5 card
             for(let i=0; i<5; i++) {
+                html += '<div class="row">';
                 for(let j=0; j<5; j++) {
-                    let number;
+                    let num;
                     if(i===2 && j===2) {
-                        number = "FREE";
+                        num = "FREE";
                     } else {
-                        // B:1-15, I:16-30, N:31-45, G:46-60, O:61-75
-                        number = Math.floor(Math.random() * 15) + 1 + (j * 15);
+                        num = Math.floor(Math.random()*15) + 1 + (j*15);
                     }
                     
-                    myCard.push({number: number, marked: (i===2 && j===2)});
+                    myCard.push({
+                        number: num,
+                        marked: (i===2 && j===2)
+                    });
                     
-                    html += `<div class="bingo-cell ${(i===2 && j===2) ? 'free' : ''}" 
-                             onclick="markNumber(${i}, ${j})">${number}</div>`;
+                    html += `<div class="number ${(i===2&&j===2)?'free':''}" 
+                             onclick="mark(${i},${j})">${num}</div>`;
                 }
+                html += '</div>';
             }
-            html += '</div>';
+            
             document.getElementById('bingoCard').innerHTML = html;
+            called = [];
+            document.getElementById('numbers').textContent = 'None';
         }
         
-        function markNumber(row, col) {
-            const cells = document.querySelectorAll('.bingo-cell');
-            const index = row * 5 + col;
-            cells[index].classList.toggle('marked');
-            myCard[index].marked = !myCard[index].marked;
-            checkBingo();
+        function mark(row, col) {
+            const idx = row*5 + col;
+            if(myCard[idx].number !== "FREE") {
+                myCard[idx].marked = !myCard[idx].marked;
+                
+                const cells = document.querySelectorAll('.number');
+                cells[idx].classList.toggle('marked');
+            }
         }
         
         function callNumber() {
-            let number;
+            let num;
             do {
-                number = Math.floor(Math.random() * 75) + 1;
-            } while(calledNumbers.includes(number));
+                num = Math.floor(Math.random()*75) + 1;
+            } while(called.includes(num));
             
-            calledNumbers.push(number);
-            document.getElementById('calledNumbers').innerHTML = 
-                `<h3>Called Numbers: ${calledNumbers.join(', ')}</h3>`;
+            called.push(num);
+            document.getElementById('numbers').textContent = called.join(', ');
+            
+            // Auto-mark if on card
+            myCard.forEach((cell, idx) => {
+                if(cell.number === num) {
+                    cell.marked = true;
+                    const cells = document.querySelectorAll('.number');
+                    cells[idx].classList.add('marked');
+                }
+            });
         }
         
         function checkBingo() {
-            // Simple bingo check
-            alert("Bingo checking would happen here!");
+            alert("Check if you have 5 in a row!");
         }
         
-        // Generate first card automatically
-        generateCard();
+        // Create first card
+        newCard();
     </script>
+    
 </body>
 </html>
